@@ -1,0 +1,4 @@
+interface:
+  display_name: "Chip Daily Report"
+  short_description: "生成带来源与时间戳的芯片行业日报"
+  default_prompt: "使用 $chip-daily-report 生成今天的芯片行业日报。"
