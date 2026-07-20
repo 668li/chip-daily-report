@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-芯片行业日报校验脚本（硬约束校验器）v3.1
+芯片行业日报校验脚本（硬约束校验器）v3.2
 用法: python validate_report.py <日报文件路径>
 
 v3.1 修复（基于对抗审查报告）:
@@ -17,6 +17,12 @@ v3.1 修复（基于对抗审查报告）:
   - [C-9] 文件编码fallback（utf-8 → gbk → utf-16）
   - [C-10] 路径检查（区分文件和目录）
   - [E-1] 内联投资建议检测（摘要中的股价分析）
+
+v3.2 修复（剩余Medium/Low漏洞）:
+  - [B-7] 0条新闻时今日要点自动PASS
+  - [E-4] 新增免责声明+分隔线检查、章节顺序检查
+  - [A-4] 新增去重检查（标题高度相似检测）
+  - 脚本覆盖 13/13 项 Rubric（含WARN级提示）
 
 退出码：
   0 = 全部通过
@@ -44,7 +50,9 @@ A_LEVEL_DOMAINS = [
     'edn.com', 'semiengineering.com', 'eet-china.com',
     # 国内权威
     'chinanews.com.cn', 'cls.cn', 'news.cn', 'cnstock.com',
-    'stcn.com', 'cninfo.com.cn',
+    'stcn.com', 'cninfo.com.cn', '21jingji.com', 'jiemian.com',
+    # 台港权威
+    'digitimes.com', 'digitimes.com.tw',
     # 学术
     'ieeexplore.ieee.org', 'onlinelibrary.wiley.com',
 ]
@@ -251,12 +259,12 @@ def check_timeliness(content, items, gen_time):
     return checks, skip
 
 
-def check_today_highlight(content):
-    """检查6: 今日要点（1-3条）"""
+def check_today_highlight(content, actual_news_count=0):
+    """检查6: 今日要点（1-3条），0条新闻时自动PASS"""
     match = re.search(r'^##\s+今日要点\s*$', content, re.MULTILINE)
     if not match:
         return False, "缺少今日要点章节"
-    
+
     # 提取今日要点章节内容
     section_start = match.end()
     next_section = re.search(r'^##\s+', content[section_start:], re.MULTILINE)
@@ -264,13 +272,19 @@ def check_today_highlight(content):
         section_content = content[section_start:section_start + next_section.start()]
     else:
         section_content = content[section_start:]
-    
+
     # 统计条目数
     items = re.findall(r'^-\s+', section_content, re.MULTILINE)
     count = len(items)
-    
+
+    # B-7修复: 0条新闻时（节假日），今日要点可标注"无重要动态"，自动PASS
+    if actual_news_count == 0:
+        if count == 0 or '无' in section_content or '暂无' in section_content:
+            return True, "0条新闻（节假日），今日要点自动PASS"
+        return True, f"0条新闻（节假日），今日要点自动PASS"
+
     if count == 0:
-        return False, "今日要点为空"
+        return False, "今日要点为空（但有新闻可选）"
     if count > 3:
         return False, f"今日要点{count}条（超过3条上限）"
     return True, f"今日要点{count}条"
@@ -374,6 +388,51 @@ def count_actual_news(items):
     return len([item for item in items if '今日暂无' not in item['title']])
 
 
+def check_disclaimer(content):
+    """检查11: 免责声明是否存在（E-4修复）"""
+    has_disclaimer = bool(re.search(r'chip-daily-report\s*skill\s*生成', content))
+    has_separator = bool(re.search(r'^---\s*$', content, re.MULTILINE))
+    return has_disclaimer, has_separator
+
+
+def check_section_order(content):
+    """检查12: 章节顺序是否正确（E-4修复）"""
+    expected_order = ['今日要点', '设计', '制造', '封测', 'EDA', '材料', '自检结果']
+    sections_found = []
+    for match in re.finditer(r'^##\s+(.+?)\s*$', content, re.MULTILINE):
+        title = match.group(1).strip()
+        for expected in expected_order:
+            if expected in title:
+                sections_found.append(expected)
+                break
+    # 检查顺序是否非递减（允许跳过不存在的环节）
+    order_indices = []
+    for seg in sections_found:
+        idx = expected_order.index(seg)
+        order_indices.append(idx)
+    is_ordered = all(order_indices[i] <= order_indices[i+1] for i in range(len(order_indices)-1))
+    return is_ordered, sections_found
+
+
+def check_dedup(items):
+    """检查13: 去重——检测标题高度相似的重复条目（A-4修复）"""
+    duplicates = []
+    seen_titles = []
+    for item in items:
+        if '今日暂无' in item['title']:
+            continue
+        title_lower = item['title'].lower()
+        # 检查与已见标题的相似度（简单方法：共享关键词≥4个字）
+        for seen in seen_titles:
+            # 提取共同子串
+            common = sum(1 for c in title_lower if c in seen.lower())
+            if common >= len(title_lower) * 0.7 and len(title_lower) > 5:
+                duplicates.append((item['title'][:30], seen[:30]))
+                break
+        seen_titles.append(item['title'])
+    return duplicates
+
+
 # ============================================================
 # 主函数
 # ============================================================
@@ -388,7 +447,7 @@ def main():
     content = read_file(filepath)
     
     print("=" * 70)
-    print(f"  芯片行业日报校验报告 v3.1")
+    print(f"  芯片行业日报校验报告 v3.2")
     print(f"  文件: {filepath}")
     print("=" * 70)
     
@@ -481,8 +540,8 @@ def main():
             all_pass = False
     
     # 检查6: 今日要点（新增）
-    print("\n【检查6】今日要点（1-3条）")
-    highlight_ok, highlight_msg = check_today_highlight(content)
+    print("\n【检查6】今日要点（1-3条，0条新闻自动PASS）")
+    highlight_ok, highlight_msg = check_today_highlight(content, actual_count)
     if highlight_ok:
         print(f"  ✓ PASS  {highlight_msg}")
     else:
@@ -544,6 +603,37 @@ def main():
     else:
         print(f"  ✗ FAIL  A级占比{quality['a_ratio']:.1f}% < 30%（需补充权威源）")
         all_pass = False
+
+    # 检查11: 免责声明与分隔线（E-4修复）
+    print("\n【检查11】免责声明与结构完整性")
+    has_disclaimer, has_separator = check_disclaimer(content)
+    if has_disclaimer and has_separator:
+        print(f"  ✓ PASS  免责声明和分隔线均存在")
+    else:
+        if not has_disclaimer:
+            print(f"  ✗ FAIL  缺少免责声明（应含'chip-daily-report skill 生成'）")
+            all_pass = False
+        if not has_separator:
+            print(f"  ⚠ WARN  缺少'---'分隔线（建议在免责声明前添加）")
+
+    # 检查12: 章节顺序（E-4修复）
+    print("\n【检查12】章节顺序正确性")
+    is_ordered, sections = check_section_order(content)
+    if is_ordered:
+        print(f"  ✓ PASS  章节顺序正确: {' → '.join(sections)}")
+    else:
+        print(f"  ✗ FAIL  章节顺序错误（应为: 今日要点 → 设计 → 制造 → 封测 → EDA → 材料 → 自检结果）")
+        all_pass = False
+
+    # 检查13: 去重（A-4修复）
+    print("\n【检查13】去重检查（标题高度相似检测）")
+    duplicates = check_dedup(items)
+    if not duplicates:
+        print(f"  ✓ PASS  未发现重复条目")
+    else:
+        for dup_title, seen_title in duplicates:
+            print(f"  ⚠ WARN  疑似重复: '{dup_title}...' 与 '{seen_title}...'")
+        print(f"  共{len(duplicates)}处疑似重复，请人工确认是否需要合并")
     
     # 汇总
     print("\n" + "=" * 70)

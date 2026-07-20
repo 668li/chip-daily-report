@@ -1,5 +1,5 @@
 # Chip Daily Report Agent 配置
-# 版本: 3.0 模块化架构
+# 版本: 3.2 模块化架构（全漏洞修复版）
 
 interface:
   display_name: "Chip Daily Report"
@@ -9,7 +9,7 @@ interface:
     采用模块化架构：SKILL.md主控流程，references/提供分级源库+分类规则+Rubric标准，
     scripts/提供可执行校验脚本。生成日报后自动运行13项门禁检查+脚本硬校验。
   default_prompt: "使用 $chip-daily-report 生成今天的芯片行业日报。"
-  version: "3.0.0"
+  version: "3.2.0"
 
 # Agent 行为配置
 behavior:
@@ -24,7 +24,7 @@ behavior:
   # 搜索策略
   search_strategy:
     bilingual: true              # 双语搜索（中英文）
-    min_sources_per_segment: 2   # 每个产业链环节至少查2个来源
+    min_sources_per_segment: 2   # 每个产业链环节至少查2个来源（1中+1英）
     cross_validation: true       # 交叉验证信息准确性
     max_search_rounds: 3         # 最大搜索轮次（来源不足时补充搜索）
   
@@ -54,7 +54,7 @@ behavior:
   # 质量门禁
   quality_gate:
     rubric_items: 13              # 13项门禁检查
-    max_retry: 3                  # 最大修正循环次数
+    max_retry: 5                  # 最大修正循环次数
     script_validation: true       # 必须运行校验脚本
     script_path: "scripts/validate_report.py"
     fail_action: "回到对应Step修正→重新组装→再次自检"
@@ -65,7 +65,7 @@ behavior:
     review_threshold_hours: 72    # 超72小时标注[回顾]
     timezone: "Asia/Shanghai"
 
-# 模块化文件引用
+# 模块化文件引用（路径相对于 skill 根目录，即 SKILL.md 所在目录）
 modules:
   main: "SKILL.md"
   sources: "references/sources.md"
