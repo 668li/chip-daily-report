@@ -1,0 +1,81 @@
+# Chip Daily Report Agent 配置
+# 版本: 3.0 模块化架构
+
+interface:
+  display_name: "Chip Daily Report"
+  short_description: "生成带来源与时间戳的芯片行业日报（模块化架构）"
+  long_description: |
+    覆盖设计、制造、封测、EDA、材料、设备等全产业链的芯片行业日报生成器。
+    采用模块化架构：SKILL.md主控流程，references/提供分级源库+分类规则+Rubric标准，
+    scripts/提供可执行校验脚本。生成日报后自动运行13项门禁检查+脚本硬校验。
+  default_prompt: "使用 $chip-daily-report 生成今天的芯片行业日报。"
+  version: "3.0.0"
+
+# Agent 行为配置
+behavior:
+  # 工具权限
+  tools:
+    - web_search        # 网页搜索（必需）
+    - web_fetch         # 网页内容抓取（必需）
+    - file_read         # 读取文件（加载references）
+    - file_write        # 写入文件（保存日报）
+    - command_run       # 运行命令（执行校验脚本）
+  
+  # 搜索策略
+  search_strategy:
+    bilingual: true              # 双语搜索（中英文）
+    min_sources_per_segment: 2   # 每个产业链环节至少查2个来源
+    cross_validation: true       # 交叉验证信息准确性
+    max_search_rounds: 3         # 最大搜索轮次（来源不足时补充搜索）
+  
+  # 来源质量约束
+  source_constraints:
+    min_a_level_ratio: 0.30      # A级权威源最低占比30%
+    c_level_forbidden: true      # C级社交媒体来源禁止使用
+    broken_link_handling: "标注'链接待验证'，保留标题和摘要"
+  
+  # 输出约束
+  output_constraints:
+    format: "markdown"
+    encoding: "utf-8"
+    filename_pattern: "芯片行业日报_YYYYMMDD.md"
+    must_include:
+      - "头部元信息（生成时间/覆盖范围/新闻总数）"
+      - "今日要点（1-3条最重要新闻）"
+      - "5个产业链环节（设计/制造/封测/EDA/材料设备）"
+      - "自检结果小节（13项Rubric的PASS/FAIL）"
+      - "来源分级统计（A级/B级占比）"
+      - "尾部免责声明"
+    must_not_include:
+      - "市场动态/股价分析等越界附录"
+      - "投资建议或市场预测"
+      - "社交媒体来源（C级）"
+  
+  # 质量门禁
+  quality_gate:
+    rubric_items: 13              # 13项门禁检查
+    max_retry: 3                  # 最大修正循环次数
+    script_validation: true       # 必须运行校验脚本
+    script_path: "scripts/validate_report.py"
+    fail_action: "回到对应Step修正→重新组装→再次自检"
+  
+  # 时效性
+  timeliness:
+    default_coverage: "最近一个工作日"
+    review_threshold_hours: 72    # 超72小时标注[回顾]
+    timezone: "Asia/Shanghai"
+
+# 模块化文件引用
+modules:
+  main: "SKILL.md"
+  sources: "references/sources.md"
+  classification: "references/classification.md"
+  rubric: "references/rubric.md"
+  validator: "scripts/validate_report.py"
+  
+  # 加载时机
+  load_on_demand:
+    sources: "Step 2 搜索收集时"
+    classification: "Step 4 分类判定时"
+    rubric: "Step 10 门禁自检时"
+    validator: "Step 10 自检后运行"
