@@ -43,6 +43,8 @@
 | 21世纪经济报道 | 权威财经 | https://www.21jingji.com | 综合 | 产业分析、SEMI等预测 |
 | 界面新闻 | 权威财经 | https://www.jiemian.com | 综合 | 封测/产业动态 |
 | 电子时报DigiTimes | 权威媒体 | https://www.digitimes.com.tw | 制造/封测 | 台积电/代工产能独家 |
+| Nikkei Asia | 权威财经 | https://asia.nikkei.com | 制造/综合 | 台积电/代工独家报道 |
+| SEMI大半导体产业网 | 行业组织 | https://www.semi.org.cn | 材料/设备 | SEMI中国官方 |
 | 公司公告（巨潮资讯） | 官方披露 | https://www.cninfo.com.cn | 综合 | 上市公司官方公告 |
 
 ### 学术/期刊（用于技术突破类新闻）

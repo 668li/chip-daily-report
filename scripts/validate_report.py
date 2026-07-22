@@ -45,7 +45,7 @@ A_LEVEL_DOMAINS = [
     'tsmc.com', 'news.samsung.com', 'skhynix.com', 'news.skhynix.com',
     'intel.com', 'nvidia.com', 'nvidianews.nvidia.com',
     # 行业组织/权威分析
-    'semi.org', 'techinsights.com', 'semianalysis.com',
+    'semi.org', 'semi.org.cn', 'techinsights.com', 'semianalysis.com',
     # 权威媒体
     'edn.com', 'semiengineering.com', 'eet-china.com',
     # 国内权威
@@ -55,6 +55,8 @@ A_LEVEL_DOMAINS = [
     'digitimes.com', 'digitimes.com.tw',
     # 学术
     'ieeexplore.ieee.org', 'onlinelibrary.wiley.com',
+    # 国际财经
+    'asia.nikkei.com',
 ]
 
 # C级来源域名（精确匹配，禁止使用）
