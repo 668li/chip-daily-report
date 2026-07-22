@@ -14,4 +14,4 @@ chip-daily-report scripts 模块
 from . import validate_report
 
 __all__ = ['validate_report']
-__version__ = '3.2.0'
+__version__ = '4.0.0'

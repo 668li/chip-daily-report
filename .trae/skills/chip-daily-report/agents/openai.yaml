@@ -1,15 +1,14 @@
 # Chip Daily Report Agent 配置
-# 版本: 3.2 模块化架构（全漏洞修复版）
+# 版本: 4.0 高效架构（流程合并+前置判定）
 
 interface:
   display_name: "Chip Daily Report"
-  short_description: "生成带来源与时间戳的芯片行业日报（模块化架构）"
+  short_description: "生成带来源与时间戳的芯片行业日报（6步高效流程）"
   long_description: |
     覆盖设计、制造、封测、EDA、材料、设备等全产业链的芯片行业日报生成器。
-    采用模块化架构：SKILL.md主控流程，references/提供分级源库+分类规则+Rubric标准，
-    scripts/提供可执行校验脚本。生成日报后自动运行13项门禁检查+脚本硬校验。
+    v4.0高效架构：10步合并为6步，搜索时即时分级/去重/标注时效，组装时防抖检查，目标单次通过门禁。
   default_prompt: "使用 $chip-daily-report 生成今天的芯片行业日报。"
-  version: "3.2.0"
+  version: "4.0.0"
 
 # Agent 行为配置
 behavior:

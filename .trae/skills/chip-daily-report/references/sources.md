@@ -105,14 +105,38 @@
 
 ## 搜索关键词模板
 
-### 中文关键词
+### A级限定搜索（优先使用，确保A级占比≥30%）
+
+> **核心策略**：先搜索A级域名站内新闻，再补充B级聚合源。这样可以一次性确保A级≥30%，避免事后回溯补搜。
+
+**中文 site:限定搜索**：
+- 财联社：`site:cls.cn 芯片 半导体`
+- 中国新闻网：`site:chinanews.com.cn 芯片 半导体`
+- EET-China：`site:eet-china.com 芯片 EDA`
+- 21世纪经济报道：`site:21jingji.com 半导体 设备`
+- 界面新闻：`site:jiemian.com 封装 先进封装`
+- SEMI中国：`site:semi.org.cn 设备 市场`
+- 巨潮资讯：`site:cninfo.com.cn 芯片 业绩`
+
+**英文 site:限定搜索**：
+- TSMC：`site:tsmc.com investor relations earnings`
+- Samsung：`site:news.samsung.com semiconductor foundry`
+- SEMI：`site:semi.org equipment market forecast`
+- Nikkei Asia：`site:asia.nikkei.com TSMC semiconductor`
+- SemiAnalysis：`site:semianalysis.com AI chip`
+- EDN：`site:edn.com chip design`
+- Semiconductor Engineering：`site:semiengineering.com EDA packaging`
+
+### 通用搜索（补充搜索，B级来源）
+
+**中文关键词**
 - 设计：`AI芯片 设计 发布 规格 性能`
 - 制造：`晶圆代工 制程 产能 HBM DRAM`
 - 封测：`先进封装 HBM封装 测试 封测厂`
 - EDA：`EDA工具 Synopsys Cadence 仿真`
 - 材料设备：`半导体材料 光刻机 电子特气 光刻胶`
 
-### 英文关键词
+**英文关键词**
 - Design: `chip design GPU AI semiconductor news`
 - Manufacturing: `foundry process node HBM wafer`
 - Packaging: `advanced packaging HBM packaging test`
