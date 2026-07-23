@@ -1,6 +1,7 @@
 # 芯片行业新闻来源（分级动态源库）
 
-> 最后更新: 2026-07-20
+> 最后更新: 2026-07-23
+> 版本: v5.0（新增学术会议源+技术突破搜索模板）
 > 维护规则：每月核查源可用性，发现失效源及时标注或替换
 
 ## 使用规则
@@ -53,6 +54,12 @@
 |------|------|------|----------|------|
 | IEEE Xplore | 学术 | https://ieeexplore.ieee.org | 设计/EDA | 学术论文 |
 | Engineering Reports | 学术 | https://onlinelibrary.wiley.com/journal/25778196 | 封测/制造 | 工程研究成果 |
+| ISSCC | 顶级会议 | https://www.isscc.org | 设计/制造 | 国际固态半导体电路会议，芯片设计领域顶级 |
+| VLSI Symposium | 顶级会议 | https://www.vlsisymposium.org | 制造/设计 | 超大规模集成电路研讨会，制程技术发布重镇 |
+| DAC | 顶级会议 | https://www.dac.com | EDA/设计 | 设计自动化大会，EDA工具和设计方法学 |
+| IEDM | 顶级会议 | https://www.ieee-iedm.org | 制造/材料/设备 | 国际电子器件大会，器件和工艺技术突破 |
+| Nature Electronics | 顶级期刊 | https://www.nature.com/natelectron/ | 综合 | 自然-电子学，前沿半导体研究 |
+| SEMI | 行业组织 | https://www.semi.org/en/products-services/market-data | 材料/设备 | 设备销售预测、行业数据 |
 
 ## B级来源（聚合：新闻聚合平台/门户）
 
@@ -142,3 +149,27 @@
 - Packaging: `advanced packaging HBM packaging test`
 - EDA: `EDA tools Synopsys Cadence simulation`
 - Materials: `semiconductor materials lithography equipment`
+
+### 技术突破搜索（v5.0新增，捕获学术会议和前沿技术进展）
+
+> **核心策略**：搜索近期顶级学术会议和技术突破，将课堂知识与产业实践连接。这类新闻往往包含制程节点、器件结构、工艺参数等技术维度信息，是技术注解的重要来源。
+
+**学术会议搜索关键词**：
+- ISSCC（芯片设计）: `ISSCC 2026 chip design processor` / `ISSCC 2026 论文 芯片`
+- VLSI Symposium（制程技术）: `VLSI Symposium 2026 process node` / `VLSI 2026 制程 工艺`
+- DAC（EDA/设计方法学）: `DAC 2026 EDA design automation` / `DAC 2026 设计自动化`
+- IEDM（器件/工艺突破）: `IEDM 2026 device transistor` / `IEDM 2026 器件 工艺`
+- Nature Electronics: `Nature Electronics semiconductor 2026` / `Nature Electronics 半导体 突破`
+
+**技术突破搜索关键词**（按技术方向）：
+- 晶体管结构: `GAA transistor breakthrough 2026` / `CFET 全环绕晶体管 突破`
+- 先进制程: `2nm process node 2026` / `1.4nm 制程 进展`
+- 先进封装: `3D IC packaging breakthrough` / `Chiplet 互连 突破`
+- 存储技术: `HBM4 development 2026` / `存算一体 芯片 突破`
+- 新材料: `silicon photonics breakthrough` / `碳化硅 氮化镓 进展`
+- EDA工具: `AI chip design automation 2026` / `AI辅助 芯片设计 EDA`
+
+**site:限定搜索（学术源）**：
+- IEEE Xplore: `site:ieeexplore.ieee.org semiconductor 2026`
+- Nature: `site:nature.com semiconductor chip 2026`
+- SEMI: `site:semi.org equipment market forecast 2026`

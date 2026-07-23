@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-芯片行业日报校验脚本（硬约束校验器）v3.2
+芯片行业日报校验脚本（硬约束校验器）v5.0
 用法: python validate_report.py <日报文件路径>
 
 v3.1 修复（基于对抗审查报告）:
@@ -23,6 +23,13 @@ v3.2 修复（剩余Medium/Low漏洞）:
   - [E-4] 新增免责声明+分隔线检查、章节顺序检查
   - [A-4] 新增去重检查（标题高度相似检测）
   - 脚本覆盖 13/13 项 Rubric（含WARN级提示）
+
+v5.0 升级（微电子专业深度版）:
+  - [R-1] 摘要句数标准从3-4句放宽至3-5句（6句WARN，≥7句FAIL）
+  - [R-2] 新增#14 技术注解检查：涉及专业术语的新闻必须有[技术注解: xxx]标签
+  - [R-3] 新增#15 产业链关联检查：必须包含## 产业链关联小节且≥2组关联
+  - [R-4] 章节顺序检查更新：新增"产业链关联"环节
+  - 脚本覆盖 15/15 项 Rubric（含WARN级提示）
 
 退出码：
   0 = 全部通过
@@ -206,12 +213,12 @@ def check_source_links(items):
 
 
 def check_summary_sentences(items):
-    """检查4: 摘要句数（目标3-4句，5句WARN，≥6句FAIL）"""
+    """检查4: 摘要句数（v5.0: 目标3-5句，6句WARN，≥7句FAIL）"""
     checks = []
     for item in items:
         title = item['title'][:30]
         sent_count = count_sentences(item['summary'])
-        ok = 3 <= sent_count <= 4
+        ok = 3 <= sent_count <= 5
         checks.append((title, ok, sent_count))
     return checks
 
@@ -398,8 +405,8 @@ def check_disclaimer(content):
 
 
 def check_section_order(content):
-    """检查12: 章节顺序是否正确（E-4修复）"""
-    expected_order = ['今日要点', '设计', '制造', '封测', 'EDA', '材料', '自检结果']
+    """检查12: 章节顺序是否正确（v5.0: 新增"产业链关联"环节）"""
+    expected_order = ['今日要点', '设计', '制造', '封测', 'EDA', '材料', '产业链关联', '自检结果']
     sections_found = []
     for match in re.finditer(r'^##\s+(.+?)\s*$', content, re.MULTILINE):
         title = match.group(1).strip()
@@ -435,6 +442,87 @@ def check_dedup(items):
     return duplicates
 
 
+# v5.0新增：需要技术注解的专业术语关键词
+TECH_TERM_KEYWORDS = [
+    # 晶体管结构
+    'GAA', 'FinFET', 'TFET', 'Gate-All-Around',
+    # 封装技术
+    'CoWoS', 'InFO', 'MR-MUF', 'Chiplet', '2.5D', '3D IC', '3DIC',
+    '先进封装', '混合键合', '热压键合',
+    # 存储技术
+    'HBM3E', 'HBM4', 'HBM3', 'LPDDR', 'DRAM', 'NAND',
+    # 制程相关
+    'EUV', 'DUV', 'SADP', 'SAQP', '极紫外',
+    # 材料规格
+    '6N', '电子特气', '光刻胶', '碳化硅', '氮化镓', 'SiC', 'GaN',
+    # 架构技术
+    'NPU', 'TPU', '存算一体', 'RISC-V',
+    # 制程节点
+    '2nm', '3nm', '5nm', '7nm', '14nm', '28nm',
+]
+
+
+def check_tech_annotations(items):
+    """检查14: 技术注解（v5.0新增）——涉及专业术语的新闻必须有[技术注解: xxx]标签"""
+    missing = []
+    has_annotation_count = 0
+    needs_annotation_count = 0
+
+    for item in items:
+        if '今日暂无' in item['title']:
+            continue
+        # 检查摘要+标题中是否包含专业术语
+        full_text = item['title'] + ' ' + item['summary']
+        has_tech_term = any(kw.lower() in full_text.lower() for kw in TECH_TERM_KEYWORDS)
+
+        if has_tech_term:
+            needs_annotation_count += 1
+            has_annotation = '[技术注解' in item['summary'] or '[技术注解' in item['title']
+            if has_annotation:
+                has_annotation_count += 1
+            else:
+                missing.append(item['title'][:30])
+
+    return {
+        'needs_annotation': needs_annotation_count,
+        'has_annotation': has_annotation_count,
+        'missing': missing,
+    }
+
+
+def check_industry_chain(content):
+    """检查15: 产业链关联（v5.0新增）——必须包含## 产业链关联小节且≥2组关联"""
+    # 检查章节是否存在
+    match = re.search(r'^##\s+产业链关联\s*$', content, re.MULTILINE)
+    if not match:
+        return False, "缺少'## 产业链关联'章节", 0
+
+    # 提取章节内容
+    section_start = match.end()
+    next_section = re.search(r'^##\s+', content[section_start:], re.MULTILINE)
+    if next_section:
+        section_content = content[section_start:section_start + next_section.start()]
+    else:
+        section_content = content[section_start:]
+
+    # 统计关联组数（以 - ** 开头的条目）
+    groups = re.findall(r'^-\s+\*\*', section_content, re.MULTILINE)
+    group_count = len(groups)
+
+    # 检查每组是否涉及产业链环节
+    segment_keywords = ['设计', '制造', '封测', 'EDA', '材料', '设备']
+    segments_mentioned = sum(1 for kw in segment_keywords if kw in section_content)
+
+    if group_count >= 2 and segments_mentioned >= 2:
+        return True, f"产业链关联{group_count}组，涉及{segments_mentioned}个环节", group_count
+    elif group_count >= 2:
+        return True, f"产业链关联{group_count}组（WARN: 环节覆盖不足{segments_mentioned}个）", group_count
+    elif group_count == 1:
+        return False, f"产业链关联仅{group_count}组（需≥2组）", group_count
+    else:
+        return False, "产业链关联章节为空", group_count
+
+
 # ============================================================
 # 主函数
 # ============================================================
@@ -449,7 +537,7 @@ def main():
     content = read_file(filepath)
     
     print("=" * 70)
-    print(f"  芯片行业日报校验报告 v3.2")
+    print(f"  芯片行业日报校验报告 v5.0")
     print(f"  文件: {filepath}")
     print("=" * 70)
     
@@ -504,16 +592,16 @@ def main():
         all_pass = False
     
     # 检查4: 摘要句数
-    print("\n【检查4】摘要规范（3-4句PASS，5句WARN，≥6句FAIL）")
+    print("\n【检查4】摘要规范（v5.0: 3-5句PASS，6句WARN，≥7句FAIL）")
     summary_checks = check_summary_sentences(items)
     fail_count = 0
     warn_count = 0
     for title, ok, sent_count in summary_checks:
-        if sent_count >= 6:
+        if sent_count >= 7:
             print(f"  ✗ FAIL  {title}... 句数={sent_count}（过长）")
             fail_count += 1
-        elif sent_count == 5:
-            print(f"  ⚠ WARN  {title}... 句数={sent_count}（建议压缩到3-4句）")
+        elif sent_count == 6:
+            print(f"  ⚠ WARN  {title}... 句数={sent_count}（建议压缩到3-5句）")
             warn_count += 1
     if fail_count == 0:
         if warn_count > 0:
@@ -624,7 +712,7 @@ def main():
     if is_ordered:
         print(f"  ✓ PASS  章节顺序正确: {' → '.join(sections)}")
     else:
-        print(f"  ✗ FAIL  章节顺序错误（应为: 今日要点 → 设计 → 制造 → 封测 → EDA → 材料 → 自检结果）")
+        print(f"  ✗ FAIL  章节顺序错误（应为: 今日要点 → 设计 → 制造 → 封测 → EDA → 材料 → 产业链关联 → 自检结果）")
         all_pass = False
 
     # 检查13: 去重（A-4修复）
@@ -636,6 +724,28 @@ def main():
         for dup_title, seen_title in duplicates:
             print(f"  ⚠ WARN  疑似重复: '{dup_title}...' 与 '{seen_title}...'")
         print(f"  共{len(duplicates)}处疑似重复，请人工确认是否需要合并")
+
+    # 检查14: 技术注解（v5.0新增）
+    print("\n【检查14】技术注解（v5.0: 涉及专业术语的新闻必须有[技术注解]）")
+    tech_result = check_tech_annotations(items)
+    if tech_result['needs_annotation'] == 0:
+        print(f"  ⚠ SKIP  无涉及专业术语的新闻（可能新闻条数不足或未覆盖技术类新闻）")
+    elif len(tech_result['missing']) == 0:
+        print(f"  ✓ PASS  {tech_result['has_annotation']}/{tech_result['needs_annotation']}条涉及术语的新闻均含[技术注解]")
+    else:
+        print(f"  ✗ FAIL  {len(tech_result['missing'])}条涉及术语的新闻缺少[技术注解]:")
+        for title in tech_result['missing']:
+            print(f"         - {title}...")
+        all_pass = False
+
+    # 检查15: 产业链关联（v5.0新增）
+    print("\n【检查15】产业链关联（v5.0: 必须包含≥2组上下游关联分析）")
+    chain_ok, chain_msg, group_count = check_industry_chain(content)
+    if chain_ok:
+        print(f"  ✓ PASS  {chain_msg}")
+    else:
+        print(f"  ✗ FAIL  {chain_msg}")
+        all_pass = False
     
     # 汇总
     print("\n" + "=" * 70)

@@ -1,14 +1,15 @@
 # Chip Daily Report Agent 配置
-# 版本: 4.0 高效架构（流程合并+前置判定）
+# 版本: 5.0 专业深度版（微电子视角+技术解读+产业链关联）
 
 interface:
   display_name: "Chip Daily Report"
-  short_description: "生成带来源与时间戳的芯片行业日报（6步高效流程）"
+  short_description: "生成带来源与技术注解的芯片行业日报（6步高效流程，微电子专业视角）"
   long_description: |
     覆盖设计、制造、封测、EDA、材料、设备等全产业链的芯片行业日报生成器。
-    v4.0高效架构：10步合并为6步，搜索时即时分级/去重/标注时效，组装时防抖检查，目标单次通过门禁。
+    v5.0专业深度版：面向微电子/IC专业读者，每条新闻含技术维度信息和[技术注解]标签，
+    新增产业链关联分析小节，三层搜索（A级限定+产业新闻+学术突破），15项门禁检查。
   default_prompt: "使用 $chip-daily-report 生成今天的芯片行业日报。"
-  version: "4.0.0"
+  version: "5.0.0"
 
 # Agent 行为配置
 behavior:
@@ -26,6 +27,7 @@ behavior:
     min_sources_per_segment: 2   # 每个产业链环节至少查2个来源（1中+1英）
     cross_validation: true       # 交叉验证信息准确性
     max_search_rounds: 3         # 最大搜索轮次（来源不足时补充搜索）
+    academic_search: true        # v5.0: 学术会议搜索（ISSCC/VLSI/DAC/IEDM）
   
   # 来源质量约束
   source_constraints:
@@ -42,7 +44,9 @@ behavior:
       - "头部元信息（生成时间/覆盖范围/新闻总数）"
       - "今日要点（1-3条最重要新闻）"
       - "5个产业链环节（设计/制造/封测/EDA/材料设备）"
-      - "自检结果小节（13项Rubric的PASS/FAIL）"
+      - "[技术注解]标签（涉及专业术语的新闻）"
+      - "产业链关联小节（≥2组上下游关联分析）"
+      - "自检结果小节（15项Rubric的PASS/FAIL）"
       - "来源分级统计（A级/B级占比）"
       - "尾部免责声明"
     must_not_include:
@@ -52,11 +56,25 @@ behavior:
   
   # 质量门禁
   quality_gate:
-    rubric_items: 13              # 13项门禁检查
+    rubric_items: 15              # 15项门禁检查（v5.0新增#14技术注解+#15产业链关联）
     max_retry: 5                  # 最大修正循环次数
     script_validation: true       # 必须运行校验脚本
     script_path: "scripts/validate_report.py"
     fail_action: "回到对应Step修正→重新组装→再次自检"
+  
+  # 摘要约束（v5.0升级）
+  summary_constraints:
+    min_sentences: 3              # 最少3句
+    max_sentences_pass: 5         # 5句以内PASS
+    warn_sentences: 6             # 6句WARN
+    fail_sentences: 7             # ≥7句FAIL
+    target_word_count: "80-150字"  # 目标字数（含技术维度）
+    must_include_elements:        # 五要素
+      - "主体"
+      - "事件"
+      - "数据"
+      - "影响"
+      - "技术维度（制程节点/工艺/器件/材料规格）"
   
   # 时效性
   timeliness:
@@ -74,7 +92,7 @@ modules:
   
   # 加载时机
   load_on_demand:
-    sources: "Step 2 搜索收集时"
-    classification: "Step 4 分类判定时"
-    rubric: "Step 10 门禁自检时"
-    validator: "Step 10 自检后运行"
+    sources: "Step 2 搜索时"
+    classification: "Step 3 分类时"
+    rubric: "Step 5 自检时"
+    validator: "Step 5 自检后运行"
