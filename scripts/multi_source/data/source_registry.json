@@ -1,0 +1,870 @@
+{
+  "meta": {
+    "version": "1.0",
+    "generated": "2026-08-09",
+    "source": "references/sources.md + rules/rule_registry.yaml（盘点产物）",
+    "segment_count": 5,
+    "type_count": 6
+  },
+  "segments": [
+    "设计",
+    "制造",
+    "封测",
+    "EDA",
+    "材料"
+  ],
+  "types": [
+    "ir",
+    "news",
+    "analysis",
+    "filing",
+    "data",
+    "academic"
+  ],
+  "type_labels": {
+    "ir": "公司一手(IR/法说会)",
+    "news": "行业媒体",
+    "analysis": "深度分析",
+    "filing": "监管/财报文件",
+    "data": "价格/产能数据",
+    "academic": "学术会议/论文"
+  },
+  "target_grid": {
+    "设计": {
+      "ir": 1,
+      "news": 1,
+      "analysis": 2,
+      "filing": 2,
+      "data": 2,
+      "academic": 1
+    },
+    "制造": {
+      "ir": 1,
+      "news": 1,
+      "analysis": 2,
+      "filing": 2,
+      "data": 2,
+      "academic": 1
+    },
+    "封测": {
+      "ir": 1,
+      "news": 1,
+      "analysis": 2,
+      "filing": 2,
+      "data": 2,
+      "academic": 1
+    },
+    "EDA": {
+      "ir": 1,
+      "news": 1,
+      "analysis": 2,
+      "filing": 2,
+      "data": 2,
+      "academic": 1
+    },
+    "材料": {
+      "ir": 1,
+      "news": 1,
+      "analysis": 2,
+      "filing": 2,
+      "data": 2,
+      "academic": 1
+    }
+  },
+  "sources": [
+    {
+      "id": "tsmc_ir",
+      "name": "TSMC 台积电 IR",
+      "tier": 0,
+      "type": "ir",
+      "segments": [
+        "制造"
+      ],
+      "url": "https://ir.tsmc.com",
+      "status": "active"
+    },
+    {
+      "id": "samsung_ir",
+      "name": "Samsung Semiconductor",
+      "tier": 0,
+      "type": "ir",
+      "segments": [
+        "设计",
+        "制造",
+        "封测"
+      ],
+      "url": "https://www.samsung.com/semiconductor",
+      "status": "active"
+    },
+    {
+      "id": "skhynix_ir",
+      "name": "SK hynix 新闻室",
+      "tier": 0,
+      "type": "ir",
+      "segments": [
+        "制造",
+        "封测"
+      ],
+      "url": "https://news.skhynix.com",
+      "status": "active"
+    },
+    {
+      "id": "intel_ir",
+      "name": "Intel Newsroom",
+      "tier": 0,
+      "type": "ir",
+      "segments": [
+        "设计",
+        "制造"
+      ],
+      "url": "https://www.intel.com/newsroom",
+      "status": "active"
+    },
+    {
+      "id": "nvidia_ir",
+      "name": "NVIDIA Newsroom",
+      "tier": 0,
+      "type": "ir",
+      "segments": [
+        "设计"
+      ],
+      "url": "https://nvidianews.nvidia.com",
+      "status": "active"
+    },
+    {
+      "id": "amd_ir",
+      "name": "AMD IR",
+      "tier": 0,
+      "type": "ir",
+      "segments": [
+        "设计"
+      ],
+      "url": "https://ir.amd.com",
+      "status": "active"
+    },
+    {
+      "id": "micron_ir",
+      "name": "Micron 美光 IR",
+      "tier": 0,
+      "type": "ir",
+      "segments": [
+        "制造",
+        "封测"
+      ],
+      "url": "https://investors.micron.com",
+      "status": "active"
+    },
+    {
+      "id": "asml_ir",
+      "name": "ASML IR",
+      "tier": 0,
+      "type": "ir",
+      "segments": [
+        "材料"
+      ],
+      "url": "https://www.asml.com",
+      "status": "active"
+    },
+    {
+      "id": "amat_ir",
+      "name": "Applied Materials IR",
+      "tier": 0,
+      "type": "ir",
+      "segments": [
+        "材料"
+      ],
+      "url": "https://www.appliedmaterials.com",
+      "status": "active"
+    },
+    {
+      "id": "lam_ir",
+      "name": "Lam Research IR",
+      "tier": 0,
+      "type": "ir",
+      "segments": [
+        "材料"
+      ],
+      "url": "https://www.lamresearch.com",
+      "status": "active"
+    },
+    {
+      "id": "kla_ir",
+      "name": "KLA IR",
+      "tier": 0,
+      "type": "ir",
+      "segments": [
+        "材料"
+      ],
+      "url": "https://www.kla.com",
+      "status": "active"
+    },
+    {
+      "id": "broadcom_ir",
+      "name": "Broadcom IR",
+      "tier": 0,
+      "type": "ir",
+      "segments": [
+        "设计"
+      ],
+      "url": "https://www.broadcom.com",
+      "status": "active"
+    },
+    {
+      "id": "smic_ir",
+      "name": "中芯国际 SMIC IR",
+      "tier": 0,
+      "type": "ir",
+      "segments": [
+        "制造"
+      ],
+      "url": "https://www.smci.com",
+      "status": "active"
+    },
+    {
+      "id": "huahong_ir",
+      "name": "华虹半导体 IR",
+      "tier": 0,
+      "type": "ir",
+      "segments": [
+        "制造"
+      ],
+      "url": "https://www.huahong.com",
+      "status": "active"
+    },
+    {
+      "id": "naura_ir",
+      "name": "北方华创 IR",
+      "tier": 0,
+      "type": "ir",
+      "segments": [
+        "材料"
+      ],
+      "url": "https://www.naura.com",
+      "status": "active"
+    },
+    {
+      "id": "amec_ir",
+      "name": "中微公司 AMEC IR",
+      "tier": 0,
+      "type": "ir",
+      "segments": [
+        "材料"
+      ],
+      "url": "https://www.amec-inc.com",
+      "status": "active"
+    },
+    {
+      "id": "jcet_filing",
+      "name": "长电科技（交易所公告）",
+      "tier": 0,
+      "type": "filing",
+      "segments": [
+        "封测"
+      ],
+      "url": "http://www.sse.com.cn",
+      "status": "active"
+    },
+    {
+      "id": "cambricon_filing",
+      "name": "寒武纪（交易所公告）",
+      "tier": 0,
+      "type": "filing",
+      "segments": [
+        "设计"
+      ],
+      "url": "http://www.sse.com.cn",
+      "status": "active"
+    },
+    {
+      "id": "semianalysis",
+      "name": "SemiAnalysis",
+      "tier": 1,
+      "type": "analysis",
+      "segments": [
+        "设计",
+        "制造",
+        "封测",
+        "EDA",
+        "材料"
+      ],
+      "url": "https://www.semianalysis.com",
+      "status": "active"
+    },
+    {
+      "id": "digitimes_en",
+      "name": "DigiTimes(EN)",
+      "tier": 1,
+      "type": "news",
+      "segments": [
+        "制造",
+        "封测"
+      ],
+      "url": "https://www.digitimes.com",
+      "status": "active"
+    },
+    {
+      "id": "digitimes_tw",
+      "name": "电子时报 DigiTimes(TW)",
+      "tier": 1,
+      "type": "news",
+      "segments": [
+        "制造",
+        "封测"
+      ],
+      "url": "https://www.digitimes.com.tw",
+      "status": "active"
+    },
+    {
+      "id": "semiengineering",
+      "name": "Semiconductor Engineering",
+      "tier": 1,
+      "type": "news",
+      "segments": [
+        "EDA",
+        "材料",
+        "设计"
+      ],
+      "url": "https://semiengineering.com",
+      "status": "active"
+    },
+    {
+      "id": "eetimes",
+      "name": "EE Times",
+      "tier": 1,
+      "type": "news",
+      "segments": [
+        "设计",
+        "EDA"
+      ],
+      "url": "https://www.eetimes.com",
+      "status": "active"
+    },
+    {
+      "id": "techinsights",
+      "name": "TechInsights",
+      "tier": 1,
+      "type": "analysis",
+      "segments": [
+        "设计",
+        "制造",
+        "封测"
+      ],
+      "url": "https://www.techinsights.com",
+      "status": "active"
+    },
+    {
+      "id": "trendforce",
+      "name": "TrendForce(EN)",
+      "tier": 1,
+      "type": "data",
+      "segments": [
+        "制造",
+        "封测",
+        "材料"
+      ],
+      "url": "https://www.trendforce.com",
+      "status": "active"
+    },
+    {
+      "id": "thelec",
+      "name": "The Elec",
+      "tier": 1,
+      "type": "news",
+      "segments": [
+        "制造",
+        "封测"
+      ],
+      "url": "https://www.thelec.net",
+      "status": "active"
+    },
+    {
+      "id": "tomshardware",
+      "name": "Tom's Hardware",
+      "tier": 1,
+      "type": "news",
+      "segments": [
+        "设计"
+      ],
+      "url": "https://www.tomshardware.com",
+      "status": "active"
+    },
+    {
+      "id": "sec_edgar",
+      "name": "SEC EDGAR",
+      "tier": 2,
+      "type": "filing",
+      "segments": [
+        "设计",
+        "制造",
+        "封测"
+      ],
+      "url": "https://www.sec.gov/cgi-bin/browse-edgar",
+      "status": "active"
+    },
+    {
+      "id": "sse_szse",
+      "name": "上交所 / 深交所公告",
+      "tier": 2,
+      "type": "filing",
+      "segments": [
+        "设计",
+        "制造",
+        "封测",
+        "EDA",
+        "材料"
+      ],
+      "url": "http://www.cninfo.com.cn",
+      "status": "active"
+    },
+    {
+      "id": "mops",
+      "name": "台湾 MOPS 公开资讯观测站",
+      "tier": 2,
+      "type": "filing",
+      "segments": [
+        "制造",
+        "封测"
+      ],
+      "url": "https://mops.twse.com.tw",
+      "status": "active"
+    },
+    {
+      "id": "dart",
+      "name": "韩国 DART",
+      "tier": 2,
+      "type": "filing",
+      "segments": [
+        "制造",
+        "封测"
+      ],
+      "url": "https://dart.fss.or.kr",
+      "status": "active"
+    },
+    {
+      "id": "cls",
+      "name": "财联社",
+      "tier": 3,
+      "type": "news",
+      "segments": [
+        "制造",
+        "封测",
+        "设计"
+      ],
+      "url": "https://www.cls.cn",
+      "status": "active"
+    },
+    {
+      "id": "stcn",
+      "name": "证券时报",
+      "tier": 3,
+      "type": "news",
+      "segments": [
+        "设计",
+        "制造",
+        "封测",
+        "EDA",
+        "材料"
+      ],
+      "url": "https://www.stcn.com",
+      "status": "active"
+    },
+    {
+      "id": "xinhuanet",
+      "name": "新华网",
+      "tier": 3,
+      "type": "news",
+      "segments": [
+        "制造",
+        "材料"
+      ],
+      "url": "https://www.xinhuanet.com",
+      "status": "active"
+    },
+    {
+      "id": "21jingji",
+      "name": "21世纪经济报道",
+      "tier": 3,
+      "type": "news",
+      "segments": [
+        "材料",
+        "制造"
+      ],
+      "url": "https://www.21jingji.com",
+      "status": "active"
+    },
+    {
+      "id": "eetchina",
+      "name": "EET-China",
+      "tier": 3,
+      "type": "news",
+      "segments": [
+        "设计",
+        "EDA",
+        "材料"
+      ],
+      "url": "https://www.eet-china.com",
+      "status": "active"
+    },
+    {
+      "id": "cninfo",
+      "name": "巨潮资讯",
+      "tier": 3,
+      "type": "filing",
+      "segments": [
+        "设计",
+        "制造",
+        "封测",
+        "EDA",
+        "材料"
+      ],
+      "url": "https://www.cninfo.com.cn",
+      "status": "active"
+    },
+    {
+      "id": "aihot",
+      "name": "AIHOT 聚合 API",
+      "tier": 4,
+      "type": "news",
+      "segments": [
+        "设计",
+        "制造",
+        "封测",
+        "EDA",
+        "材料"
+      ],
+      "url": "https://aihot.virxact.com",
+      "status": "active",
+      "note": "迭代2 正式源：collector 适配器已接入，links.original 追溯原文"
+    },
+    {
+      "id": "qq_news",
+      "name": "腾讯新闻",
+      "tier": 4,
+      "type": "news",
+      "segments": [
+        "设计",
+        "制造",
+        "封测",
+        "EDA",
+        "材料"
+      ],
+      "url": "https://news.qq.com",
+      "status": "active"
+    },
+    {
+      "id": "toutiao",
+      "name": "今日头条",
+      "tier": 4,
+      "type": "news",
+      "segments": [
+        "设计",
+        "制造",
+        "封测",
+        "EDA",
+        "材料"
+      ],
+      "url": "https://www.toutiao.com",
+      "status": "active"
+    },
+    {
+      "id": "163_news",
+      "name": "网易科技",
+      "tier": 4,
+      "type": "news",
+      "segments": [
+        "设计",
+        "制造",
+        "封测"
+      ],
+      "url": "https://tech.163.com",
+      "status": "active"
+    },
+    {
+      "id": "sia_wsts",
+      "name": "SIA / WSTS 市场数据",
+      "tier": 1,
+      "type": "data",
+      "segments": [
+        "设计",
+        "制造",
+        "封测",
+        "EDA",
+        "材料"
+      ],
+      "url": "https://www.semiconductors.org",
+      "status": "planned"
+    },
+    {
+      "id": "dramexchange",
+      "name": "TrendForce DRAMeXchange 价格",
+      "tier": 1,
+      "type": "data",
+      "segments": [
+        "制造"
+      ],
+      "url": "https://www.trendforce.com",
+      "status": "planned"
+    },
+    {
+      "id": "google_patents",
+      "name": "Google Patents 专利情报",
+      "tier": 2,
+      "type": "filing",
+      "segments": [
+        "设计",
+        "EDA",
+        "材料"
+      ],
+      "url": "https://patents.google.com",
+      "status": "planned"
+    },
+    {
+      "id": "bis_rules",
+      "name": "美国 BIS 出口管制规则",
+      "tier": 2,
+      "type": "filing",
+      "segments": [
+        "制造",
+        "材料",
+        "封测"
+      ],
+      "url": "https://www.bis.doc.gov",
+      "status": "planned"
+    },
+    {
+      "id": "eu_chips",
+      "name": "欧盟芯片法案官方",
+      "tier": 2,
+      "type": "filing",
+      "segments": [
+        "制造",
+        "材料"
+      ],
+      "url": "https://digital-strategy.ec.europa.eu",
+      "status": "planned"
+    },
+    {
+      "id": "yole",
+      "name": "Yole Group 封装/材料分析",
+      "tier": 1,
+      "type": "analysis",
+      "segments": [
+        "封测",
+        "材料"
+      ],
+      "url": "https://www.yolegroup.com",
+      "status": "planned"
+    },
+    {
+      "id": "semi_api",
+      "name": "SEMI 行业数据 API",
+      "tier": 1,
+      "type": "data",
+      "segments": [
+        "材料"
+      ],
+      "url": "https://www.semi.org",
+      "status": "planned"
+    },
+    {
+      "id": "cnipa",
+      "name": "国家知识产权局专利检索",
+      "tier": 2,
+      "type": "filing",
+      "segments": [
+        "设计",
+        "EDA",
+        "材料"
+      ],
+      "url": "https://pss-system.cponline.cnipa.gov.cn",
+      "status": "planned"
+    }
+  ],
+  "grid": {
+    "设计": {
+      "ir": [
+        "samsung_ir",
+        "intel_ir",
+        "nvidia_ir",
+        "amd_ir",
+        "broadcom_ir"
+      ],
+      "news": [
+        "semiengineering",
+        "eetimes",
+        "tomshardware",
+        "cls",
+        "stcn",
+        "eetchina",
+        "aihot",
+        "qq_news",
+        "toutiao",
+        "163_news"
+      ],
+      "analysis": [
+        "semianalysis",
+        "techinsights"
+      ],
+      "filing": [
+        "cambricon_filing",
+        "sec_edgar",
+        "sse_szse",
+        "cninfo",
+        "google_patents",
+        "cnipa"
+      ],
+      "data": [
+        "sia_wsts"
+      ],
+      "academic": []
+    },
+    "制造": {
+      "ir": [
+        "tsmc_ir",
+        "samsung_ir",
+        "skhynix_ir",
+        "intel_ir",
+        "micron_ir",
+        "smic_ir",
+        "huahong_ir"
+      ],
+      "news": [
+        "digitimes_en",
+        "digitimes_tw",
+        "thelec",
+        "cls",
+        "stcn",
+        "xinhuanet",
+        "21jingji",
+        "aihot",
+        "qq_news",
+        "toutiao",
+        "163_news"
+      ],
+      "analysis": [
+        "semianalysis",
+        "techinsights"
+      ],
+      "filing": [
+        "sec_edgar",
+        "sse_szse",
+        "mops",
+        "dart",
+        "cninfo",
+        "bis_rules",
+        "eu_chips"
+      ],
+      "data": [
+        "trendforce",
+        "sia_wsts",
+        "dramexchange"
+      ],
+      "academic": []
+    },
+    "封测": {
+      "ir": [
+        "samsung_ir",
+        "skhynix_ir",
+        "micron_ir"
+      ],
+      "news": [
+        "digitimes_en",
+        "digitimes_tw",
+        "thelec",
+        "cls",
+        "stcn",
+        "aihot",
+        "qq_news",
+        "toutiao",
+        "163_news"
+      ],
+      "analysis": [
+        "semianalysis",
+        "techinsights",
+        "yole"
+      ],
+      "filing": [
+        "jcet_filing",
+        "sec_edgar",
+        "sse_szse",
+        "mops",
+        "dart",
+        "cninfo",
+        "bis_rules"
+      ],
+      "data": [
+        "trendforce",
+        "sia_wsts"
+      ],
+      "academic": []
+    },
+    "EDA": {
+      "ir": [],
+      "news": [
+        "semiengineering",
+        "eetimes",
+        "stcn",
+        "eetchina",
+        "aihot",
+        "qq_news",
+        "toutiao"
+      ],
+      "analysis": [
+        "semianalysis"
+      ],
+      "filing": [
+        "sse_szse",
+        "cninfo",
+        "google_patents",
+        "cnipa"
+      ],
+      "data": [
+        "sia_wsts"
+      ],
+      "academic": []
+    },
+    "材料": {
+      "ir": [
+        "asml_ir",
+        "amat_ir",
+        "lam_ir",
+        "kla_ir",
+        "naura_ir",
+        "amec_ir"
+      ],
+      "news": [
+        "semiengineering",
+        "stcn",
+        "xinhuanet",
+        "21jingji",
+        "eetchina",
+        "aihot",
+        "qq_news",
+        "toutiao"
+      ],
+      "analysis": [
+        "semianalysis",
+        "yole"
+      ],
+      "filing": [
+        "sse_szse",
+        "cninfo",
+        "google_patents",
+        "bis_rules",
+        "eu_chips",
+        "cnipa"
+      ],
+      "data": [
+        "trendforce",
+        "sia_wsts",
+        "semi_api"
+      ],
+      "academic": []
+    }
+  },
+  "source_count": {
+    "total": 49,
+    "active": 41,
+    "planned": 8
+  }
+}

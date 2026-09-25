@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>multi_source 融合质量报告</title>
+<style>
+:root{--bg:#f1f5f9;--card:#fff;--ink:#1e293b;--muted:#64748b;--line:#e2e8f0}
+*{box-sizing:border-box}
+body{margin:0;font-family:-apple-system,"Segoe UI",Roboto,"PingFang SC","Microsoft YaHei",sans-serif;
+  background:var(--bg);color:var(--ink);line-height:1.6}
+.wrap{max-width:1060px;margin:0 auto;padding:24px 18px 56px}
+header{background:linear-gradient(120deg,#0f172a,#134e4a);color:#fff;border-radius:16px;padding:20px 26px}
+header h1{margin:0 0 6px;font-size:22px}
+.meta{font-size:13px;opacity:.9}
+h2.sec{font-size:17px;margin:26px 0 12px;padding-bottom:8px;border-bottom:2px solid var(--line)}
+.block{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px 18px;margin-bottom:18px}
+.empty{padding:16px;text-align:center;color:var(--muted);background:#f8fafc;border:1px dashed var(--line);border-radius:10px}
+.ev-card{border:1px solid var(--line);border-radius:12px;padding:12px 14px;margin-bottom:12px;background:#fbfdff}
+.ev-head{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:6px}
+.ev-id{font-size:11px;font-weight:700;color:#fff;background:#0f172a;border-radius:6px;padding:1px 7px}
+.ev-head h3{margin:0;font-size:15px}
+.seg-chip{font-size:11.5px;font-weight:700;color:#134e4a;background:#ccfbf1;border-radius:999px;padding:1px 9px}
+.ev-meta{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:12.5px;color:var(--muted);margin-bottom:8px;align-items:center}
+.conf{display:flex;align-items:center;gap:6px}
+.conf-track{width:90px;height:8px;background:#e2e8f0;border-radius:999px;overflow:hidden}
+.conf-fill{height:100%;border-radius:999px}
+.srcs{display:flex;flex-wrap:wrap;gap:6px}
+.src-badge{font-size:11.5px;border:1px solid;border-radius:999px;padding:0 9px;font-weight:600}
+.div-block{background:#fff5f5;border:1px solid #fecaca;border-radius:10px;padding:8px 12px;margin-top:8px}
+.div-title{font-weight:700;color:#b91c1c;font-size:12.5px;margin-bottom:4px}
+.div{font-size:12.5px;color:#334155;margin-bottom:4px}
+.claim{font-weight:700;color:#b91c1c}
+.div-note{margin-left:8px;font-size:11.5px;color:var(--muted)}
+.tbl{width:100%;border-collapse:collapse;font-size:13px}
+.tbl th,.tbl td{border-bottom:1px solid var(--line);padding:7px 9px;text-align:left;vertical-align:top}
+.tbl th{color:var(--muted);font-weight:600;white-space:nowrap}
+.prio{font-weight:700;font-size:11.5px;border-radius:999px;padding:0 9px;white-space:nowrap}
+.leak-reason{font-size:12px;color:#475569}
+.cov td{text-align:center;white-space:nowrap}
+.cov-na{color:#cbd5e1}
+.note{font-size:12px;color:var(--muted);margin-top:8px}
+.health-dots{margin-top:12px;font-size:12.5px;display:flex;flex-wrap:wrap;gap:4px 12px;align-items:center}
+.hd{display:inline-flex;align-items:center;gap:5px;color:#475569}
+.hd i{width:9px;height:9px;border-radius:50%;display:inline-block}
+.gap-item{border:1px solid var(--line);border-left-width:4px;border-radius:10px;padding:9px 12px;margin-bottom:8px;background:#fbfdff}
+.gap-head{display:flex;align-items:center;gap:8px;margin-bottom:4px}
+.gap-lvl{font-size:11px;font-weight:700;border-radius:999px;padding:0 9px}
+.gap-desc{font-size:12.5px;color:var(--muted)}
+.gap-srcs{font-size:12px;color:#475569;margin-top:2px}
+footer{margin-top:26px;text-align:center;font-size:12px;color:var(--muted)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>🧩 multi_source 融合质量报告</h1>
+    <div class="meta">生成于 2026-09-10 15:48 · 数据源采集 → 清洗 → 融合 → 缺口分析 → 漏聚探测 全链路观测</div>
+  </header>
+
+  <h2 class="sec">1 · 多源事件卡片（10 条）</h2>
+  <div class="block">
+        <article class="ev-card">
+          <div class="ev-head">
+            <span class="ev-id">EV01</span>
+            <h3>SK hynix 公布约 384 亿美元扩产计划 加码 HBM 与 DRAM</h3>
+            <span class="seg-chip">制造</span>
+          </div>
+          <div class="ev-meta">
+            <span>📅 2026-08-07</span>
+            <span>🔗 3 源 · 3 独立源</span>
+            <span>✅ verified</span>
+            <span>🎯 主源：SK hynix 新闻室</span>
+            <div class="conf"><span>置信度 83.0</span>
+              <div class="conf-track"><div class="conf-fill" style="width:83.0%;background:#15803d"></div></div></div>
+          </div>
+          <div class="srcs"><span class="src-badge" style="color:#15803d;border-color:#15803d">SK hynix 新闻室 · T0 一手</span><span class="src-badge" style="color:#0f766e;border-color:#0f766e">TrendForce · T1 英文权威</span><span class="src-badge" style="color:#b45309;border-color:#b45309">财联社 · T3 中文权威</span></div>
+          
+        </article>
+        <article class="ev-card">
+          <div class="ev-head">
+            <span class="ev-id">EV04</span>
+            <h3>TSMC N2 Monthly Capacity to Reach 120K Wafers</h3>
+            <span class="seg-chip">制造</span>
+          </div>
+          <div class="ev-meta">
+            <span>📅 2026-08-06</span>
+            <span>🔗 3 源 · 3 独立源</span>
+            <span>✅ verified</span>
+            <span>🎯 主源：TrendForce</span>
+            <div class="conf"><span>置信度 83.0</span>
+              <div class="conf-track"><div class="conf-fill" style="width:83.0%;background:#15803d"></div></div></div>
+          </div>
+          <div class="srcs"><span class="src-badge" style="color:#0f766e;border-color:#0f766e">TrendForce · T1 英文权威</span><span class="src-badge" style="color:#0f766e;border-color:#0f766e">电子时报 DigiTimes · T1 英文权威</span><span class="src-badge" style="color:#b45309;border-color:#b45309">Chosun Ilbo · T3 中文权威</span></div>
+          
+        </article>
+        <article class="ev-card">
+          <div class="ev-head">
+            <span class="ev-id">EV02</span>
+            <h3>寒武纪 2026 年半年度报告：营收 59.96 亿元，净利润 23.11 亿元</h3>
+            <span class="seg-chip">设计</span>
+          </div>
+          <div class="ev-meta">
+            <span>📅 2026-08-07</span>
+            <span>🔗 2 源 · 2 独立源</span>
+            <span>✅ verified</span>
+            <span>🎯 主源：寒武纪（交易所公告）</span>
+            <div class="conf"><span>置信度 78.0</span>
+              <div class="conf-track"><div class="conf-fill" style="width:78.0%;background:#15803d"></div></div></div>
+          </div>
+          <div class="srcs"><span class="src-badge" style="color:#15803d;border-color:#15803d">寒武纪（交易所公告） · T0 一手</span><span class="src-badge" style="color:#b45309;border-color:#b45309">证券时报 · T3 中文权威</span></div>
+          
+        </article>
+        <article class="ev-card">
+          <div class="ev-head">
+            <span class="ev-id">EV05</span>
+            <h3>长电科技78亿落子上海临港 建先进封装基地</h3>
+            <span class="seg-chip">封测</span>
+          </div>
+          <div class="ev-meta">
+            <span>📅 2026-08-06</span>
+            <span>🔗 2 源 · 2 独立源</span>
+            <span>✅ verified</span>
+            <span>🎯 主源：证券时报</span>
+            <div class="conf"><span>置信度 71.0</span>
+              <div class="conf-track"><div class="conf-fill" style="width:71.0%;background:#b45309"></div></div></div>
+          </div>
+          <div class="srcs"><span class="src-badge" style="color:#b45309;border-color:#b45309">证券时报 · T3 中文权威</span><span class="src-badge" style="color:#64748b;border-color:#64748b">腾讯新闻 · T4 聚合/线索</span></div>
+          
+        </article>
+        <article class="ev-card">
+          <div class="ev-head">
+            <span class="ev-id">EV10</span>
+            <h3>MATCH Act: House Foreign Affairs Committee Passes 36-8</h3>
+            <span class="seg-chip">制造</span>
+          </div>
+          <div class="ev-meta">
+            <span>📅 2026-06-10</span>
+            <span>🔗 2 源 · 2 独立源</span>
+            <span>✅ verified</span>
+            <span>🎯 主源：美国 BIS 出口管制规则</span>
+            <div class="conf"><span>置信度 70.0</span>
+              <div class="conf-track"><div class="conf-fill" style="width:70.0%;background:#b45309"></div></div></div>
+          </div>
+          <div class="srcs"><span class="src-badge" style="color:#1d4ed8;border-color:#1d4ed8">美国 BIS 出口管制规则 · T2 监管/财报</span><span class="src-badge" style="color:#b45309;border-color:#b45309">新华网 · T3 中文权威</span></div>
+          
+        </article>
+        <article class="ev-card">
+          <div class="ev-head">
+            <span class="ev-id">EV03</span>
+            <h3>AMD Unveils Instinct MI400 Series with CDNA 5</h3>
+            <span class="seg-chip">设计</span>
+          </div>
+          <div class="ev-meta">
+            <span>📅 2026-08-07</span>
+            <span>🔗 2 源 · 2 独立源</span>
+            <span>✅ verified</span>
+            <span>🎯 主源：EE Times</span>
+            <div class="conf"><span>置信度 65.0</span>
+              <div class="conf-track"><div class="conf-fill" style="width:65.0%;background:#b45309"></div></div></div>
+          </div>
+          <div class="srcs"><span class="src-badge" style="color:#0f766e;border-color:#0f766e">EE Times · T1 英文权威</span><span class="src-badge" style="color:#64748b;border-color:#64748b">网易科技 · T4 聚合/线索</span></div>
+          <div class="div-block"><div class="div-title">⚠ 跨源分歧</div><div class="div"><b>163_news</b> 说 <span class="claim">384GB</span>，<b>eetimes</b> 说 <span class="claim">432GB</span><span class="div-note">关键数字不一致（GB）</span></div></div>
+        </article>
+        <article class="ev-card">
+          <div class="ev-head">
+            <span class="ev-id">EV09</span>
+            <h3>DRAM Contract Prices Up 53-58% QoQ in 2Q26</h3>
+            <span class="seg-chip">制造</span>
+          </div>
+          <div class="ev-meta">
+            <span>📅 2026-07-14</span>
+            <span>🔗 2 源 · 2 独立源</span>
+            <span>✅ verified</span>
+            <span>🎯 主源：TrendForce</span>
+            <div class="conf"><span>置信度 65.0</span>
+              <div class="conf-track"><div class="conf-fill" style="width:65.0%;background:#b45309"></div></div></div>
+          </div>
+          <div class="srcs"><span class="src-badge" style="color:#0f766e;border-color:#0f766e">TrendForce · T1 英文权威</span><span class="src-badge" style="color:#64748b;border-color:#64748b">腾讯新闻 · T4 聚合/线索</span></div>
+          
+        </article>
+        <article class="ev-card">
+          <div class="ev-head">
+            <span class="ev-id">EV06</span>
+            <h3>华大九天发布Argus 3DIC全流程EDA 对标国际大厂</h3>
+            <span class="seg-chip">EDA</span>
+          </div>
+          <div class="ev-meta">
+            <span>📅 2026-08-05</span>
+            <span>🔗 1 源 · 1 独立源</span>
+            <span>✅ single_source</span>
+            <span>🎯 主源：EET-China</span>
+            <div class="conf"><span>置信度 51.0</span>
+              <div class="conf-track"><div class="conf-fill" style="width:51.0%;background:#b45309"></div></div></div>
+          </div>
+          <div class="srcs"><span class="src-badge" style="color:#b45309;border-color:#b45309">EET-China · T3 中文权威</span></div>
+          
+        </article>
+        <article class="ev-card">
+          <div class="ev-head">
+            <span class="ev-id">EV07</span>
+            <h3>鼎龙股份光刻胶产能达330吨 潜江二期投产</h3>
+            <span class="seg-chip">材料</span>
+          </div>
+          <div class="ev-meta">
+            <span>📅 2026-08-05</span>
+            <span>🔗 1 源 · 1 独立源</span>
+            <span>✅ single_source</span>
+            <span>🎯 主源：21世纪经济报道</span>
+            <div class="conf"><span>置信度 51.0</span>
+              <div class="conf-track"><div class="conf-fill" style="width:51.0%;background:#b45309"></div></div></div>
+          </div>
+          <div class="srcs"><span class="src-badge" style="color:#b45309;border-color:#b45309">21世纪经济报道 · T3 中文权威</span></div>
+          
+        </article>
+        <article class="ev-card">
+          <div class="ev-head">
+            <span class="ev-id">EV08</span>
+            <h3>概伦电子21.74亿并购落地 国产EDA迈向平台化</h3>
+            <span class="seg-chip">EDA</span>
+          </div>
+          <div class="ev-meta">
+            <span>📅 2026-08-04</span>
+            <span>🔗 1 源 · 1 独立源</span>
+            <span>✅ single_source</span>
+            <span>🎯 主源：东方财富网</span>
+            <div class="conf"><span>置信度 44.0</span>
+              <div class="conf-track"><div class="conf-fill" style="width:44.0%;background:#b91c1c"></div></div></div>
+          </div>
+          <div class="srcs"><span class="src-badge" style="color:#64748b;border-color:#64748b">东方财富网 · T4 聚合/线索</span></div>
+          
+        </article></div>
+
+  <h2 class="sec">2 · 漏聚候选（该聚未聚）</h2>
+  <div class="block"><div class="empty">暂无漏聚候选（leak_report.json 缺失或为空）</div></div>
+
+  <h2 class="sec">3 · 源覆盖矩阵 + 数据源健康</h2>
+  <div class="block">
+    <table class="tbl cov">
+      <thead><tr><th>环节</th><th>公司一手(IR/法说会)</th><th>行业媒体</th><th>深度分析</th><th>监管/财报文件</th><th>价格/产能数据</th><th>学术会议/论文</th></tr></thead>
+      <tbody><tr><td><b>设计</b></td><td style="background:#dcfce7;color:#15803d">充足</td><td style="background:#dcfce7;color:#15803d">充足</td><td style="background:#fef3c7;color:#b45309">缺口</td><td style="background:#dcfce7;color:#15803d">充足</td><td style="background:#fef3c7;color:#b45309">缺口</td><td style="background:#fee2e2;color:#b91c1c">严重缺口</td></tr><tr><td><b>制造</b></td><td style="background:#dcfce7;color:#15803d">充足</td><td style="background:#dcfce7;color:#15803d">充足</td><td style="background:#fef3c7;color:#b45309">缺口</td><td style="background:#dcfce7;color:#15803d">充足</td><td style="background:#dcfce7;color:#15803d">充足</td><td style="background:#fee2e2;color:#b91c1c">严重缺口</td></tr><tr><td><b>封测</b></td><td style="background:#dcfce7;color:#15803d">充足</td><td style="background:#dcfce7;color:#15803d">充足</td><td style="background:#dcfce7;color:#15803d">充足</td><td style="background:#dcfce7;color:#15803d">充足</td><td style="background:#fef3c7;color:#b45309">缺口</td><td style="background:#fee2e2;color:#b91c1c">严重缺口</td></tr><tr><td><b>EDA</b></td><td style="background:#fee2e2;color:#b91c1c">严重缺口</td><td style="background:#dcfce7;color:#15803d">充足</td><td style="background:#fef3c7;color:#b45309">缺口</td><td style="background:#dcfce7;color:#15803d">充足</td><td style="background:#fef3c7;color:#b45309">缺口</td><td style="background:#fee2e2;color:#b91c1c">严重缺口</td></tr><tr><td><b>材料</b></td><td style="background:#dcfce7;color:#15803d">充足</td><td style="background:#dcfce7;color:#15803d">充足</td><td style="background:#fef3c7;color:#b45309">缺口</td><td style="background:#dcfce7;color:#15803d">充足</td><td style="background:#dcfce7;color:#15803d">充足</td><td style="background:#fee2e2;color:#b91c1c">严重缺口</td></tr></tbody>
+    </table>
+    <div class="health-dots"><b>数据源健康：</b><span class="hd" title="SEC EDGAR · degraded · 4194ms · 7日可用率 0.33"><i style="background:#b45309"></i>SEC EDGAR</span><span class="hd" title="AIHOT 聚合 API · ok · 2288ms · 7日可用率 0.67"><i style="background:#15803d"></i>AIHOT 聚合 API</span><span class="hd" title="Semiconductor Engineering · ok · 1838ms · 7日可用率 1.0"><i style="background:#15803d"></i>Semiconductor Engineering</span><span class="hd" title="EE Times · ok · 701ms · 7日可用率 1.0"><i style="background:#15803d"></i>EE Times</span><span class="hd" title="CNBC Tech · ok · 699ms · 7日可用率 1.0"><i style="background:#15803d"></i>CNBC Tech</span><span class="hd" title="SemiAnalysis · ok · 536ms · 7日可用率 1.0"><i style="background:#15803d"></i>SemiAnalysis</span></div></div>
+
+  <h2 class="sec">4 · 缺口清单</h2>
+  <div class="block">
+        <div class="gap-item" style="border-left-color:#b91c1c">
+          <div class="gap-head"><b>EDA · 学术会议/论文</b>
+            <span class="gap-lvl" style="background:#fee2e2;color:#b91c1c">严重缺口</span></div>
+          <div class="gap-desc">实际 0 源 / 目标 1 源</div>
+          <div class="gap-srcs">现有：无</div>
+        </div>
+        <div class="gap-item" style="border-left-color:#b91c1c">
+          <div class="gap-head"><b>EDA · 公司一手(IR/法说会)</b>
+            <span class="gap-lvl" style="background:#fee2e2;color:#b91c1c">严重缺口</span></div>
+          <div class="gap-desc">实际 0 源 / 目标 1 源</div>
+          <div class="gap-srcs">现有：无</div>
+        </div>
+        <div class="gap-item" style="border-left-color:#b91c1c">
+          <div class="gap-head"><b>制造 · 学术会议/论文</b>
+            <span class="gap-lvl" style="background:#fee2e2;color:#b91c1c">严重缺口</span></div>
+          <div class="gap-desc">实际 0 源 / 目标 1 源</div>
+          <div class="gap-srcs">现有：无</div>
+        </div>
+        <div class="gap-item" style="border-left-color:#b91c1c">
+          <div class="gap-head"><b>封测 · 学术会议/论文</b>
+            <span class="gap-lvl" style="background:#fee2e2;color:#b91c1c">严重缺口</span></div>
+          <div class="gap-desc">实际 0 源 / 目标 1 源</div>
+          <div class="gap-srcs">现有：无</div>
+        </div>
+        <div class="gap-item" style="border-left-color:#b91c1c">
+          <div class="gap-head"><b>材料 · 学术会议/论文</b>
+            <span class="gap-lvl" style="background:#fee2e2;color:#b91c1c">严重缺口</span></div>
+          <div class="gap-desc">实际 0 源 / 目标 1 源</div>
+          <div class="gap-srcs">现有：无</div>
+        </div>
+        <div class="gap-item" style="border-left-color:#b91c1c">
+          <div class="gap-head"><b>设计 · 学术会议/论文</b>
+            <span class="gap-lvl" style="background:#fee2e2;color:#b91c1c">严重缺口</span></div>
+          <div class="gap-desc">实际 0 源 / 目标 1 源</div>
+          <div class="gap-srcs">现有：无</div>
+        </div>
+        <div class="gap-item" style="border-left-color:#b45309">
+          <div class="gap-head"><b>EDA · 深度分析</b>
+            <span class="gap-lvl" style="background:#fef3c7;color:#b45309">缺口</span></div>
+          <div class="gap-desc">实际 1 源 / 目标 2 源</div>
+          <div class="gap-srcs">现有：semianalysis</div>
+        </div>
+        <div class="gap-item" style="border-left-color:#b45309">
+          <div class="gap-head"><b>EDA · 价格/产能数据</b>
+            <span class="gap-lvl" style="background:#fef3c7;color:#b45309">缺口</span></div>
+          <div class="gap-desc">实际 1 源 / 目标 2 源</div>
+          <div class="gap-srcs">现有：sia_wsts</div>
+        </div>
+        <div class="gap-item" style="border-left-color:#b45309">
+          <div class="gap-head"><b>设计 · 价格/产能数据</b>
+            <span class="gap-lvl" style="background:#fef3c7;color:#b45309">缺口</span></div>
+          <div class="gap-desc">实际 1 源 / 目标 2 源</div>
+          <div class="gap-srcs">现有：sia_wsts</div>
+        </div></div>
+
+  <footer>由 chip-daily-report · multi_source 生成 · 面向维护者 · 全局指标：raw 19 → cleaned 19 · 丢弃率 0.0 · 融合事件 10 · 冲突率 0.1 · 缺口格 13</footer>
+</div>
+</body>
+</html>

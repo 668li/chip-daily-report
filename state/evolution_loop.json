@@ -1,0 +1,58 @@
+{
+  "runs": [
+    {
+      "date": "2026-08-21",
+      "steps": [
+        {
+          "script": "forecast_calibrator.py",
+          "rc": 0,
+          "out": "已验证前瞻总数：3\n  高确定性：3 条 · 一致 2 · 偏差 1 · 偏差率 33%\n\n🎭 多剧本并行打分（L4 情景推演）：\n  [真趋势] 1 个剧本 · 印证 1 · 被打脸 0 · 命中率 100%\n  [炒作] 1 个剧本 · 印证 0 · 被打脸 1 · 命中率 100%\n  [被绕开] 1 个剧本 · 印证 0 · 被打脸 1 · 命中率 0%\n\n⚠️ 校准建议（human-in-loop，不直接改 rubric）：\n  - [高确定性] 偏差率 33% 超阈值 20% → 复核「高确定性」时点官宣边界\n\n[calibrator] 已写入 state/forecast_calibration.json\n",
+          "err": ""
+        },
+        {
+          "script": "rule_growth.py",
+          "rc": 0,
+          "out": "分析期数：7 | 规则数：45\nFAIL 阈值 30% / WARN 阈值 50% / 样本下限 3\n\n✅ 当前各规则 FAIL/WARN 频率均在阈值内，rubric 暂无需自生长。\n\n[rule_growth] 已写入 state/rule_growth.json\n",
+          "err": ""
+        },
+        {
+          "script": "m5_rewrite_skill.py",
+          "rc": 0,
+          "out": "=== [M5] 已追加规律沉淀块到 SKILL.md（保留最近 8 条）===\n- 预判校准（M3）：确定性·高确定性偏差率 33% 超阈值\n- 规则自生长（M4）：各规则 FAIL/WARN 均在阈值内，无需自生长\n- 剧本复盘（M5）：升级信号=`真趋势`(100%)；淘汰信号=`被绕开`(0%)\n",
+          "err": ""
+        }
+      ],
+      "failed": [],
+      "auto_streak": 1,
+      "milestone_reached": false
+    },
+    {
+      "date": "2026-08-21",
+      "steps": [
+        {
+          "script": "forecast_calibrator.py",
+          "rc": 0,
+          "out": "已验证前瞻总数：3\n  高确定性：3 条 · 一致 2 · 偏差 1 · 偏差率 33%\n\n🎭 多剧本并行打分（L4 情景推演）：\n  [真趋势] 1 个剧本 · 印证 1 · 被打脸 0 · 命中率 100%\n  [炒作] 1 个剧本 · 印证 0 · 被打脸 1 · 命中率 100%\n  [被绕开] 1 个剧本 · 印证 0 · 被打脸 1 · 命中率 0%\n  → 当前最会判的剧本：真趋势（命中率 100%）；最易误判：被绕开（命中率 0%）\n\n⚠️ 校准建议（human-in-loop，不直接改 rubric）：\n  - [高确定性] 高确定性事件实际偏差率 33% 超过阈值 20%\n    → 复核「高确定性」分级标准：当前偏差偏高，建议重新界定该档位「时点官宣」的边界（如是否混淆了'会谈已宣布'与'成果已确认'、'法规生效日'与'细则落地日'），并在 SKILL.md 确定性 rubric 中收紧定义或补充反例。\n\n[calibrator] 已写入 D:\\创建skill\\skills\\chip-daily-report\\state\\forecast_calibration.json\n",
+          "err": ""
+        },
+        {
+          "script": "rule_growth.py",
+          "rc": 0,
+          "out": "分析期数：7 | 规则数：45\nFAIL 阈值 30% / WARN 阈值 50% / 样本下限 3\n\n✅ 当前各规则 FAIL/WARN 频率均在阈值内，rubric 暂无需自生长。\n\n[rule_growth] 已写入 D:\\创建skill\\skills\\chip-daily-report\\state\\rule_growth.json\n",
+          "err": ""
+        },
+        {
+          "script": "m5_rewrite_skill.py",
+          "rc": 0,
+          "out": "=== [M5 预览] 将写入 SKILL.md 的规律沉淀块 ===\n\n### 规律沉淀 · 2026-08-21\n\n- **预判校准（M3）**：\n  - 确定性·高确定性：高确定性事件实际偏差率 33% 超过阈值 20%（复核「高确定性」分级标准：当前偏差偏高，建议重新界定该档位「时点官宣」的边界（如是否混淆了'会谈已宣布'与'成果已确认'…）\n- **规则自生长（M4）**：\n  - 本期各规则 FAIL/WARN 频率均在阈值内，rubric 暂无需自生长\n- **剧本复盘（M5）**：\n  - 剧本命中率：升级信号=`真趋势`(100%)；淘汰信号=`被绕开`(0%)\n\n\n--- 输入信号统计 ---\n  M3 校准建议：1 条\n  M4 规则建议：0 条\n  M5 剧本信号：剧本命中率：升级信号=`真趋势`(100%)；淘汰信号=`被绕开`(0%)\n\n[M5] 已追加规律沉淀块到 SKILL.md（保留最近 8 条）\n",
+          "err": ""
+        }
+      ],
+      "failed": [],
+      "auto_streak": 1,
+      "milestone_reached": false
+    }
+  ],
+  "auto_streak": 1,
+  "milestone": 30
+}

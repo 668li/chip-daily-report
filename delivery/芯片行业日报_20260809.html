@@ -1,0 +1,719 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>芯片行业日报— 2026-08-09 · 可视化</title>
+<style>
+:root{
+  --bg:#f1f5f9; --card:#ffffff; --ink:#1e293b; --muted:#64748b;
+  --line:#e2e8f0; --accent:#0f172a;
+  --seg-design:#2563eb; --seg-make:#7c3aed; --seg-pack:#0891b2;
+  --seg-eda:#db2777; --seg-mat:#16a34a;
+}
+*{box-sizing:border-box}
+body{margin:0;font-family:-apple-system,"Segoe UI",Roboto,"PingFang SC","Microsoft YaHei",sans-serif;
+  background:var(--bg);color:var(--ink);line-height:1.6}
+.wrap{max-width:1080px;margin:0 auto;padding:24px 18px 56px}
+header.top{background:linear-gradient(120deg,#0f172a,#1e3a8a);color:#fff;border-radius:16px;
+  padding:22px 26px;box-shadow:0 8px 24px rgba(15,23,42,.18)}
+header.top h1{margin:0 0 6px;font-size:23px;letter-spacing:.5px}
+.meta-row{display:flex;flex-wrap:wrap;gap:10px 22px;font-size:13px;opacity:.92}
+.meta-row b{font-weight:600;opacity:.8;margin-right:4px}
+.tabs{display:flex;gap:8px;margin:20px 0 14px;flex-wrap:wrap}
+.tab{border:1px solid var(--line);background:#fff;color:var(--muted);padding:9px 18px;
+  border-radius:999px;cursor:pointer;font-size:14px;font-weight:600;transition:.15s}
+.tab:hover{border-color:#94a3b8}
+.tab.active{background:var(--accent);color:#fff;border-color:var(--accent)}
+.panel{display:none;animation:fade .25s ease}
+.panel.active{display:block}
+@keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+
+/* 今日要点 */
+.highlights{background:#fff;border:1px solid var(--line);border-radius:14px;padding:16px 20px;margin-bottom:18px}
+.hl-title{margin:0 0 10px;font-size:16px;color:var(--accent)}
+.hl-list{margin:0;padding-left:0;list-style:none;display:grid;gap:8px}
+.hl-item{position:relative;padding:10px 14px 10px 38px;background:#f8fafc;border-radius:10px;font-size:14px}
+.hl-item::before{content:"★";position:absolute;left:14px;top:10px;color:#f59e0b}
+
+/* 环节分区 */
+.seg{margin-bottom:22px}
+.seg-title{display:flex;align-items:center;gap:10px;font-size:18px;margin:0 0 12px;
+  padding-bottom:8px;border-bottom:2px solid var(--seg)}
+.seg-title .dot{width:12px;height:12px;border-radius:50%}
+.seg-count{font-size:13px;color:var(--muted);font-weight:500}
+.seg-stat{margin-left:auto;font-size:12px;color:var(--muted);font-weight:500}
+.news-list{display:grid;gap:12px}
+.news{background:#fff;border:1px solid var(--line);border-left:4px solid var(--seg);
+  border-radius:12px;padding:14px 16px}
+.news-head{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:6px}
+.news-title{margin:0;font-size:15.5px;line-height:1.4}
+.news-summary{margin:6px 0 10px;font-size:14px;color:#334155}
+.annot{background:#f8fafc;border:1px dashed #cbd5e1;border-radius:10px;padding:8px 12px;
+  font-size:13px;color:#475569;display:flex;gap:6px;align-items:baseline}
+.annot-ico{font-size:14px}
+.annot-label{font-weight:700;color:#0f766e;white-space:nowrap}
+.annot-body{flex:1}
+.news-meta{display:flex;align-items:center;gap:10px;flex-wrap:wrap;font-size:12.5px;color:var(--muted)}
+.srcs{display:flex;gap:6px;flex-wrap:wrap}
+.src-link{color:#1d4ed8;text-decoration:none;font-weight:600}
+.src-link:hover{text-decoration:underline}
+.badge{font-size:11.5px;font-weight:700;padding:2px 9px;border-radius:999px;white-space:nowrap}
+.badge-review{background:#fef3c7;color:#b45309}
+.sig-group{display:inline-flex;gap:5px;flex-wrap:wrap}
+.sig-badge{font-size:11px;font-weight:700;padding:1px 8px;border-radius:999px;white-space:nowrap}
+.tag-origin{background:#eef2ff;color:#4338ca;padding:2px 9px;border-radius:999px;font-size:11.5px}
+.ts{white-space:nowrap}
+
+/* 自检 */
+.selfcheck{background:#fff;border:1px solid var(--line);border-radius:12px;padding:6px 14px;margin-top:6px}
+.selfcheck summary{cursor:pointer;font-weight:600;padding:8px 0;color:var(--accent)}
+.sc-table{width:100%;border-collapse:collapse;font-size:13px;margin:6px 0 12px}
+.sc-table th,.sc-table td{border-bottom:1px solid var(--line);padding:7px 8px;text-align:left}.sc-table th{color:var(--muted);font-weight:600}
+.sc-pill{font-weight:700;padding:1px 9px;border-radius:999px;font-size:12px}
+.sc-pass{background:#dcfce7;color:#15803d}
+.sc-warn{background:#fef3c7;color:#b45309}
+.sc-fail{background:#fee2e2;color:#b91c1c}
+/* 持续追踪（B v5.3） */
+.tracking-block{margin-top:18px;background:#fff;border:1px solid var(--line);border-radius:12px;padding:14px 16px}
+.tk-title{font-size:16.5px;margin:0 0 10px;color:#0f766e}
+.tk-sub{font-size:12.5px;color:var(--muted);font-weight:500;margin-left:8px}
+.tk-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:10px}
+.tk-card{background:#f0fdfa;border:1px solid #99f6e4;border-radius:10px;padding:10px 12px}
+.tk-head{display:flex;align-items:center;gap:8px;margin-bottom:4px}
+.tk-dir{font-size:11.5px;font-weight:700;color:#0f766e;background:#ccfbf1;border-radius:999px;padding:1px 8px;white-space:nowrap}
+.tk-topic{font-weight:700;font-size:14px;color:#134e4a}
+.tk-detail{margin:0;font-size:13px;color:#475569;line-height:1.5}
+/* 前瞻催化剂（C v5.3） */
+.catalyst-block{margin-top:18px;background:#fff;border:1px solid var(--line);border-radius:12px;padding:14px 16px}
+.ct-title{font-size:16.5px;margin:0 0 10px;color:#1d4ed8}
+.ct-sub{font-size:12.5px;color:var(--muted);font-weight:500;margin-left:8px}
+.ct-table{width:100%;border-collapse:collapse;font-size:13.5px}
+.ct-table th,.ct-table td{border-bottom:1px solid var(--line);padding:8px 9px;text-align:left}
+.ct-table th{color:var(--muted);font-weight:600}
+.ct-date{font-weight:700;color:#1e293b;white-space:nowrap}
+.ct-imp{font-weight:700;border:1.5px solid;border-radius:999px;padding:0 9px;font-size:12px;white-space:nowrap}
+.sc-fail{background:#fee2e2;color:#b91c1c}
+
+/* 费曼解释（F1.3 v5.4） */
+.feynman-block{margin-top:18px;background:#fff;border:1px solid var(--line);border-radius:12px;padding:14px 16px}
+.fk-title{font-size:16.5px;margin:0 0 10px;color:#6d28d9}
+.fk-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:10px}
+.fk-card{background:#f5f3ff;border:1px solid #ddd6fe;border-radius:10px;padding:10px 12px}
+.fk-term{font-weight:700;font-size:14px;color:#5b21b6;margin-bottom:4px}
+.fk-text{margin:0;font-size:13px;color:#475569;line-height:1.55}
+
+/* 深度解读（v5.6） */
+.deep-block{margin-top:18px;background:#fff;border:1px solid var(--line);border-radius:12px;padding:14px 16px}
+.dd-title{font-size:16.5px;margin:0 0 10px;color:#b91c1c}
+.dd-list{display:grid;gap:12px}
+.dd-card{background:#fff7f7;border:1px solid #fecaca;border-radius:10px;padding:12px 14px}
+.dd-head{display:flex;align-items:center;gap:8px;margin-bottom:8px}
+.dd-num{width:22px;height:22px;border-radius:50%;background:#b91c1c;color:#fff;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.dd-title{font-size:15px;font-weight:700;color:#7f1d1d}
+.dd-part{margin-bottom:8px}
+.dd-part:last-child{margin-bottom:0}
+.dd-part-title{font-size:13px;font-weight:700;color:#b91c1c;margin-bottom:2px}
+.dd-part-text{font-size:13.5px;color:#334155;line-height:1.7;text-align:justify}
+
+/* 未来借鉴（v5.6） */
+.future-block{margin-top:18px;background:#fff;border:1px solid var(--line);border-radius:12px;padding:14px 16px}
+.fu-title{font-size:16.5px;margin:0 0 10px;color:#0f766e}
+.fu-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:10px}
+.fu-card{background:#f8fafc;border:1px solid var(--line);border-top:3px solid var(--line);border-radius:10px;padding:10px 12px}
+.fu-head{display:flex;align-items:center;gap:6px;margin-bottom:4px}
+.fu-ico{font-size:14px}
+.fu-cat{font-weight:700;font-size:14px}
+.fu-text{margin:0;font-size:13px;color:#475569;line-height:1.6}
+/* 未来借鉴 v5.8 增强：强度徽章 + 格局时间轴 */
+.fu-strength{display:inline-block;font-size:11px;font-weight:700;padding:0 8px;border-radius:999px;margin:0 3px;white-space:nowrap;vertical-align:1px}
+.tl-track{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:0;margin-top:2px}
+.tl-stage{position:relative;padding:8px 10px 8px 16px;border-left:3px solid #0f766e;margin-right:8px}
+.tl-stage:last-child{margin-right:0}
+.tl-dot{font-size:11px;font-weight:700;color:#fff;background:#0f766e;border-radius:999px;padding:0 8px;display:inline-block;margin-bottom:3px}
+.tl-period{font-size:13.5px;font-weight:800;color:#134e4a;margin-bottom:3px}
+.tl-desc{margin:0;font-size:12.5px;color:#475569;line-height:1.55;text-align:justify}
+
+/* 导师课堂（v5.8） */
+.tutor-view{display:grid;gap:16px}
+.tu-intro{background:#fff;border:1px solid var(--line);border-radius:12px;padding:12px 16px;font-size:13.5px;color:#475569;line-height:1.7}
+.tu-intro b{color:#7c3aed}
+.tu-block{background:#fff;border:1px solid var(--line);border-radius:14px;padding:16px 18px}
+.tu-title{font-size:16.5px;margin:0 0 12px;color:#7c3aed}
+.tu-sub{font-size:12.5px;color:var(--muted);font-weight:500;margin-left:8px}
+.tu-board{background:linear-gradient(135deg,#312e81,#1e1b4b);color:#e0e7ff;border-radius:12px;padding:16px 18px}
+.tu-board p{margin:0 0 10px;font-size:14.5px;line-height:1.85}
+.tu-board p:last-child{margin-bottom:0}
+.tu-board b{color:#fde68a}
+.tu-board ul,.tu-board ol{margin:6px 0;padding-left:22px}
+.tu-board li{margin-bottom:5px;font-size:13.5px;line-height:1.7}
+.tu-lesson-card{background:#faf5ff;border:1px solid #e9d5ff;border-radius:12px;padding:14px 16px}
+.tu-lead{font-size:14.5px;font-weight:700;color:#6b21a8;background:#f3e8ff;border-radius:8px;padding:8px 12px;margin-bottom:10px;line-height:1.7}
+.tu-lesson-card ul,.tu-lesson-card ol{margin:4px 0 8px;padding-left:22px}
+.tu-lesson-card li{margin-bottom:6px;font-size:13.5px;color:#334155;line-height:1.7}
+.tu-lesson-card li b{color:#6b21a8}
+.tu-concept-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:10px}
+.tu-concept{background:#f0fdf4;border:1px solid #bbf7d0;border-radius:10px;padding:10px 12px}
+.tu-concept-term{font-weight:800;font-size:13.5px;color:#166534;margin-bottom:3px}
+.tu-concept-text{font-size:13px;color:#475569;line-height:1.6}
+.tu-concept-text b{color:#166534}
+.tu-q-list{display:grid;gap:10px}
+.tu-q{display:flex;gap:10px;align-items:flex-start;background:#fffbeb;border:1px solid #fde68a;border-radius:10px;padding:11px 13px}
+.tu-q-num{width:24px;height:24px;border-radius:50%;background:#b45309;color:#fff;font-size:13px;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.tu-q-text{font-size:13.5px;color:#334155;line-height:1.7}
+.tu-q-text b{color:#92400e}
+.tu-empty{padding:20px;text-align:center;color:var(--muted);background:#fff;border:1px solid var(--line);border-radius:12px}
+
+/* 产业链全貌 */
+.chain-intro{background:#fff;border:1px solid var(--line);border-radius:12px;padding:12px 16px;
+  font-size:14px;color:#334155;margin-bottom:14px;line-height:1.7}
+.chain-intro b{color:var(--accent)}
+.seg-strip{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-bottom:16px}
+.ss-cell{border:1px solid var(--line);border-top:3px solid;border-radius:12px;background:#fff;
+  padding:12px 8px;text-align:center}
+.ss-name{font-size:13px;font-weight:700}
+.ss-num{font-size:20px;font-weight:800;margin:4px 0 2px}
+.ss-ab{font-size:11.5px;color:var(--muted)}
+.chain-svg-wrap{background:linear-gradient(180deg,#fbfdff,#eef2f7);border:1px solid var(--line);
+  border-radius:14px;padding:14px 10px;margin-bottom:18px}
+.chain-svg{display:block;margin:0 auto}
+.stage{cursor:pointer;transition:transform .15s}
+.stage:hover{transform:translateY(-3px)}
+.chain-detail-title{font-size:16px;margin:4px 0 12px;color:var(--accent)}
+.chain-ribbons{display:grid;gap:12px;margin-left:2px}
+.chain-ribbon{border:1px solid var(--line);border-radius:12px;background:#fff;padding:12px 16px;
+  border-left-width:4px}
+.cr-head{display:flex;align-items:center;gap:10px;margin-bottom:8px}
+.cr-num{width:24px;height:24px;border-radius:50%;color:#fff;font-weight:700;font-size:13px;
+  display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.cr-title{font-weight:700;font-size:14.5px;color:#1e293b}
+.cr-flow{display:flex;align-items:center;flex-wrap:wrap;gap:6px;margin-bottom:6px}
+.cr-step{border:1.5px solid;border-radius:999px;padding:3px 13px;font-size:13px;font-weight:600;
+  background:#f8fafc;transition:.15s}
+.cr-step.hl{background:#e0e7ff}
+.cr-arrow{color:#94a3b8;font-weight:700;font-size:15px}
+.cr-body{margin:0;font-size:13.5px;color:#475569;line-height:1.55}
+.flow{stroke-dasharray:7 5;animation:dash 1.1s linear infinite}
+@keyframes dash{to{stroke-dashoffset:-24}}
+
+/* 横向维度视图（多维透视） */
+.dim-block{background:#fff;border:1px solid var(--line);border-radius:14px;padding:16px 18px;margin-bottom:18px}
+.dim-head{display:flex;align-items:center;gap:12px;padding-bottom:12px;margin-bottom:12px;
+  border-bottom:2px solid var(--line)}
+.dim-ico{width:38px;height:38px;border-radius:10px;display:flex;align-items:center;justify-content:center;
+  font-size:19px;color:#fff;flex-shrink:0}
+.dim-name{font-size:17px;font-weight:800;color:var(--ink)}
+.dim-desc{font-size:12.5px;color:var(--muted);margin-top:2px}
+.dim-intro{background:#f8fafc;border-left:3px solid var(--line);border-radius:8px;padding:8px 12px;
+  font-size:13px;color:#475569;margin-bottom:12px;line-height:1.6}
+.dim-sub{padding:12px 0;border-top:1px solid var(--line)}
+.dim-sub:first-of-type{border-top:none;padding-top:0}
+.ds-title{font-size:15px;font-weight:700;color:#1e293b;margin-bottom:6px}
+.ds-body{font-size:13.8px;color:#334155;line-height:1.75}
+.ds-srcs{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
+.badge-a{background:#dcfce7;color:#15803d}
+.badge-b{background:#fef3c7;color:#b45309}
+.dim-empty{padding:20px;text-align:center;color:var(--muted);background:#fff;border:1px solid var(--line);border-radius:12px}
+
+/* v5.5 趋势图 + 周报对比 */
+.tr-block{background:#fff;border:1px solid var(--line);border-radius:14px;padding:16px 18px;margin-bottom:18px}
+.tr-title{font-size:16.5px;margin:0 0 12px;color:var(--accent)}
+.tr-sub{font-size:12.5px;color:var(--muted);font-weight:500;margin-left:8px}
+.chart-card{background:#fbfdff;border:1px solid var(--line);border-radius:12px;padding:12px 14px;overflow-x:auto}
+.viz-svg{display:block;width:100%;height:auto;min-width:560px}
+.chart-legend{display:flex;gap:16px;margin-top:8px;font-size:12.5px;color:var(--muted);flex-wrap:wrap}
+.lg-chip{display:inline-flex;align-items:center;gap:6px}
+.lg-chip i{width:12px;height:12px;border-radius:3px;display:inline-block}
+.tr-note{font-size:12px;color:var(--muted);margin:8px 0 0}
+.tr-dir{font-size:11.5px;font-weight:700;border:1.5px solid;border-radius:999px;padding:1px 9px;white-space:nowrap}
+.tk-delta{font-size:12px;font-weight:600;color:#0f766e;margin:2px 0 4px}
+.wk-cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin-bottom:6px}
+.wk-card{background:#f8fafc;border:1px solid var(--line);border-radius:12px;padding:12px;text-align:center}
+.wk-num{font-size:22px;font-weight:800;color:var(--accent)}
+.wk-label{font-size:12px;color:var(--muted);margin-top:2px}
+.x12-card{margin-top:12px}
+.x12-title{font-size:13px;font-weight:700;color:#475569;margin-bottom:8px}
+.x12-row{display:flex;align-items:center;gap:10px;margin-bottom:6px;font-size:12.5px}
+.x12-lab{width:46px;font-weight:700}
+.x12-track{flex:1;background:#f1f5f9;border-radius:999px;height:12px;overflow:hidden}
+.x12-fill{height:100%;border-radius:999px}
+.x12-num{width:22px;text-align:right;color:var(--muted)}
+.wk-table{width:100%;border-collapse:collapse;font-size:13px}
+.wk-table th,.wk-table td{border-bottom:1px solid var(--line);padding:8px 9px;text-align:left;vertical-align:middle}
+.wk-table th{color:var(--muted);font-weight:600;white-space:nowrap}
+.mini-bar{display:inline-block;width:74px;height:9px;background:#f1f5f9;border-radius:999px;overflow:hidden;vertical-align:middle;margin-right:6px}
+.mini-fill{height:100%;background:#16a34a;border-radius:999px}
+.mini-val{font-weight:700;color:#1e293b}
+.cov-dot{display:inline-block;width:11px;height:11px;border-radius:50%;margin-right:3px;vertical-align:middle}
+.wk-topic{font-weight:700;color:#1e293b}
+.wk-detail{font-size:12.5px;color:#64748b;max-width:380px}
+
+footer.foot{margin-top:30px;text-align:center;font-size:12px;color:var(--muted)}
+
+@media(max-width:720px){
+  .seg-strip{grid-template-columns:repeat(2,1fr)}
+  .wrap{padding:16px 12px 40px}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <h1>芯片行业日报— 2026-08-09</h1>
+    <div class="meta-row"><span><b>生成时间</b>2026-08-09 10:55</span><span><b>覆盖范围</b>2026年8月7日-9日</span><span><b>新闻总数</b>15 条</span><span><b>A 级占比</b>33%</span></div>
+  </header>
+
+  <nav class="tabs"><button class="tab" data-tab="report">日报视图</button><button class="tab" data-tab="chain">产业链全貌</button><button class="tab" data-tab="dimensions">多维透视</button><button class="tab" data-tab="trend">趋势图</button><button class="tab" data-tab="weekly">周报对比</button><button class="tab" data-tab="tutor">导师课堂</button></nav>
+  <div class="panel" id="panel-report">
+    <div class="report-view">
+      <div class="highlights"><h2 class="hl-title">今日要点</h2><ul class="hl-list"><li class="hl-item">英伟达 Rubin Ultra HBM 配置从 12 层 384GB 砍半至 8 层 192GB，SK hynix 股价单日暴跌 19%，AI 存储需求预期遭遇本轮超级周期首个重大利空（详见设计）</li><li class="hl-item">三星、SK hynix、美光 2027 年存储产能已全部售罄，客户配货量仅得 60-70%，2027 或成短缺&quot;最严峻时期&quot;（详见制造）</li><li class="hl-item">SK hynix 批准 380 亿美元建两座新厂，HBF 获谷歌 DeepMind 公开背书——存储巨头一边扩产、一边开新战线（详见制造）</li></ul></div>
+      
+    <section class="seg" id="seg-设计" style="--seg:#2563eb">
+      <h2 class="seg-title"><span class="dot" style="background:#2563eb"></span>设计
+        <span class="seg-count">4 条</span><span class="seg-stat">A 1 · B 3 · C 0</span></h2>
+      <div class="news-list">
+    <article class="news" data-seg="设计">
+      <div class="news-head">
+        
+        <span class="badge" style="color:#b45309;background:#fef3c7">B 级·聚合</span>
+        <span class="sig-group"><span class="sig-badge" style="color:#b91c1c;background:#fee2e2">重要·高</span><span class="sig-badge" style="color:#b91c1c;background:#fee2e2">影响·利空</span><span class="sig-badge" style="color:#b91c1c;background:#fee2e2">情绪·负面</span></span>
+        <h3 class="news-title">英伟达 Rubin Ultra 削减 HBM 配置近半，SK hynix 股价单日暴跌 19%</h3>
+      </div>
+      <p class="news-summary">据多个信源，英伟达为下一代旗舰 GPU Rubin Ultra 采用更省内存方案，HBM 配置从原定 12 层堆叠约 384GB 降至 8 层约 192GB、降幅近 50%，GPU 芯粒亦从 4 颗减为 2 颗，功耗同步下调；英伟达并行评估 HBM4e 8 层与 HBM4 12 层等组合，最终规格预计 2026 下半年验证后敲定。TrendForce 数据显示该调整自 Q3 起已启动评估，部分云服务商也在考虑调降下一代自研 ASIC 的 HBM 容量。SK hynix 占据约 70% HBM 份额、为本轮超级周期最大受益者，机构测算 Rubin Ultra 约占 2027 年全球 HBM 需求两成，显存砍半相当于全球 HBM 少卖约一成。 `[技术注解: HBM 通过垂直堆叠 DRAM 芯片实现超高带宽，堆叠层数（如 12 层 vs 8 层）直接决定容量与成本，AI 芯片用&quot;更大显存&quot;换取更少跨卡通信，削减配置可显著降本]`</p>
+      
+      <div class="news-meta">
+        <span class="srcs"><a class="src-link" href="https://www.toutiao.com/article/7670351409895817762/" target="_blank" rel="noopener">21世纪经济报道引 TrendForce ↗</a></span>
+        <span class="ts">🕒 [新浪财经 7x24](https://cj.sina.com.cn/article/norm_detail?url=https%3A%2F%2Ffinance.sina.com.cn%2F7x24%2F2026-08-09%2Fdoc-inimswyp1897019.shtml&amp;finpagefr=w_110) | 2026-08-09</span>
+        
+      </div>
+    </article>
+
+    <article class="news" data-seg="设计">
+      <div class="news-head">
+        
+        <span class="badge" style="color:#b45309;background:#fef3c7">B 级·聚合</span>
+        <span class="sig-group"><span class="sig-badge" style="color:#b45309;background:#fef3c7">重要·中</span><span class="sig-badge" style="color:#15803d;background:#dcfce7">影响·利好</span><span class="sig-badge" style="color:#15803d;background:#dcfce7">情绪·正面</span></span>
+        <h3 class="news-title">寒武纪 2026 中报：营收 59.96 亿元同比+108%，扣非净利 21.66 亿元+137%</h3>
+      </div>
+      <p class="news-summary">寒武纪发布 2026 年半年度业绩，营收 59.96 亿元、同比增长 108%，扣非净利润 21.66 亿元、同比增长 137%，云端产品线贡献约 99.98% 收入，成长斜率居国产 AI 芯片之首。但存货从年初 49.44 亿元激增至 82.48 亿元、占总资产 45.32%，为最大不确定性；机构预测 2026 全年营收 135-165 亿元区间，对应 PE 约 133 倍，估值与库存双高需持续跟踪。 `[技术注解: 云端 AI 芯片面向数据中心推理/训练场景，收入确认与存货攀升同步放大，反映&quot;先备货后出货&quot;的订单驱动模式]`</p>
+      
+      <div class="news-meta">
+        <span class="srcs"><a class="src-link" href="https://www.toutiao.com/article/7671572758043607554/" target="_blank" rel="noopener">今日头条 ↗</a></span>
+        <span class="ts">🕒 2026-08-08</span>
+        
+      </div>
+    </article>
+
+    <article class="news" data-seg="设计">
+      <div class="news-head">
+        
+        <span class="badge" style="color:#b45309;background:#fef3c7">B 级·聚合</span>
+        <span class="sig-group"><span class="sig-badge" style="color:#b45309;background:#fef3c7">重要·中</span><span class="sig-badge" style="color:#64748b;background:#e2e8f0">影响·中性</span><span class="sig-badge" style="color:#15803d;background:#dcfce7">情绪·正面</span></span>
+        <h3 class="news-title">VLSI 2026 开幕：OpenAI 硬件负责人呼吁&quot;系统级创新&quot;，IBM 亮出 CFET 路线图至 2040</h3>
+      </div>
+      <p class="news-summary">2026 超大规模集成电路研讨会（VLSI Symposium）上，OpenAI 硬件负责人 Richard Ho 在主题演讲中呼吁业界从系统层面思考：进步不仅靠晶体管尺寸缩小，还需存储器集成、低功耗互连、电源传输、散热与先进封装协同优化，&quot;未来十年 AI 硬件发展将由系统级创新定义&quot;。IBM 研究院发布晶体管创新路线图，称堆叠式互补场效应晶体管（CFET）将在后 1 纳米时代出现、器件尺寸可达 2 埃；互连层需钴/钌衬垫与铜回流焊技术，空气间隙将发挥作用。 `[技术注解: CFET 将 N 型与 P 型晶体管垂直堆叠，是 GAA 之后的下一个晶体管结构节点；DTCO（设计技术协同优化）在互连瓶颈时代成为关键]`</p>
+      
+      <div class="news-meta">
+        <span class="srcs"><a class="src-link" href="https://www.163.com/dy/article/L3SNAQJ80511CPMT.html" target="_blank" rel="noopener">网易·半导体行业观察 ↗</a></span>
+        <span class="ts">🕒 2026-08-09</span>
+        
+      </div>
+    </article>
+
+    <article class="news" data-seg="设计">
+      <div class="news-head">
+        
+        <span class="badge" style="color:#15803d;background:#dcfce7">A 级·权威</span>
+        <span class="sig-group"><span class="sig-badge" style="color:#b91c1c;background:#fee2e2">重要·高</span><span class="sig-badge" style="color:#b91c1c;background:#fee2e2">影响·利空</span><span class="sig-badge" style="color:#b91c1c;background:#fee2e2">情绪·负面</span></span>
+        <h3 class="news-title">美国 BIS 审查海外算力获取通道，GPU 走私与远程租用均被纳入视野</h3>
+      </div>
+      <p class="news-summary">彭博社 8 月 7 日报道，美国商务部工业与安全局（BIS）出口管制执法部门正系统梳理受限国家 AI 企业获取英伟达先进芯片的渠道：一是受限芯片经第三国转运流入，二是企业通过海外数据中心远程租用算力使用英伟达 GPU。BIS 正在整理两份国家名单（疑似芯片黑市转运国、芯片部署所在国）；此前 5 月 31 日 BIS 已发布指南关闭&quot;海外子公司&quot;漏洞——许可要求改为按母公司总部所在地判定。美国众议院已通过两党法案、拟明确赋予政府限制这类海外云计算访问的权力，尚待参议院表决。 `[技术注解: &quot;算力即服务&quot;模式下，云端租用不涉及实体芯片跨境，传统出口管制难以覆盖，正成为监管新焦点]`</p>
+      
+      <div class="news-meta">
+        <span class="srcs"><a class="src-link" href="https://www.bloomberg.com/news/articles/2026-08-07/us-reviews-china-s-offshore-access-to-nvidia-chips-after-ai-breakthroughs" target="_blank" rel="noopener">Bloomberg ↗</a></span>
+        <span class="ts">🕒 [新浪财经引彭博](https://finance.sina.com.cn/roll/2026-08-07/doc-inimnzsm4713430.shtml) | 2026-08-07</span>
+        
+      </div>
+    </article></div>
+    </section>
+
+    <section class="seg" id="seg-制造" style="--seg:#7c3aed">
+      <h2 class="seg-title"><span class="dot" style="background:#7c3aed"></span>制造
+        <span class="seg-count">6 条</span><span class="seg-stat">A 4 · B 2 · C 0</span></h2>
+      <div class="news-list">
+    <article class="news" data-seg="制造">
+      <div class="news-head">
+        
+        <span class="badge" style="color:#15803d;background:#dcfce7">A 级·权威</span>
+        <span class="sig-group"><span class="sig-badge" style="color:#b91c1c;background:#fee2e2">重要·高</span><span class="sig-badge" style="color:#15803d;background:#dcfce7">影响·利好</span><span class="sig-badge" style="color:#15803d;background:#dcfce7">情绪·正面</span></span>
+        <h3 class="news-title">SK hynix 批准 54 万亿韩元（约 383 亿美元）建两座新厂，龙仁 Y2 瞄准 HBM</h3>
+      </div>
+      <p class="news-summary">SK hynix 董事会决议通过龙仁&quot;Y2&quot;与清州&quot;M17&quot;两座新晶圆厂建设，分别投资 35.2 万亿韩元与 19.1 万亿韩元，系公司 6 月公布的中长期投资战略（龙仁集群 600 万亿韩元 + 清州基地 100 万亿韩元）落地关键一步。Y2 为龙仁集群四座工厂中的第二座，总建筑面积约 113 万平方米，将作为 DRAM 与 HBM 生产基地，明年 7 月动工、2029 年 6 月启用首个无尘室；M17 为 NAND 闪存厂，首个无尘室预计 2028 年 12 月启用。公司引 Omdia 预测称 2026-2030 年 DRAM/NAND 需求年复合增速达 19%，&quot;存储器已从普通零部件升级为决定 AI 性能的核心基础设施&quot;。 `[技术注解: HBM 为多层 DRAM 垂直堆叠而成，晶圆产能占用显著高于普通 DRAM，扩产周期 2-3 年，是 2027 年供需格局的关键变量]`</p>
+      
+      <div class="news-meta">
+        <span class="srcs"><a class="src-link" href="https://news.skhynix.com/en/fab-facility-investment-2026/" target="_blank" rel="noopener">SK hynix 新闻室 ↗</a></span>
+        <span class="ts">🕒 [腾讯新闻](https://new.qq.com/rain/a/20260809A000TU00?refer=cp_1009) | 2026-08-09</span>
+        
+      </div>
+    </article>
+
+    <article class="news" data-seg="制造">
+      <div class="news-head">
+        
+        <span class="badge" style="color:#15803d;background:#dcfce7">A 级·权威</span>
+        <span class="sig-group"><span class="sig-badge" style="color:#b91c1c;background:#fee2e2">重要·高</span><span class="sig-badge" style="color:#15803d;background:#dcfce7">影响·利好</span><span class="sig-badge" style="color:#15803d;background:#dcfce7">情绪·正面</span></span>
+        <h3 class="news-title">谷歌 DeepMind 公开背书 HBF 为下一代 AI 推理存储，SK hynix/闪迪标准落地</h3>
+      </div>
+      <p class="news-summary">FMS 2026 上，SK hynix 与谷歌 DeepMind、闪迪探讨高带宽闪存（HBF）作为 AI 内存瓶颈的解决方案，SK hynix 与闪迪随后联合发布业界首个 HBF 开放标准规范（经 OCP 发布，谷歌、Tenstorrent 参与）。谷歌 DeepMind 研究员马晓宇指出，LLM 推理所需数据量激增、现有内存系统难以快速响应，兼具高容量高带宽高能效的 HBF 是推理时代最佳存储方案；闪迪副总裁表示若 HBF 主要承担读取角色，NAND 磨损担忧可化解。SK hynix 副总裁提出推理阶段&quot;HBF 与 HBM 联合使用&quot;的模型。 `[技术注解: HBF 将 NAND 按 HBM 方式垂直堆叠，提供 0.4~3.0TB/s 分级带宽、最高 512GB 容量，定位介于 HBM 与 SSD 之间的&quot;第三存储层级&quot;；UCIe 为其与 CPU/GPU 互连的开放接口]`</p>
+      
+      <div class="news-meta">
+        <span class="srcs"><a class="src-link" href="https://news.skhynix.com/en/hbf-at-fms-2026" target="_blank" rel="noopener">SK hynix 新闻室 ↗</a></span>
+        <span class="ts">🕒 [腾讯新闻](https://news.qq.com/rain/a/20260809A03T2M00?adChannelId=news_news_tech) | 2026-08-09</span>
+        
+      </div>
+    </article>
+
+    <article class="news" data-seg="制造">
+      <div class="news-head">
+        
+        <span class="badge" style="color:#b45309;background:#fef3c7">B 级·聚合</span>
+        <span class="sig-group"><span class="sig-badge" style="color:#b45309;background:#fef3c7">重要·中</span><span class="sig-badge" style="color:#15803d;background:#dcfce7">影响·利好</span><span class="sig-badge" style="color:#15803d;background:#dcfce7">情绪·正面</span></span>
+        <h3 class="news-title">芯片热管理成 AI 竞争核心：三星 zHBM 热阻减半，液冷/浸没式冷却升温</h3>
+      </div>
+      <p class="news-summary">随着 AI 数据中心投资预计从去年 7500 亿美元飙升至今年 1 万亿美元，散热成为决定 AI 基础设施竞争力的核心技术。Fortune Business Insights 预测全球热管理系统市场将从 2025 年 819.7 亿美元增至 2034 年 1694 亿美元、年复合增长率 8.5%；Dell&#x27;Oro 预计 2026 年全球数据中心资本支出首次超过 1 万亿美元。存储侧，HBM 堆叠层数增加使散热成为竞争核心：三星 zHBM 宣称热阻降低一半，SK hynix 在 HBM4/HBM4E 研发中持续推进散热材料与封装技术；韩国正积极研发浸没式冷却方案。 `[技术注解: 数据中心冷却分为风冷、芯片级液冷与浸没式冷却三档，浸没式将服务器整机浸入绝缘冷却液，PUE（电能使用效率）最优但成本最高]`</p>
+      
+      <div class="news-meta">
+        <span class="srcs"><a class="src-link" href="https://dy.163.com/article/L3SN9BN10511CPMT.html" target="_blank" rel="noopener">网易·半导体行业观察 ↗</a></span>
+        <span class="ts">🕒 2026-08-09</span>
+        
+      </div>
+    </article>
+
+    <article class="news" data-seg="制造">
+      <div class="news-head">
+        <span class="badge badge-review">回顾</span>
+        <span class="badge" style="color:#15803d;background:#dcfce7">A 级·权威</span>
+        <span class="sig-group"><span class="sig-badge" style="color:#b91c1c;background:#fee2e2">重要·高</span><span class="sig-badge" style="color:#64748b;background:#e2e8f0">影响·中性</span><span class="sig-badge" style="color:#15803d;background:#dcfce7">情绪·正面</span></span>
+        <h3 class="news-title">三星发布 zNAND-O 与 zHBM 垂直堆叠架构，存储厂竞逐下一代 AI 内存定义权</h3>
+      </div>
+      <p class="news-summary">三星电子在 FMS 2026 展示新一代 3D 存储方案：zHBM 将内存垂直堆叠于 AI 加速器之上，缩短数据传输距离，宣称系统性能较传统 HBM 提升高达 8 倍、能效提升 3 倍、热阻降低约一半；同步发布 zNAND-O 高性能 NAND，结合 V-NAND 堆叠与硅通孔（TSV）技术实现 4 层或 8 层堆叠，瞄准设备端与边缘 AI 市场。官方未公布商业化时间表，zHBM 预计 2029 年前后量产。 `[技术注解: zHBM 改变传统 2.5D&quot;并排贴装&quot;布局，改为将内存直接堆叠于计算芯片上方，互连距离大幅缩短，但散热与良率挑战显著]`</p>
+      
+      <div class="news-meta">
+        <span class="srcs"><a class="src-link" href="https://semiconductor.samsung.com/news-events/news/samsung-unveils-next-gen-3d-memory-vision-at-fms-2026-charting-the-future-of-ai-infrastructure" target="_blank" rel="noopener">Samsung 官方 ↗</a></span>
+        <span class="ts">🕒 [网易](https://dy.163.com/article/L3SN9BN10511CPMT.html) | 2026-08-04</span>
+        
+      </div>
+    </article>
+
+    <article class="news" data-seg="制造">
+      <div class="news-head">
+        
+        <span class="badge" style="color:#b45309;background:#fef3c7">B 级·聚合</span>
+        <span class="sig-group"><span class="sig-badge" style="color:#b91c1c;background:#fee2e2">重要·高</span><span class="sig-badge" style="color:#15803d;background:#dcfce7">影响·利好</span><span class="sig-badge" style="color:#15803d;background:#dcfce7">情绪·正面</span></span>
+        <h3 class="news-title">存储三巨头 2027 年产能已全部售罄，行业警示&quot;最严峻短缺&quot;将至</h3>
+      </div>
+      <p class="news-summary">财联社 8 月 7 日报道，三星、SK hynix、美光已完成 2027 年全年产能分配谈判，DRAM 与 HBM 产能均已提前售罄，多数客户最终配货量仅为其初始请求的 60%-70%，且三大供应商目前均无新增产能规划。SK 集团会长崔泰源表示，2027 年 AI 半导体需求预计较 2026 年大增 60%-100%、整体存储需求增幅达 50%-60%，&quot;2027 年将面临史上最严重的短缺与供需失衡&quot;。部分 AI 企业愿意支付溢价抢购剩余内存芯片，游戏主机与手机涨价潮已开始向消费端传导。 `[技术注解: 存储厂商以年度产能分配（Allocation）机制向客户分货，售罄即客户无法再下单，是供需紧张的最终信号；涨价沿内存→模组→终端逐级传导]`</p>
+      
+      <div class="news-meta">
+        <span class="srcs"><a class="src-link" href="https://view.inews.qq.com/a/20260807A06N5Y00" target="_blank" rel="noopener">财联社 ↗</a></span>
+        <span class="ts">🕒 2026-08-07</span>
+        
+      </div>
+    </article>
+
+    <article class="news" data-seg="制造">
+      <div class="news-head">
+        <span class="badge badge-review">回顾</span>
+        <span class="badge" style="color:#15803d;background:#dcfce7">A 级·权威</span>
+        <span class="sig-group"><span class="sig-badge" style="color:#b91c1c;background:#fee2e2">重要·高</span><span class="sig-badge" style="color:#15803d;background:#dcfce7">影响·利好</span><span class="sig-badge" style="color:#15803d;background:#dcfce7">情绪·正面</span></span>
+        <h3 class="news-title">长鑫 LPDDR6 接近研发验证尾声，Q2 营收增速领跑全球</h3>
+      </div>
+      <p class="news-summary">据第一财经，长鑫存储 LPDDR6（第六代低功耗内存标准）已接近研发验证尾声、为量产前重要一步，有望 2026 年下半年发布并量产导入；Counterpoint Research 数据显示，长鑫 2026 Q2 营收同比增长 716%、为全球增长最快的 DRAM 供应商，市占率约 7% 稳居全球第四（三星 39% 重回榜首、SK hynix 26%、美光 25%）。公司科创板上市后扩产节奏明确：全年计划扩产 5-6 万片晶圆、设备采购 50-60 亿美元；华鑫证券预计 2028 年底长鑫全球 DRAM 产能占比有望提升至 17%。 `[技术注解: LPDDR 为面向移动端的低功耗 DRAM 标准，LPDDR6 是新一代制式；三星/美光重心转向 HBM 给国产 DRAM 留下&quot;空窗期&quot;追赶窗口]`</p>
+      
+      <div class="news-meta">
+        <span class="srcs"><a class="src-link" href="https://m.21jingji.com/article/20260806/herald/025cd701ee80d0aa1ada18cffb5da4a6.html" target="_blank" rel="noopener">21世纪经济报道 ↗</a></span>
+        <span class="ts">🕒 [网易](https://www.163.com/dy/article/L3II7B0D05199NPP.html) | 2026-08-06</span>
+        
+      </div>
+    </article></div>
+    </section>
+
+    <section class="seg" id="seg-封测" style="--seg:#0891b2">
+      <h2 class="seg-title"><span class="dot" style="background:#0891b2"></span>封测
+        <span class="seg-count">3 条</span><span class="seg-stat">A 0 · B 3 · C 0</span></h2>
+      <div class="news-list">
+    <article class="news" data-seg="封测">
+      <div class="news-head">
+        
+        <span class="badge" style="color:#b45309;background:#fef3c7">B 级·聚合</span>
+        <span class="sig-group"><span class="sig-badge" style="color:#b91c1c;background:#fee2e2">重要·高</span><span class="sig-badge" style="color:#15803d;background:#dcfce7">影响·利好</span><span class="sig-badge" style="color:#15803d;background:#dcfce7">情绪·正面</span></span>
+        <h3 class="news-title">长电科技 78 亿临港扩产 + 半年报预增 63-101%，先进封装订单排至 2027</h3>
+      </div>
+      <p class="news-summary">长电科技公告投资 78 亿元建设临港高端封测工厂，产能全部瞄准 XDFOI、混合键合、HBM 封装等顶级工艺；7 月中旬发布半年报预告，归母净利润 7.7-9.5 亿元、同比大增 63%-101%，高毛利先进封装业务占比突破 45% 成为利润增长引擎。公司已斩获华为昇腾、寒武纪等多家国产算力公司长单，订单能见度排至 2027 年。二级市场方面，8 月 7 日收盘 77.75 元、周涨 18.36%，单日成交 174.83 亿元、换手率 12.76%，因三日涨幅偏离值超 20% 登上龙虎榜；公司将于 8 月 19 日召开临时股东会审议股权激励修订。 `[技术注解: XDFOI 为长电高密度扇出型封装平台，可适配 4nm 多芯片集成、最大封装面积达 1500mm²，是国产 2.5D 封装的代表路线之一]`</p>
+      
+      <div class="news-meta">
+        <span class="srcs"><a class="src-link" href="https://www.toutiao.com/article/7671893583607169580/" target="_blank" rel="noopener">今日头条 ↗</a></span>
+        <span class="ts">🕒 [搜狐](https://www.sohu.com/a/1060503674_115377) | 2026-08-09</span>
+        
+      </div>
+    </article>
+
+    <article class="news" data-seg="封测">
+      <div class="news-head">
+        
+        <span class="badge" style="color:#b45309;background:#fef3c7">B 级·聚合</span>
+        <span class="sig-group"><span class="sig-badge" style="color:#b91c1c;background:#fee2e2">重要·高</span><span class="sig-badge" style="color:#15803d;background:#dcfce7">影响·利好</span><span class="sig-badge" style="color:#15803d;background:#dcfce7">情绪·正面</span></span>
+        <h3 class="news-title">通富微电半年报预增 288-337%，先进封装占比超 70% 盈利弹性释放</h3>
+      </div>
+      <p class="news-summary">通富微电发布 2026 年上半年业绩预告，归母净利润同比暴增 288%-337%，先进封装收入占比已超 70%；公司依托与 AMD 的深度绑定积累了大量 Chiplet 架构封装经验，苏州及南通工厂新导入的国产 AI 推理芯片产线已在 2026 年三季度实现千片级出货，非 AMD 客户占比持续提升。二级市场 8 月 7 日放量上涨 6.17% 收于 64.72 元、成交额 102.19 亿元。 `[技术注解: Chiplet 将大芯片拆分为多个小芯粒异构集成，封测环节承担&quot;拼接&quot;核心工序；先进封装净利率可接近 30%，与传统封测的 4-5% 是两种生意]`</p>
+      
+      <div class="news-meta">
+        <span class="srcs"><a class="src-link" href="https://www.toutiao.com/article/7671692934084919823/" target="_blank" rel="noopener">今日头条 ↗</a></span>
+        <span class="ts">🕒 2026-08-09</span>
+        
+      </div>
+    </article>
+
+    <article class="news" data-seg="封测">
+      <div class="news-head">
+        <span class="badge badge-review">回顾</span>
+        <span class="badge" style="color:#b45309;background:#fef3c7">B 级·聚合</span>
+        <span class="sig-group"><span class="sig-badge" style="color:#b45309;background:#fef3c7">重要·中</span><span class="sig-badge" style="color:#15803d;background:#dcfce7">影响·利好</span><span class="sig-badge" style="color:#15803d;background:#dcfce7">情绪·正面</span></span>
+        <h3 class="news-title">安靠与英伟达达成 15 亿美元多年协议，共同开发下一代 AI 封装</h3>
+      </div>
+      <p class="news-summary">全球第二大 OSAT 厂商安靠（Amkor）7 月 23 日宣布与英伟达达成 15 亿美元多年合作协议，共同开发下一代 AI 封装技术；公司同步在美国亚利桑那州与韩国 K5 线扩产，凭借与台积电亚利桑那厂的&quot;前店后厂&quot;模式承接苹果、英伟达部分封装转移订单，但产能爬坡最快 2026 年四季度才能初具规模。分析认为，2026 下半年至 2027 上半年是全球先进封装产能最吃紧的&quot;空窗期&quot;，国产封测三强（长电、通富、盛合晶微）正借机承接台积电 CoWoS 排期之外的溢出订单。 `[技术注解: 台积电自有 CoWoS 产能七成以上被头部客户锁定，外溢订单流向日月光、安靠等第三方 OSAT 与国产厂商，形成本轮封测涨价的核心供需逻辑]`</p>
+      
+      <div class="news-meta">
+        <span class="srcs"><a class="src-link" href="https://www.toutiao.com/article/7666680685533135403/" target="_blank" rel="noopener">今日头条 ↗</a></span>
+        <span class="ts">🕒 2026-07-23</span>
+        
+      </div>
+    </article></div>
+    </section>
+
+    <section class="seg" id="seg-EDA" style="--seg:#db2777">
+      <h2 class="seg-title"><span class="dot" style="background:#db2777"></span>EDA / 工具
+        <span class="seg-count">1 条</span><span class="seg-stat">A 0 · B 1 · C 0</span></h2>
+      <div class="news-list">
+    <article class="news" data-seg="EDA">
+      <div class="news-head">
+        <span class="badge badge-review">回顾</span>
+        <span class="badge" style="color:#b45309;background:#fef3c7">B 级·聚合</span>
+        <span class="sig-group"><span class="sig-badge" style="color:#b45309;background:#fef3c7">重要·中</span><span class="sig-badge" style="color:#15803d;background:#dcfce7">影响·利好</span><span class="sig-badge" style="color:#15803d;background:#dcfce7">情绪·正面</span></span>
+        <h3 class="news-title">概伦电子 21.74 亿并购资产过户完成，国产&quot;EDA+IP&quot;平台闭环落地</h3>
+      </div>
+      <p class="news-summary">概伦电子发布公告，发行股份及支付现金购买锐成芯微 100% 股权及纳能微 45.64% 股权的标的资产过户手续已全部完成（7 月 19 日、7 月 31 日分别完成工商变更登记），交易对价 21.74 亿元、募集配套资金不超过 10.5 亿元。此次交易系国内 EDA 领域首个以发行股份结合现金支付方式完成的大型横向生态整合案例，概伦电子打通&quot;工具设计-IP 复用-流片验证&quot;闭环，成为国内首家&quot;EDA+IP&quot;双引擎全链路平台。 `[技术注解: 物理 IP 为预先设计验证好的电路功能模块，与 EDA 工具协同构成生态壁垒；并购补齐模拟、射频、存储、接口全品类物理 IP 是国产 EDA 从单点工具走向全流程的关键一步]`</p>
+      
+      <div class="news-meta">
+        <span class="srcs"><a class="src-link" href="https://www.zhangtongshe.com/article.html?id=102611" target="_blank" rel="noopener">张通社 ↗</a></span>
+        <span class="ts">🕒 [雪球](https://www.xueqiu.com/4696908130/402350675) | 2026-08-04</span>
+        
+      </div>
+    </article></div>
+    </section>
+
+    <section class="seg" id="seg-材料" style="--seg:#16a34a">
+      <h2 class="seg-title"><span class="dot" style="background:#16a34a"></span>材料 / 设备
+        <span class="seg-count">1 条</span><span class="seg-stat">A 0 · B 1 · C 0</span></h2>
+      <div class="news-list">
+    <article class="news" data-seg="材料">
+      <div class="news-head">
+        <span class="badge badge-review">回顾</span>
+        <span class="badge" style="color:#b45309;background:#fef3c7">B 级·聚合</span>
+        <span class="sig-group"><span class="sig-badge" style="color:#b45309;background:#fef3c7">重要·中</span><span class="sig-badge" style="color:#64748b;background:#e2e8f0">影响·中性</span><span class="sig-badge" style="color:#15803d;background:#dcfce7">情绪·正面</span></span>
+        <h3 class="news-title">六氟化钨价格同比涨 232%，日本关东电化预警库存告急</h3>
+      </div>
+      <p class="news-summary">受上游钨粉价格飙升（2025 年初 315 元/公斤一度涨至 2026 年 3 月 2350 元/公斤、涨幅超 646%）与海外产能退出双重影响，六氟化钨（芯片制造关键特种气体，用于钨沉积）5N 级价格已涨至约 1670-1810 元/公斤、同比上涨 232.7%；日本关东电化、中央硝子两家全球主要供应商 7 月 1 日宣布停产六氟化钨，合计影响产能约 2000 吨、占全球约 25%。关东电化曾向三星发出供应预警称库存只能撑到 5 月底——中国钨原料出口管制正从&quot;资源牌&quot;转化为半导体材料的供应链话语权。 `[技术注解: 六氟化钨是高端存储与先进逻辑芯片沉积金属钨的关键原料，全球产能高度集中于少数日企；中国钨管制卡住其上游原料，形成&quot;你卡我设备、我卡你材料&quot;的博弈格局]`</p>
+      
+      <div class="news-meta">
+        <span class="srcs"><a class="src-link" href="https://new.qq.com/rain/a/20260612A08UU900?refer=cp_1009" target="_blank" rel="noopener">腾讯新闻·红星资本局 ↗</a></span>
+        <span class="ts">🕒 [今日头条](https://www.toutiao.com/article/7654462078644519424/?channel=) | 2026-06-12</span>
+        
+      </div>
+    </article></div>
+    </section>
+      
+    <section class="tracking-block">
+      <h2 class="tk-title">📈 持续追踪 <span class="tk-sub">跨日记忆 · 主题变比</span></h2>
+      <div class="tk-grid"><div class="tk-card"><div class="tk-head"><span class="tk-dir">↓ 下行</span><span class="tk-topic">HBM 价格与供需</span></div><p class="tk-detail">down（连续1期）Δ Rubin Ultra 砍单 — 本期英伟达 Rubin Ultra HBM 配置从 12 层 384GB 砍半至 8 层 192GB，SK hynix 股价单日暴跌 19%，为本轮超级周期首个重大利空；但 2027 年三巨头产能售罄、SK hynix 批准 380 亿美元扩产，供需从&quot;单边上行&quot;转向&quot;高位分化&quot;（详见设计/市场）。</p></div><div class="tk-card"><div class="tk-head"><span class="tk-dir">↗ 趋紧</span><span class="tk-topic">先进封装产能紧缺</span></div><p class="tk-detail">tight（连续4期）Δ 长电 78 亿扩产、通富预增 288% — 本期长电临港高端封测工厂开建、订单排至 2027，通富先进封装占比超 70%，安靠与英伟达签 15 亿美元协议，紧缺格局延续至 2027 年。</p></div><div class="tk-card"><div class="tk-head"><span class="tk-dir">↑ 上行</span><span class="tk-topic">国产 EDA 并购整合</span></div><p class="tk-detail">up（连续4期）Δ 概伦 21.74 亿并购过户完成 — 本期概伦电子收购锐成芯微/纳能微资产过户落地，&quot;EDA+IP&quot;双引擎平台闭环成型，国产 EDA 并购进入&quot;交割兑现期&quot;。</p></div><div class="tk-card"><div class="tk-head"><span class="tk-dir">↗ 趋紧</span><span class="tk-topic">出口管制收紧</span></div><p class="tk-detail">tight（连续4期）Δ BIS 审查算力通道、FCC 拟禁光模块 — 本期美国管制从芯片延伸到海外算力租用与光互连组件，管制链条再扩两环；中国以钨出口管制反制，博弈升级。</p></div></div>
+    </section>
+      
+    <section class="catalyst-block">
+      <h2 class="ct-title">🗓 前瞻催化剂 <span class="ct-sub">未来 7 天确定时点</span></h2>
+      <table class="ct-table">
+        <thead><tr><th>日期</th><th>事件</th><th>环节</th><th>重要度</th><th>来源</th></tr></thead>
+        <tbody><tr><td class="ct-date">2026-08-10</td><td>台积电公布 7 月营收</td><td>制造</td><td><span class="ct-imp" style="color:#b91c1c;border-color:#b91c1c">高</span></td><td><a class="src-link" href="https://www.tsmc.com/schinese/investorRelations/financial_calendar.htm" target="_blank" rel="noopener">TSMC 投资者日历 ↗</a></td></tr><tr><td class="ct-date">2026-08-13</td><td>中芯国际披露 2026 年 Q2 业绩（交易时段后）</td><td>制造</td><td><span class="ct-imp" style="color:#b91c1c;border-color:#b91c1c">高</span></td><td><a class="src-link" href="https://www.toutiao.com/article/7668382537407889947" target="_blank" rel="noopener">公告转载 ↗</a></td></tr><tr><td class="ct-date">2026-08-14</td><td>中芯国际 Q2 业绩说明会（08:30-09:30 网络直播）</td><td>制造</td><td><span class="ct-imp" style="color:#b91c1c;border-color:#b91c1c">高</span></td><td><a class="src-link" href="https://www.toutiao.com/article/7668382537407889947" target="_blank" rel="noopener">公告转载 ↗</a></td></tr></tbody>
+      </table>
+    </section>
+      
+    <section class="feynman-block">
+      <h2 class="fk-title">💬 费曼解释 <span class="tk-sub">大白话术语表 · 零基础友好 · 12 条</span></h2>
+      <div class="fk-grid"><div class="fk-card"><div class="fk-term">HBM（高带宽内存）</div><p class="fk-text">AI 芯片的&quot;贴身数据快递员&quot;——紧贴在芯片旁边飞快地搬数据。为什么重要：AI 算得再快，数据送不进来也会&quot;饿肚子&quot;，HBM 就是解决这个喂饭速度的，AI 服务器里几乎都有它。</p></div><div class="fk-card"><div class="fk-term">HBM 堆叠层数（12 层 vs 8 层）</div><p class="fk-text">内存&quot;千层饼&quot;的层数。为什么重要：层数越多容量越大，但越贵越难造——英伟达把 Rubin Ultra 从 12 层砍到 8 层，等于&quot;饼&quot;做薄了，省下大笔钱但内存容量少一半。</p></div><div class="fk-card"><div class="fk-term">HBF（高带宽闪存）</div><p class="fk-text">HBM 和普通硬盘之间的&quot;新中间层&quot;——比硬盘快很多，又比 HBM 便宜很多。为什么重要：AI 推理要处理海量数据，全用贵的 HBM 装不下，HBF 用便宜的材料装大数据，正好补上中间这块空档。</p></div><div class="fk-card"><div class="fk-term">zHBM / zNAND-O（垂直堆叠存储）</div><p class="fk-text">把内存从芯片&quot;旁边&quot;挪到芯片&quot;头顶&quot;上，像给 CPU 戴了顶数据帽子。为什么重要：距离越短传得越快越省电，是三星提出的下一代内存构想（还没量产）。</p></div><div class="fk-card"><div class="fk-term">Rubin Ultra（英伟达下一代旗舰 GPU）</div><p class="fk-text">英伟达下代&quot;算力王牌&quot;。为什么重要：它是全球 AI 芯片的风向标，它怎么配内存，整个存储产业链都得跟着调整——今天它砍 HBM，SK hynix 股价就跌了 19%。</p></div><div class="fk-card"><div class="fk-term">LPDDR6（第六代低功耗内存）</div><p class="fk-text">手机、轻薄本用的&quot;省电内存&quot;第 6 代。为什么重要：三星、美光都去忙 HBM 了，国产长鑫借这个&quot;空窗期&quot;冲 LPDDR6，是国产内存攻入移动端的关键一仗。</p></div><div class="fk-card"><div class="fk-term">六氟化钨（芯片特种气体）</div><p class="fk-text">制造芯片时&quot;铺金属层&quot;用的特殊气体。为什么重要：全球主要供应商在日本，而日本厂商的原料钨大多来自中国——中国一管制钨，日本就库存告急，材料话语权发生了逆转。</p></div><div class="fk-card"><div class="fk-term">光收发模块（光模块）</div><p class="fk-text">数据中心里&quot;把电信号变成光信号&quot;的零件，是 AI 服务器之间高速通信的&quot;传声筒&quot;。为什么重要：美国 FCC 想禁中国光模块，但全球最大的光模块厂就是中国的中际旭创，禁了反而美国云厂商先难受。</p></div><div class="fk-card"><div class="fk-term">算力通道管制</div><p class="fk-text">美国不直接禁芯片，而是盯住&quot;中国公司怎么在国外租云服务器用 AI 芯片&quot;。为什么重要：以前芯片运到第三国再转手，或直接远程租用，绕开了管制；美国现在要补这个&quot;后门&quot;。</p></div><div class="fk-card"><div class="fk-term">先进封装（2.5D/CoWoS）</div><p class="fk-text">把 GPU 和内存并排放在一块&quot;硅板&quot;上，像一群人围坐同一张桌子开会，传话快。为什么重要：AI 芯片大多用这种方式组装，产能紧张导致封测厂集体涨价——长电、通富今年利润暴涨就靠它。</p></div><div class="fk-card"><div class="fk-term">CFET（堆叠晶体管）</div><p class="fk-text">把两种晶体管上下叠在一起，比现在&quot;平铺&quot;的更省地方。为什么重要：芯片越做越小快到头了，CFET 是 1nm 之后的下一个技术方向，IBM 说能做到 2040 年。</p></div><div class="fk-card"><div class="fk-term">PE 估值（市盈率）</div><p class="fk-text">股价 ÷ 每股利润，相当于&quot;回本需要多少年&quot;。为什么重要：寒武纪 PE 约 133 倍，意味着市场已经为它未来多年的高增长付了钱，涨多了就有人担心&quot;贵&quot;。</p></div></div>
+    </section>
+      
+    <section class="deep-block">
+      <h2 class="dd-title">🔍 深度解读 <span class="tk-sub">最重要新闻 · 意味着什么 · 未来影响 · 格局意义 · 4 条</span></h2>
+      <div class="dd-list"><div class="dd-card"><div class="dd-head"><span class="dd-num">1</span><span class="dd-title">英伟达砍 HBM——存储超级周期的第一个裂痕（设计 → 制造）</span></div><div class="dd-part"><div class="dd-part-title">💡 这意味着什么</div><div class="dd-part-text">过去两年，AI 存储的故事是&quot;HBM 永远不够用、价格一直涨&quot;。今天英伟达把下一代旗舰芯片 Rubin Ultra 的 HBM 从 12 层 384GB 砍到 8 层 192GB——相当于一个&quot;大胃王&quot;顾客突然说&quot;我吃少点，省点钱&quot;。原因很直白：HBM 太贵了，AI 公司开始用系统设计（少配内存、多靠软件和互联优化）来对抗存储成本。SK hynix 七成 HBM 生意靠英伟达这类大客户，客户一减配，股价当天暴跌 19%。</div></div><div class="dd-part"><div class="dd-part-title">🔮 未来影响</div><div class="dd-part-text">短期（1 年内）这只是单款芯片的规格调整，2027 年产能仍售罄、价格仍在涨；中期（1-3 年）如果更多云厂商跟进下调 HBM 配置，&quot;存储永远供不应求&quot;的叙事会被改写，HBM 涨幅将明显收敛；长期（3-5 年）AI 硬件从&quot;堆料&quot;转向&quot;系统级优化&quot;（OpenAI 硬件负责人今天的演讲正是这个主题），存储厂必须用新架构（HBF/zHBM）创造新需求，而不能只靠涨价。</div></div><div class="dd-part"><div class="dd-part-title">🌍 格局意义</div><div class="dd-part-text">这是 AI 产业链第一次出现&quot;需求方主动降配&quot;的信号——英伟达作为最大买方，用一纸规格调整就给整个存储链&quot;降温&quot;。对世界：提醒市场&quot;超级周期也有拐点&quot;；对中国：长鑫恰好是&quot;没被波及的 DRAM 大厂&quot;（消费级 DRAM 与 HBM 是两条赛道），国产存储反而可能迎来客户分流；对普通人：内存、手机、电脑的涨价压力，2027 年后有望缓解。</div></div></div><div class="dd-card"><div class="dd-head"><span class="dd-num">2</span><span class="dd-title">2027 年存储产能全部售罄——&quot;结构性短缺&quot;进入最严峻期（制造）</span></div><div class="dd-part"><div class="dd-part-title">💡 这意味着什么</div><div class="dd-part-text">三星、SK hynix、美光把 2027 年的 DRAM 和 HBM 产能全部卖出去了，客户求着多给点，只能拿到 60-70%。这等于告诉全世界：存储的紧俏不是一两年的事，是能见度排到三年后的确定事件。SK 集团会长甚至说 2027 年是&quot;史上最严重短缺&quot;。</div></div><div class="dd-part"><div class="dd-part-title">🔮 未来影响</div><div class="dd-part-text">短期云厂商、手机厂、游戏机厂商都在抢货、涨价（Xbox 已涨 150 美元、iPhone 18 Pro 或超 1399 美元）；中期长协锁定（照付不议）让现货市场&quot;无货可买&quot;，价格易涨难跌；长期产能扩张需要 2-3 年才见效，2027 年供需缺口大概率真实存在——但正因为预期太一致，一旦某个大客户（比如英伟达）砍单，价格可能快速松动，今天 SK hynix 的暴跌就是预警。</div></div><div class="dd-part"><div class="dd-part-title">🌍 格局意义</div><div class="dd-part-text">存储首次成为 AI 时代的&quot;战略资源&quot;，话语权从买方（云厂商）转移到卖方（存储原厂）。对中国：长鑫借势扩产（全年 50-60 亿美元设备采购、LPDDR6 冲刺量产），这是国产 DRAM 从&quot;第七名&quot;冲&quot;第四极&quot;的历史性窗口；对普通人：未来一两年买手机电脑会更贵，且涨价可能持续到 2027 年。</div></div></div><div class="dd-card"><div class="dd-head"><span class="dd-num">3</span><span class="dd-title">HBF 获谷歌背书——存储巨头开打&quot;下一代内存定义战&quot;（制造）</span></div><div class="dd-part"><div class="dd-part-title">💡 这意味着什么</div><div class="dd-part-text">HBM 贵、SSD 慢，AI 推理需要一种&quot;又快又便宜又大&quot;的中间存储——HBF 就是答案候选。SK hynix 联合闪迪发布了 HBF 的第一个开放标准，还拉来了谷歌 DeepMind 站台（谷歌自己的 AI 推理需求就是最大的试金石）。这等于存储厂在抢着定义&quot;AI 时代内存长什么样&quot;，谁的标准被行业采纳，谁就握着未来的&quot;收租权&quot;。</div></div><div class="dd-part"><div class="dd-part-title">🔮 未来影响</div><div class="dd-part-text">短期 HBM 仍是主流，HBF 先切入小规模推理场景；中期&quot;分层内存&quot;成为标配——贵的 HBM 管高速、便宜的 HBF 管海量、SSD 管归档，内存不再是单一品种；长期 zHBM（戴在芯片头顶的内存）若量产，服务器散热、主板、电源全链路要重新设计，是一轮产业级换机潮。</div></div><div class="dd-part"><div class="dd-part-title">🌍 格局意义</div><div class="dd-part-text">存储从&quot;跟着 CPU/GPU 规格走的配角&quot;变成&quot;定义架构的主角&quot;。SK hynix 抢 HBF 标准、三星押注 zHBM、美光押注 HBM4——三巨头各有路线，AI 让存储第一次站上产业链中心。对中国：国产存储（长鑫）必须跟上架构变革，否则会在下一代 AI 内存上再落后一代。</div></div></div><div class="dd-card"><div class="dd-head"><span class="dd-num">4</span><span class="dd-title">美国管制延伸到&quot;算力通道&quot;与&quot;光互连&quot;——封锁网再扩两环（政策）</span></div><div class="dd-part"><div class="dd-part-title">💡 这意味着什么</div><div class="dd-part-text">美国以前管的是&quot;芯片本身&quot;（禁卖英伟达高端 GPU），现在盯上两条新通道：一是中国公司去海外租云服务器远程用 GPU（算力即服务，不碰实体芯片也能绕开管制）；二是美国自己的 AI 数据中心里不能有中国产的光模块（担心供应链依赖）。相当于从&quot;禁卖&quot;升级到&quot;禁租、禁用&quot;。</div></div><div class="dd-part"><div class="dd-part-title">🔮 未来影响</div><div class="dd-part-text">短期海外云计算租用通道可能收紧，中国 AI 公司获取高端算力的成本与合规风险上升；中期 FCC 若真禁光模块，全球光模块市场重新洗牌——中际旭创占全球 27%，美国本土厂商产能短期补不上，最先疼的反而是美国云厂商；长期管制每延伸一环，就为中国供应链创造一个确定性方向（国产光模块、国产算力集群、钨等资源反制）。</div></div><div class="dd-part"><div class="dd-part-title">🌍 格局意义</div><div class="dd-part-text">这场博弈从&quot;技术封锁&quot;演变为&quot;全链条供应链攻防&quot;。中国手里也有牌——钨、锗等关键材料管制让日本关东电化库存告急（见材料/设备），&quot;你卡我光刻机，我卡你钨原料&quot;的相互威慑格局正在成形。对普通人：AI 供应链的地缘博弈越激烈，全球科技产品价格与可用性就越不稳定。</div></div></div></div>
+    </section>
+      
+    <section class="future-block">
+      <h2 class="fu-title">🧭 未来借鉴 <span class="tk-sub">趋势信号 · 格局预判 · 格局时间轴 · 可借鉴行动 · 风险提示</span></h2>
+      <div class="fu-grid"><div class="fu-card" style="border-top-color:#2563eb"><div class="fu-head"><span class="fu-ico">📡</span><span class="fu-cat" style="color:#2563eb">趋势信号</span></div><div class="fu-text">1. AI 硬件从&quot;堆料竞赛&quot;转向&quot;系统级优化&quot;——英伟达砍 HBM、OpenAI 硬件负责人呼吁系统级创新，两个信号指向同一结论：AI 公司开始用设计优化对抗硬件成本，&quot;越大越贵越好&quot;的买买买模式出现拐点。<span class="fu-strength" style="color:#b91c1c;background:#fee2e2">↑ 强度·强</span> 2. 存储超级周期出现&quot;高位分化&quot;——2027 年产能售罄（基本面仍强）与 Rubin Ultra 砍单（预期见顶）同一天出现，市场用 SK hynix 单日 -19% 给&quot;一致性看多&quot;敲了警钟。<span class="fu-strength" style="color:#b91c1c;background:#fee2e2">↑ 强度·强</span> 3. 存储架构进入&quot;定义权争夺期&quot;——HBF 开放标准落地、谷歌背书、三星 zHBM 路线图，三巨头竞逐下一代内存定义权，标准与生态比产能更值钱。<span class="fu-strength" style="color:#b91c1c;background:#fee2e2">↑ 强度·强</span> 4. 美国 AI 管制从&quot;禁卖&quot;升级为&quot;禁租+禁用&quot;——算力通道审查、光模块禁令，封锁维度从芯片本身扩展到使用环节，中国 AI 供应链进入&quot;全面承压-全面国产化&quot;阶段。<span class="fu-strength" style="color:#b91c1c;background:#fee2e2">↑ 强度·强</span></div></div><div class="fu-card" style="border-top-color:#7c3aed"><div class="fu-head"><span class="fu-ico">🌐</span><span class="fu-cat" style="color:#7c3aed">格局预判</span></div><div class="fu-text">1. 存储&quot;三巨头+长鑫&quot;格局加速定型：2027 年前存储话语权在卖方，2027 年后随产能释放与需求降配可能出现再平衡——英伟达的砍单决策是这一再平衡的提前预演。 2. 先进封装与 HBF 类新存储成为 2026-2027 年确定性最高的增量赛道：封测厂订单排到 2027、存储代际革新直接拉动封装测试设备需求。 3. 中美供应链攻防进入&quot;相互威慑&quot;阶段：美国卡芯片与设备，中国卡钨/锗等关键材料，双方各自在对方薄弱环节建立反制筹码。</div></div><div class="fu-card" style="border-top-color:#0f766e"><div class="fu-head"><span class="fu-ico">🕐</span><span class="fu-cat" style="color:#0f766e">格局时间轴</span></div><div class="tl-track"><div class="tl-stage"><div class="tl-dot">阶段 1</div><div class="tl-period">1 年内</div><div class="tl-desc">Rubin Ultra 规格验证敲定，HBM 需求预期持续受其扰动；HBF 从小规模推理场景切入；长电、通富、长鑫扩产订单集中落地；FCC 光模块禁令是否落地见分晓。</div></div><div class="tl-stage"><div class="tl-dot">阶段 2</div><div class="tl-period">1-3 年</div><div class="tl-desc">&quot;内存分层&quot;成为 AI 服务器标配；长鑫全球 DRAM 产能占比向 17% 爬升；先进封装新产能释放、紧缺开始缓解；若更多云厂商跟进砍 HBM，存储涨价周期可能在 2027 年后见顶。</div></div><div class="tl-stage"><div class="tl-dot">阶段 3</div><div class="tl-period">3-5 年</div><div class="tl-desc">zHBM 若量产引发服务器全链路换机潮；存储格局定型&quot;三强+长鑫+新存储层级&quot;；今天被卡得最狠的环节（光模块、算力通道、封装设备）大概率是国产化率最高、话语权最重的环节。</div></div></div></div><div class="fu-card" style="border-top-color:#16a34a"><div class="fu-head"><span class="fu-ico">🛠</span><span class="fu-cat" style="color:#16a34a">可借鉴行动</span></div><div class="fu-text">1. 跟踪&quot;英伟达规格书&quot;做产业研究：Rubin Ultra 的 HBM 配置变化是观察存储链拐点的最灵敏指标——大客户的一纸改单，胜过十份研报的预测。 2. 用&quot;供需剪刀差&quot;思维看涨价：今天 SK hynix 暴跌与 2027 售罄并存，说明&quot;基本面向好&quot;与&quot;预期见顶&quot;可以同时为真——看到一致性看多时要主动找反转证据。 3. 关注&quot;新存储层级&quot;（HBF/分层内存）的设备链机会：存储架构变革直接利好封装、测试、材料环节，这与先进封装紧缺是同一条主线的两个面。</div></div><div class="fu-card" style="border-top-color:#b91c1c"><div class="fu-head"><span class="fu-ico">⚠️</span><span class="fu-cat" style="color:#b91c1c">风险提示</span></div><div class="fu-text">1. 存储&quot;超级周期&quot;共识已极度拥挤：2027 年产能售罄的叙事越一致，越要警惕需求降配（如英伟达砍单）引发戴维斯双杀，SK hynix -19% 就是预演。 2. 国产替代节奏不确定：管制升级可能加速，也可能因国际谈判反复；验证进度、订单落地都可能低于预期，概念股情绪与产业逻辑要分开看（长电 174 亿天量换手即是情绪指标）。 3. 消费端通胀反噬：存储涨价已传导至手机（iPhone 18 Pro 或超 1399 美元）、游戏机（Xbox 涨 150 美元），若需求因涨价萎缩，产业链&quot;量缩价涨&quot;可能演变为滞胀风险。</div></div></div>
+    </section>
+      
+    <details class="selfcheck">
+      <summary>自检结果（19 项 Rubric）</summary>
+      <table class="sc-table">
+        <thead><tr><th>#</th><th>检查项</th><th>结果</th><th>说明</th></tr></thead>
+        <tbody><tr class="sc-pass"><td>1</td><td>产业链完整性</td><td><span class="sc-pill sc-pass">PASS</span></td><td>5 环节全部出现（设计 4 / 制造 6 / 封测 3 / EDA 1 / 材料设备 1）</td></tr><tr class="sc-pass"><td>2</td><td>来源可追溯</td><td><span class="sc-pill sc-pass">PASS</span></td><td>15 条均附可点击来源链接</td></tr><tr class="sc-pass"><td>3</td><td>时间戳准确</td><td><span class="sc-pill sc-pass">PASS</span></td><td>每条标注发布日期</td></tr><tr class="sc-pass"><td>4</td><td>摘要规范</td><td><span class="sc-pill sc-pass">PASS</span></td><td>每条 3-5 句、80-150 字，含制程/堆叠层数/价格/市占率等技术维度</td></tr><tr class="sc-pass"><td>5</td><td>时效性</td><td><span class="sc-pill sc-pass">PASS</span></td><td>8 条超 72h 新闻已标注[回顾]</td></tr><tr class="sc-pass"><td>6</td><td>信源可靠性</td><td><span class="sc-pill sc-pass">PASS</span></td><td>无 C 级来源（微博/社媒未采用）</td></tr><tr class="sc-pass"><td>7</td><td>中立性</td><td><span class="sc-pill sc-pass">PASS</span></td><td>仅汇总事实，技术注解为原理说明非投资建议</td></tr><tr class="sc-pass"><td>8</td><td>去重</td><td><span class="sc-pill sc-pass">PASS</span></td><td>同一事件多源已合并（Rubin Ultra 配置调整 8/5 评估+8/9 落地；HBF 标准+谷歌背书双源链接）</td></tr><tr class="sc-pass"><td>9</td><td>元信息完整</td><td><span class="sc-pill sc-pass">PASS</span></td><td>生成时间/覆盖范围/新闻总数（15 条）齐全</td></tr><tr class="sc-pass"><td>10</td><td>今日要点</td><td><span class="sc-pill sc-pass">PASS</span></td><td>精选 3 条最重要新闻</td></tr><tr class="sc-pass"><td>11</td><td>分类正确</td><td><span class="sc-pill sc-pass">PASS</span></td><td>按 classification.md 规则归类（HBF/zHBM 归制造、政策归横向维度）</td></tr><tr class="sc-pass"><td>12</td><td>无附录越界</td><td><span class="sc-pill sc-pass">PASS</span></td><td>横向维度小节为客观事实汇总，无股价分析/投资建议</td></tr><tr class="sc-pass"><td>13</td><td>来源质量</td><td><span class="sc-pill sc-pass">PASS</span></td><td>A级 5 条 / 共 15 条 = 33.3% ≥ 30%</td></tr><tr class="sc-pass"><td>14</td><td>技术注解</td><td><span class="sc-pill sc-pass">PASS</span></td><td>14 条涉及专业术语新闻均含[技术注解]</td></tr><tr class="sc-pass"><td>15</td><td>产业链关联</td><td><span class="sc-pill sc-pass">PASS</span></td><td>3 组关联，覆盖设计→制造→市场、制造→封测、政策→材料传导</td></tr><tr class="sc-pass"><td>16</td><td>费曼解释</td><td><span class="sc-pill sc-pass">PASS</span></td><td>12 条大白话术语解释，覆盖当日全部难懂术语</td></tr><tr class="sc-pass"><td>17</td><td>深度解读</td><td><span class="sc-pill sc-pass">PASS</span></td><td>4 条最重要新闻逐条解读（意味着什么/未来影响/格局意义）</td></tr><tr class="sc-pass"><td>18</td><td>未来借鉴</td><td><span class="sc-pill sc-pass">PASS</span></td><td>趋势信号 4 条（含强度标注）/ 格局预判 3 条 / 格局时间轴 3 阶段 / 可借鉴行动 3 条 / 风险提示 3 条</td></tr><tr class="sc-pass"><td>19</td><td>今日导师课</td><td><span class="sc-pill sc-pass">PASS</span></td><td>今日速览 / 深度第一课 / 必懂概念 / 课后思考 四模块齐全（学生视角）</td></tr></tbody>
+      </table>
+    </details>
+    </div></div><div class="panel" id="panel-chain">
+    <div class="chain-view">
+      <p class="chain-intro">半导体价值链条：<b>上游支撑层</b>（材料 / 设备、EDA / IP）
+        → <b>中游核心层</b>（芯片设计 → 晶圆制造）→ <b>下游层</b>（封测 / OSAT）→ 终端应用。
+        卡片内为本期真实厂商 / 事件（圆点：<span style="color:#16a34a">绿=A 级一手</span> /
+        <span style="color:#d97706">琥珀=B 级聚合</span>）；下方为三组产业链关联传导链（含量化与技术依赖）。</p>
+      <div class="seg-strip"><div class="ss-cell" style="border-color:#2563eb"><div class="ss-name" style="color:#2563eb">芯片设计</div><div class="ss-num">4 条</div><div class="ss-ab">A 1 · B 3 · C 0</div></div><div class="ss-cell" style="border-color:#7c3aed"><div class="ss-name" style="color:#7c3aed">晶圆制造</div><div class="ss-num">6 条</div><div class="ss-ab">A 4 · B 2 · C 0</div></div><div class="ss-cell" style="border-color:#0891b2"><div class="ss-name" style="color:#0891b2">封测 / OSAT</div><div class="ss-num">3 条</div><div class="ss-ab">A 0 · B 3 · C 0</div></div><div class="ss-cell" style="border-color:#db2777"><div class="ss-name" style="color:#db2777">EDA / IP</div><div class="ss-num">1 条</div><div class="ss-ab">A 0 · B 1 · C 0</div></div><div class="ss-cell" style="border-color:#16a34a"><div class="ss-name" style="color:#16a34a">材料 / 设备</div><div class="ss-num">1 条</div><div class="ss-ab">A 0 · B 1 · C 0</div></div></div>
+      <div class="chain-svg-wrap">
+        <svg viewBox="0 0 1000 672" width="100%" preserveAspectRatio="xMidYMid meet" role="img" aria-label="产业链全貌价值链条形图" class="chain-svg"><defs><marker id="arrow" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto" markerUnits="strokeWidth"><path d="M0,0 L7,3 L0,6 Z" fill="#475569"/></marker><filter id="ds" x="-20%" y="-20%" width="140%" height="140%"><feDropShadow dx="0" dy="3" stdDeviation="4" flood-color="#0f172a" flood-opacity="0.13"/></filter><linearGradient id="demand" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#0f172a"/><stop offset="1" stop-color="#1e3a8a"/></linearGradient><linearGradient id="term" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#0891b2"/><stop offset="1" stop-color="#155e75"/></linearGradient></defs><g><rect x="60" y="18" width="880" height="56" rx="16" fill="url(#demand)"/><text x="84" y="52" fill="#fff" font-size="17" font-weight="800">需求驱动</text><text x="186" y="51" fill="#fff" font-size="13.5" opacity=".92">AI 算力军备竞赛 · HBM4 量产交付 · 国产替代加速</text></g><g><rect x="60" y="600" width="880" height="56" rx="16" fill="url(#term)"/><text x="84" y="634" fill="#fff" font-size="17" font-weight="800">终端应用</text><text x="186" y="633" fill="#fff" font-size="13.5" opacity=".92">AI 服务器 · 智能手机 · 汽车电子 · 高性能计算</text></g><g><rect x="60" y="86" width="101" height="26" rx="13" fill="#0f172a"/><text x="73" y="104" fill="#fff" font-size="13" font-weight="700">上游支撑层</text></g><g><rect x="60" y="254" width="101" height="26" rx="13" fill="#0f172a"/><text x="73" y="272" fill="#fff" font-size="13" font-weight="700">中游核心层</text></g><g><rect x="60" y="422" width="71" height="26" rx="13" fill="#0f172a"/><text x="73" y="440" fill="#fff" font-size="13" font-weight="700">下游层</text></g><line x1="500" y1="74" x2="500" y2="116" stroke="#475569" stroke-width="2.6" marker-end="url(#arrow)" class="bk"/><line x1="270" y1="244" x2="270" y2="288" stroke="#db2777" stroke-width="2.6" marker-end="url(#arrow)" class="bk"/><text x="284.0" y="266.0" text-anchor="middle" font-size="11.5" font-weight="600" fill="#db2777">支撑</text><line x1="730" y1="244" x2="730" y2="288" stroke="#16a34a" stroke-width="2.6" marker-end="url(#arrow)" class="bk"/><text x="716.0" y="266.0" text-anchor="middle" font-size="11.5" font-weight="600" fill="#16a34a">供给</text><line x1="470" y1="350" x2="530" y2="350" stroke="#334155" stroke-width="3" marker-end="url(#arrow)" class="bk"/><text x="500.0" y="340.0" text-anchor="middle" font-size="11.5" font-weight="600" fill="#334155">设计交付</text><line x1="730" y1="412" x2="500" y2="456" stroke="#334155" stroke-width="3" marker-end="url(#arrow)" class="bk"/><text x="645.0" y="434.0" text-anchor="middle" font-size="11.5" font-weight="600" fill="#334155">封测</text><line x1="500" y1="580" x2="500" y2="596" stroke="#334155" stroke-width="3" marker-end="url(#arrow)" class="bk"/><g class="stage" data-seg="EDA"><rect x="70" y="120" width="400" height="124" rx="14" fill="#fff" stroke="#db2777" stroke-width="2.5" filter="url(#ds)"/><path d="M70,134 a14,14 0 0 1 14,-14 h372 a14,14 0 0 1 14,14 v20 h-400 z" fill="#db2777"/><text x="85" y="145" fill="#fff" font-size="15" font-weight="700">EDA / IP</text><text x="455" y="145" text-anchor="end" fill="#fff" font-size="13" opacity=".92">1 条</text><circle cx="90" cy="168" r="4.2" fill="#d97706"/><text x="103" y="172" font-size="13" fill="#334155">概伦电子 21.74 亿并购资产过…</text></g><g class="stage" data-seg="材料"><rect x="530" y="120" width="400" height="124" rx="14" fill="#fff" stroke="#16a34a" stroke-width="2.5" filter="url(#ds)"/><path d="M530,134 a14,14 0 0 1 14,-14 h372 a14,14 0 0 1 14,14 v20 h-400 z" fill="#16a34a"/><text x="545" y="145" fill="#fff" font-size="15" font-weight="700">材料 / 设备</text><text x="915" y="145" text-anchor="end" fill="#fff" font-size="13" opacity=".92">1 条</text><circle cx="550" cy="168" r="4.2" fill="#d97706"/><text x="563" y="172" font-size="13" fill="#334155">六氟化钨价格同比涨 232%，日本…</text></g><g class="stage" data-seg="设计"><rect x="70" y="288" width="400" height="124" rx="14" fill="#fff" stroke="#2563eb" stroke-width="2.5" filter="url(#ds)"/><path d="M70,302 a14,14 0 0 1 14,-14 h372 a14,14 0 0 1 14,14 v20 h-400 z" fill="#2563eb"/><text x="85" y="313" fill="#fff" font-size="15" font-weight="700">芯片设计</text><text x="455" y="313" text-anchor="end" fill="#fff" font-size="13" opacity=".92">4 条</text><circle cx="90" cy="336" r="4.2" fill="#d97706"/><text x="103" y="340" font-size="13" fill="#334155">英伟达 Rubin Ultra 削…</text><circle cx="90" cy="358" r="4.2" fill="#d97706"/><text x="103" y="362" font-size="13" fill="#334155">寒武纪 2026 中报：营收 59…</text><circle cx="90" cy="380" r="4.2" fill="#d97706"/><text x="103" y="384" font-size="13" fill="#334155">VLSI 2026 开幕：Open…</text><circle cx="90" cy="402" r="4.2" fill="#16a34a"/><text x="103" y="406" font-size="13" fill="#334155">美国 BIS 审查海外算力获取通道…</text></g><g class="stage" data-seg="制造"><rect x="530" y="288" width="400" height="124" rx="14" fill="#fff" stroke="#7c3aed" stroke-width="2.5" filter="url(#ds)"/><path d="M530,302 a14,14 0 0 1 14,-14 h372 a14,14 0 0 1 14,14 v20 h-400 z" fill="#7c3aed"/><text x="545" y="313" fill="#fff" font-size="15" font-weight="700">晶圆制造</text><text x="915" y="313" text-anchor="end" fill="#fff" font-size="13" opacity=".92">6 条</text><circle cx="550" cy="336" r="4.2" fill="#16a34a"/><text x="563" y="340" font-size="13" fill="#334155">SK hynix 批准 54 万亿…</text><circle cx="550" cy="358" r="4.2" fill="#16a34a"/><text x="563" y="362" font-size="13" fill="#334155">谷歌 DeepMind 公开背书 …</text><circle cx="550" cy="380" r="4.2" fill="#d97706"/><text x="563" y="384" font-size="13" fill="#334155">芯片热管理成 AI 竞争核心：三星…</text><circle cx="550" cy="402" r="4.2" fill="#16a34a"/><text x="563" y="406" font-size="13" fill="#334155">三星发布 zNAND-O 与 zH…</text><text x="563" y="428" font-size="12" fill="#94a3b8">+2 条…</text></g><g class="stage" data-seg="封测"><rect x="300" y="456" width="400" height="124" rx="14" fill="#fff" stroke="#0891b2" stroke-width="2.5" filter="url(#ds)"/><path d="M300,470 a14,14 0 0 1 14,-14 h372 a14,14 0 0 1 14,14 v20 h-400 z" fill="#0891b2"/><text x="315" y="481" fill="#fff" font-size="15" font-weight="700">封测 / OSAT</text><text x="685" y="481" text-anchor="end" fill="#fff" font-size="13" opacity=".92">3 条</text><circle cx="320" cy="504" r="4.2" fill="#d97706"/><text x="333" y="508" font-size="13" fill="#334155">长电科技 78 亿临港扩产 + 半…</text><circle cx="320" cy="526" r="4.2" fill="#d97706"/><text x="333" y="530" font-size="13" fill="#334155">通富微电半年报预增 288-337…</text><circle cx="320" cy="548" r="4.2" fill="#d97706"/><text x="333" y="552" font-size="13" fill="#334155">安靠与英伟达达成 15 亿美元多年…</text></g></svg>
+      </div>
+      <h3 class="chain-detail-title">三组产业链关联传导链（量化 + 技术领域链）</h3>
+      <div class="chain-ribbons">
+    <div class="chain-ribbon" style="border-left:4px solid #2563eb">
+      <div class="cr-head">
+        <span class="cr-num" style="background:#2563eb">1</span>
+        <span class="cr-title">AI 芯片降本 → 存储需求预期重估 → 存储股价剧烈波动</span>
+      </div>
+      <div class="cr-flow"></div>
+      <p class="cr-body">英伟达 Rubin Ultra 削减 HBM 配置近半（设计）→ SK hynix 股价单日暴跌 19%、存储链需求预期遭重估（市场）→ 但 2027 年三巨头产能已售罄、SK 反…</p>
+    </div>
+    <div class="chain-ribbon" style="border-left:4px solid #db2777">
+      <div class="cr-head">
+        <span class="cr-num" style="background:#db2777">2</span>
+        <span class="cr-title">存储缺货 → 内存分层 → 先进封装与设备放量</span>
+      </div>
+      <div class="cr-flow"></div>
+      <p class="cr-body">2027 产能售罄（制造）→ HBF/zHBM 等新存储层级加速定义（制造）→ 先进封装成为新存储层级的必配工序，长电 78 亿扩产、通富预增 288-337%、安靠与英伟达签 1…</p>
+    </div>
+    <div class="chain-ribbon" style="border-left:4px solid #16a34a">
+      <div class="cr-head">
+        <span class="cr-num" style="background:#16a34a">3</span>
+        <span class="cr-title">美国管制升级 → 中国 AI 供应链新封锁点 → 国产替代窗口</span>
+      </div>
+      <div class="cr-flow"></div>
+      <p class="cr-body">BIS 审查海外算力通道、FCC 拟禁中国光模块（政策）→ 中国 AI 基建的&quot;算力获取+光互连&quot;双通道承压（设计/市场）→ 国产光模块、算力集群与上游材料（钨管制反制）获得自主化…</p>
+    </div></div>
+    </div></div><div class="panel" id="panel-dimensions"><section class="dim-block"><div class="dim-head" style="border-color:#0891b2"><span class="dim-ico" style="background:#0891b2">📈</span><div><div class="dim-name">市场与需求</div><div class="dim-desc">供需 · 价格 · 景气度 · 共 1 节 / A 级 0</div></div></div><div class="dim-intro">当日行业供需、价格与景气度的客观事实汇总（非投资建议/预测）</div><div class="dim-sub"><div class="ds-title">内存与存储</div><div class="ds-body">存储超级周期进入&quot;需求预期分化&quot;阶段：一方面英伟达 Rubin Ultra 削减 HBM 配置近半（详见设计），部分云服务商也在评估下调自研 ASIC 的 HBM 容量；另一方面三星、SK hynix、美光 2027 年产能已全部售罄、客户配货仅 60-70%，SK 集团会长预计 2027 年 AI 半导体需求再增 60-100%（来源：<a href="https://view.inews.qq.com/a/20260807A06N5Y00" class="src-link" target="_blank" rel="noopener">财联社</a>，2026-08-07）。DRAM 合约价 Q1 环比涨 93-98%、Q2 涨 58-63%，TrendForce 预计 Q3 续涨 13-18%但涨幅收敛（来源：<a href="https://www.163.com/dy/article/L2046QRB05118O92.html" class="src-link" target="_blank" rel="noopener">网易引 TrendForce</a>，[回顾]）。云厂商资本开支持续加码：谷歌上调全年至 1950-2050 亿美元、亚马逊 2200 亿美元、Meta 1300-1450 亿美元，均创历史新高，为存储需求增速提供基本盘支撑（来源：<a href="https://new.qq.com/rain/a/20260807A0D7NA00?refer=cp_1009" class="src-link" target="_blank" rel="noopener">腾讯新闻</a>，2026-08-07）。</div><div class="ds-srcs"><a class="badge-b" href="https://view.inews.qq.com/a/20260807A06N5Y00" target="_blank" rel="noopener">财联社 · B</a><a class="badge-b" href="https://www.163.com/dy/article/L2046QRB05118O92.html" target="_blank" rel="noopener">网易引 TrendForce · B</a><a class="badge-b" href="https://new.qq.com/rain/a/20260807A0D7NA00?refer=cp_1009" target="_blank" rel="noopener">腾讯新闻 · B</a></div></div></section><section class="dim-block"><div class="dim-head" style="border-color:#7c3aed"><span class="dim-ico" style="background:#7c3aed">⚖️</span><div><div class="dim-name">政策与监管</div><div class="dim-desc">出口管制 · 补贴 · 安全审查 · 共 2 节 / A 级 0</div></div></div><div class="dim-intro">各国出口管制、产业补贴、安全审查等客观事实（标注发布机构与日期）</div><div class="dim-sub"><div class="ds-title">出口管制</div><div class="ds-body">美国 AI 供应链管制从&quot;芯片&quot;延伸到&quot;算力通道&quot;与&quot;光互连&quot;两个新维度：BIS 正在审查受限国家企业海外获取与远程租用英伟达算力的渠道（来源：<a href="https://finance.sina.com.cn/roll/2026-08-07/doc-inimnzsm4713430.shtml" class="src-link" target="_blank" rel="noopener">新浪财经引彭博</a>，2026-08-07）；美国联邦通信委员会（FCC）拟起草禁令禁止进口中国新型数据中心组件、当前重点指向光收发模块，官员希望年内公布实施——中际旭创占全球光模块市场约 27%，Counterpoint 与美创新基金会报告称美国 Coherent、Lumentum 产能不足以取代中国供应商（来源：<a href="https://new.qq.com/rain/a/20260805A0486H00" class="src-link" target="_blank" rel="noopener">中新经纬引路透</a>，2026-08-05）。</div><div class="ds-srcs"><a class="badge-b" href="https://finance.sina.com.cn/roll/2026-08-07/doc-inimnzsm4713430.shtml" target="_blank" rel="noopener">新浪财经引彭博 · B</a><a class="badge-b" href="https://new.qq.com/rain/a/20260805A0486H00" target="_blank" rel="noopener">中新经纬引路透 · B</a></div></div><div class="dim-sub"><div class="ds-title">产业政策</div><div class="ds-body">《智能网联汽车 自动驾驶系统安全要求》强制性国家标准正式发布，拟于 2027 年 7 月 1 日实施，对 L3 级自动驾驶系统提出驾驶人接管能力监测等要求，车规级芯片与感知器件的安全验证标准随之收紧（来源：<a href="https://www.163.com/dy/article/L3SF34I00550B1DU.html" class="src-link" target="_blank" rel="noopener">科创板日报</a>，2026-08-09）。</div><div class="ds-srcs"><a class="badge-b" href="https://www.163.com/dy/article/L3SF34I00550B1DU.html" target="_blank" rel="noopener">科创板日报 · B</a></div></div></section><section class="dim-block"><div class="dim-head" style="border-color:#16a34a"><span class="dim-ico" style="background:#16a34a">💰</span><div><div class="dim-name">资本与投融资</div><div class="dim-desc">融资 · 并购 · IPO · 产线投资 · 共 2 节 / A 级 0</div></div></div><div class="dim-intro">融资、并购、IPO、产线投资等客观事实（标注金额/轮次/参与方）</div><div class="dim-sub"><div class="ds-title">并购</div><div class="ds-body">锴威特（688693，高性能功率半导体，SiC 领域自主核心技术）拟收购晶艺半导体 100% 股权，功率半导体板块并购整合持续；乐鑫科技公告拟以 5000 万元至 1 亿元回购公司股份（来源：<a href="https://www.163.com/dy/article/L3SF34I00550B1DU.html" class="src-link" target="_blank" rel="noopener">科创板日报</a>，2026-08-09）。</div><div class="ds-srcs"><a class="badge-b" href="https://www.163.com/dy/article/L3SF34I00550B1DU.html" target="_blank" rel="noopener">科创板日报 · B</a></div></div><div class="dim-sub"><div class="ds-title">产线投资</div><div class="ds-body">SK hynix 批准约 380 亿美元新建两座晶圆厂（详见制造）；长电科技 78 亿元临港高端封测工厂（详见封测）；长鑫全年设备采购 50-60 亿美元、Q2 已开启设备招投标（详见制造）。</div></div></section></div><div class="panel" id="panel-trend">
+    <section class="tr-block">
+      <h2 class="tr-title">📊 历史趋势 <span class="tr-sub">quality_dashboard · 5 期</span></h2>
+      <div class="chart-card"><svg viewBox="0 0 940 216" class="viz-svg" role="img" aria-label="趋势折线图"><line x1="12" y1="20.0" x2="924" y2="20.0" stroke="#eef2f7" stroke-width="1"/><line x1="12" y1="60.0" x2="924" y2="60.0" stroke="#eef2f7" stroke-width="1"/><line x1="12" y1="100.0" x2="924" y2="100.0" stroke="#eef2f7" stroke-width="1"/><line x1="12" y1="140.0" x2="924" y2="140.0" stroke="#eef2f7" stroke-width="1"/><line x1="12" y1="180.0" x2="924" y2="180.0" stroke="#eef2f7" stroke-width="1"/><text x="12.0" y="204" text-anchor="middle" font-size="11.5" fill="#64748b">07-20</text><text x="240.0" y="204" text-anchor="middle" font-size="11.5" fill="#64748b">07-22</text><text x="468.0" y="204" text-anchor="middle" font-size="11.5" fill="#64748b">07-27</text><text x="696.0" y="204" text-anchor="middle" font-size="11.5" fill="#64748b">08-08</text><text x="924.0" y="204" text-anchor="middle" font-size="11.5" fill="#64748b">08-09</text><polyline points="12.0,151.9 240.0,173.6 468.0,32.8 696.0,97.8 924.0,119.4" fill="none" stroke="#2563eb" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/><g><circle cx="12.0" cy="151.9" r="4" fill="#fff" stroke="#2563eb" stroke-width="2.2"><title>07-20 · 新闻条数：11</title></circle><text x="12.0" y="142.9" text-anchor="middle" font-size="10.5" font-weight="700" fill="#2563eb">11</text></g><g><circle cx="240.0" cy="173.6" r="4" fill="#fff" stroke="#2563eb" stroke-width="2.2"><title>07-22 · 新闻条数：9</title></circle><text x="240.0" y="164.6" text-anchor="middle" font-size="10.5" font-weight="700" fill="#2563eb">9</text></g><g><circle cx="468.0" cy="32.8" r="4" fill="#fff" stroke="#2563eb" stroke-width="2.2"><title>07-27 · 新闻条数：22</title></circle><text x="468.0" y="23.8" text-anchor="middle" font-size="10.5" font-weight="700" fill="#2563eb">22</text></g><g><circle cx="696.0" cy="97.8" r="4" fill="#fff" stroke="#2563eb" stroke-width="2.2"><title>08-08 · 新闻条数：16</title></circle><text x="696.0" y="88.8" text-anchor="middle" font-size="10.5" font-weight="700" fill="#2563eb">16</text></g><g><circle cx="924.0" cy="119.4" r="4" fill="#fff" stroke="#2563eb" stroke-width="2.2"><title>08-09 · 新闻条数：14</title></circle><text x="924.0" y="110.4" text-anchor="middle" font-size="10.5" font-weight="700" fill="#2563eb">14</text></g><polyline points="12.0,130.0 240.0,173.6 468.0,32.8 696.0,113.9 924.0,165.0" fill="none" stroke="#16a34a" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/><g><circle cx="12.0" cy="130.0" r="4" fill="#fff" stroke="#16a34a" stroke-width="2.2"><title>07-20 · A 级占比：46%</title></circle><text x="12.0" y="121.0" text-anchor="middle" font-size="10.5" font-weight="700" fill="#16a34a">46%</text></g><g><circle cx="240.0" cy="173.6" r="4" fill="#fff" stroke="#16a34a" stroke-width="2.2"><title>07-22 · A 级占比：33%</title></circle><text x="240.0" y="164.6" text-anchor="middle" font-size="10.5" font-weight="700" fill="#16a34a">33%</text></g><g><circle cx="468.0" cy="32.8" r="4" fill="#fff" stroke="#16a34a" stroke-width="2.2"><title>07-27 · A 级占比：73%</title></circle><text x="468.0" y="23.8" text-anchor="middle" font-size="10.5" font-weight="700" fill="#16a34a">73%</text></g><g><circle cx="696.0" cy="113.9" r="4" fill="#fff" stroke="#16a34a" stroke-width="2.2"><title>08-08 · A 级占比：50%</title></circle><text x="696.0" y="104.9" text-anchor="middle" font-size="10.5" font-weight="700" fill="#16a34a">50%</text></g><g><circle cx="924.0" cy="165.0" r="4" fill="#fff" stroke="#16a34a" stroke-width="2.2"><title>08-09 · A 级占比：36%</title></circle><text x="924.0" y="156.0" text-anchor="middle" font-size="10.5" font-weight="700" fill="#16a34a">36%</text></g></svg><div class="chart-legend"><span class="lg-chip"><i style="background:#2563eb"></i>新闻条数</span><span class="lg-chip"><i style="background:#16a34a"></i>A 级占比</span></div></div>
+      <p class="tr-note">双轴各自独立归一化（形状可比，精确数值见数据点标注）· A 级占比按权威域名白名单对真实 URL 计算</p>
+    </section>
+    <section class="tr-block">
+      <h2 class="tr-title">🧪 质量聚合 <span class="tr-sub">跨期汇总 · 自检 / 条数分级</span></h2>
+      <div class="wk-cards"><div class="wk-card"><div class="wk-num">5</div><div class="wk-label">报告期数</div></div><div class="wk-card"><div class="wk-num">14.4</div><div class="wk-label">平均新闻条数</div></div><div class="wk-card"><div class="wk-num">47%</div><div class="wk-label">平均 A 级占比</div></div><div class="wk-card"><div class="wk-num">100%</div><div class="wk-label">自检通过率</div></div></div>
+      <div class="chart-card x12-card">
+        <div class="x12-title">新闻条数分级（X12 软指标：15-20 条 PASS / 10-14、21-25 WARN）</div>
+        <div class="x12-row"><span class="x12-lab">PASS</span><div class="x12-track"><div class="x12-fill" style="width:20.0%;background:#15803d"></div></div><span class="x12-num">1</span></div><div class="x12-row"><span class="x12-lab">WARN</span><div class="x12-track"><div class="x12-fill" style="width:60.0%;background:#b45309"></div></div><span class="x12-num">3</span></div><div class="x12-row"><span class="x12-lab">FAIL</span><div class="x12-track"><div class="x12-fill" style="width:20.0%;background:#b91c1c"></div></div><span class="x12-num">1</span></div>
+      </div>
+    </section>
+    <section class="tr-block">
+      <h2 class="tr-title">🧩 本期环节分布 <span class="tr-sub">设计 → 制造 → 封测 → EDA → 材料 · 共 15 条</span></h2>
+      <div class="chart-card"><svg viewBox="0 0 940 190" class="viz-svg" role="img" aria-label="条形图"><rect x="43.1" y="68.7" width="117.8" height="89.3" rx="5" fill="#2563eb"><title>设计：4 条</title></rect><text x="102.0" y="61.7" text-anchor="middle" font-size="11.5" font-weight="700" fill="#334155">4</text><text x="102.0" y="179" text-anchor="middle" font-size="11" fill="#64748b">设计</text><rect x="227.1" y="24.0" width="117.8" height="134.0" rx="5" fill="#7c3aed"><title>制造：6 条</title></rect><text x="286.0" y="17.0" text-anchor="middle" font-size="11.5" font-weight="700" fill="#334155">6</text><text x="286.0" y="179" text-anchor="middle" font-size="11" fill="#64748b">制造</text><rect x="411.1" y="91.0" width="117.8" height="67.0" rx="5" fill="#0891b2"><title>封测：3 条</title></rect><text x="470.0" y="84.0" text-anchor="middle" font-size="11.5" font-weight="700" fill="#334155">3</text><text x="470.0" y="179" text-anchor="middle" font-size="11" fill="#64748b">封测</text><rect x="595.1" y="135.7" width="117.8" height="22.3" rx="5" fill="#db2777"><title>EDA：1 条</title></rect><text x="654.0" y="128.7" text-anchor="middle" font-size="11.5" font-weight="700" fill="#334155">1</text><text x="654.0" y="179" text-anchor="middle" font-size="11" fill="#64748b">EDA</text><rect x="779.1" y="135.7" width="117.8" height="22.3" rx="5" fill="#16a34a"><title>材料：1 条</title></rect><text x="838.0" y="128.7" text-anchor="middle" font-size="11.5" font-weight="700" fill="#334155">1</text><text x="838.0" y="179" text-anchor="middle" font-size="11" fill="#64748b">材料</text></svg><div class="chart-legend"><span class="lg-chip"><i style="background:#2563eb"></i>设计</span><span class="lg-chip"><i style="background:#7c3aed"></i>制造</span><span class="lg-chip"><i style="background:#0891b2"></i>封测</span><span class="lg-chip"><i style="background:#db2777"></i>EDA</span><span class="lg-chip"><i style="background:#16a34a"></i>材料</span></div></div>
+    </section>
+    <section class="tr-block">
+      <h2 class="tr-title">📈 持续追踪趋势 <span class="tr-sub">跨日记忆 · 方向 / 连续期数 / Δ 变比</span></h2>
+      <div class="tk-grid"><div class="tk-card"><div class="tk-head"><span class="tr-dir" style="color:#16a34a;border-color:#16a34a">下行 · 连续 1 期</span><span class="tk-topic">HBM 价格与供需</span></div><p class="tk-detail tk-delta">Δ 变比：Rubin Ultra 砍单</p><p class="tk-detail">down（连续1期）Δ Rubin Ultra 砍单 — 本期英伟达 Rubin Ultra HBM 配置从 12 层 384GB 砍半至 8 层 192GB，SK hynix 股价单日暴跌 19%，为本轮超级周期首个重大利空；但 2027 年三巨头产能售罄、SK hynix 批准 380 亿美元扩产，供需从&quot;单边上行&quot;转向&quot;高位分化&quot;（详见设计/市场）。</p></div><div class="tk-card"><div class="tk-head"><span class="tr-dir" style="color:#b45309;border-color:#b45309">趋紧 · 连续 4 期</span><span class="tk-topic">先进封装产能紧缺</span></div><p class="tk-detail tk-delta">Δ 变比：长电 78 亿扩产、通富预增 288%</p><p class="tk-detail">tight（连续4期）Δ 长电 78 亿扩产、通富预增 288% — 本期长电临港高端封测工厂开建、订单排至 2027，通富先进封装占比超 70%，安靠与英伟达签 15 亿美元协议，紧缺格局延续至 2027 年。</p></div><div class="tk-card"><div class="tk-head"><span class="tr-dir" style="color:#dc2626;border-color:#dc2626">上行 · 连续 4 期</span><span class="tk-topic">国产 EDA 并购整合</span></div><p class="tk-detail tk-delta">Δ 变比：概伦 21.74 亿并购过户完成</p><p class="tk-detail">up（连续4期）Δ 概伦 21.74 亿并购过户完成 — 本期概伦电子收购锐成芯微/纳能微资产过户落地，&quot;EDA+IP&quot;双引擎平台闭环成型，国产 EDA 并购进入&quot;交割兑现期&quot;。</p></div><div class="tk-card"><div class="tk-head"><span class="tr-dir" style="color:#b45309;border-color:#b45309">趋紧 · 连续 4 期</span><span class="tk-topic">出口管制收紧</span></div><p class="tk-detail tk-delta">Δ 变比：BIS 审查算力通道、FCC 拟禁光模块</p><p class="tk-detail">tight（连续4期）Δ BIS 审查算力通道、FCC 拟禁光模块 — 本期美国管制从芯片延伸到海外算力租用与光互连组件，管制链条再扩两环；中国以钨出口管制反制，博弈升级。</p></div></div>
+    </section></div><div class="panel" id="panel-weekly"><section class="tr-block"><h2 class="tr-title">📋 概览 <span class="tr-sub">5 期 · 07-20 ~ 08-09</span></h2><div class="wk-cards"><div class="wk-card"><div class="wk-num">5</div><div class="wk-label">报告期数</div></div><div class="wk-card"><div class="wk-num">73</div><div class="wk-label">累计新闻</div></div><div class="wk-card"><div class="wk-num">14.6</div><div class="wk-label">平均条数</div></div><div class="wk-card"><div class="wk-num">47%</div><div class="wk-label">平均 A 级占比</div></div><div class="wk-card"><div class="wk-num">5/5 期</div><div class="wk-label">全环节覆盖</div></div></div></section>
+    <section class="tr-block">
+      <h2 class="tr-title">🗂 逐期对比 <span class="tr-sub">条数 · 来源质量 · 环节覆盖 · 自检 · 追踪/催化剂</span></h2>
+      <div class="chart-card">
+        <table class="wk-table">
+          <thead><tr><th>日期</th><th>新闻</th><th>A 级占比</th><th>环节覆盖</th>
+            <th>自检通过</th><th>X12</th><th>追踪</th><th>催化剂</th></tr></thead>
+          <tbody><tr><td class="ct-date">07-20</td><td><b>11</b></td><td><div class="mini-bar"><div class="mini-fill" style="width:45%"></div></div><span class="mini-val">45%</span></td><td style="white-space:nowrap"><i class="cov-dot" style="background:#2563eb" title="设计 ✓"></i><i class="cov-dot" style="background:#7c3aed" title="制造 ✓"></i><i class="cov-dot" style="background:#0891b2" title="封测 ✓"></i><i class="cov-dot" style="background:#db2777" title="EDA ✓"></i><i class="cov-dot" style="background:#16a34a" title="材料 ✓"></i></td><td>13/13</td><td><span class="sc-pill sc-warn">WARN</span></td><td>—</td><td>—</td></tr><tr><td class="ct-date">07-22</td><td><b>9</b></td><td><div class="mini-bar"><div class="mini-fill" style="width:33%"></div></div><span class="mini-val">33%</span></td><td style="white-space:nowrap"><i class="cov-dot" style="background:#2563eb" title="设计 ✓"></i><i class="cov-dot" style="background:#7c3aed" title="制造 ✓"></i><i class="cov-dot" style="background:#0891b2" title="封测 ✓"></i><i class="cov-dot" style="background:#db2777" title="EDA ✓"></i><i class="cov-dot" style="background:#16a34a" title="材料 ✓"></i></td><td>13/13</td><td><span class="sc-pill sc-fail">FAIL</span></td><td>—</td><td>—</td></tr><tr><td class="ct-date">07-27</td><td><b>22</b></td><td><div class="mini-bar"><div class="mini-fill" style="width:73%"></div></div><span class="mini-val">73%</span></td><td style="white-space:nowrap"><i class="cov-dot" style="background:#2563eb" title="设计 ✓"></i><i class="cov-dot" style="background:#7c3aed" title="制造 ✓"></i><i class="cov-dot" style="background:#0891b2" title="封测 ✓"></i><i class="cov-dot" style="background:#db2777" title="EDA ✓"></i><i class="cov-dot" style="background:#16a34a" title="材料 ✓"></i></td><td>15/15</td><td><span class="sc-pill sc-warn">WARN</span></td><td>—</td><td>—</td></tr><tr><td class="ct-date">08-08</td><td><b>16</b></td><td><div class="mini-bar"><div class="mini-fill" style="width:50%"></div></div><span class="mini-val">50%</span></td><td style="white-space:nowrap"><i class="cov-dot" style="background:#2563eb" title="设计 ✓"></i><i class="cov-dot" style="background:#7c3aed" title="制造 ✓"></i><i class="cov-dot" style="background:#0891b2" title="封测 ✓"></i><i class="cov-dot" style="background:#db2777" title="EDA ✓"></i><i class="cov-dot" style="background:#16a34a" title="材料 ✓"></i></td><td>18/18</td><td><span class="sc-pill sc-pass">PASS</span></td><td>4</td><td>3</td></tr><tr><td class="ct-date">08-09</td><td><b>15</b></td><td><div class="mini-bar"><div class="mini-fill" style="width:33%"></div></div><span class="mini-val">33%</span></td><td style="white-space:nowrap"><i class="cov-dot" style="background:#2563eb" title="设计 ✓"></i><i class="cov-dot" style="background:#7c3aed" title="制造 ✓"></i><i class="cov-dot" style="background:#0891b2" title="封测 ✓"></i><i class="cov-dot" style="background:#db2777" title="EDA ✓"></i><i class="cov-dot" style="background:#16a34a" title="材料 ✓"></i></td><td>19/19</td><td><span class="sc-pill sc-warn">WARN</span></td><td>4</td><td>3</td></tr></tbody>
+        </table>
+      </div>
+    </section>
+    <section class="tr-block">
+      <h2 class="tr-title">📉 条数 × 质量走势 <span class="tr-sub">双轴独立归一化 · 精确数值见标注</span></h2>
+      <div class="chart-card"><svg viewBox="0 0 940 216" class="viz-svg" role="img" aria-label="趋势折线图"><line x1="12" y1="20.0" x2="924" y2="20.0" stroke="#eef2f7" stroke-width="1"/><line x1="12" y1="60.0" x2="924" y2="60.0" stroke="#eef2f7" stroke-width="1"/><line x1="12" y1="100.0" x2="924" y2="100.0" stroke="#eef2f7" stroke-width="1"/><line x1="12" y1="140.0" x2="924" y2="140.0" stroke="#eef2f7" stroke-width="1"/><line x1="12" y1="180.0" x2="924" y2="180.0" stroke="#eef2f7" stroke-width="1"/><text x="12.0" y="204" text-anchor="middle" font-size="11.5" fill="#64748b">07-20</text><text x="240.0" y="204" text-anchor="middle" font-size="11.5" fill="#64748b">07-22</text><text x="468.0" y="204" text-anchor="middle" font-size="11.5" fill="#64748b">07-27</text><text x="696.0" y="204" text-anchor="middle" font-size="11.5" fill="#64748b">08-08</text><text x="924.0" y="204" text-anchor="middle" font-size="11.5" fill="#64748b">08-09</text><polyline points="12.0,151.9 240.0,173.6 468.0,32.8 696.0,97.8 924.0,108.6" fill="none" stroke="#2563eb" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/><g><circle cx="12.0" cy="151.9" r="4" fill="#fff" stroke="#2563eb" stroke-width="2.2"><title>07-20 · 新闻条数：11</title></circle><text x="12.0" y="142.9" text-anchor="middle" font-size="10.5" font-weight="700" fill="#2563eb">11</text></g><g><circle cx="240.0" cy="173.6" r="4" fill="#fff" stroke="#2563eb" stroke-width="2.2"><title>07-22 · 新闻条数：9</title></circle><text x="240.0" y="164.6" text-anchor="middle" font-size="10.5" font-weight="700" fill="#2563eb">9</text></g><g><circle cx="468.0" cy="32.8" r="4" fill="#fff" stroke="#2563eb" stroke-width="2.2"><title>07-27 · 新闻条数：22</title></circle><text x="468.0" y="23.8" text-anchor="middle" font-size="10.5" font-weight="700" fill="#2563eb">22</text></g><g><circle cx="696.0" cy="97.8" r="4" fill="#fff" stroke="#2563eb" stroke-width="2.2"><title>08-08 · 新闻条数：16</title></circle><text x="696.0" y="88.8" text-anchor="middle" font-size="10.5" font-weight="700" fill="#2563eb">16</text></g><g><circle cx="924.0" cy="108.6" r="4" fill="#fff" stroke="#2563eb" stroke-width="2.2"><title>08-09 · 新闻条数：15</title></circle><text x="924.0" y="99.6" text-anchor="middle" font-size="10.5" font-weight="700" fill="#2563eb">15</text></g><polyline points="12.0,130.3 240.0,173.6 468.0,32.8 696.0,114.0 924.0,173.6" fill="none" stroke="#16a34a" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/><g><circle cx="12.0" cy="130.3" r="4" fill="#fff" stroke="#16a34a" stroke-width="2.2"><title>07-20 · A 级占比：45%</title></circle><text x="12.0" y="121.3" text-anchor="middle" font-size="10.5" font-weight="700" fill="#16a34a">45%</text></g><g><circle cx="240.0" cy="173.6" r="4" fill="#fff" stroke="#16a34a" stroke-width="2.2"><title>07-22 · A 级占比：33%</title></circle><text x="240.0" y="164.6" text-anchor="middle" font-size="10.5" font-weight="700" fill="#16a34a">33%</text></g><g><circle cx="468.0" cy="32.8" r="4" fill="#fff" stroke="#16a34a" stroke-width="2.2"><title>07-27 · A 级占比：73%</title></circle><text x="468.0" y="23.8" text-anchor="middle" font-size="10.5" font-weight="700" fill="#16a34a">73%</text></g><g><circle cx="696.0" cy="114.0" r="4" fill="#fff" stroke="#16a34a" stroke-width="2.2"><title>08-08 · A 级占比：50%</title></circle><text x="696.0" y="105.0" text-anchor="middle" font-size="10.5" font-weight="700" fill="#16a34a">50%</text></g><g><circle cx="924.0" cy="173.6" r="4" fill="#fff" stroke="#16a34a" stroke-width="2.2"><title>08-09 · A 级占比：33%</title></circle><text x="924.0" y="164.6" text-anchor="middle" font-size="10.5" font-weight="700" fill="#16a34a">33%</text></g></svg><div class="chart-legend"><span class="lg-chip"><i style="background:#2563eb"></i>新闻条数</span><span class="lg-chip"><i style="background:#16a34a"></i>A 级占比</span></div></div>
+    </section>
+    <section class="tr-block">
+      <h2 class="tr-title">🧩 环节结构对比 <span class="tr-sub">堆叠长度 = 各环节新闻条数（按全表最大值归一）</span></h2>
+      <div class="chart-card"><svg viewBox="0 0 940 290" class="viz-svg" role="img" aria-label="环节堆叠对比图"><text x="4" y="20.0" font-size="12.5" font-weight="700" fill="#1e293b">07-20</text><rect x="4" y="26.0" width="884" height="20" rx="6" fill="#f1f5f9"/><rect x="4.0" y="26.0" width="40.2" height="20" rx="3" fill="#2563eb"><title>07-20 · 设计：1 条</title></rect><rect x="44.2" y="26.0" width="160.7" height="20" rx="3" fill="#7c3aed"><title>07-20 · 制造：4 条</title></rect><rect x="204.9" y="26.0" width="80.4" height="20" rx="3" fill="#0891b2"><title>07-20 · 封测：2 条</title></rect><rect x="285.3" y="26.0" width="80.4" height="20" rx="3" fill="#db2777"><title>07-20 · EDA：2 条</title></rect><rect x="365.6" y="26.0" width="80.4" height="20" rx="3" fill="#16a34a"><title>07-20 · 材料：2 条</title></rect><text x="896" y="40.0" font-size="11.5" fill="#64748b">11</text><text x="4" y="70.0" font-size="12.5" font-weight="700" fill="#1e293b">07-22</text><rect x="4" y="76.0" width="884" height="20" rx="6" fill="#f1f5f9"/><rect x="4.0" y="76.0" width="40.2" height="20" rx="3" fill="#2563eb"><title>07-22 · 设计：1 条</title></rect><rect x="44.2" y="76.0" width="120.5" height="20" rx="3" fill="#7c3aed"><title>07-22 · 制造：3 条</title></rect><rect x="164.7" y="76.0" width="80.4" height="20" rx="3" fill="#0891b2"><title>07-22 · 封测：2 条</title></rect><rect x="245.1" y="76.0" width="80.4" height="20" rx="3" fill="#db2777"><title>07-22 · EDA：2 条</title></rect><rect x="325.5" y="76.0" width="40.2" height="20" rx="3" fill="#16a34a"><title>07-22 · 材料：1 条</title></rect><text x="896" y="90.0" font-size="11.5" fill="#64748b">9</text><text x="4" y="120.0" font-size="12.5" font-weight="700" fill="#1e293b">07-27</text><rect x="4" y="126.0" width="884" height="20" rx="6" fill="#f1f5f9"/><rect x="4.0" y="126.0" width="241.1" height="20" rx="3" fill="#2563eb"><title>07-27 · 设计：6 条</title></rect><rect x="245.1" y="126.0" width="321.5" height="20" rx="3" fill="#7c3aed"><title>07-27 · 制造：8 条</title></rect><rect x="566.5" y="126.0" width="120.5" height="20" rx="3" fill="#0891b2"><title>07-27 · 封测：3 条</title></rect><rect x="687.1" y="126.0" width="40.2" height="20" rx="3" fill="#db2777"><title>07-27 · EDA：1 条</title></rect><rect x="727.3" y="126.0" width="160.7" height="20" rx="3" fill="#16a34a"><title>07-27 · 材料：4 条</title></rect><text x="896" y="140.0" font-size="11.5" fill="#64748b">22</text><text x="4" y="170.0" font-size="12.5" font-weight="700" fill="#1e293b">08-08</text><rect x="4" y="176.0" width="884" height="20" rx="6" fill="#f1f5f9"/><rect x="4.0" y="176.0" width="160.7" height="20" rx="3" fill="#2563eb"><title>08-08 · 设计：4 条</title></rect><rect x="164.7" y="176.0" width="160.7" height="20" rx="3" fill="#7c3aed"><title>08-08 · 制造：4 条</title></rect><rect x="325.5" y="176.0" width="120.5" height="20" rx="3" fill="#0891b2"><title>08-08 · 封测：3 条</title></rect><rect x="446.0" y="176.0" width="80.4" height="20" rx="3" fill="#db2777"><title>08-08 · EDA：2 条</title></rect><rect x="526.4" y="176.0" width="120.5" height="20" rx="3" fill="#16a34a"><title>08-08 · 材料：3 条</title></rect><text x="896" y="190.0" font-size="11.5" fill="#64748b">16</text><text x="4" y="220.0" font-size="12.5" font-weight="700" fill="#1e293b">08-09</text><rect x="4" y="226.0" width="884" height="20" rx="6" fill="#f1f5f9"/><rect x="4.0" y="226.0" width="160.7" height="20" rx="3" fill="#2563eb"><title>08-09 · 设计：4 条</title></rect><rect x="164.7" y="226.0" width="241.1" height="20" rx="3" fill="#7c3aed"><title>08-09 · 制造：6 条</title></rect><rect x="405.8" y="226.0" width="120.5" height="20" rx="3" fill="#0891b2"><title>08-09 · 封测：3 条</title></rect><rect x="526.4" y="226.0" width="40.2" height="20" rx="3" fill="#db2777"><title>08-09 · EDA：1 条</title></rect><rect x="566.5" y="226.0" width="40.2" height="20" rx="3" fill="#16a34a"><title>08-09 · 材料：1 条</title></rect><text x="896" y="240.0" font-size="11.5" fill="#64748b">15</text></svg><div class="chart-legend"><span class="lg-chip"><i style="background:#2563eb"></i>设计</span><span class="lg-chip"><i style="background:#7c3aed"></i>制造</span><span class="lg-chip"><i style="background:#0891b2"></i>封测</span><span class="lg-chip"><i style="background:#db2777"></i>EDA</span><span class="lg-chip"><i style="background:#16a34a"></i>材料</span></div></div>
+    </section>
+    <section class="tr-block">
+      <h2 class="tr-title">🔁 持续追踪跨期对比 <span class="tr-sub">主题 · 方向 · 连续期数（v5.3 起收录）</span></h2>
+      <div class="chart-card">
+        <table class="wk-table">
+          <thead><tr><th>日期</th><th>主题</th><th>方向</th><th>连续</th><th>说明</th></tr></thead>
+          <tbody><tr><td class="ct-date">08-08</td><td class="wk-topic">HBM 价格与供需</td><td><span class="tr-dir" style="color:#dc2626;border-color:#dc2626">上行</span></td><td>3</td><td class="wk-detail">up（连续 3 期）Δ 2026Q2 合约价环比 +53~58% — 本期 SK海力士 384 亿美元扩产、三星 HBM4 Q3 量产，供需紧平衡延续（详见今日要点第 2 条）。</td></tr><tr><td class="ct-date">08-08</td><td class="wk-topic">先进封装产能紧缺</td><td><span class="tr-dir" style="color:#b45309;border-color:#b45309">趋紧</span></td><td>2</td><td class="wk-detail">tight（连续 2 期）Δ 产能满载、订单排期紧张 — 本期长电 78 亿临港基地落地、HBM4 封装良率 98.5%，紧缺格局短期难缓解。</td></tr><tr><td class="ct-date">08-08</td><td class="wk-topic">国产 EDA 并购整合</td><td><span class="tr-dir" style="color:#dc2626;border-color:#dc2626">上行</span></td><td>2</td><td class="wk-detail">up（连续 2 期）Δ 概伦电子 21.74 亿并购落地 — 本期华大九天 Argus 3DIC 发布，工具+IP 平台化进程提速。</td></tr><tr><td class="ct-date">08-08</td><td class="wk-topic">出口管制收紧</td><td><span class="tr-dir" style="color:#b45309;border-color:#b45309">趋紧</span></td><td>2</td><td class="wk-detail">tight（连续 2 期）Δ MATCH 法案 36:8 通过 — 本期无新增管制动态，仍处立法推进期。</td></tr><tr><td class="ct-date">08-09</td><td class="wk-topic">HBM 价格与供需</td><td><span class="tr-dir" style="color:#16a34a;border-color:#16a34a">下行</span></td><td>1</td><td class="wk-detail">down（连续1期）Δ Rubin Ultra 砍单 — 本期英伟达 Rubin Ultra HBM 配置从 12 层 384GB 砍半至 8 层 192GB，SK hynix 股价单日暴跌 19%，为本轮超级周期首个重大利空；但 2027 年三巨头产能售罄、SK hynix 批准 380 亿美元扩产，供需从&quot;单边上行&quot;转向&quot;高位分化&quot;（详见设计/市场）。</td></tr><tr><td class="ct-date">08-09</td><td class="wk-topic">先进封装产能紧缺</td><td><span class="tr-dir" style="color:#b45309;border-color:#b45309">趋紧</span></td><td>4</td><td class="wk-detail">tight（连续4期）Δ 长电 78 亿扩产、通富预增 288% — 本期长电临港高端封测工厂开建、订单排至 2027，通富先进封装占比超 70%，安靠与英伟达签 15 亿美元协议，紧缺格局延续至 2027 年。</td></tr><tr><td class="ct-date">08-09</td><td class="wk-topic">国产 EDA 并购整合</td><td><span class="tr-dir" style="color:#dc2626;border-color:#dc2626">上行</span></td><td>4</td><td class="wk-detail">up（连续4期）Δ 概伦 21.74 亿并购过户完成 — 本期概伦电子收购锐成芯微/纳能微资产过户落地，&quot;EDA+IP&quot;双引擎平台闭环成型，国产 EDA 并购进入&quot;交割兑现期&quot;。</td></tr><tr><td class="ct-date">08-09</td><td class="wk-topic">出口管制收紧</td><td><span class="tr-dir" style="color:#b45309;border-color:#b45309">趋紧</span></td><td>4</td><td class="wk-detail">tight（连续4期）Δ BIS 审查算力通道、FCC 拟禁光模块 — 本期美国管制从芯片延伸到海外算力租用与光互连组件，管制链条再扩两环；中国以钨出口管制反制，博弈升级。</td></tr></tbody>
+        </table>
+      </div>
+    </section></div><div class="panel" id="panel-tutor">
+    <div class="tutor-view">
+      <div class="tu-intro">
+        <b>📖 今日导师课</b> —— 把今天的日报当一节课来上：先听懂今天讲了什么
+        （今日速览），再弄懂最值得弄懂的一件事（深度第一课），记住几个核心概念
+        （必懂概念），最后带着问题自己想一想（课后思考）。面向零基础读者。
+      </div>
+      
+    <section class="tu-block tu-speed">
+      <h2 class="tu-title">🎬 今日速览 <span class="tu-sub">一句话记住今天 · 类比开场</span></h2>
+      <div class="tu-board"><p>今天整个行业其实只讲了一个故事：<b>存储的好日子，第一次出现了一道裂缝</b>。</p><p>过去两年，芯片行业最确定的事是&quot;AI 需要越来越多内存，存储厂躺着赚钱&quot;。但今天发生了两件看似矛盾的事：一边是三星、SK hynix、美光把 2027 年的产能全部卖光了（基本面强得离谱）；另一边是英伟达把下一代旗舰芯片的内存配置砍掉一半，SK hynix 股价当天暴跌 19%（预期开始松动）。</p><p>打个比方：存储厂开了一家全城最火的饭店，2027 年的座位都订满了（产能售罄），老板正准备再开两家分店（380 亿美元扩产）；但就在这时，最大的那个老顾客（英伟达）过来说&quot;我以后少吃点，菜别上那么多了&quot;（砍 HBM）——饭店的股票当场就跌了。基本面没变坏，但&quot;永远排队&quot;的预期破了。</p><p>同时，美国对中国的封锁网又多了两个网眼（算力通道、光模块），而存储巨头们则在忙着争夺&quot;下一代内存长什么样&quot;的定义权（HBF 标准、谷歌背书）。一句话总结今天：<b>涨价的故事还在讲，但第一个读者开始离场了。</b></p></div>
+    </section>
+    <section class="tu-block tu-lesson">
+      <h2 class="tu-title">📚 深度第一课 <span class="tu-sub">今日最值得弄懂的一件事 · 掰开揉碎</span></h2>
+      <div class="tu-lesson-card">
+        <div class="tu-lead">💡 要弄懂今天最惊悚的那条新闻（暴跌 19%），先记住一个词：大客户依赖。</div>
+        <ul><li><b>SK hynix 的生意模式</b>：全球 HBM 七成是它家产的，而 HBM 的买家高度集中在英伟达、谷歌、微软这几家 AI 巨头。客户越少、订单越大，公司业绩越猛——但也越脆弱：任何一个大客户改主意，业绩预期就要重算。</li><li><b>英伟达改了什么</b>：Rubin Ultra 的内存配置从 12 层（384GB）砍到 8 层（192GB）。为什么砍？因为 HBM 太贵了，一颗旗舰芯片里内存的成本占比越来越高，英伟达决定用&quot;更聪明的系统设计&quot;（更少内存+更优互联）来省钱。</li><li><b>为什么跌 19%</b>：市场算了一笔账——Rubin Ultra 约占 2027 年全球 HBM 需求的两成，它砍一半，全球 HBM 需求就少卖约一成；而 SK hynix 的利润高度依赖 HBM 的量价。需求预期一变，股价就按&quot;远期利润缩水&quot;重新定价。19% 不是今天亏钱了，是市场把&quot;未来几年少赚的钱&quot;一次性扣掉了。</li><li><b>这一课的要点</b>：<b>凡是客户极度集中、价格涨到天上、人人都说&quot;永远涨&quot;的生意，都要警惕第一个大客户改口</b>。这不是芯片行业独有，是所有超级周期共通的宿命——今天的 SK hynix，就是 2021 年的航运股、2020 年的猪肉股的翻版。</li></ul>
+      </div>
+    </section>
+    <section class="tu-block tu-concepts">
+      <h2 class="tu-title">🎯 必懂概念 <span class="tu-sub">导师重点划 · 记住这几个就够 · 5 个</span></h2>
+      <div class="tu-concept-grid"><div class="tu-concept"><div class="tu-concept-term">HBM 层数（12 层 vs 8 层）</div><div class="tu-concept-text">内存&quot;千层饼&quot;的层数，直接决定容量和成本。<b>记住一个关系：层数越少，越便宜，但容量越小</b>——英伟达砍层数=省钱，SK hynix 少卖=少赚。</div></div><div class="tu-concept"><div class="tu-concept-term">产能售罄 vs 股价暴跌</div><div class="tu-concept-text">产能售罄是&quot;过去和现在&quot;，股价暴跌是&quot;对未来预期的定价&quot;。<b>基本面与预期是两回事</b>——这是今天最值得记住的市场常识。</div></div><div class="tu-concept"><div class="tu-concept-term">HBF（高带宽闪存）</div><div class="tu-concept-text">HBM（贵而快）和 SSD（便宜而慢）之间的&quot;新中间层&quot;，SK hynix 联合闪迪定了标准，谷歌 DeepMind 站台。<b>它是存储厂给&quot;内存变贵&quot;开出的解药</b>：用便宜材料装大数据。</div></div><div class="tu-concept"><div class="tu-concept-term">光模块</div><div class="tu-concept-text">AI 服务器之间通信的&quot;传声筒&quot;。中国的中际旭创占全球 27%——<b>美国想禁它，但自己人一时造不出来</b>，这就是&quot;你中有我、我中有你&quot;的供应链博弈。</div></div><div class="tu-concept"><div class="tu-concept-term">六氟化钨</div><div class="tu-concept-text">造芯片铺金属层的气体，全球产能多在日企，原料钨多来自中国。<b>中国管制钨 → 日本厂商库存告急</b>——这是&quot;资源反制&quot;的活教材。</div></div></div>
+    </section>
+    <section class="tu-block tu-homework">
+      <h2 class="tu-title">✍️ 课后思考 <span class="tu-sub">带着问题离开 · 想一想再说 · 3 题</span></h2>
+      <div class="tu-q-list"><div class="tu-q"><span class="tu-q-num">1</span><span class="tu-q-text">今天 SK hynix 股价暴跌 19%，但 2027 年产能明明已经卖光了。你觉得&quot;基本面很好&quot;和&quot;股价大跌&quot;矛盾吗？试着用&quot;预期&quot;两个字解释一下。</span></div><div class="tu-q"><span class="tu-q-num">2</span><span class="tu-q-text">英伟达砍 HBM 是在&quot;省成本&quot;，但它砍掉的是存储厂的&quot;利润&quot;。如果你是存储厂老板，你会怎么应对——降价保量？还是研发新架构（像 HBF）创造新需求？</span></div><div class="tu-q"><span class="tu-q-num">3</span><span class="tu-q-text">美国禁光模块，为什么先着急的反而是美国云厂商？中国手里的&quot;钨管制&quot;和美国的&quot;芯片管制&quot;，本质上是同一种工具吗？试着比较两者的相同与不同。</span></div></div>
+    </section>
+    </div></div>
+
+  <footer class="foot">由 chip-daily-report · report_viz 生成 · 单文件零依赖 · 视图模块可扩展</footer>
+</div>
+
+<script>
+function switchTab(id){
+  document.querySelectorAll('.tab').forEach(t=>t.classList.toggle('active', t.dataset.tab===id));
+  document.querySelectorAll('.panel').forEach(p=>p.classList.toggle('active', p.id==='panel-'+id));
+  try{localStorage.setItem('rv_tab', id);}catch(e){}
+}
+document.addEventListener('DOMContentLoaded', function(){
+  document.querySelectorAll('.tab').forEach(t=>t.addEventListener('click', ()=>switchTab(t.dataset.tab)));
+  // 产业链节点点击 -> 跳转到日报对应环节
+  document.querySelectorAll('.stage').forEach(n=>{
+    n.style.cursor='pointer';
+    n.addEventListener('click', ()=>{
+      const seg = n.getAttribute('data-seg');
+      const el = document.getElementById('seg-'+seg);
+      if(el){ switchTab('report'); el.scrollIntoView({behavior:'smooth', block:'center'});
+        el.style.transition='background .4s'; el.style.background='#fffbeb';
+        setTimeout(()=>el.style.background='', 900); }
+    });
+    // 悬停联动：高亮相关传导链步骤
+    n.addEventListener('mouseenter', ()=>{
+      const seg = n.getAttribute('data-seg');
+      document.querySelectorAll('.cr-step').forEach(st=>
+        st.classList.toggle('hl', st.getAttribute('data-seg')===seg));
+    });
+    n.addEventListener('mouseleave', ()=>
+      document.querySelectorAll('.cr-step').forEach(st=>st.classList.remove('hl')));
+  });
+  try{ const last=localStorage.getItem('rv_tab'); if(last) switchTab(last); }catch(e){}
+});
+</script>
+
+</body>
+</html>

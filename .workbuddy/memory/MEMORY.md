@@ -1,0 +1,62 @@
+# chip-daily-report 项目长期约定（MEMORY.md，已精简 2026-08-14）
+
+## 运行环境（铁律）
+- 托管 venv 的 yaml/pip 损坏 → 治理/看板/校验脚本一律用 **system Python 3.12**：`C:/Users/李勇谚/AppData/Local/Programs/Python/Python312/python.exe`（yaml 6.0.3 + pytest 9.1.1）。勿碰旧 venv。
+
+## 用户画像（长期，影响所有写作口径）
+- 用户=**勇谚，微电子专业大二本科生**。已学/正在学：电路、模电、数电、半导体物理基础（PN 结、MOSFET、能带）。**未系统学**：产业链、市场、政策、财务/金融词汇。
+- 行业黑话与金融词是主要卡点；器件/物理原理反而是现成搭桥材料。写「今日导师课」等教学内容时，**全程从课内已知（MOSFET/存储层次/模电）搭桥走向行业未知**，不引入超大纲数学/器件细节；出现术语必配类比。
+- 对 AI 自主产出的质量满意，但需要"教得懂"。连接器/技能推荐一律只给**真实有用**项并说明契合点（见各次对话）。
+
+## 规则治理核心
+- `rules/rule_registry.yaml` = X1–X16 裁决与全部规则唯一权威源。改域名/规则只改它，再跑 `python scripts/gen_rules.py`（重写 validate_report.py 的 `GEN:RULES` 块 + sources.md `GEN:ALEVEL` 表）。**禁止手工同步两处**。
+- X7 一致性：`check_rules_consistency.py` 是 CI 硬门禁（H1–H5 任一不一致退出码 1）。A 级域名=44（脚本 39+学术 5 域）；Samsung 统一 `samsung.com`。
+- 镜像同步：`.trae/skills/chip-daily-report/` 8 文件须与根目录逐字节一致；references 文件 cp 进镜像 references/（cp 到根级成幽灵被 R1 跳过）。
+
+## 关键裁决速查
+- X3 摘要 3-5 句 PASS/6 WARN/≥7 FAIL。X9 HBM 归制造。X10 产能 IPO 纳入/纯融资不纳。X11 股价仅一句佐证，不作主体/标题/今日要点。
+- X12 条数 15-20 软（10-14/21-25 WARN，<10/>25 FAIL）。X15 环节全称。X16 标题附日期+blockquote 半角冒号。X17 信号层（每条 `| 信号: 重要性/影响方向/情绪`，覆盖≥80%）。B 持续追踪 / C 前瞻催化剂（Step2 只搜已公告，禁预测）。
+- 校验器=26 项（15 Rubric+检查 16-26），后 8 项软 WARN 不破退出码。
+
+## 日报格式规范（改规范走"四条链路"铁律）
+- 新增小节必须同步改：①validate_report.py ②report_viz/parser.py ③views/report_view.py ④report_viz/__init__.py(CSS)。HTML 交付前 grep 断言新元素出现。
+- 小节清单：费曼解释 / 深度解读（这意味着什么+未来影响+格局意义）/ 未来借鉴（趋势信号↑→↓弱+格局预判+可借鉴行动+风险提示+格局时间轴）/ 今日导师课（4 模块，独立第 6 视图 Tab）/ 持续追踪 / 前瞻催化剂。
+
+## HTML 交付形态
+- 权威构建器=`scripts/build_report_html.py`（基于 scripts/report_viz/ 模块包，5 视图 Tab：report/chain/dimensions/trend/weekly）。**禁止重写简化版**（曾误写 report_html.py 顶掉原版已删）。
+
+## multi_source 融合模块
+- `scripts/multi_source/`：collector→cleaner→fusion→gap_analyzer。聚类仅从标题实体共现；分歧检测只抓带单位数字无交集。
+- 漏聚探测器 leak_detector.py：只建议候选锚词不自动改码。
+- 三件套（挂 F4 Step6 fail-soft）：health_check→source_health.yaml；value_score→value_score.json（47.6 首跑）；report_viz→multi_source_report.html。
+- **迭代3（2026-08-15）：online 采集扩至 6 源**（+CNBC B级 / +SemiAnalysis A级；DigiTimes 反爬未接入）。新增 **gate.py 选择性纳入门禁**（G1 置信度/G2 时效/G3 单源/G4 环节配额/G5 主题关键词/G6 数量上限）→ state/gate_report.json，Step2 搜索前先看候选池。**prepare_candidates.py 一键流水线**（online→clean→fusion→gate，不落盘 data/ 基线）已接入 F4 自动化生成前步骤。测试 **134 passed**。
+- **v5.9（2026-08-15）：英文一律译中文纪律 + 前瞻催化剂升级**。写作纪律固化 SKILL.md：机构名/来源标签必中文、术语首现「中文（缩写）」、产品型号首现加中文说明、URL 不翻；新建 `references/glossary.md` 中英文术语对照表（机构30+/术语40+）。前瞻催化剂从裸表升级为「速览表 + 高/中重要度前瞻解读块（看点/关注信号/潜在影响）」，每日必给，与「深度解读」对称。F4 自动化 prompt 已加 v5.9 硬性段，日后每日自动遵守。
+- 数据源扩容：4 免 key 源（SEC EDGAR / SemiEngineering / EETimes / AIHOT）。`python -m pytest tests/ -q`=**132 passed**（改 fusion/leak/collector/health/value_score/report_viz/gate 必跑）。**data/ 是回归基线，跑 online 会覆盖致测试挂 → online 快照另建目录**。
+
+## 认知深化
+- signal_history.py（Step6 每日跑）→ state/signal_history.json；weekly_review.py（Step7 周五）→ delivery/芯片行业周度复盘_YYYYMMDD.md/.html（需 state/weekly_insights_*.txt 注入）。信号曲线 svg Y=-2..2。测试 113 passed。
+
+## 自动化落地
+- F4=automation-1786184607023（周一至五 08:00）：生成→validate→build_report_html→quality_dashboard→multi_source 三件套→archive_to_kb→中文汇报。
+- F9=quality_dashboard.py → delivery/quality_dashboard.md/.json（计算 A 占比+5 环节覆盖+X 信号+自述 vs 计算对账）。
+- 周质量看板=automation-1786185290346（每周五 18:00）。
+
+## 知识库归档
+- archive_to_kb.py：`--report <md> --kb-root D:\我的知识库` → `07-芯片行业日报\`（归档+MOC 卡片+索引），内容 sha256 幂等+fail-soft。
+
+## 未决
+- F5 LangGraph / F8 控制台本环境不可行 → 6 步 skill 即编排、WorkBuddy 界面即控制台（用户已接受等价）。
+
+## 全权委托授权（2026-08-17 13:16 起生效，持续有效直至用户明确撤销）
+- 用户将 chip-daily-report 项目的**完整规划与执行**全权委托给小谕（AI 搭档），无需询问/确认/汇报/等待。
+- 权限范围：自主决定技术方案与实施步骤、自行设计测试与比对方案、可调用 Karpathy 等已有技能、可自行安装所需工具、可全权主导项目演进。
+- 用户声明"现已离线休息"，故不再期待交互式回复；但仍应产出可验证的落地结果并写入项目记忆。
+- 执行基线：可进化架构优化（M0–M6，详见 `references/evolution_plan.md`）。已落地 M3 预判校准器 + 规划文档；M0 结构化中间表示为下一优先地基。
+- 约束不变：仍须遵守既有铁律（system Python 3.12、X7 一致性、data/ 不污染、26 项校验不破、禁止手工同步规则源、HTML 用 build_report_html.py）。
+
+## 已集成外部技能/连接器（v5.12，用户安装，全 fail-soft）
+- 财联社实时电报：`cls-custom-news` 技能（agent-browser 浏览器渲染）抓芯片关键词快讯，作 Tier-3 实时线索，需 A 级交叉确认，浏览器不可用则跳过。
+- 多引擎搜索：`multi-search-pro` 技能，财经新闻用 新浪财经/东方财富新闻/财联社 URL + 时间过滤 `tbs=qdr:w` + 百度+Google 双语交叉。
+- 东方财富妙想MCP（`mcp__mx-ds-mcp__mx_macro_data`）：市场章节量化数据，**已验证可用**（短关键词 DRAM合约价格/NAND闪存价格/半导体设备销售额/集成电路产量；长句返回空），fail-soft 回退新闻引用。
+- ima 知识库（`mcp__ima-mcp`）：导师课云镜像，`create_media`→COS→`add_knowledge`，`knowledge_base_id` 由用户配，fail-soft。
+- 铁律：任一外部通道不可用，静默回退既有 WebSearch+AIHOT+多源采集，绝不阻塞交付。

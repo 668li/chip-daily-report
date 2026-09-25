@@ -1,0 +1,505 @@
+{
+  "cells": [
+    {
+      "segment": "设计",
+      "type": "ir",
+      "type_label": "公司一手(IR/法说会)",
+      "actual": 5,
+      "target": 1,
+      "level": "充足",
+      "source_ids": [
+        "samsung_ir",
+        "intel_ir",
+        "nvidia_ir",
+        "amd_ir",
+        "broadcom_ir"
+      ]
+    },
+    {
+      "segment": "设计",
+      "type": "news",
+      "type_label": "行业媒体",
+      "actual": 10,
+      "target": 1,
+      "level": "充足",
+      "source_ids": [
+        "semiengineering",
+        "eetimes",
+        "tomshardware",
+        "cls",
+        "stcn",
+        "eetchina",
+        "aihot",
+        "qq_news",
+        "toutiao",
+        "163_news"
+      ]
+    },
+    {
+      "segment": "设计",
+      "type": "analysis",
+      "type_label": "深度分析",
+      "actual": 2,
+      "target": 2,
+      "level": "可接受",
+      "source_ids": [
+        "semianalysis",
+        "techinsights"
+      ]
+    },
+    {
+      "segment": "设计",
+      "type": "filing",
+      "type_label": "监管/财报文件",
+      "actual": 6,
+      "target": 2,
+      "level": "充足",
+      "source_ids": [
+        "cambricon_filing",
+        "sec_edgar",
+        "sse_szse",
+        "cninfo",
+        "google_patents",
+        "cnipa"
+      ]
+    },
+    {
+      "segment": "设计",
+      "type": "data",
+      "type_label": "价格/产能数据",
+      "actual": 1,
+      "target": 2,
+      "level": "缺口",
+      "source_ids": [
+        "sia_wsts"
+      ]
+    },
+    {
+      "segment": "设计",
+      "type": "academic",
+      "type_label": "学术会议/论文",
+      "actual": 0,
+      "target": 1,
+      "level": "严重缺口",
+      "source_ids": []
+    },
+    {
+      "segment": "制造",
+      "type": "ir",
+      "type_label": "公司一手(IR/法说会)",
+      "actual": 7,
+      "target": 1,
+      "level": "充足",
+      "source_ids": [
+        "tsmc_ir",
+        "samsung_ir",
+        "skhynix_ir",
+        "intel_ir",
+        "micron_ir",
+        "smic_ir",
+        "huahong_ir"
+      ]
+    },
+    {
+      "segment": "制造",
+      "type": "news",
+      "type_label": "行业媒体",
+      "actual": 11,
+      "target": 1,
+      "level": "充足",
+      "source_ids": [
+        "digitimes_en",
+        "digitimes_tw",
+        "thelec",
+        "cls",
+        "stcn",
+        "xinhuanet",
+        "21jingji",
+        "aihot",
+        "qq_news",
+        "toutiao",
+        "163_news"
+      ]
+    },
+    {
+      "segment": "制造",
+      "type": "analysis",
+      "type_label": "深度分析",
+      "actual": 2,
+      "target": 2,
+      "level": "可接受",
+      "source_ids": [
+        "semianalysis",
+        "techinsights"
+      ]
+    },
+    {
+      "segment": "制造",
+      "type": "filing",
+      "type_label": "监管/财报文件",
+      "actual": 7,
+      "target": 2,
+      "level": "充足",
+      "source_ids": [
+        "sec_edgar",
+        "sse_szse",
+        "mops",
+        "dart",
+        "cninfo",
+        "bis_rules",
+        "eu_chips"
+      ]
+    },
+    {
+      "segment": "制造",
+      "type": "data",
+      "type_label": "价格/产能数据",
+      "actual": 3,
+      "target": 2,
+      "level": "充足",
+      "source_ids": [
+        "trendforce",
+        "sia_wsts",
+        "dramexchange"
+      ]
+    },
+    {
+      "segment": "制造",
+      "type": "academic",
+      "type_label": "学术会议/论文",
+      "actual": 0,
+      "target": 1,
+      "level": "严重缺口",
+      "source_ids": []
+    },
+    {
+      "segment": "封测",
+      "type": "ir",
+      "type_label": "公司一手(IR/法说会)",
+      "actual": 3,
+      "target": 1,
+      "level": "充足",
+      "source_ids": [
+        "samsung_ir",
+        "skhynix_ir",
+        "micron_ir"
+      ]
+    },
+    {
+      "segment": "封测",
+      "type": "news",
+      "type_label": "行业媒体",
+      "actual": 9,
+      "target": 1,
+      "level": "充足",
+      "source_ids": [
+        "digitimes_en",
+        "digitimes_tw",
+        "thelec",
+        "cls",
+        "stcn",
+        "aihot",
+        "qq_news",
+        "toutiao",
+        "163_news"
+      ]
+    },
+    {
+      "segment": "封测",
+      "type": "analysis",
+      "type_label": "深度分析",
+      "actual": 3,
+      "target": 2,
+      "level": "充足",
+      "source_ids": [
+        "semianalysis",
+        "techinsights",
+        "yole"
+      ]
+    },
+    {
+      "segment": "封测",
+      "type": "filing",
+      "type_label": "监管/财报文件",
+      "actual": 7,
+      "target": 2,
+      "level": "充足",
+      "source_ids": [
+        "jcet_filing",
+        "sec_edgar",
+        "sse_szse",
+        "mops",
+        "dart",
+        "cninfo",
+        "bis_rules"
+      ]
+    },
+    {
+      "segment": "封测",
+      "type": "data",
+      "type_label": "价格/产能数据",
+      "actual": 2,
+      "target": 2,
+      "level": "可接受",
+      "source_ids": [
+        "trendforce",
+        "sia_wsts"
+      ]
+    },
+    {
+      "segment": "封测",
+      "type": "academic",
+      "type_label": "学术会议/论文",
+      "actual": 0,
+      "target": 1,
+      "level": "严重缺口",
+      "source_ids": []
+    },
+    {
+      "segment": "EDA",
+      "type": "ir",
+      "type_label": "公司一手(IR/法说会)",
+      "actual": 0,
+      "target": 1,
+      "level": "严重缺口",
+      "source_ids": []
+    },
+    {
+      "segment": "EDA",
+      "type": "news",
+      "type_label": "行业媒体",
+      "actual": 7,
+      "target": 1,
+      "level": "充足",
+      "source_ids": [
+        "semiengineering",
+        "eetimes",
+        "stcn",
+        "eetchina",
+        "aihot",
+        "qq_news",
+        "toutiao"
+      ]
+    },
+    {
+      "segment": "EDA",
+      "type": "analysis",
+      "type_label": "深度分析",
+      "actual": 1,
+      "target": 2,
+      "level": "缺口",
+      "source_ids": [
+        "semianalysis"
+      ]
+    },
+    {
+      "segment": "EDA",
+      "type": "filing",
+      "type_label": "监管/财报文件",
+      "actual": 4,
+      "target": 2,
+      "level": "充足",
+      "source_ids": [
+        "sse_szse",
+        "cninfo",
+        "google_patents",
+        "cnipa"
+      ]
+    },
+    {
+      "segment": "EDA",
+      "type": "data",
+      "type_label": "价格/产能数据",
+      "actual": 1,
+      "target": 2,
+      "level": "缺口",
+      "source_ids": [
+        "sia_wsts"
+      ]
+    },
+    {
+      "segment": "EDA",
+      "type": "academic",
+      "type_label": "学术会议/论文",
+      "actual": 0,
+      "target": 1,
+      "level": "严重缺口",
+      "source_ids": []
+    },
+    {
+      "segment": "材料",
+      "type": "ir",
+      "type_label": "公司一手(IR/法说会)",
+      "actual": 6,
+      "target": 1,
+      "level": "充足",
+      "source_ids": [
+        "asml_ir",
+        "amat_ir",
+        "lam_ir",
+        "kla_ir",
+        "naura_ir",
+        "amec_ir"
+      ]
+    },
+    {
+      "segment": "材料",
+      "type": "news",
+      "type_label": "行业媒体",
+      "actual": 8,
+      "target": 1,
+      "level": "充足",
+      "source_ids": [
+        "semiengineering",
+        "stcn",
+        "xinhuanet",
+        "21jingji",
+        "eetchina",
+        "aihot",
+        "qq_news",
+        "toutiao"
+      ]
+    },
+    {
+      "segment": "材料",
+      "type": "analysis",
+      "type_label": "深度分析",
+      "actual": 2,
+      "target": 2,
+      "level": "可接受",
+      "source_ids": [
+        "semianalysis",
+        "yole"
+      ]
+    },
+    {
+      "segment": "材料",
+      "type": "filing",
+      "type_label": "监管/财报文件",
+      "actual": 6,
+      "target": 2,
+      "level": "充足",
+      "source_ids": [
+        "sse_szse",
+        "cninfo",
+        "google_patents",
+        "bis_rules",
+        "eu_chips",
+        "cnipa"
+      ]
+    },
+    {
+      "segment": "材料",
+      "type": "data",
+      "type_label": "价格/产能数据",
+      "actual": 3,
+      "target": 2,
+      "level": "充足",
+      "source_ids": [
+        "trendforce",
+        "sia_wsts",
+        "semi_api"
+      ]
+    },
+    {
+      "segment": "材料",
+      "type": "academic",
+      "type_label": "学术会议/论文",
+      "actual": 0,
+      "target": 1,
+      "level": "严重缺口",
+      "source_ids": []
+    }
+  ],
+  "gaps": [
+    {
+      "segment": "EDA",
+      "type": "academic",
+      "type_label": "学术会议/论文",
+      "actual": 0,
+      "target": 1,
+      "level": "严重缺口",
+      "source_ids": []
+    },
+    {
+      "segment": "EDA",
+      "type": "ir",
+      "type_label": "公司一手(IR/法说会)",
+      "actual": 0,
+      "target": 1,
+      "level": "严重缺口",
+      "source_ids": []
+    },
+    {
+      "segment": "制造",
+      "type": "academic",
+      "type_label": "学术会议/论文",
+      "actual": 0,
+      "target": 1,
+      "level": "严重缺口",
+      "source_ids": []
+    },
+    {
+      "segment": "封测",
+      "type": "academic",
+      "type_label": "学术会议/论文",
+      "actual": 0,
+      "target": 1,
+      "level": "严重缺口",
+      "source_ids": []
+    },
+    {
+      "segment": "材料",
+      "type": "academic",
+      "type_label": "学术会议/论文",
+      "actual": 0,
+      "target": 1,
+      "level": "严重缺口",
+      "source_ids": []
+    },
+    {
+      "segment": "设计",
+      "type": "academic",
+      "type_label": "学术会议/论文",
+      "actual": 0,
+      "target": 1,
+      "level": "严重缺口",
+      "source_ids": []
+    },
+    {
+      "segment": "EDA",
+      "type": "analysis",
+      "type_label": "深度分析",
+      "actual": 1,
+      "target": 2,
+      "level": "缺口",
+      "source_ids": [
+        "semianalysis"
+      ]
+    },
+    {
+      "segment": "EDA",
+      "type": "data",
+      "type_label": "价格/产能数据",
+      "actual": 1,
+      "target": 2,
+      "level": "缺口",
+      "source_ids": [
+        "sia_wsts"
+      ]
+    },
+    {
+      "segment": "设计",
+      "type": "data",
+      "type_label": "价格/产能数据",
+      "actual": 1,
+      "target": 2,
+      "level": "缺口",
+      "source_ids": [
+        "sia_wsts"
+      ]
+    }
+  ],
+  "gap_count": 9,
+  "severe_count": 6
+}

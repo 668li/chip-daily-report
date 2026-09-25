@@ -1,0 +1,23 @@
+{
+  "meta": {
+    "generated": "2026-08-15",
+    "input_events": 10,
+    "single_source": 3,
+    "pairs_checked": 3,
+    "thresholds": {
+      "min_shared_entities": 1,
+      "time_window_days": 3,
+      "jaccard": 0.25,
+      "range_tolerance": 0.1
+    }
+  },
+  "candidates": [],
+  "stats": {
+    "total_candidates": 0,
+    "by_priority": {
+      "high": 0,
+      "medium": 0,
+      "low": 0
+    }
+  }
+}

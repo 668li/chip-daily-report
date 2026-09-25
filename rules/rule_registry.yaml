@@ -1,0 +1,526 @@
+# =============================================================================
+# chip-daily-report 规则注册表（单一权威源 / Single Source of Truth）
+# =============================================================================
+# 本文件是 X1–X16 上游冲突裁决的唯一落点（F1.1）。
+#
+# 权威链（X1/X7 裁决）：
+#   本注册表(rules/rule_registry.yaml)
+#     ├─ 生成 ─> scripts/validate_report.py 的 A/B/C 域名常量（执行权威）
+#     └─ 生成 ─> references/sources.md 的 A 级来源表（业务权威，人读）
+#
+# 一致性铁律（X7）：
+#   - 脚本 A_LEVEL_DOMAINS 与 sources.md A 级表 必须由本注册表生成
+#   - 三者双向差集必须为 0（check_rules_consistency.py 强制校验）
+#   - 任何规则修改只改本文件，再跑 gen_rules.py，禁止手工同步两处
+#
+# 生成时间基准：2026-08-07
+# 对应裁决文档：delivery/高层架构设计.md §3.4（X1–X16）
+# =============================================================================
+
+meta:
+  version: "1.0"
+  kind: "rule-registry"
+  owner: "F1 规则治理中心"
+  generated_from: "delivery/高层架构设计.md §3.4 (X1–X16)"
+  authority_chain:
+    registry: "rules/rule_registry.yaml"
+    execution: "scripts/validate_report.py (A_LEVEL_DOMAINS / C_LEVEL_DOMAINS / SEGMENTS)"
+    business: "references/sources.md (A 级来源表)"
+  consistency_rule: "registry == execution == business，三者双向差集必须为 0"
+
+# -----------------------------------------------------------------------------
+# 1. 来源分级域名（X1/X7/X8）
+#    matching: 父域匹配（domain == pattern 或 domain.endswith('.'+pattern)）
+# -----------------------------------------------------------------------------
+domains:
+
+  # A 级：权威源（官方/行业组织/权威媒体/学术会议），共 44 个
+  # 构建规则：
+  #   - 根目录脚本原有 39 个（X1 以根目录为权威）
+  #   + X7 补齐 5 个学术域名（isscc.org / vlsisymposium.org / dac.com / ieee-iedm.org / nature.com）
+  #   - X8 统一为 samsung.com 父域（覆盖 news.samsung.com / semiconductor.samsung.com）
+  a_level:
+    - domain: "tsmc.com"
+      name: "TSMC 官方"
+      url: "https://www.tsmc.com"
+      segment: "制造"
+      note: "法说会纪要、投资者关系页"
+    - domain: "samsung.com"
+      name: "Samsung 官方（父域）"
+      url: "https://www.samsung.com/semiconductor"
+      segment: "设计/制造/封测"
+      note: "X8：父域匹配，覆盖 news.samsung.com 与 semiconductor.samsung.com"
+    - domain: "skhynix.com"
+      name: "SK hynix 官方"
+      url: "https://www.skhynix.com"
+      segment: "制造/封测"
+      note: "HBM 相关官方公告"
+    - domain: "news.skhynix.com"
+      name: "SK hynix 新闻室"
+      url: "https://news.skhynix.com"
+      segment: "制造/封测"
+      note: "HBM 相关官方新闻"
+    - domain: "intel.com"
+      name: "Intel Newsroom"
+      url: "https://www.intel.com"
+      segment: "设计/制造"
+      note: "英特尔官方新闻"
+    - domain: "nvidia.com"
+      name: "NVIDIA 官方"
+      url: "https://www.nvidia.com"
+      segment: "设计"
+      note: "GPU/AI 芯片官方发布"
+    - domain: "nvidianews.nvidia.com"
+      name: "NVIDIA Newsroom"
+      url: "https://nvidianews.nvidia.com"
+      segment: "设计"
+      note: "NVIDIA 官方新闻室"
+    - domain: "semi.org"
+      name: "SEMI"
+      url: "https://www.semi.org"
+      segment: "材料/设备"
+      note: "设备销售预测、行业数据"
+    - domain: "semi.org.cn"
+      name: "SEMI 大半导体产业网"
+      url: "https://www.semi.org.cn"
+      segment: "材料/设备"
+      note: "SEMI 中国官方"
+    - domain: "techinsights.com"
+      name: "TechInsights"
+      url: "https://www.techinsights.com"
+      segment: "综合"
+      note: "拆解分析、技术情报"
+    - domain: "semianalysis.com"
+      name: "SemiAnalysis"
+      url: "https://www.semianalysis.com"
+      segment: "综合"
+      note: "深度行业分析"
+    - domain: "edn.com"
+      name: "EDN"
+      url: "https://www.edn.com"
+      segment: "设计/EDA"
+      note: "电子设计技术媒体"
+    - domain: "semiengineering.com"
+      name: "Semiconductor Engineering"
+      url: "https://semiengineering.com"
+      segment: "EDA/材料/设备"
+      note: "半导体工程媒体"
+    - domain: "eet-china.com"
+      name: "EET-China"
+      url: "https://www.eet-china.com"
+      segment: "综合"
+      note: "电子工程专辑中文版"
+    - domain: "chinanews.com.cn"
+      name: "中国新闻网"
+      url: "https://www.chinanews.com.cn"
+      segment: "综合"
+      note: "封测/产业政策"
+    - domain: "cls.cn"
+      name: "财联社"
+      url: "https://www.cls.cn"
+      segment: "制造/综合"
+      note: "快讯、公司动态"
+    - domain: "news.cn"
+      name: "新华社"
+      url: "https://www.news.cn"
+      segment: "综合"
+      note: "产业政策、重大动态"
+    - domain: "cnstock.com"
+      name: "上海证券报"
+      url: "https://www.cnstock.com"
+      segment: "综合"
+      note: "上市公司公告"
+    - domain: "stcn.com"
+      name: "证券时报"
+      url: "https://www.stcn.com"
+      segment: "综合"
+      note: "上市公司公告"
+    - domain: "cninfo.com.cn"
+      name: "巨潮资讯"
+      url: "https://www.cninfo.com.cn"
+      segment: "综合"
+      note: "上市公司官方公告"
+    - domain: "21jingji.com"
+      name: "21世纪经济报道"
+      url: "https://www.21jingji.com"
+      segment: "综合"
+      note: "产业分析、SEMI 等预测"
+    - domain: "jiemian.com"
+      name: "界面新闻"
+      url: "https://www.jiemian.com"
+      segment: "综合"
+      note: "封测/产业动态"
+    - domain: "ce.cn"
+      name: "经济日报"
+      url: "http://www.ce.cn"
+      segment: "综合"
+      note: "产业经济政策"
+    - domain: "cet.com.cn"
+      name: "中国经济网"
+      url: "http://www.cet.com.cn"
+      segment: "综合"
+      note: "产业经济报道"
+    - domain: "xinhuanet.com"
+      name: "新华网"
+      url: "https://www.xinhuanet.com"
+      segment: "综合"
+      note: "权威时政产业"
+    - domain: "people.com.cn"
+      name: "人民网"
+      url: "http://www.people.com.cn"
+      segment: "综合"
+      note: "权威综合媒体"
+    - domain: "cctvl.com"
+      name: "央视网"
+      url: "https://www.cctvl.com"
+      segment: "综合"
+      note: "权威视频/图文新闻"
+    - domain: "chinadaily.com.cn"
+      name: "中国日报"
+      url: "https://www.chinadaily.com.cn"
+      segment: "综合"
+      note: "英文权威对外媒体"
+    - domain: "yicai.com"
+      name: "第一财经"
+      url: "https://www.yicai.com"
+      segment: "综合"
+      note: "财经产业报道"
+    - domain: "cena.com.cn"
+      name: "中国电子报"
+      url: "https://www.cena.com.cn"
+      segment: "综合"
+      note: "电子信息产业权威媒体"
+    - domain: "digitimes.com"
+      name: "DigiTimes"
+      url: "https://www.digitimes.com"
+      segment: "制造/封测"
+      note: "台积电/代工产能独家"
+    - domain: "digitimes.com.tw"
+      name: "电子时报 DigiTimes"
+      url: "https://www.digitimes.com.tw"
+      segment: "制造/封测"
+      note: "台系代工/封测独家"
+    - domain: "ieeexplore.ieee.org"
+      name: "IEEE Xplore"
+      url: "https://ieeexplore.ieee.org"
+      segment: "设计/EDA"
+      note: "学术论文"
+    - domain: "onlinelibrary.wiley.com"
+      name: "Wiley Online Library"
+      url: "https://onlinelibrary.wiley.com"
+      segment: "封测/制造"
+      note: "Engineering Reports 等工程研究成果"
+    - domain: "isscc.org"
+      name: "ISSCC"
+      url: "https://www.isscc.org"
+      segment: "设计/制造"
+      note: "X7：顶级会议，芯片设计领域顶级"
+    - domain: "vlsisymposium.org"
+      name: "VLSI Symposium"
+      url: "https://www.vlsisymposium.org"
+      segment: "制造/设计"
+      note: "X7：超大规模集成电路研讨会，制程技术发布重镇"
+    - domain: "dac.com"
+      name: "DAC"
+      url: "https://www.dac.com"
+      segment: "EDA/设计"
+      note: "X7：设计自动化大会，EDA 工具和设计方法学"
+    - domain: "ieee-iedm.org"
+      name: "IEDM"
+      url: "https://www.ieee-iedm.org"
+      segment: "制造/材料/设备"
+      note: "X7：国际电子器件大会，器件和工艺技术突破"
+    - domain: "nature.com"
+      name: "Nature"
+      url: "https://www.nature.com"
+      segment: "综合"
+      note: "X7：Nature Electronics 等前沿半导体研究"
+    - domain: "asia.nikkei.com"
+      name: "Nikkei Asia"
+      url: "https://asia.nikkei.com"
+      segment: "制造/综合"
+      note: "台积电/代工独家报道"
+    - domain: "reuters.com"
+      name: "Reuters"
+      url: "https://www.reuters.com"
+      segment: "综合"
+      note: "国际权威通讯社"
+    - domain: "bloomberg.com"
+      name: "Bloomberg"
+      url: "https://www.bloomberg.com"
+      segment: "综合"
+      note: "国际财经权威"
+    - domain: "chosun.com"
+      name: "Chosun Ilbo"
+      url: "https://www.chosun.com"
+      segment: "综合"
+      note: "韩国权威媒体（半导体独家）"
+    - domain: "koreatimes.co.kr"
+      name: "Korea Times"
+      url: "https://www.koreatimes.co.kr"
+      segment: "综合"
+      note: "韩国英文权威媒体"
+
+  # B 级：聚合源（可使用，但须追溯到原始来源并标注）
+  b_level:
+    - domain: "toutiao.com"
+      name: "今日头条"
+      url: "https://www.toutiao.com"
+      note: "需追溯原始来源"
+    - domain: "finance.sina.com.cn"
+      name: "新浪财经"
+      url: "https://finance.sina.com.cn"
+      note: "需追溯原始来源"
+    - domain: "tech.163.com"
+      name: "网易科技"
+      url: "https://tech.163.com"
+      note: "需追溯原始来源"
+    - domain: "m.sohu.com"
+      name: "搜狐科技"
+      url: "https://m.sohu.com"
+      note: "需追溯原始来源"
+    - domain: "eastmoney.com"
+      name: "东方财富网"
+      url: "https://www.eastmoney.com"
+      note: "需追溯原始来源"
+    - domain: "xueqiu.com"
+      name: "雪球"
+      url: "https://xueqiu.com"
+      note: "需追溯原始来源"
+    - domain: "mydrivers.com"
+      name: "快科技"
+      url: "https://www.mydrivers.com"
+      note: "需追溯原始来源"
+    - domain: "news.qq.com"
+      name: "腾讯新闻"
+      url: "https://news.qq.com"
+      note: "需追溯原始来源"
+
+  # C 级：禁止源（社交媒体/未验证），一律不使用
+  c_level:
+    - domain: "weibo.com"
+      name: "微博"
+      note: "未经验证，可能是传言"
+    - domain: "weibo.cn"
+      name: "微博（移动）"
+      note: "未经验证，可能是传言"
+    - domain: "twitter.com"
+      name: "Twitter"
+      note: "未经验证，可能是传言"
+    - domain: "x.com"
+      name: "X（Twitter）"
+      note: "未经验证，可能是传言"
+    - domain: "douyin.com"
+      name: "抖音"
+      note: "无法验证真实性"
+    - domain: "kuaishou.com"
+      name: "快手"
+      note: "无法验证真实性"
+    - domain: "zhihu.com"
+      name: "知乎帖文"
+      note: "用户生成内容，未经验证"
+    - domain: "xiaohongshu.com"
+      name: "小红书"
+      note: "用户生成内容，未经验证"
+    - domain: "bilibili.com"
+      name: "B站"
+      note: "用户生成内容，未经验证"
+
+# -----------------------------------------------------------------------------
+# 2. 产业链环节（SEGMENTS 常量）
+# -----------------------------------------------------------------------------
+segments:
+  - "设计"
+  - "制造"
+  - "封测"
+  - "EDA"
+  - "材料"
+
+# 章节标题全称（X15：统一全称，禁止简写）
+section_titles:
+  eda: "EDA / 工具"
+  material: "材料 / 设备"
+
+# -----------------------------------------------------------------------------
+# 3. 关键词与边界清单（供脚本常量生成）
+# -----------------------------------------------------------------------------
+keywords:
+  # 越界附录关键词（检查8）
+  forbidden_appendices:
+    - "市场与政策动态"
+    - "市场动态"
+    - "市场分析"
+    - "股价分析"
+    - "财经动态"
+    - "投资建议"
+  # 投资建议关键词（检查9：中立性）
+  investment_advice:
+    - "建议买入"
+    - "值得投资"
+    - "前景光明"
+    - "看涨"
+    - "看跌"
+    - "强烈推荐"
+    - "买入评级"
+    - "目标价"
+    - "预测涨"
+    - "预计下跌"
+    - "股价有望"
+    - "建议卖出"
+    - "增持"
+    - "减持"
+    - "建议加仓"
+    - "建议减仓"
+    - "投资价值"
+    - "上涨空间"
+    - "下跌空间"
+  # 技术术语关键词（检查14：技术注解）
+  tech_terms:
+    - "GAA"
+    - "FinFET"
+    - "TFET"
+    - "Gate-All-Around"
+    - "CoWoS"
+    - "InFO"
+    - "MR-MUF"
+    - "Chiplet"
+    - "2.5D"
+    - "3D IC"
+    - "3DIC"
+    - "先进封装"
+    - "混合键合"
+    - "热压键合"
+    - "HBM3E"
+    - "HBM4"
+    - "HBM3"
+    - "LPDDR"
+    - "DRAM"
+    - "NAND"
+    - "EUV"
+    - "DUV"
+    - "SADP"
+    - "SAQP"
+    - "极紫外"
+    - "6N"
+    - "电子特气"
+    - "光刻胶"
+    - "碳化硅"
+    - "氮化镓"
+    - "SiC"
+    - "GaN"
+    - "NPU"
+    - "TPU"
+    - "存算一体"
+    - "RISC-V"
+    - "2nm"
+    - "3nm"
+    - "5nm"
+    - "7nm"
+    - "14nm"
+    - "28nm"
+
+# -----------------------------------------------------------------------------
+# 4. 规模与格式阈值（X3 / X12）
+# -----------------------------------------------------------------------------
+thresholds:
+  # X3：摘要句数
+  summary_sentences:
+    pass_min: 3
+    pass_max: 5
+    warn_at: 6          # 6 句 WARN
+    fail_at: 7          # ≥7 句 FAIL
+    fail_below: 3       # ≤2 句 FAIL（与 pass_min 一致边界）
+  # X12：单期新闻条数（软指标）
+  news_count:
+    target_min: 15
+    target_max: 20
+    warn_min: 10        # 10–14 条 WARN
+    warn_max: 25        # 21–25 条 WARN
+    fail_below: 10      # <10 条 FAIL
+    fail_above: 25      # >25 条 FAIL
+    holiday_zero_pass: true   # 0 条（节假日）按既有兜底自动 PASS
+
+# -----------------------------------------------------------------------------
+# 5. 分类边界裁决（X9 / X10 / X11）
+#    以结构化形式固化，供 classification.md 生成与回归用例引用
+# -----------------------------------------------------------------------------
+classification_arbitration:
+  X9:
+    topic: "HBM 类新闻归属"
+    verdict: "制造"
+    condition: "仅当新闻主体是封装工艺细节（混合键合、热压键合、MR-MUF、堆叠层数工艺）时才归封测"
+    basis: "classification.md 存疑仲裁规则明写'HBM 相关新闻归制造'；封测反条目同样写'HBM4 量产不是封测是制造'"
+    example_pass: "SK海力士启动12层HBM4量产 → 制造"
+    example_fail: "HBM4 进入量产交付 放封测 → 误分类"
+  X10:
+    topic: "企业上市/IPO 是否纳入"
+    verdict: "按主体类型二分"
+    rule: |
+      晶圆厂、存储厂、封测厂等产能实体的上市/新建/投产，且新闻披露产能或工艺信息的，纳入对应环节；
+      芯片设计公司与 AI 芯片公司的纯融资/IPO 事件不纳入。
+      正文须以产能与工艺事实为主，募资金额仅作背景。
+    basis: "classification.md 制造包含项明列'晶圆厂动态（新建/投产/上市）'并有晶合集成上市正例；存疑仲裁'不纳入'限定语是'AI 芯片公司融资/上市'"
+    example_pass: "长鑫科技科创板上市（3 座 12 英寸 DRAM 厂、产能规模）→ 制造"
+    example_fail: "某 AI 芯片初创纯融资 5 亿元 → 不纳入"
+  X11:
+    topic: "股价信息能否出现"
+    verdict: "不得作主体/标题主语/今日要点；可作一句影响佐证"
+    rule: |
+      股价与指数不得作为新闻主体、标题主语或今日要点；
+      当股价变动是某技术事件的市场反应且来源已如实报道时，允许在摘要中作为一句影响佐证出现，
+      且不得含涨跌预测与投资建议措辞。
+    basis: "classification.md 不纳入清单与 rubric #11 禁止股价类内容；EDA 正例保留股价表述，二者以'主体 vs 佐证'划界"
+    example_pass: "标题'Kimi K3 48小时自主完成芯片设计'；摘要末句'该进展使 Cadence/Synopsys 股价承压'（一句佐证）"
+    example_fail: "标题'Cadence/Synopsys 股价重挫'并列为今日要点第 1 条 → 越界"
+
+# -----------------------------------------------------------------------------
+# 6. 格式裁决（X14 / X15 / X16）
+#    供脚本 WARN 级检查与模板锁定
+# -----------------------------------------------------------------------------
+format_rules:
+  X14:
+    topic: "来源分级统计的位置与格式"
+    verdict: "置于 ## 自检结果 小节内部，三行文本格式"
+    format: |
+      A级（权威）：[列出A级来源域名] = X条
+      B级（聚合）：[列出B级来源域名] = Y条
+      A级占比：X/(X+Y) = Z% ≥ 30% ✓
+    basis: "SKILL.md 输出格式、rubric.md 自检结果输出格式、历史产物 D9/D10 四处一致"
+    action: "模板锁定；脚本增位置 WARN 检查"
+  X15:
+    topic: "环节章节标题写法"
+    verdict: "统一 ## EDA / 工具 与 ## 材料 / 设备 全称"
+    forbidden: ["## EDA", "## 材料"]
+    basis: "SKILL.md 输出格式、rubric #1 的 PASS 写法、D9/D10 四处一致"
+    action: "模板锁定；脚本增标题全称一致性 WARN 检查"
+  X16:
+    topic: "头部元信息书写格式"
+    verdict: "blockquote 三行 + 半角冒号，一级标题附日期"
+    title_pattern: "# 芯片行业日报 — 年月日"
+    meta_pattern: |
+      > 生成时间: [YYYY-MM-DD HH:MM]
+      > 覆盖范围: [日期/日期范围]
+      > 新闻总数: [N]条
+    basis: "SKILL.md 输出格式、rubric #9、D9/D10 四处一致"
+    action: "模板锁定；脚本增标题日期检查"
+
+# -----------------------------------------------------------------------------
+# 7. 完整裁决索引（X1–X16，供人工回溯与 check 引用）
+# -----------------------------------------------------------------------------
+decisions:
+  X1:  { topic: "根目录与镜像 A 级域名清单不一致", verdict: "根目录 33 域名为唯一权威，.trae 镜像同步至 v5.0", action: "F1 建注册表；F2 加 CI diff 阻断" }
+  X2:  { topic: "镜像同步状态描述不一致", verdict: "以逐字节 diff 为准：8 文件中 7 个已一致，仅域名常量不同步", action: "修订 CLAUDE.md 当前状态段" }
+  X3:  { topic: "摘要句数阈值差 1 句", verdict: "3-5 PASS / 6 WARN / ≥7 FAIL / 1-2 FAIL", action: "修订 SKILL.md Step 3 该行" }
+  X4:  { topic: "摘要过长回退目标", verdict: "回退 Step 3（摘要生成步）", action: "修订 SKILL.md 失败处理表" }
+  X5:  { topic: "15 项 Rubric 双口径", verdict: "脚本 15 项为执行权威，rubric.md 按脚本口径重排", action: "F3 重排 rubric.md；F11 承接 3 项" }
+  X6:  { topic: "样例自检表口径", verdict: "新产物一律 15 行脚本口径", action: "模板锁定 15 行；加回归用例" }
+  X7:  { topic: "A 级来源权威定义源", verdict: "sources.md 与脚本均由本注册表生成，双向差集=0", action: "F1 注册表；F2 双向差集校验" }
+  X8:  { topic: "Samsung 官方源域名写法", verdict: "samsung.com 父域匹配", action: "注册表登记 samsung.com" }
+  X9:  { topic: "HBM 类新闻归属", verdict: "制造（封装工艺细节除外）", action: "加分类回归用例；F15 回收争议" }
+  X10: { topic: "企业上市/IPO 是否纳入", verdict: "产能实体纳入 / 纯融资不纳入", action: "改写 classification.md 存疑仲裁" }
+  X11: { topic: "股价信息能否出现", verdict: "不作主体；可作一句佐证", action: "classification.md 增补；脚本保留 19 关键词扫描" }
+  X12: { topic: "单期条数 15–20 刚性", verdict: "目标区间但 WARN 软指标", action: "脚本增检查项；SKILL.md 改软指标" }
+  X13: { topic: "D11 自身 A/B 统计矛盾", verdict: "以逐条判定结果为准，独立统计章节删除", action: "删除 D11 式独立统计；模板锁定" }
+  X14: { topic: "来源分级统计位置与格式", verdict: "置于自检结果小节内三行文本", action: "模板锁定；脚本增位置 WARN" }
+  X15: { topic: "环节章节标题写法", verdict: "EDA / 工具 与 材料 / 设备 全称", action: "模板锁定；脚本增 WARN" }
+  X16: { topic: "头部元信息书写格式", verdict: "blockquote 三行 + 半角冒号 + 标题附日期", action: "模板锁定；脚本增标题日期检查" }

@@ -1,0 +1,68 @@
+{
+  "schema_version": 2,
+  "generated": "2026-08-21",
+  "threshold": 0.2,
+  "verified_total": 3,
+  "stats_by_certainty": {
+    "高确定性": {
+      "total": 3,
+      "consistent": 2,
+      "deviated": 1,
+      "dev_rate": 0.333
+    },
+    "中确定性": {
+      "total": 0,
+      "consistent": 0,
+      "deviated": 0,
+      "dev_rate": null
+    },
+    "低确定性": {
+      "total": 0,
+      "consistent": 0,
+      "deviated": 0,
+      "dev_rate": null
+    }
+  },
+  "scenario_stats": {
+    "真趋势": {
+      "total": 1,
+      "consistent": 1,
+      "deviated": 0,
+      "hit_rate": 1.0
+    },
+    "炒作": {
+      "total": 1,
+      "consistent": 0,
+      "deviated": 1,
+      "hit_rate": 1.0
+    },
+    "被绕开": {
+      "total": 1,
+      "consistent": 0,
+      "deviated": 1,
+      "hit_rate": 0.0
+    }
+  },
+  "scenario_weights": {
+    "真趋势": 1.0,
+    "炒作": 1.0,
+    "被绕开": 0.0
+  },
+  "suggestions": [
+    {
+      "kind": "certainty",
+      "certainty": "高确定性",
+      "dev_rate": 0.333,
+      "n": 3,
+      "issue": "高确定性事件实际偏差率 33% 超过阈值 20%",
+      "recommendation": "复核「高确定性」分级标准：当前偏差偏高，建议重新界定该档位「时点官宣」的边界（如是否混淆了'会谈已宣布'与'成果已确认'、'法规生效日'与'细则落地日'），并在 SKILL.md 确定性 rubric 中收紧定义或补充反例。",
+      "dev_samples": [
+        {
+          "id": "20260814-uscn-talk",
+          "event": "中美经贸会谈（西班牙）",
+          "verified_note": "已举行但公开报道未确认半导体专项成果；同期BIS实体清单9个月零新增、对华出口暴跌26%，更像分级许可常态化背景板"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,156 @@
+schema_version: 1
+generated: '2026-09-10T15:48:35+08:00'
+sources:
+- source_id: sec_edgar
+  source_name: SEC EDGAR
+  status: degraded
+  last_attempt: '2026-09-10T15:48:35+08:00'
+  last_success: '2026-09-03T17:12:05+08:00'
+  consecutive_failures: 1
+  availability_7d: 0.33
+  avg_latency_ms: 4194
+  last_error: '<urlopen error [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in
+    violation of protocol (_ssl.c:1010)>'
+  history:
+  - date: '2026-08-09'
+    ok: false
+    latency_ms: 0
+  - date: '2026-08-15'
+    ok: false
+    latency_ms: 0
+  - date: '2026-08-17'
+    ok: true
+    latency_ms: 2692
+  - date: '2026-08-31'
+    ok: false
+    latency_ms: 8328
+  - date: '2026-09-03'
+    ok: true
+    latency_ms: 732
+  - date: '2026-09-10'
+    ok: false
+    latency_ms: 5024
+- source_id: aihot
+  source_name: AIHOT 聚合 API
+  status: ok
+  last_attempt: '2026-09-10T15:48:35+08:00'
+  last_success: '2026-09-10T15:48:35+08:00'
+  consecutive_failures: 0
+  availability_7d: 0.67
+  avg_latency_ms: 2288
+  last_error: null
+  history:
+  - date: '2026-08-09'
+    ok: false
+    latency_ms: 0
+  - date: '2026-08-15'
+    ok: false
+    latency_ms: 0
+  - date: '2026-08-17'
+    ok: true
+    latency_ms: 189
+  - date: '2026-08-31'
+    ok: true
+    latency_ms: 279
+  - date: '2026-09-03'
+    ok: true
+    latency_ms: 8284
+  - date: '2026-09-10'
+    ok: true
+    latency_ms: 402
+- source_id: semiengineering
+  source_name: Semiconductor Engineering
+  status: ok
+  last_attempt: '2026-09-10T15:48:35+08:00'
+  last_success: '2026-09-10T15:48:35+08:00'
+  consecutive_failures: 0
+  availability_7d: 1.0
+  avg_latency_ms: 1838
+  last_error: null
+  history:
+  - date: '2026-08-17'
+    ok: true
+    latency_ms: 1338
+  - date: '2026-08-31'
+    ok: true
+    latency_ms: 1563
+  - date: '2026-09-03'
+    ok: true
+    latency_ms: 2319
+  - date: '2026-09-10'
+    ok: true
+    latency_ms: 2135
+- source_id: eetimes
+  source_name: EE Times
+  status: ok
+  last_attempt: '2026-09-10T15:48:35+08:00'
+  last_success: '2026-09-10T15:48:35+08:00'
+  consecutive_failures: 0
+  availability_7d: 1.0
+  avg_latency_ms: 701
+  last_error: null
+  history:
+  - date: '2026-08-17'
+    ok: true
+    latency_ms: 624
+  - date: '2026-08-31'
+    ok: true
+    latency_ms: 1116
+  - date: '2026-09-03'
+    ok: true
+    latency_ms: 513
+  - date: '2026-09-10'
+    ok: true
+    latency_ms: 552
+- source_id: cnbc
+  source_name: CNBC Tech
+  status: ok
+  last_attempt: '2026-09-10T15:48:35+08:00'
+  last_success: '2026-09-10T15:48:35+08:00'
+  consecutive_failures: 0
+  availability_7d: 1.0
+  avg_latency_ms: 699
+  last_error: null
+  history:
+  - date: '2026-08-17'
+    ok: true
+    latency_ms: 688
+  - date: '2026-08-31'
+    ok: true
+    latency_ms: 1006
+  - date: '2026-09-03'
+    ok: true
+    latency_ms: 510
+  - date: '2026-09-10'
+    ok: true
+    latency_ms: 592
+- source_id: semianalysis
+  source_name: SemiAnalysis
+  status: ok
+  last_attempt: '2026-09-10T15:48:35+08:00'
+  last_success: '2026-09-10T15:48:35+08:00'
+  consecutive_failures: 0
+  availability_7d: 1.0
+  avg_latency_ms: 536
+  last_error: null
+  history:
+  - date: '2026-08-17'
+    ok: true
+    latency_ms: 472
+  - date: '2026-08-31'
+    ok: true
+    latency_ms: 555
+  - date: '2026-09-03'
+    ok: true
+    latency_ms: 607
+  - date: '2026-09-10'
+    ok: true
+    latency_ms: 513
+global:
+  raw_count: 19
+  cleaned_count: 19
+  discard_rate: 0.0
+  fused_events: 10
+  conflict_rate: 0.1
+  gap_cells: 13
+  severe_gaps: 6

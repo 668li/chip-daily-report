@@ -1,0 +1,205 @@
+[
+  {
+    "date": "20260808",
+    "topics": [
+      {
+        "topic": "HBM 价格与供需",
+        "direction": "up",
+        "streak": 3,
+        "signal": "高/利好/正面"
+      },
+      {
+        "topic": "先进封装产能紧缺",
+        "direction": "tight",
+        "streak": 2,
+        "signal": "高/利好/正面"
+      },
+      {
+        "topic": "国产 EDA 并购整合",
+        "direction": "up",
+        "streak": 2,
+        "signal": "中/利好/正面"
+      },
+      {
+        "topic": "出口管制收紧",
+        "direction": "tight",
+        "streak": 2,
+        "signal": "高/利空/负面"
+      }
+    ]
+  },
+  {
+    "date": "20260809",
+    "topics": [
+      {
+        "topic": "HBM 价格与供需",
+        "direction": "down",
+        "streak": 1,
+        "signal": "高/利空/负面"
+      },
+      {
+        "topic": "先进封装产能紧缺",
+        "direction": "tight",
+        "streak": 4,
+        "signal": "高/利好/正面"
+      },
+      {
+        "topic": "国产 EDA 并购整合",
+        "direction": "up",
+        "streak": 4,
+        "signal": "中/利好/正面"
+      },
+      {
+        "topic": "出口管制收紧",
+        "direction": "tight",
+        "streak": 4,
+        "signal": "高/利空/负面"
+      }
+    ]
+  },
+  {
+    "date": "20260814",
+    "topics": [
+      {
+        "topic": "HBM 价格与供需",
+        "direction": "down",
+        "streak": 2,
+        "signal": "高/利空/负面"
+      },
+      {
+        "topic": "先进封装产能紧缺",
+        "direction": "tight",
+        "streak": 5,
+        "signal": "高/利好/正面"
+      },
+      {
+        "topic": "国产设备替代",
+        "direction": "up",
+        "streak": 1,
+        "signal": "中/利好/正面"
+      },
+      {
+        "topic": "出口管制收紧",
+        "direction": "tight",
+        "streak": 5,
+        "signal": "高/利空/负面"
+      }
+    ]
+  },
+  {
+    "date": "20260817",
+    "topics": [
+      {
+        "topic": "HBM 价格与供需",
+        "direction": "down",
+        "streak": 3,
+        "signal": "高/利空/负面"
+      },
+      {
+        "topic": "先进封装产能紧缺",
+        "direction": "tight",
+        "streak": 6,
+        "signal": "高/利好/正面"
+      },
+      {
+        "topic": "国产设备替代",
+        "direction": "up",
+        "streak": 2,
+        "signal": "中/利好/正面"
+      },
+      {
+        "topic": "出口管制收紧",
+        "direction": "tight",
+        "streak": 6,
+        "signal": "高/利空/负面"
+      }
+    ]
+  },
+  {
+    "date": "20260831",
+    "topics": [
+      {
+        "topic": "HBM 价格与供需",
+        "direction": "tight",
+        "streak": 2,
+        "signal": "高/利好/正面"
+      },
+      {
+        "topic": "先进封装产能紧缺",
+        "direction": "tight",
+        "streak": 8,
+        "signal": "高/利好/正面"
+      },
+      {
+        "topic": "国产设备替代",
+        "direction": "up",
+        "streak": 4,
+        "signal": "中/利好/正面"
+      },
+      {
+        "topic": "出口管制收紧",
+        "direction": "tight",
+        "streak": 8,
+        "signal": "高/利空/负面"
+      }
+    ]
+  },
+  {
+    "date": "20260903",
+    "topics": [
+      {
+        "topic": "HBM 价格与供需",
+        "direction": "tight",
+        "streak": 3,
+        "signal": "高/利好/正面"
+      },
+      {
+        "topic": "先进封装产能紧缺",
+        "direction": "tight",
+        "streak": 9,
+        "signal": "高/利好/正面"
+      },
+      {
+        "topic": "国产设备替代",
+        "direction": "up",
+        "streak": 5,
+        "signal": "中/利好/正面"
+      },
+      {
+        "topic": "出口管制收紧",
+        "direction": "tight",
+        "streak": 9,
+        "signal": "高/利空/负面"
+      }
+    ]
+  },
+  {
+    "date": "20260910",
+    "topics": [
+      {
+        "topic": "HBM 价格与供需",
+        "direction": "tight",
+        "streak": 4,
+        "signal": "高/利好/正面"
+      },
+      {
+        "topic": "先进封装产能紧缺",
+        "direction": "tight",
+        "streak": 10,
+        "signal": "高/利好/正面"
+      },
+      {
+        "topic": "国产设备替代",
+        "direction": "up",
+        "streak": 6,
+        "signal": "中/利好/正面"
+      },
+      {
+        "topic": "出口管制收紧",
+        "direction": "tight",
+        "streak": 10,
+        "signal": "高/利空/负面"
+      }
+    ]
+  }
+]

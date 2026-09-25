@@ -1,0 +1,732 @@
+{
+  "generated": "2026-09-10 15:27:05",
+  "rules": {
+    "conf_min": 60.0,
+    "stale_days": 7,
+    "max_per_segment": 6,
+    "top_n": 24
+  },
+  "stats": {
+    "raw": 89,
+    "candidates": 0,
+    "rejected": 89,
+    "by_reason": {
+      "low_confidence": 89
+    }
+  },
+  "candidates": [],
+  "rejected": [
+    {
+      "event_id": "EV06",
+      "title": "AI-Driven Data Feed Forward: Scaling Advanced Test Methodolo",
+      "confidence": 57.5,
+      "verification": "single_source",
+      "segment": "设计",
+      "reason": "low_confidence"
+    },
+    {
+      "event_id": "EV17",
+      "title": "The Intersection Of AI And Voice At The Edge",
+      "confidence": 57.5,
+      "verification": "single_source",
+      "segment": "未知",
+      "reason": "low_confidence"
+    },
+    {
+      "event_id": "EV18",
+      "title": "When Digital Forensics Reaches The Hardware Layer",
+      "confidence": 57.5,
+      "verification": "single_source",
+      "segment": "未知",
+      "reason": "low_confidence"
+    },
+    {
+      "event_id": "EV19",
+      "title": "Can GPUs Continue To Dominate AI Compute?",
+      "confidence": 57.5,
+      "verification": "single_source",
+      "segment": "设计",
+      "reason": "low_confidence"
+    },
+    {
+      "event_id": "EV20",
+      "title": "Token Costs Are Becoming The New EDA Budget Battle",
+      "confidence": 57.5,
+      "verification": "single_source",
+      "segment": "EDA",
+      "reason": "low_confidence"
+    },
+    {
+      "event_id": "EV21",
+      "title": "Blog Review: Sept. 9",
+      "confidence": 57.5,
+      "verification": "single_source",
+      "segment": "未知",
+      "reason": "low_confidence"
+    },
+    {
+      "event_id": "EV22",
+      "title": "LEDs Push Wireless Power Further",
+      "confidence": 57.5,
+      "verification": "single_source",
+      "segment": "未知",
+      "reason": "low_confidence"
+    },
+    {
+      "event_id": "EV23",
+      "title": "The Hardware-assisted Verification Imperative",
+      "confidence": 57.5,
+      "verification": "single_source",
+      "segment": "EDA",
+      "reason": "low_confidence"
+    },
+    {
+      "event_id": "EV24",
+      "title": "BIWIN Brings Storage Solutions for AI Era at embedded world ",
+      "confidence": 57.5,
+      "verification": "single_source",
+      "segment": "未知",
+      "reason": "low_confidence"
+    },
+    {
+      "event_id": "EV25",
+      "title": "Bridging the HPC Software Gap for Practical Quantum Computin",
+      "confidence": 57.5,
+      "verification": "single_source",
+      "segment": "未知",
+      "reason": "low_confidence"
+    },
+    {
+      "event_id": "EV26",
+      "title": "Quantum Scaling Is Becoming a Control-Electronics Problem",
+      "confidence": 57.5,
+      "verification": "single_source",
+      "segment": "未知",
+      "reason": "low_confidence"
+    },
+    {
+      "event_id": "EV30",
+      "title": "Smart Outlier Detection",
+      "confidence": 57.5,
+      "verification": "single_source",
+      "segment": "未知",
+      "reason": "low_confidence"
+    },
+    {
+      "event_id": "EV31",
+      "title": "Research Bits: Sept. 8",
+      "confidence": 57.5,
+      "verification": "single_source",
+      "segment": "未知",
+      "reason": "low_confidence"
+    },
+    {
+      "event_id": "EV32",
+      "title": "Chip Industry Technical Paper Roundup: Sept. 8",
+      "confidence": 57.5,
+      "verification": "single_source",
+      "segment": "设计",
+      "reason": "low_confidence"
+    },
+    {
+      "event_id": "EV33",
+      "title": "Strategy Paper Urges Canada to Add Semiconductors to AI Stra",
+      "confidence": 57.5,
+      "verification": "single_source",
+      "segment": "未知",
+      "reason": "low_confidence"
+    },
+    {
+      "event_id": "EV34",
+      "title": "The Pragmatic Path to Achieving CRA Compliance and Securing ",
+      "confidence": 57.5,
+      "verification": "single_source",
+      "segment": "未知",
+      "reason": "low_confidence"
+    },
+    {
+      "event_id": "EV35",
+      "title": "The Security AI That Learns the Language of Movement",
+      "confidence": 57.5,
+      "verification": "single_source",
+      "segment": "未知",
+      "reason": "low_confidence"
+    },
+    {
+      "event_id": "EV36",
+      "title": "Powering High Precision Lasers",
+      "confidence": 57.5,
+      "verification": "single_source",
+      "segment": "未知",
+      "reason": "low_confidence"
+    },
+    {
+      "event_id": "EV37",
+      "title": "How Much Impact Will AI Have on IoT Software Engineering?",
+      "confidence": 57.5,
+      "verification": "single_source",
+      "segment": "未知",
+      "reason": "low_confidence"
+    },
+    {
+      "event_id": "EV39",
+      "title": "Chip Industry Week In Review",
+      "confidence": 54.5,
+      "verification": "single_source",
+      "segment": "设计",
+      "reason": "low_confidence"
+    },
+    {
+      "event_id": "EV40",
+      "title": "Labor Day marks the start of 'fallcations' as wealthy travel",
+      "confidence": 54.5,
+      "verification": "single_source",
+      "segment": "未知",
+      "reason": "low_confidence"
+    },
+    {
+      "event_id": "EV41",
+      "title": "Wealthy shift to 'Fallcations': Here's what to know",
+      "confidence": 54.5,
+      "verification": "single_source",
+      "segment": "未知",
+      "reason": "low_confidence"
+    },
+    {
+      "event_id": "EV42",
+      "title": "Manhattan's luxury rental market is booming, with units reac",
+      "confidence": 51.5,
+      "verification": "single_source",
+      "segment": "未知",
+      "reason": "low_confidence"
+    },
+    {
+      "event_id": "EV43",
+      "title": "Family offices are making a bullish bet on the stock market,",
+      "confidence": 51.5,
+      "verification": "single_source",
+      "segment": "未知",
+      "reason": "low_confidence"
+    },
+    {
+      "event_id": "EV44",
+      "title": "Family offices shift to stocks: Here's what to know",
+      "confidence": 51.5,
+      "verification": "single_source",
+      "segment": "未知",
+      "reason": "low_confidence"
+    },
+    {
+      "event_id": "EV45",
+      "title": "Bugatti CEO Mate Rimac says the future of supercars is old-s",
+      "confidence": 51.5,
+      "verification": "single_source",
+      "segment": "未知",
+      "reason": "low_confidence"
+    },
+    {
+      "event_id": "EV46",
+      "title": "Inside Wealth: Bugatti Rimac's Mate Rimac on the supercar ma",
+      "confidence": 51.5,
+      "verification": "single_source",
+      "segment": "未知",
+      "reason": "low_confidence"
+    },
+    {
+      "event_id": "EV47",
+      "title": "Manhattan rents hit all-time high: Here's what to know",
+      "confidence": 51.5,
+      "verification": "single_source",
+      "segment": "未知",
+      "reason": "low_confidence"
+    },
+    {
+      "event_id": "EV48",
+      "title": "California billionaire tax debate: Here's what to know",
+      "confidence": 51.5,
+      "verification": "single_source",
+      "segment": "未知",
+      "reason": "low_confidence"
+    },
+    {
+      "event_id": "EV49",
+      "title": "Monterey car week sales top $750 million",
+      "confidence": 51.5,
+      "verification": "single_source",
+      "segment": "未知",
+      "reason": "low_confidence"
+    },
+    {
+      "event_id": "EV50",
+      "title": "Lamborghini unveils Revuelto SV, its most powerful productio",
+      "confidence": 51.5,
+      "verification": "single_source",
+      "segment": "未知",
+      "reason": "low_confidence"
+    },
+    {
+      "event_id": "EV51",
+      "title": "New super car bubble?: Massive market rotation in classic ca",
+      "confidence": 51.5,
+      "verification": "single_source",
+      "segment": "未知",
+      "reason": "low_confidence"
+    },
+    {
+      "event_id": "EV52",
+      "title": "Millennials, Gen Z drivers push record classic car market fo",
+      "confidence": 51.5,
+      "verification": "single_source",
+      "segment": "未知",
+      "reason": "low_confidence"
+    },
+    {
+      "event_id": "EV53",
+      "title": "Supercars drive classic car market",
+      "confidence": 51.5,
+      "verification": "single_source",
+      "segment": "未知",
+      "reason": "low_confidence"
+    },
+    {
+      "event_id": "EV54",
+      "title": "Young buyers fuel supercar demand: Here's what to know",
+      "confidence": 51.5,
+      "verification": "single_source",
+      "segment": "未知",
+      "reason": "low_confidence"
+    },
+    {
+      "event_id": "EV55",
+      "title": "Monterey Car Week auctions could hit a record $500 million, ",
+      "confidence": 51.5,
+      "verification": "single_source",
+      "segment": "未知",
+      "reason": "low_confidence"
+    },
+    {
+      "event_id": "EV56",
+      "title": "Rockstar Energy founder builds Celsius stake, wants to take ",
+      "confidence": 49.5,
+      "verification": "single_source",
+      "segment": "未知",
+      "reason": "low_confidence"
+    },
+    {
+      "event_id": "EV57",
+      "title": "Rockstar Energy founder builds Celsius stake, wants to take ",
+      "confidence": 49.5,
+      "verification": "single_source",
+      "segment": "未知",
+      "reason": "low_confidence"
+    },
+    {
+      "event_id": "EV58",
+      "title": "Megayacht Amadea sold for $187 million to Dubai billionaire ",
+      "confidence": 49.5,
+      "verification": "single_source",
+      "segment": "未知",
+      "reason": "low_confidence"
+    },
+    {
+      "event_id": "EV59",
+      "title": "Superyacht 'Amadea' sold for $187 million: Here's what to kn",
+      "confidence": 49.5,
+      "verification": "single_source",
+      "segment": "未知",
+      "reason": "low_confidence"
+    },
+    {
+      "event_id": "EV60",
+      "title": "Inside Alts: Neuberger's Tony Tutrone on private market fund",
+      "confidence": 49.5,
+      "verification": "single_source",
+      "segment": "未知",
+      "reason": "low_confidence"
+    },
+    {
+      "event_id": "EV61",
+      "title": "More tech millionaires are using donor-advised funds for tax",
+      "confidence": 49.5,
+      "verification": "single_source",
+      "segment": "未知",
+      "reason": "low_confidence"
+    },
+    {
+      "event_id": "EV62",
+      "title": "Jewelry drives luxury rebound: Here's what to know",
+      "confidence": 49.5,
+      "verification": "single_source",
+      "segment": "未知",
+      "reason": "low_confidence"
+    },
+    {
+      "event_id": "EV63",
+      "title": "AI boom sparks charitable giving: Here's what to know",
+      "confidence": 49.5,
+      "verification": "single_source",
+      "segment": "未知",
+      "reason": "low_confidence"
+    },
+    {
+      "event_id": "EV64",
+      "title": "Boom in tech wealth is fueling record prices for dinosaur bo",
+      "confidence": 49.5,
+      "verification": "single_source",
+      "segment": "未知",
+      "reason": "low_confidence"
+    },
+    {
+      "event_id": "EV65",
+      "title": "Collectibles surge at auctions: Here's what to know",
+      "confidence": 49.5,
+      "verification": "single_source",
+      "segment": "未知",
+      "reason": "low_confidence"
+    },
+    {
+      "event_id": "EV66",
+      "title": "Renting a yacht in the Mediterranean this summer just got ch",
+      "confidence": 49.5,
+      "verification": "single_source",
+      "segment": "未知",
+      "reason": "low_confidence"
+    },
+    {
+      "event_id": "EV67",
+      "title": "How big is the great wealth transfer? It could be over $100 ",
+      "confidence": 49.5,
+      "verification": "single_source",
+      "segment": "未知",
+      "reason": "low_confidence"
+    },
+    {
+      "event_id": "EV68",
+      "title": "Wealthy splurge on household staff: Here's what to know",
+      "confidence": 49.5,
+      "verification": "single_source",
+      "segment": "未知",
+      "reason": "low_confidence"
+    },
+    {
+      "event_id": "EV69",
+      "title": "The $60 trillion in missing inheritance: Here's what to know",
+      "confidence": 49.5,
+      "verification": "single_source",
+      "segment": "未知",
+      "reason": "low_confidence"
+    },
+    {
+      "event_id": "EV70",
+      "title": "xAI’s Colossus 2 – First Gigawatt Datacenter In The World, U",
+      "confidence": 49.5,
+      "verification": "single_source",
+      "segment": "未知",
+      "reason": "low_confidence"
+    },
+    {
+      "event_id": "EV71",
+      "title": "Another Giant Leap: The Rubin CPX Specialized Accelerator & ",
+      "confidence": 49.5,
+      "verification": "single_source",
+      "segment": "设计",
+      "reason": "low_confidence"
+    },
+    {
+      "event_id": "EV72",
+      "title": "Huawei Ascend Production Ramp: Die Banks, TSMC Continued Pro",
+      "confidence": 49.5,
+      "verification": "single_source",
+      "segment": "制造",
+      "reason": "low_confidence"
+    },
+    {
+      "event_id": "EV73",
+      "title": "Amazon’s AI Resurgence: AWS & Anthropic’s Multi-Gigawatt Tra",
+      "confidence": 49.5,
+      "verification": "single_source",
+      "segment": "未知",
+      "reason": "low_confidence"
+    },
+    {
+      "event_id": "EV74",
+      "title": "H100 vs GB200 NVL72 Training Benchmarks – Power, TCO, and Re",
+      "confidence": 49.5,
+      "verification": "single_source",
+      "segment": "未知",
+      "reason": "low_confidence"
+    },
+    {
+      "event_id": "EV75",
+      "title": "GPT-5 Set the Stage for Ad Monetization and the SuperApp",
+      "confidence": 49.5,
+      "verification": "single_source",
+      "segment": "未知",
+      "reason": "low_confidence"
+    },
+    {
+      "event_id": "EV76",
+      "title": "Scaling the Memory Wall: The Rise and Roadmap of HBM",
+      "confidence": 49.5,
+      "verification": "single_source",
+      "segment": "制造",
+      "reason": "low_confidence"
+    },
+    {
+      "event_id": "EV77",
+      "title": "Robotics Levels of Autonomy",
+      "confidence": 49.5,
+      "verification": "single_source",
+      "segment": "未知",
+      "reason": "low_confidence"
+    },
+    {
+      "event_id": "EV78",
+      "title": "Intel 18A Details & Cost, Future of DRAM 4F2 vs 3D, Backside",
+      "confidence": 49.5,
+      "verification": "single_source",
+      "segment": "制造",
+      "reason": "low_confidence"
+    },
+    {
+      "event_id": "EV79",
+      "title": "Meta Superintelligence – Leadership Compute, Talent, and Dat",
+      "confidence": 49.5,
+      "verification": "single_source",
+      "segment": "设计",
+      "reason": "low_confidence"
+    },
+    {
+      "event_id": "EV80",
+      "title": "8-K - Current report",
+      "confidence": 47.8,
+      "verification": "single_source",
+      "segment": "设计",
+      "reason": "low_confidence"
+    },
+    {
+      "event_id": "EV81",
+      "title": "8-K - Current report",
+      "confidence": 47.8,
+      "verification": "single_source",
+      "segment": "设计",
+      "reason": "low_confidence"
+    },
+    {
+      "event_id": "EV82",
+      "title": "8-K - Current report",
+      "confidence": 47.8,
+      "verification": "single_source",
+      "segment": "设计",
+      "reason": "low_confidence"
+    },
+    {
+      "event_id": "EV83",
+      "title": "8-K - Current report",
+      "confidence": 47.8,
+      "verification": "single_source",
+      "segment": "设计",
+      "reason": "low_confidence"
+    },
+    {
+      "event_id": "EV84",
+      "title": "8-K - Current report",
+      "confidence": 47.8,
+      "verification": "single_source",
+      "segment": "设计",
+      "reason": "low_confidence"
+    },
+    {
+      "event_id": "EV85",
+      "title": "8-K - Current report",
+      "confidence": 47.8,
+      "verification": "single_source",
+      "segment": "设计",
+      "reason": "low_confidence"
+    },
+    {
+      "event_id": "EV86",
+      "title": "8-K - Current report",
+      "confidence": 47.8,
+      "verification": "single_source",
+      "segment": "设计",
+      "reason": "low_confidence"
+    },
+    {
+      "event_id": "EV87",
+      "title": "8-K - Current report",
+      "confidence": 47.8,
+      "verification": "single_source",
+      "segment": "设计",
+      "reason": "low_confidence"
+    },
+    {
+      "event_id": "EV88",
+      "title": "8-K - Current report",
+      "confidence": 47.8,
+      "verification": "single_source",
+      "segment": "设计",
+      "reason": "low_confidence"
+    },
+    {
+      "event_id": "EV89",
+      "title": "8-K - Current report",
+      "confidence": 47.8,
+      "verification": "single_source",
+      "segment": "设计",
+      "reason": "low_confidence"
+    },
+    {
+      "event_id": "EV01",
+      "title": "雷军回应新华社报道：小米未来 5 年计划投入 2000 亿元研发费用",
+      "confidence": 47.0,
+      "verification": "single_source",
+      "segment": "未知",
+      "reason": "low_confidence"
+    },
+    {
+      "event_id": "EV02",
+      "title": "英伟达 CUDA Toolkit 13.4 首次原生支持 Windows on Arm64，为 RTX Spark 铺路",
+      "confidence": 47.0,
+      "verification": "single_source",
+      "segment": "未知",
+      "reason": "low_confidence"
+    },
+    {
+      "event_id": "EV03",
+      "title": "IT早报 0910：苹果发首款折叠屏 iPhone Duo、iPhone 18 Pro 系列；曝 DeepSeek 备战",
+      "confidence": 47.0,
+      "verification": "single_source",
+      "segment": "未知",
+      "reason": "low_confidence"
+    },
+    {
+      "event_id": "EV04",
+      "title": "DeepSeek Harness 0.1.5 更新：适配 DeepSeek V4.1 Flash 模型，新增文件上传与侧",
+      "confidence": 47.0,
+      "verification": "single_source",
+      "segment": "未知",
+      "reason": "low_confidence"
+    },
+    {
+      "event_id": "EV05",
+      "title": "System76 发布 AM5 工作站 Thelio Mira AI，支持双卡配置",
+      "confidence": 47.0,
+      "verification": "single_source",
+      "segment": "未知",
+      "reason": "low_confidence"
+    },
+    {
+      "event_id": "EV07",
+      "title": "Besxar 计划借助 SpaceX 火箭助推器打造轨道半导体工厂",
+      "confidence": 47.0,
+      "verification": "single_source",
+      "segment": "未知",
+      "reason": "low_confidence"
+    },
+    {
+      "event_id": "EV08",
+      "title": "三星与 Mistral AI 合作将模型部署于半导体制造并领投其 D 轮融资",
+      "confidence": 47.0,
+      "verification": "single_source",
+      "segment": "未知",
+      "reason": "low_confidence"
+    },
+    {
+      "event_id": "EV09",
+      "title": "OpenAI 韩国负责人：与三星电子的下一代芯片合作取得良好进展",
+      "confidence": 47.0,
+      "verification": "single_source",
+      "segment": "未知",
+      "reason": "low_confidence"
+    },
+    {
+      "event_id": "EV10",
+      "title": "三星电子与 Mistral AI 达成战略合作，联手打造半导体专用 AI 模型",
+      "confidence": 47.0,
+      "verification": "single_source",
+      "segment": "未知",
+      "reason": "low_confidence"
+    },
+    {
+      "event_id": "EV11",
+      "title": "Apple 发布文档解释新音频智能功能如何保护隐私",
+      "confidence": 47.0,
+      "verification": "single_source",
+      "segment": "未知",
+      "reason": "low_confidence"
+    },
+    {
+      "event_id": "EV12",
+      "title": "Apple 发布首款折叠屏 iPhone Duo，起售价 $1，999",
+      "confidence": 47.0,
+      "verification": "single_source",
+      "segment": "未知",
+      "reason": "low_confidence"
+    },
+    {
+      "event_id": "EV13",
+      "title": "苹果发布 A20 Pro 芯片：2nm 制程，6 核 CPU 与 7 核 GPU",
+      "confidence": 47.0,
+      "verification": "single_source",
+      "segment": "未知",
+      "reason": "low_confidence"
+    },
+    {
+      "event_id": "EV14",
+      "title": "谷歌过程图框架：让智能体自我进化",
+      "confidence": 47.0,
+      "verification": "single_source",
+      "segment": "未知",
+      "reason": "low_confidence"
+    },
+    {
+      "event_id": "EV15",
+      "title": "韩国国家超算 6 号机 12 月投运：理论算力是现有 5 号机 24 倍，性能剑指全球前十",
+      "confidence": 47.0,
+      "verification": "single_source",
+      "segment": "未知",
+      "reason": "low_confidence"
+    },
+    {
+      "event_id": "EV16",
+      "title": "中国联通与魅族合作发布\"小魔方\"AI 手机：4 英寸小方屏，主打全语音交互与端云协同",
+      "confidence": 47.0,
+      "verification": "single_source",
+      "segment": "未知",
+      "reason": "low_confidence"
+    },
+    {
+      "event_id": "EV27",
+      "title": "OpenAI 发布 ChatGPT Images 2.5 生图模型，延迟降低 50% 并新增 Sketch 草图功能",
+      "confidence": 47.0,
+      "verification": "single_source",
+      "segment": "未知",
+      "reason": "low_confidence"
+    },
+    {
+      "event_id": "EV28",
+      "title": "Arm CEO 哈斯：AI 有望在有生之年攻克癌症，但算力供应是瓶颈",
+      "confidence": 47.0,
+      "verification": "single_source",
+      "segment": "未知",
+      "reason": "low_confidence"
+    },
+    {
+      "event_id": "EV29",
+      "title": "英特尔 High-NA EUV 晶圆处理量突破 100 万片，超越其他厂商总和",
+      "confidence": 47.0,
+      "verification": "single_source",
+      "segment": "未知",
+      "reason": "low_confidence"
+    },
+    {
+      "event_id": "EV38",
+      "title": "华为何庭波发布 τ 定律论文，麒麟 2026 晶体管密度提升 55% 且功耗大降",
+      "confidence": 44.0,
+      "verification": "single_source",
+      "segment": "未知",
+      "reason": "low_confidence"
+    }
+  ]
+}

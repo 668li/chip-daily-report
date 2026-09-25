@@ -1,0 +1,475 @@
+[
+  {
+    "event_id": "EV01",
+    "title": "SK hynix 公布约 384 亿美元扩产计划 加码 HBM 与 DRAM",
+    "segment": "制造",
+    "published": "2026-08-07",
+    "n_sources": 3,
+    "n_unique_sources": 3,
+    "verification": "verified",
+    "confidence": 83.0,
+    "confidence_breakdown": {
+      "tier_score": 0.8,
+      "multi_source": 0.667,
+      "freshness": 1.0,
+      "consistency": 1.0
+    },
+    "divergences": [],
+    "primary_source": {
+      "source_id": "skhynix_ir",
+      "source_name": "SK hynix 新闻室",
+      "tier": 0,
+      "type": "ir",
+      "title": "SK hynix 公布约 384 亿美元扩产计划 加码 HBM 与 DRAM",
+      "url": "https://news.skhynix.com/hbm-capex-2026",
+      "published": "2026-08-07"
+    },
+    "sources": [
+      {
+        "source_id": "skhynix_ir",
+        "source_name": "SK hynix 新闻室",
+        "tier": 0,
+        "type": "ir",
+        "title": "SK hynix 公布约 384 亿美元扩产计划 加码 HBM 与 DRAM",
+        "url": "https://news.skhynix.com/hbm-capex-2026",
+        "published": "2026-08-07"
+      },
+      {
+        "source_id": "trendforce",
+        "source_name": "TrendForce",
+        "tier": 1,
+        "type": "data",
+        "title": "SK hynix Plans $38.4B Capex for HBM/DRAM Expansion",
+        "url": "https://www.trendforce.com/news/skhynix-capex",
+        "published": "2026-08-07"
+      },
+      {
+        "source_id": "cls",
+        "source_name": "财联社",
+        "tier": 3,
+        "type": "news",
+        "title": "SK海力士拟投384亿美元扩产 加码HBM与DRAM",
+        "url": "https://www.cls.cn/detail/xk/2448352",
+        "published": "2026-08-07"
+      }
+    ],
+    "summary": "SK海力士公布约384亿美元扩产计划，重点投向龙仁Y2与清州M17晶圆厂，用于HBM、DRAM与NAND产能扩张。公司凭借HBM3E与HBM4先发优势深度绑定英伟达，2026年HBM出货份额有望维持全球领先。"
+  },
+  {
+    "event_id": "EV04",
+    "title": "TSMC N2 Monthly Capacity to Reach 120K Wafers",
+    "segment": "制造",
+    "published": "2026-08-06",
+    "n_sources": 3,
+    "n_unique_sources": 3,
+    "verification": "verified",
+    "confidence": 83.0,
+    "confidence_breakdown": {
+      "tier_score": 0.8,
+      "multi_source": 0.667,
+      "freshness": 1.0,
+      "consistency": 1.0
+    },
+    "divergences": [],
+    "primary_source": {
+      "source_id": "trendforce",
+      "source_name": "TrendForce",
+      "tier": 1,
+      "type": "data",
+      "title": "TSMC N2 Monthly Capacity to Reach 120K Wafers",
+      "url": "https://www.trendforce.com/news/tsmc-n2-capacity",
+      "published": "2026-08-06"
+    },
+    "sources": [
+      {
+        "source_id": "trendforce",
+        "source_name": "TrendForce",
+        "tier": 1,
+        "type": "data",
+        "title": "TSMC N2 Monthly Capacity to Reach 120K Wafers",
+        "url": "https://www.trendforce.com/news/tsmc-n2-capacity",
+        "published": "2026-08-06"
+      },
+      {
+        "source_id": "digitimes_tw",
+        "source_name": "电子时报 DigiTimes",
+        "tier": 1,
+        "type": "news",
+        "title": "台积电N2 2nm五厂放量 月产能冲击12万片",
+        "url": "https://www.digitimes.com.tw/n2-2nm-ramp",
+        "published": "2026-08-06"
+      },
+      {
+        "source_id": "chosun",
+        "source_name": "Chosun Ilbo",
+        "tier": 3,
+        "type": "news",
+        "title": "TSMC 2nm ramp-up accelerates at five fabs",
+        "url": "https://www.chosun.com/english/industry-en/tsmc-n2",
+        "published": "2026-08-06"
+      }
+    ],
+    "summary": "TrendForce estimates TSMC N2 monthly capacity will reach 120,000 wafers across five fabs in 2026, with unit fab capacity at ~20,000 wafers per month."
+  },
+  {
+    "event_id": "EV02",
+    "title": "寒武纪 2026 年半年度报告：营收 59.96 亿元，净利润 23.11 亿元",
+    "segment": "设计",
+    "published": "2026-08-07",
+    "n_sources": 2,
+    "n_unique_sources": 2,
+    "verification": "verified",
+    "confidence": 78.0,
+    "confidence_breakdown": {
+      "tier_score": 0.8,
+      "multi_source": 0.5,
+      "freshness": 1.0,
+      "consistency": 1.0
+    },
+    "divergences": [],
+    "primary_source": {
+      "source_id": "cambricon_filing",
+      "source_name": "寒武纪（交易所公告）",
+      "tier": 0,
+      "type": "filing",
+      "title": "寒武纪 2026 年半年度报告：营收 59.96 亿元，净利润 23.11 亿元",
+      "url": "http://www.sse.com.cn/assortment/stock/list/info/announcement",
+      "published": "2026-08-07"
+    },
+    "sources": [
+      {
+        "source_id": "cambricon_filing",
+        "source_name": "寒武纪（交易所公告）",
+        "tier": 0,
+        "type": "filing",
+        "title": "寒武纪 2026 年半年度报告：营收 59.96 亿元，净利润 23.11 亿元",
+        "url": "http://www.sse.com.cn/assortment/stock/list/info/announcement",
+        "published": "2026-08-07"
+      },
+      {
+        "source_id": "stcn",
+        "source_name": "证券时报",
+        "tier": 3,
+        "type": "news",
+        "title": "寒武纪上半年营收59.96亿元同比增108% 净利23.11亿元扭亏",
+        "url": "https://www.stcn.com/article/detail/4064724.html",
+        "published": "2026-08-07"
+      }
+    ],
+    "summary": "寒武纪发布2026年半年度业绩，实现营业收入59.96亿元同比增长108.13%，归母净利润23.11亿元同比增122.61%，扭转连续亏损。"
+  },
+  {
+    "event_id": "EV05",
+    "title": "长电科技78亿落子上海临港 建先进封装基地",
+    "segment": "封测",
+    "published": "2026-08-06",
+    "n_sources": 2,
+    "n_unique_sources": 2,
+    "verification": "verified",
+    "confidence": 71.0,
+    "confidence_breakdown": {
+      "tier_score": 0.6,
+      "multi_source": 0.5,
+      "freshness": 1.0,
+      "consistency": 1.0
+    },
+    "divergences": [],
+    "primary_source": {
+      "source_id": "stcn",
+      "source_name": "证券时报",
+      "tier": 3,
+      "type": "news",
+      "title": "长电科技78亿落子上海临港 建先进封装基地",
+      "url": "https://stcn.com/article/detail/3978587.html",
+      "published": "2026-08-06"
+    },
+    "sources": [
+      {
+        "source_id": "stcn",
+        "source_name": "证券时报",
+        "tier": 3,
+        "type": "news",
+        "title": "长电科技78亿落子上海临港 建先进封装基地",
+        "url": "https://stcn.com/article/detail/3978587.html",
+        "published": "2026-08-06"
+      },
+      {
+        "source_id": "qq_news",
+        "source_name": "腾讯新闻",
+        "tier": 4,
+        "type": "news",
+        "title": "长电科技78亿建临港先进封装基地 对标台积电CoWoS",
+        "url": "https://new.qq.com/rain/a/20260806A06SBT00",
+        "published": "2026-08-06"
+      }
+    ],
+    "summary": "长电科技宣布投资78亿元在上海临港建设先进封装基地，规划覆盖2.5D/3D、HBM3e、Chiplet与CPO光电共封装等产线。"
+  },
+  {
+    "event_id": "EV10",
+    "title": "MATCH Act: House Foreign Affairs Committee Passes 36-8",
+    "segment": "制造",
+    "published": "2026-06-10",
+    "n_sources": 2,
+    "n_unique_sources": 2,
+    "verification": "verified",
+    "confidence": 70.0,
+    "confidence_breakdown": {
+      "tier_score": 0.8,
+      "multi_source": 0.5,
+      "freshness": 0.6,
+      "consistency": 1.0
+    },
+    "divergences": [],
+    "primary_source": {
+      "source_id": "bis_rules",
+      "source_name": "美国 BIS 出口管制规则",
+      "tier": 2,
+      "type": "filing",
+      "title": "MATCH Act: House Foreign Affairs Committee Passes 36-8",
+      "url": "https://www.bis.doc.gov/match-act",
+      "published": "2026-04-22"
+    },
+    "sources": [
+      {
+        "source_id": "bis_rules",
+        "source_name": "美国 BIS 出口管制规则",
+        "tier": 2,
+        "type": "filing",
+        "title": "MATCH Act: House Foreign Affairs Committee Passes 36-8",
+        "url": "https://www.bis.doc.gov/match-act",
+        "published": "2026-04-22"
+      },
+      {
+        "source_id": "xinhuanet",
+        "source_name": "新华网",
+        "tier": 3,
+        "type": "news",
+        "title": "美众议院外交事务委员会36:8通过芯片设备多边管制法案",
+        "url": "https://www.xinhuanet.com/finance/20260610",
+        "published": "2026-06-10"
+      }
+    ],
+    "summary": "US House Foreign Affairs Committee passed the MATCH Act 36-8, expanding semiconductor equipment export controls to multilateral alignment covering immersion DUV"
+  },
+  {
+    "event_id": "EV03",
+    "title": "AMD Unveils Instinct MI400 Series with CDNA 5",
+    "segment": "设计",
+    "published": "2026-08-07",
+    "n_sources": 2,
+    "n_unique_sources": 2,
+    "verification": "verified",
+    "confidence": 65.0,
+    "confidence_breakdown": {
+      "tier_score": 0.6,
+      "multi_source": 0.5,
+      "freshness": 1.0,
+      "consistency": 0.6
+    },
+    "divergences": [
+      {
+        "a": "163_news",
+        "b": "eetimes",
+        "a_claim": [
+          "384GB"
+        ],
+        "b_claim": [
+          "432GB"
+        ],
+        "note": "关键数字不一致（GB）"
+      }
+    ],
+    "primary_source": {
+      "source_id": "eetimes",
+      "source_name": "EE Times",
+      "tier": 1,
+      "type": "news",
+      "title": "AMD Unveils Instinct MI400 Series with CDNA 5",
+      "url": "https://www.eetimes.com/amd-instinct-mi400",
+      "published": "2026-08-07"
+    },
+    "sources": [
+      {
+        "source_id": "eetimes",
+        "source_name": "EE Times",
+        "tier": 1,
+        "type": "news",
+        "title": "AMD Unveils Instinct MI400 Series with CDNA 5",
+        "url": "https://www.eetimes.com/amd-instinct-mi400",
+        "published": "2026-08-07"
+      },
+      {
+        "source_id": "163_news",
+        "source_name": "网易科技",
+        "tier": 4,
+        "type": "news",
+        "title": "AMD发布Instinct MI400系列与Helios机架 正面挑战英伟达Rubin",
+        "url": "https://dy.163.com/article/L3OARQVV0556OH4N.html",
+        "published": "2026-08-07"
+      }
+    ],
+    "summary": "AMD launched the Instinct MI455X accelerator with CDNA 5 architecture, 320 billion transistors and 432GB of HBM4 memory, built on TSMC 2nm for compute dies."
+  },
+  {
+    "event_id": "EV09",
+    "title": "DRAM Contract Prices Up 53-58% QoQ in 2Q26",
+    "segment": "制造",
+    "published": "2026-07-14",
+    "n_sources": 2,
+    "n_unique_sources": 2,
+    "verification": "verified",
+    "confidence": 65.0,
+    "confidence_breakdown": {
+      "tier_score": 0.6,
+      "multi_source": 0.5,
+      "freshness": 0.7,
+      "consistency": 1.0
+    },
+    "divergences": [],
+    "primary_source": {
+      "source_id": "trendforce",
+      "source_name": "TrendForce",
+      "tier": 1,
+      "type": "data",
+      "title": "DRAM Contract Prices Up 53-58% QoQ in 2Q26",
+      "url": "https://www.trendforce.com/news/dram-price-2q26",
+      "published": "2026-07-14"
+    },
+    "sources": [
+      {
+        "source_id": "trendforce",
+        "source_name": "TrendForce",
+        "tier": 1,
+        "type": "data",
+        "title": "DRAM Contract Prices Up 53-58% QoQ in 2Q26",
+        "url": "https://www.trendforce.com/news/dram-price-2q26",
+        "published": "2026-07-14"
+      },
+      {
+        "source_id": "qq_news",
+        "source_name": "腾讯新闻",
+        "tier": 4,
+        "type": "news",
+        "title": "存储超级周期：Q2 DRAM合约价环比上涨55%",
+        "url": "https://new.qq.com/rain/a/20260714A02J1V00",
+        "published": "2026-07-14"
+      }
+    ],
+    "summary": "TrendForce: general DRAM contract prices rose 53-58% QoQ in Q2 2026, HBM included. HBM market to grow 58% to $54.6B in 2026."
+  },
+  {
+    "event_id": "EV06",
+    "title": "华大九天发布Argus 3DIC全流程EDA 对标国际大厂",
+    "segment": "EDA",
+    "published": "2026-08-05",
+    "n_sources": 1,
+    "n_unique_sources": 1,
+    "verification": "single_source",
+    "confidence": 51.0,
+    "confidence_breakdown": {
+      "tier_score": 0.8,
+      "multi_source": 0.0,
+      "freshness": 0.85,
+      "consistency": 0.4
+    },
+    "divergences": [],
+    "primary_source": {
+      "source_id": "eetchina",
+      "source_name": "EET-China",
+      "tier": 3,
+      "type": "news",
+      "title": "华大九天发布Argus 3DIC全流程EDA 对标国际大厂",
+      "url": "https://www.eet-china.com/mp/a507778.html",
+      "published": "2026-08-05"
+    },
+    "sources": [
+      {
+        "source_id": "eetchina",
+        "source_name": "EET-China",
+        "tier": 3,
+        "type": "news",
+        "title": "华大九天发布Argus 3DIC全流程EDA 对标国际大厂",
+        "url": "https://www.eet-china.com/mp/a507778.html",
+        "published": "2026-08-05"
+      }
+    ],
+    "summary": "华大九天推出Argus 3DIC物理验证平台，全面支持2.5D/3D异构集成封装设计，实现从协同设计到封装的全链路物理验证。"
+  },
+  {
+    "event_id": "EV07",
+    "title": "鼎龙股份光刻胶产能达330吨 潜江二期投产",
+    "segment": "材料",
+    "published": "2026-08-05",
+    "n_sources": 1,
+    "n_unique_sources": 1,
+    "verification": "single_source",
+    "confidence": 51.0,
+    "confidence_breakdown": {
+      "tier_score": 0.8,
+      "multi_source": 0.0,
+      "freshness": 0.85,
+      "consistency": 0.4
+    },
+    "divergences": [],
+    "primary_source": {
+      "source_id": "21jingji",
+      "source_name": "21世纪经济报道",
+      "tier": 3,
+      "type": "news",
+      "title": "鼎龙股份光刻胶产能达330吨 潜江二期投产",
+      "url": "https://m.21jingji.com/article/20260805",
+      "published": "2026-08-05"
+    },
+    "sources": [
+      {
+        "source_id": "21jingji",
+        "source_name": "21世纪经济报道",
+        "tier": 3,
+        "type": "news",
+        "title": "鼎龙股份光刻胶产能达330吨 潜江二期投产",
+        "url": "https://m.21jingji.com/article/20260805",
+        "published": "2026-08-05"
+      }
+    ],
+    "summary": "鼎龙股份半导体光刻胶业务再扩容，潜江二期300吨产线投产叠加一期30吨产能，KrF与ArF光刻胶总产能达到330吨。"
+  },
+  {
+    "event_id": "EV08",
+    "title": "概伦电子21.74亿并购落地 国产EDA迈向平台化",
+    "segment": "EDA",
+    "published": "2026-08-04",
+    "n_sources": 1,
+    "n_unique_sources": 1,
+    "verification": "single_source",
+    "confidence": 44.0,
+    "confidence_breakdown": {
+      "tier_score": 0.6,
+      "multi_source": 0.0,
+      "freshness": 0.85,
+      "consistency": 0.4
+    },
+    "divergences": [],
+    "primary_source": {
+      "source_id": "eastmoney",
+      "source_name": "东方财富网",
+      "tier": 4,
+      "type": "news",
+      "title": "概伦电子21.74亿并购落地 国产EDA迈向平台化",
+      "url": "https://caifuhao.eastmoney.com/news/20260804",
+      "published": "2026-08-04"
+    },
+    "sources": [
+      {
+        "source_id": "eastmoney",
+        "source_name": "东方财富网",
+        "tier": 4,
+        "type": "news",
+        "title": "概伦电子21.74亿并购落地 国产EDA迈向平台化",
+        "url": "https://caifuhao.eastmoney.com/news/20260804",
+        "published": "2026-08-04"
+      }
+    ],
+    "summary": "概伦电子完成收购锐成芯微100%股权与纳能微45.64%股权，交易作价21.74亿元，正式补齐半导体IP短板。"
+  }
+]

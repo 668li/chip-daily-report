@@ -1,0 +1,26 @@
+# chip-daily-report 跨日记忆状态文件（B · v5.3）
+# 规则：由生成流程 Step 6 更新；缺失或损坏时 Step 1 跳过持续追踪，不 FAIL。
+schema_version: 1
+last_report_date: "2026-09-10"
+coverage: "2026-09-04 ~ 2026-09-10"
+tracked_topics:
+  - topic: "HBM 价格与供需"
+    direction: "tight"         # up | down | flat | tight | loose
+    streak: 4                  # 连续期数（方向反转归 1）
+    delta: "SK海力士印第安纳40亿美元HBM/先进封装厂2028H2投产、龙仁Y1基地产能提前至2027试产、3月已交付全球首批12层HBM4、Q4启动量产；HBM占AI芯片物料成本约四成——供给侧扩产但需求（AWS 2027-28再部署200万颗GPU）同步跳升，'长期紧平衡'再确认"
+    signal: "高/利好/正面"
+  - topic: "先进封装产能紧缺"
+    direction: "tight"
+    streak: 10
+    delta: "台积电CoWoS月产能向12-13万片推进；5μm微凸点（Microbump）与面板级封装（CoPoS）并进支撑HBM4 12层堆叠；异构集成+硅光互连成主线、从产能竞赛升级为互连/材料竞赛——HBM与封装'绑死'为同一约束，排产至2027未解"
+    signal: "高/利好/正面"
+  - topic: "国产设备替代"
+    direction: "up"
+    streak: 6
+    delta: "中微9-1发布六款高端设备（刻蚀/PECVD/ALD/金属膜/SiC外延）配合净利同比+约三倍与35亿临港扩产；北方华创9-2携旭光/珂玛推氮化铝（AlN）国产化；SEMI Q2全球设备出货+23%——本土设备商平台化提速，替代方向延续"
+    signal: "中/利好/正面"
+  - topic: "出口管制收紧"
+    direction: "tight"
+    streak: 10
+    delta: "美国BIS GAAFET EDA管制60天缓冲期10-14届满生效；商务部据报把芯片关税减免与'在美制造'承诺挂钩、新一轮广泛半导体关税在考量——双边'清单化+关税武器化'升级，国产EDA迁移窗口同步打开"
+    signal: "高/利空/负面"

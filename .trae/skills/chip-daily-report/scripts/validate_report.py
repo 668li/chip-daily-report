@@ -4,7 +4,7 @@
 用法: python validate_report.py <日报文件路径>
 
 v3.1 修复（基于对抗审查报告）:
-  - [C-1] 修复自检表格正则：\d+ → [#\d]+（兼容 | # | 格式）
+  - [C-1] 修复自检表格正则：\\d+ → [#\\d]+（兼容 | # | 格式）
   - [A-3] 来源级别改为只检查URL域名，不检查display text（防注入攻击）
   - [C-2] 句数统计兼容英文标点 . ! ?，排除小数点
   - [C-3] 0条新闻时跳过A级占比检查
@@ -31,6 +31,38 @@ v5.0 升级（微电子专业深度版）:
   - [R-4] 章节顺序检查更新：新增"产业链关联"环节
   - 脚本覆盖 15/15 项 Rubric（含WARN级提示）
 
+v5.2 升级（来源分层 + 信号层，X17）:
+  - [R-5] 新增#20 信号层检查（软指标）：每条新闻须标注'| 信号: 重要性/影响方向/情绪'
+        格式错误 FAIL；覆盖率<80% WARN；0条新闻 PASS；旧日报无信号仅 WARN 不破坏退出码
+  - 来源池优先级（Tier-0/1/2）在 SKILL.md Step2 强制，脚本侧不重复判定
+  - 脚本覆盖 15/15 项 Rubric + 5 项 X 裁决软检查（16/17/18/19/20）
+
+v5.3 升级（跨日记忆 + 催化剂日历，B/C）:
+  - [R-6] 新增#21 持续追踪检查（B·软指标）：检测到'## 持续追踪'小节时验证结构
+        '暂无持续追踪主题'降级 PASS；标题缺失/内容过短 WARN；不改变退出码
+  - [R-7] 新增#22 前瞻催化剂检查（C·软指标）：检测到'## 前瞻催化剂'小节时验证表格
+        '近期无已知催化剂'降级 PASS；缺表头 WARN；不改变退出码
+  - 脚本覆盖 15/15 项 Rubric + 7 项 X 裁决软检查（16-22）
+
+v5.4 升级（费曼解释，F1.3）:
+  - [R-8] 新增#23 费曼解释检查（v5.4·软指标）：检测到'## 费曼解释'小节时验证结构
+        须含'- **术语**：大白话解释'条目；缺失/过短 WARN；不改变退出码
+  - 脚本覆盖 15/15 项 Rubric + 8 项 X 裁决软检查（16-23）
+
+v5.6 升级（深度解读 + 未来借鉴）:
+  - [R-9] 新增#24 深度解读检查（v5.6·软指标）：检测到'## 深度解读'小节时验证结构
+        须含 ≥2 条'### 解读 N：标题'，每条含'这意味着什么'与'未来影响'；缺失 WARN；不改变退出码
+  - [R-10] 新增#25 未来借鉴检查（v5.6·软指标）：检测到'## 未来借鉴'小节时验证结构
+        须含 趋势信号/格局预判/可借鉴行动 类目；缺失 WARN；不改变退出码
+  - 脚本覆盖 15/15 项 Rubric + 10 项 X 裁决软检查（16-25）
+
+v5.8 升级（未来借鉴强化 + 今日导师课）:
+  - [R-11] #25 未来借鉴增强：检测'格局时间轴'（1年内/1-3年/3-5年 分阶段）与趋势信号
+        强度标注（↑强/→中/↓弱）；含则 PASS 注明增强，缺则仍 PASS（向后兼容旧日报）
+  - [R-12] 新增#26 今日导师课检查（v5.8·软指标）：检测到'## 今日导师课'小节时验证结构
+        须含 今日速览/深度第一课/必懂概念/课后思考 四模块；缺失 WARN；不改变退出码
+  - 脚本覆盖 15/15 项 Rubric + 11 项 X 裁决软检查（16-26）
+
 退出码：
   0 = 全部通过
   1 = 存在未通过项
@@ -46,40 +78,77 @@ from pathlib import Path
 # 配置区
 # ============================================================
 
+# === GEN:RULES:START ===
+# 以下域名常量由 rules/rule_registry.yaml 自动生成（F1.2），DO NOT EDIT
 # A级来源域名（只检查URL域名，不检查display text）
 A_LEVEL_DOMAINS = [
-    # 国际厂商官方
-    'tsmc.com', 'news.samsung.com', 'skhynix.com', 'news.skhynix.com',
-    'intel.com', 'nvidia.com', 'nvidianews.nvidia.com',
-    # 行业组织/权威分析
-    'semi.org', 'semi.org.cn', 'techinsights.com', 'semianalysis.com',
-    # 权威媒体
-    'edn.com', 'semiengineering.com', 'eet-china.com',
-    # 国内权威
-    'chinanews.com.cn', 'cls.cn', 'news.cn', 'cnstock.com',
-    'stcn.com', 'cninfo.com.cn', '21jingji.com', 'jiemian.com',
-    # 台港权威
-    'digitimes.com', 'digitimes.com.tw',
-    # 学术
-    'ieeexplore.ieee.org', 'onlinelibrary.wiley.com',
-    # 国际财经
-    'asia.nikkei.com',
+    'tsmc.com',  # TSMC 官方
+    'samsung.com',  # Samsung 官方（父域）
+    'skhynix.com',  # SK hynix 官方
+    'news.skhynix.com',  # SK hynix 新闻室
+    'intel.com',  # Intel Newsroom
+    'nvidia.com',  # NVIDIA 官方
+    'nvidianews.nvidia.com',  # NVIDIA Newsroom
+    'semi.org',  # SEMI
+    'semi.org.cn',  # SEMI 大半导体产业网
+    'techinsights.com',  # TechInsights
+    'semianalysis.com',  # SemiAnalysis
+    'edn.com',  # EDN
+    'semiengineering.com',  # Semiconductor Engineering
+    'eet-china.com',  # EET-China
+    'chinanews.com.cn',  # 中国新闻网
+    'cls.cn',  # 财联社
+    'news.cn',  # 新华社
+    'cnstock.com',  # 上海证券报
+    'stcn.com',  # 证券时报
+    'cninfo.com.cn',  # 巨潮资讯
+    '21jingji.com',  # 21世纪经济报道
+    'jiemian.com',  # 界面新闻
+    'ce.cn',  # 经济日报
+    'cet.com.cn',  # 中国经济网
+    'xinhuanet.com',  # 新华网
+    'people.com.cn',  # 人民网
+    'cctvl.com',  # 央视网
+    'chinadaily.com.cn',  # 中国日报
+    'yicai.com',  # 第一财经
+    'cena.com.cn',  # 中国电子报
+    'digitimes.com',  # DigiTimes
+    'digitimes.com.tw',  # 电子时报 DigiTimes
+    'ieeexplore.ieee.org',  # IEEE Xplore
+    'onlinelibrary.wiley.com',  # Wiley Online Library
+    'isscc.org',  # ISSCC
+    'vlsisymposium.org',  # VLSI Symposium
+    'dac.com',  # DAC
+    'ieee-iedm.org',  # IEDM
+    'nature.com',  # Nature
+    'asia.nikkei.com',  # Nikkei Asia
+    'reuters.com',  # Reuters
+    'bloomberg.com',  # Bloomberg
+    'chosun.com',  # Chosun Ilbo
+    'koreatimes.co.kr',  # Korea Times
 ]
 
 # C级来源域名（精确匹配，禁止使用）
 C_LEVEL_DOMAINS = [
-    'weibo.com', 'weibo.cn', 'twitter.com', 'x.com',
-    'douyin.com', 'kuaishou.com', 'zhihu.com',
-    'xiaohongshu.com', 'bilibili.com',
+    'weibo.com',  # 微博
+    'weibo.cn',  # 微博（移动）
+    'twitter.com',  # Twitter
+    'x.com',  # X（Twitter）
+    'douyin.com',  # 抖音
+    'kuaishou.com',  # 快手
+    'zhihu.com',  # 知乎帖文
+    'xiaohongshu.com',  # 小红书
+    'bilibili.com',  # B站
 ]
 
 # 产业链5环节（章节标题关键词）
 SEGMENTS = ['设计', '制造', '封测', 'EDA', '材料']
+# === GEN:RULES:END ===
 
-# 越界附录关键词
+# 越界附录关键词（仅含真正违反中立性的"预测/建议"类标题；
+# 客观的"市场/政策/资本"事实维度已合法化，不再禁止，见 SKILL.md 边界与反例7）
 FORBIDDEN_APPENDICES = [
-    '市场与政策动态', '市场动态', '市场分析',
-    '股价分析', '财经动态', '投资建议',
+    '投资建议', '股价分析', '市场预测',
 ]
 
 # 投资建议关键词（用于中立性检查）
@@ -524,6 +593,298 @@ def check_industry_chain(content):
 
 
 # ============================================================
+# v5.0 增强检查（X12 / X14 / X15 / X16 裁决固化，F3）
+# ============================================================
+
+def check_news_count(actual_count):
+    """检查16（X12 软指标）：单期新闻条数 15-20 为目标区间，WARN 级。
+    落区间 PASS；10-14 或 21-25 WARN；<10 或 >25 FAIL；0 条（节假日）自动 PASS。
+    """
+    if actual_count == 0:
+        return 'PASS', "0 条新闻（节假日），条数检查自动 PASS"
+    if actual_count < 10:
+        return 'FAIL', f"新闻条数 {actual_count} 条（<10，信息密度过低）"
+    if actual_count > 25:
+        return 'FAIL', f"新闻条数 {actual_count} 条（>25，疑似重复/冗余）"
+    if 10 <= actual_count < 15 or 21 <= actual_count <= 25:
+        return 'WARN', f"新闻条数 {actual_count} 条（偏离目标区间 15-20，建议调整）"
+    return 'PASS', f"新闻条数 {actual_count} 条（落入目标区间 15-20）"
+
+
+def check_source_stats_location(content):
+    """检查17（X14 软指标/WARN）：来源分级统计必须位于 ## 自检结果 小节内部，
+    不得作为独立一级章节。检测到独立 '## 来源分级统计' 标题则 WARN。
+    """
+    self_idx = content.find('## 自检结果')
+    standalone = re.search(r'^##\s+来源分级统计\s*$', content, re.MULTILINE)
+    if standalone and (self_idx == -1 or standalone.start() < self_idx):
+        return 'WARN', "检测到独立 '## 来源分级统计' 一级章节，应移入 '## 自检结果' 小节内部（X14）"
+    return 'PASS', "来源分级统计位于自检结果小节内（或未见独立章节）"
+
+
+def check_section_title_fullname(content):
+    """检查18（X15 软指标/WARN）：环节章节须用全称。
+    '## EDA' / '## 材料' 简写废止，应为 '## EDA / 工具' / '## 材料 / 设备'。
+    """
+    bad = []
+    if re.search(r'^##\s+EDA\s*$', content, re.MULTILINE):
+        bad.append('## EDA')
+    if re.search(r'^##\s+材料\s*$', content, re.MULTILINE):
+        bad.append('## 材料')
+    if bad:
+        return 'WARN', f"环节标题使用了简写 {bad}，应统一为全称 '## EDA / 工具' / '## 材料 / 设备'（X15）"
+    return 'PASS', "环节章节标题均使用全称"
+
+
+def check_title_date(content):
+    """检查19（X16 软指标/WARN）：一级标题须附日期，元信息须为 blockquote 半角冒号。
+    """
+    warns = []
+    title_match = re.search(r'^#\s+芯片行业日报([^\n]*)$', content, re.MULTILINE)
+    if not title_match:
+        warns.append("缺少 '# 芯片行业日报' 一级标题")
+    else:
+        tail = title_match.group(1)
+        if not re.search(r'\d{4}\s*[-—年]\s*\d{1,2}', tail):
+            warns.append("一级标题未附日期（应为 '# 芯片行业日报 — 年月日'）")
+    meta_ok = bool(re.search(r'^>\s*生成时间\s*:', content, re.MULTILINE))
+    if not meta_ok:
+        warns.append("头部元信息未使用 '> 生成时间:' 形式的 blockquote 半角冒号（X16）")
+    if warns:
+        return 'WARN', "；".join(warns)
+    return 'PASS', "标题附日期且元信息为 blockquote 半角冒号格式"
+
+
+# ============================================================
+# v5.2 信号层（X17 来源池 + 信号三要素），F3 扩展
+# ============================================================
+
+# 信号标签格式：信号: 重要性/影响方向/情绪
+#   重要性: 高|中|低；影响方向: 利好|利空|中性；情绪: 正面|负面|中性
+SIGNAL_RE = re.compile(r"信号[:：]\s*(高|中|低)\s*/\s*(利好|利空|中性)\s*/\s*(正面|负面|中性)")
+
+
+def check_signal_layer(items):
+    """检查20（v5.2 信号层，软指标）：每条新闻应标注 '| 信号: 重要性/影响方向/情绪'。
+
+    语义（与 SKILL.md v5.2 一致）：
+      - 重要性（高/中/低）：影响范围大、牵动全链或龙头 → 高；局部/单点 → 低
+      - 影响方向（利好/利空/中性）：对产业链/公司基本面的**事实**影响方向，不做股价预测
+      - 情绪（正面/负面/中性）：市场/业内对事件的普遍解读情绪
+    判定：
+      - 信号格式错误（含"信号"字样但不匹配 SIGNAL_RE）→ FAIL
+      - 覆盖率 < 80%（含旧日报完全无信号）→ WARN，不改变退出码
+      - 0 条新闻（节假日）→ PASS
+    """
+    total = len([it for it in items if '今日暂无' not in it['title']])
+    if total == 0:
+        return 'PASS', "0 条新闻（节假日），信号层自动 PASS", 0
+    has_signal = 0
+    malformed = []
+    missing = []
+    for it in items:
+        if '今日暂无' in it['title']:
+            continue
+        tail = it['timestamp']
+        if SIGNAL_RE.search(tail):
+            has_signal += 1
+        elif '信号' in tail:
+            malformed.append(it['title'][:25])
+        else:
+            missing.append(it['title'][:25])
+    rate = has_signal / total * 100
+    if malformed:
+        return (
+            'FAIL',
+            f"{len(malformed)} 条新闻信号格式错误（应为 信号: 高|中|低/利好|利空|中性/正面|负面|中性）："
+            + "、".join(malformed),
+            rate,
+        )
+    if rate < 80:
+        return (
+            'WARN',
+            f"信号覆盖率 {rate:.0f}%（{has_signal}/{total}，目标 ≥80%），"
+            f"缺失 {len(missing)} 条：{'、'.join(missing[:5])}",
+            rate,
+        )
+    return 'PASS', f"信号覆盖率 {rate:.0f}%（{has_signal}/{total}，目标 ≥80%）", rate
+
+
+def check_tracking_section(content):
+    """检查21（B·v5.3 跨日记忆，软指标）：检测到 '## 持续追踪' 小节时验证结构。
+
+    小节出现时须包含 '## 持续追踪' 标题；内容为空或标题缺失 → WARN 不改变退出码。
+    小节缺失（旧日报）→ WARN 提示（B 为建议覆盖）。
+    0 条新闻（节假日）→ PASS。
+    """
+    match = re.search(r'^##\s+持续追踪\s*$', content, re.MULTILINE)
+    if not match:
+        return 'WARN', "未检测到 '## 持续追踪' 小节（B 跨日记忆，建议覆盖；0条新闻自动PASS）"
+    section_start = match.end()
+    next_section = re.search(r'^##\s+', content[section_start:], re.MULTILINE)
+    section_content = (
+        content[section_start : section_start + next_section.start()]
+        if next_section
+        else content[section_start:]
+    )
+    body = section_content.strip()
+    if '暂无持续追踪主题' in body:
+        return 'PASS', "持续追踪小节存在，标注'暂无持续追踪主题'（降级模式）"
+    if len(body) < 10:
+        return 'WARN', "持续追踪小节存在但内容过短，请核对状态文件主题"
+    return 'PASS', "持续追踪小节存在且含主题对比"
+
+
+def check_catalyst_section(content):
+    """检查22（C·v5.3 前瞻催化剂，软指标）：检测到 '## 前瞻催化剂' 小节时验证结构。
+
+    小节出现时须含表头 '| 日期 |' 与 '| 来源 |'；0 条标注 '近期无已知催化剂' → PASS；
+    标题缺失 → WARN 不改变退出码。
+    """
+    match = re.search(r'^##\s+前瞻催化剂\s*$', content, re.MULTILINE)
+    if not match:
+        return 'WARN', "未检测到 '## 前瞻催化剂' 小节（C 催化剂日历，建议覆盖）"
+    section_start = match.end()
+    next_section = re.search(r'^##\s+', content[section_start:], re.MULTILINE)
+    section_content = (
+        content[section_start : section_start + next_section.start()]
+        if next_section
+        else content[section_start:]
+    )
+    if '近期无已知催化剂' in section_content:
+        return 'PASS', "前瞻催化剂小节存在，标注'近期无已知催化剂'（降级模式）"
+    has_header = bool(
+        re.search(r'\|\s*日期\s*\|\s*事件\s*\|', section_content)
+        and re.search(r'\|\s*来源\s*\|', section_content)
+    )
+    if not has_header:
+        return 'WARN', "前瞻催化剂小节存在但缺少表格（应为 | 日期 | 事件 | 环节 | 重要度 | 来源 |）"
+    return 'PASS', "前瞻催化剂小节存在且含表格"
+
+
+def check_feynman_section(content):
+    """检查23（v5.4 费曼解释，软指标）：检测到 '## 费曼解释' 小节时验证结构。
+
+    小节出现时须含条目（'**' 加粗术语，非空）；缺失 → WARN 不改变退出码。
+    """
+    match = re.search(r'^##\s+费曼解释\s*$', content, re.MULTILINE)
+    if not match:
+        return 'WARN', "未检测到 '## 费曼解释' 小节（v5.4 大白话术语表，建议覆盖）"
+    section_start = match.end()
+    next_section = re.search(r'^##\s+', content[section_start:], re.MULTILINE)
+    section_content = (
+        content[section_start : section_start + next_section.start()]
+        if next_section
+        else content[section_start:]
+    )
+    body = section_content.strip()
+    if len(body) < 10:
+        return 'WARN', "费曼解释小节存在但内容过短（应含 ≥1 条'**术语**：大白话解释'条目）"
+    entry_count = len(re.findall(r'^\s*-\s*\*\*', body, re.MULTILINE))
+    if entry_count == 0:
+        return 'WARN', "费曼解释小节存在但缺少'- **术语**：解释'格式条目"
+    return 'PASS', f"费曼解释小节存在且含 {entry_count} 条术语解释"
+
+
+def check_deep_dive_section(content):
+    """检查24（v5.6 深度解读，软指标）：检测到 '## 深度解读' 小节时验证结构。
+
+    小节须含 ≥2 条 '### 解读 N：标题'，每条含 '这意味着什么' 与 '未来影响'。
+    缺失/结构不足 → WARN 不改变退出码。
+    """
+    match = re.search(r'^##\s+深度解读\s*$', content, re.MULTILINE)
+    if not match:
+        return 'WARN', "未检测到 '## 深度解读' 小节（v5.6 最重要新闻的意义解读，建议覆盖）"
+    section_start = match.end()
+    next_section = re.search(r'^##\s+', content[section_start:], re.MULTILINE)
+    section_content = (
+        content[section_start : section_start + next_section.start()]
+        if next_section
+        else content[section_start:]
+    )
+    body = section_content.strip()
+    if len(body) < 20:
+        return 'WARN', "深度解读小节存在但内容过短（应含 ≥2 条'### 解读 N：标题'）"
+    dive_count = len(re.findall(r'^###\s+解读\s*\d+', body, re.MULTILINE))
+    if dive_count < 2:
+        return 'WARN', "深度解读小节应含 ≥2 条'### 解读 N：标题'（当前 %d 条）" % dive_count
+    has_meaning = bool(re.search(r'这意味着什么', body))
+    has_future = bool(re.search(r'未来影响', body))
+    if not (has_meaning and has_future):
+        return 'WARN', "深度解读条目应包含'这意味着什么'与'未来影响'两个部分"
+    return 'PASS', f"深度解读小节存在且含 {dive_count} 条解读（意味着什么/未来影响/格局意义）"
+
+
+def check_future_lessons_section(content):
+    """检查25（v5.6 未来借鉴，软指标）：检测到 '## 未来借鉴' 小节时验证结构。
+
+    小节须含 趋势信号 / 格局预判 / 可借鉴行动 三类内容。缺失 → WARN 不改变退出码。
+    v5.8 增强（R-11）：检测'格局时间轴'（1年内/1-3年/3-5年 分阶段）与趋势信号强度标注
+    （↑强/→中/↓弱）；含则 PASS 注明增强，缺则仍 PASS（向后兼容旧日报）。
+    """
+    match = re.search(r'^##\s+未来借鉴\s*$', content, re.MULTILINE)
+    if not match:
+        return 'WARN', "未检测到 '## 未来借鉴' 小节（v5.6 趋势信号/格局预判/可借鉴行动，建议覆盖）"
+    section_start = match.end()
+    next_section = re.search(r'^##\s+', content[section_start:], re.MULTILINE)
+    section_content = (
+        content[section_start : section_start + next_section.start()]
+        if next_section
+        else content[section_start:]
+    )
+    body = section_content.strip()
+    if len(body) < 20:
+        return 'WARN', "未来借鉴小节存在但内容过短（应含趋势信号/格局预判/可借鉴行动）"
+    keys = {
+        "趋势信号": "趋势信号" in body,
+        "格局预判": "格局预判" in body,
+        "可借鉴行动": "可借鉴行动" in body,
+    }
+    missing = [k for k, ok in keys.items() if not ok]
+    if missing:
+        return 'WARN', "未来借鉴小节缺少内容类目：" + "、".join(missing)
+    extra = []
+    if "格局时间轴" in body:
+        extra.append("格局时间轴")
+    if re.search(r'强度[:：]\s*[↑→↓]\s*[强中弱]', body):
+        extra.append("强度标注")
+    if extra:
+        return 'PASS', "未来借鉴小节存在且含 趋势信号/格局预判/可借鉴行动，并带增强：" + "/".join(extra)
+    return 'PASS', "未来借鉴小节存在且含 趋势信号/格局预判/可借鉴行动 类目"
+
+
+def check_tutor_section(content):
+    """检查26（v5.8 今日导师课，软指标）：检测到 '## 今日导师课' 小节时验证结构。
+
+    小节须含 今日速览 / 深度第一课 / 必懂概念 / 课后思考 四模块（学生视角讲解）。
+    缺失/结构不足 → WARN 不改变退出码。
+    """
+    match = re.search(r'^##\s+今日导师课\s*$', content, re.MULTILINE)
+    if not match:
+        return 'WARN', "未检测到 '## 今日导师课' 小节（v5.8 导师课堂，建议覆盖）"
+    section_start = match.end()
+    next_section = re.search(r'^##\s+', content[section_start:], re.MULTILINE)
+    section_content = (
+        content[section_start : section_start + next_section.start()]
+        if next_section
+        else content[section_start:]
+    )
+    body = section_content.strip()
+    if len(body) < 30:
+        return 'WARN', "今日导师课小节存在但内容过短（应含 今日速览/深度第一课/必懂概念/课后思考）"
+    keys = {
+        "今日速览": "今日速览" in body,
+        "深度第一课": "深度第一课" in body,
+        "必懂概念": "必懂概念" in body,
+        "课后思考": "课后思考" in body,
+    }
+    missing = [k for k, ok in keys.items() if not ok]
+    if missing:
+        return 'WARN', "今日导师课小节缺少模块：" + "、".join(missing)
+    return 'PASS', "今日导师课小节存在且含 今日速览/深度第一课/必懂概念/课后思考 四模块"
+
+
+# ============================================================
 # 主函数
 # ============================================================
 
@@ -746,7 +1107,101 @@ def main():
     else:
         print(f"  ✗ FAIL  {chain_msg}")
         all_pass = False
-    
+
+    # 检查16: 新闻条数（X12 软指标）
+    print("\n【检查16】新闻条数（X12 软指标，不入 Rubric 表）")
+    count_status, count_msg = check_news_count(actual_count)
+    if count_status == 'FAIL':
+        print(f"  ✗ FAIL  {count_msg}")
+        all_pass = False
+    elif count_status == 'WARN':
+        print(f"  ⚠ WARN  {count_msg}")
+    else:
+        print(f"  ✓ PASS  {count_msg}")
+
+    # 检查17: 来源分级统计位置（X14 WARN 软指标）
+    print("\n【检查17】来源分级统计位置（X14 软指标）")
+    loc_status, loc_msg = check_source_stats_location(content)
+    if loc_status == 'WARN':
+        print(f"  ⚠ WARN  {loc_msg}")
+    else:
+        print(f"  ✓ PASS  {loc_msg}")
+
+    # 检查18: 环节标题全称（X15 WARN 软指标）
+    print("\n【检查18】环节章节标题全称（X15 软指标）")
+    title_status, title_msg = check_section_title_fullname(content)
+    if title_status == 'WARN':
+        print(f"  ⚠ WARN  {title_msg}")
+    else:
+        print(f"  ✓ PASS  {title_msg}")
+
+    # 检查19: 标题日期与元信息格式（X16 WARN 软指标）
+    print("\n【检查19】标题日期与元信息格式（X16 软指标）")
+    td_status, td_msg = check_title_date(content)
+    if td_status == 'WARN':
+        print(f"  ⚠ WARN  {td_msg}")
+    else:
+        print(f"  ✓ PASS  {td_msg}")
+
+    # 检查20: 信号层（v5.2 X17 软指标）
+    print("\n【检查20】信号层（v5.2 X17 软指标：重要性/影响方向/情绪）")
+    sig_status, sig_msg, _sig_rate = check_signal_layer(items)
+    if sig_status == 'FAIL':
+        print(f"  ✗ FAIL  {sig_msg}")
+        all_pass = False
+    elif sig_status == 'WARN':
+        print(f"  ⚠ WARN  {sig_msg}")
+    else:
+        print(f"  ✓ PASS  {sig_msg}")
+
+    # 检查21: 持续追踪（B v5.3 软指标）
+    print("\n【检查21】持续追踪（B v5.3 跨日记忆，软指标）")
+    tr_status, tr_msg = check_tracking_section(content)
+    if tr_status == 'WARN':
+        print(f"  ⚠ WARN  {tr_msg}")
+    else:
+        print(f"  ✓ PASS  {tr_msg}")
+
+    # 检查22: 前瞻催化剂（C v5.3 软指标）
+    print("\n【检查22】前瞻催化剂（C v5.3 催化剂日历，软指标）")
+    ct_status, ct_msg = check_catalyst_section(content)
+    if ct_status == 'WARN':
+        print(f"  ⚠ WARN  {ct_msg}")
+    else:
+        print(f"  ✓ PASS  {ct_msg}")
+
+    # 检查23: 费曼解释（v5.4 软指标）
+    print("\n【检查23】费曼解释（v5.4 大白话术语表，软指标）")
+    fy_status, fy_msg = check_feynman_section(content)
+    if fy_status == 'WARN':
+        print(f"  ⚠ WARN  {fy_msg}")
+    else:
+        print(f"  ✓ PASS  {fy_msg}")
+
+    # 检查24: 深度解读（v5.6 软指标）
+    print("\n【检查24】深度解读（v5.6 最重要新闻的意义解读，软指标）")
+    dd_status, dd_msg = check_deep_dive_section(content)
+    if dd_status == 'WARN':
+        print(f"  ⚠ WARN  {dd_msg}")
+    else:
+        print(f"  ✓ PASS  {dd_msg}")
+
+    # 检查25: 未来借鉴（v5.6 软指标，v5.8 增强）
+    print("\n【检查25】未来借鉴（v5.6 趋势信号/格局预判/可借鉴行动，软指标）")
+    fl_status, fl_msg = check_future_lessons_section(content)
+    if fl_status == 'WARN':
+        print(f"  ⚠ WARN  {fl_msg}")
+    else:
+        print(f"  ✓ PASS  {fl_msg}")
+
+    # 检查26: 今日导师课（v5.8 软指标）
+    print("\n【检查26】今日导师课（v5.8 导师课堂：今日速览/深度第一课/必懂概念/课后思考，软指标）")
+    tu_status, tu_msg = check_tutor_section(content)
+    if tu_status == 'WARN':
+        print(f"  ⚠ WARN  {tu_msg}")
+    else:
+        print(f"  ✓ PASS  {tu_msg}")
+
     # 汇总
     print("\n" + "=" * 70)
     if all_pass:
