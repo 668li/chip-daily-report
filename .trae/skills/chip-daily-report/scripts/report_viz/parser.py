@@ -25,8 +25,10 @@ REGISTRY = ROOT / "rules" / "rule_registry.yaml"
 NEWS_RE = re.compile(
     r"^-\s+\*\*(.+?)\*\*\s+[—–\-]+\s+(.+?)(?:\s*\|\s*来源[:：]\s*(.+?))?(?:\s*\|\s*(.+))?$"
 )
-ANNOT_RE = re.compile(r"\[技术注解:\s*(.+?)\]\s*$")
-ORIGIN_RE = re.compile(r"（原始[:：]\s*(.+?)）")
+# 容错：技术注解/原始出处可能被 markdown 行内代码反引号包裹（`[技术注解: …]`），
+# 故首尾反引号可选；与 validate_report 的宽松检测口径一致。
+ANNOT_RE = re.compile(r"`?\[技术注解:\s*(.+?)\]`?")
+ORIGIN_RE = re.compile(r"`?（原始[:：]\s*(.+?)）`?")
 SOURCE_LINK_RE = re.compile(r"\[([^\]]+)\]\((https?://[^)\s]+)\)")
 HEADING_RE = re.compile(r"^##\s+(.+?)\s*$")
 SUBHEADING_RE = re.compile(r"^###\s+(.+?)\s*$")
@@ -40,8 +42,9 @@ SEG_ORDER = ["设计", "制造", "封测", "EDA", "材料"]
 # 横向维度（多维日报扩展）：市场 / 政策 / 资本
 DIM_ORDER = ["市场与需求", "政策与监管", "资本与投融资"]
 
-# v5.3 附加小节：持续追踪（B）/ 前瞻催化剂（C）；v5.4 费曼解释（F1.3）；v5.6 深度解读/未来借鉴；v5.8 今日导师课
-EXTRA_ORDER = ["持续追踪", "前瞻催化剂", "费曼解释", "深度解读", "未来借鉴", "今日导师课"]
+# v5.3 附加小节：持续追踪（B）/ 前瞻兑现回顾（v5.10 方向1）/ 前瞻催化剂（C）；
+# v5.4 费曼解释（F1.3）；v5.6 深度解读/未来借鉴；v5.8 今日导师课
+EXTRA_ORDER = ["持续追踪", "前瞻兑现回顾", "前瞻催化剂", "费曼解释", "深度解读", "未来借鉴", "今日导师课"]
 
 
 def _seg_of(heading: str):
@@ -312,7 +315,12 @@ def _parse_tutor(buf):
 
 
 def _parse_catalyst(buf):
-    """解析 '## 前瞻催化剂' 小节（C·v5.3）：提取表格行 日期|事件|环节|重要度|来源。"""
+    """解析 '## 前瞻催化剂' 小节（C·v5.3 / v5.11）：提取表格行。
+
+    v5.11 起速览表为 6 列：日期|事件|环节|重要度|确定性|来源。
+    旧 5 列（无确定性）向后兼容：certainty=None，来源取第 5 列。
+    同时修正旧版 6 列时把『确定性』误当来源的 bug。
+    """
     rows = []
     for ln in buf:
         if not ln.strip().startswith("|"):
@@ -320,7 +328,13 @@ def _parse_catalyst(buf):
         cells = [c.strip() for c in ln.strip().strip("|").split("|")]
         if len(cells) < 5 or cells[0] in ("日期", "") or set(cells[0]) <= {"-", ":"}:
             continue
-        links = SOURCE_LINK_RE.findall(cells[4])
+        if len(cells) >= 6:
+            certainty = cells[4]
+            src_cell = cells[5]
+        else:
+            certainty = None
+            src_cell = cells[4]
+        links = SOURCE_LINK_RE.findall(src_cell)
         srcs = [
             {"name": n, "url": u, "level": _classify(urlparse_netloc(u))}
             for n, u in links
@@ -331,10 +345,72 @@ def _parse_catalyst(buf):
                 "event": cells[1],
                 "segment": cells[2],
                 "importance": cells[3],
+                "certainty": certainty,
                 "sources": srcs,
             }
         )
     return rows
+
+
+def _parse_catalyst_notes(buf):
+    """解析 '## 前瞻催化剂' 下的 '### 前瞻 N：标题' 解读块（v5.11 高/中重要度催化剂配解读）。
+
+    每条解读含 '- **这意味着什么（看点）**' / '- **到时候盯什么（关注信号）**' /
+    '- **可能影响什么（潜在影响）**' 三部分，提取为 {title, parts:[(key, text)]}。
+    """
+    items = []
+    cur = None
+    for ln in buf:
+        hm = re.match(r"^###\s+前瞻\s*\d*\s*[：:.]?\s*(.*)$", ln.strip())
+        if hm:
+            if cur is not None:
+                items.append(cur)
+            cur = {"title": hm.group(1).strip() or "前瞻", "parts": []}
+            continue
+        pm = re.match(r"^-\s*\*\*(.+?)\*\*\s*[：:]\s*(.+)$", ln.strip())
+        if cur is not None and pm:
+            cur["parts"].append((pm.group(1).strip(), pm.group(2).strip()))
+    if cur is not None:
+        items.append(cur)
+    return items
+
+
+def _parse_forward_review(buf):
+    """解析 '## 前瞻兑现回顾' 小节（v5.10 方向1·预告→验证闭环）。
+
+    提取：开头 blockquote 说明（intro）、'### 回看 N：标题' 条目（含
+    '- **发生了没**' / '- **和我们当时判断是否一致**' 两部分）、结尾 '**闭环小结**'。
+    返回 {intro, items:[{title, parts:[(key,text)]}], summary}。
+    """
+    intro_lines = []
+    items = []
+    summary = ""
+    cur = None
+    for ln in buf:
+        s = ln.strip()
+        if s.startswith(">"):
+            intro_lines.append(s.lstrip("> ").strip())
+            continue
+        hm = re.match(r"^###\s+回看\s*\d*\s*[：:.]?\s*(.*)$", ln.strip())
+        if hm:
+            if cur is not None:
+                items.append(cur)
+            cur = {"title": hm.group(1).strip() or "回看", "parts": []}
+            continue
+        sm = re.match(r"^\*\*\s*闭环小结\s*\*\*\s*[：:]?\s*(.*)$", ln.strip())
+        if sm:
+            summary = sm.group(1).strip()
+            continue
+        pm = re.match(r"^-\s*\*\*(.+?)\*\*\s*[：:]\s*(.+)$", ln.strip())
+        if cur is not None and pm:
+            cur["parts"].append((pm.group(1).strip(), pm.group(2).strip()))
+    if cur is not None:
+        items.append(cur)
+    return {
+        "intro": "\n".join(intro_lines).strip(),
+        "items": items,
+        "summary": summary,
+    }
 
 
 def _parse_selfcheck(buf):
@@ -374,6 +450,8 @@ def parse_report(path) -> dict:
         "deep_dive": [],
         "future_lessons": [],
         "tutor": [],
+        "forward_review": None,  # v5.10 方向1：预告→验证闭环
+        "catalyst_notes": [],  # v5.11：高/中重要度催化剂前瞻解读块
         "source_stats": {"A": 0, "B": 0, "C": 0},
     }
 
@@ -410,8 +488,11 @@ def parse_report(path) -> dict:
             report["dimensions"].setdefault(cur, _parse_dim_section(buf))
         elif cur == "持续追踪":
             report["tracking"].extend(_parse_tracking(buf))
+        elif cur == "前瞻兑现回顾":
+            report["forward_review"] = _parse_forward_review(buf)
         elif cur == "前瞻催化剂":
             report["catalysts"].extend(_parse_catalyst(buf))
+            report["catalyst_notes"].extend(_parse_catalyst_notes(buf))
         elif cur == "费曼解释":
             report["feynman"].extend(_parse_feynman(buf))
         elif cur == "深度解读":

@@ -294,9 +294,9 @@
 4. 日报引用：标题默认链 `links.aihot`（中文阅读页），出处核对 `links.original`；**重要数字/政策引用回第三方原文核对**。
 5. 只做线索：最终日报每条仍须有 A/B 级来源链接（AIHOT 链接本身判 B 级），A 级占比 ≥30% 纪律不变。
 
-### RSS 免 key 真实源（迭代2 新增，2026-08-09 实测 4 源全通）
+### RSS 免 key 真实源（迭代2 新增，2026-08-09 实测 4 源全通；迭代3 扩至 6 源，2026-08-15）
 
-> **定位**：`scripts/multi_source/collector.py` online 模式已接入 4 个**免 key 真实采集源**（SEC EDGAR + AIHOT + SemiEngineering + EE Times），单次采集 44-47 条。每日生成前可先跑 `collector.collect(mode='online')` 做一次真实多源快照，作为 Step 2 检索之外的机器采集补充（漏检补充 + 交叉验证素材）。
+> **定位**：`scripts/multi_source/collector.py` online 模式已接入 **6 个免 key 真实采集源**（SEC EDGAR + AIHOT + SemiEngineering + EE Times + CNBC + SemiAnalysis），单次采集 60-90 条。每日生成前先跑 `collector.collect(mode='online')` 做真实多源快照，再经 `gate.py` 选择性纳入（G1 置信度 / G2 时效 / G4 环节配额 / G5 主题关键词）得到日报候选池，作为 Step 2 检索之外的机器采集补充（漏检补充 + 交叉验证素材）。
 
 | 源 | 端点（已验证 200） | 层级 | 白名单 | 单次产量 | 备注 |
 |----|-------------------|------|--------|---------|------|
@@ -304,8 +304,12 @@
 | AIHOT | `/api/v1/items?mode=all&window=7d&q=<URL编码>&limit=N` | Tier-4 | ⚠️ B 级 | ~14 条 | 中文聚合线索，按 `links.original` 追溯原文 |
 | Semiconductor Engineering | `https://semiengineering.com/feed/` | Tier-1 | ✅ A 级 | ~10 条 | RSS 2.0，EDA/材料/设计深度技术稿 |
 | EE Times | `https://www.eetimes.com/feed/` | Tier-1 | ⚠️ B 级（未注册白名单） | ~10 条 | 英文权威行业媒体，设计/EDA 为主 |
+| CNBC Tech（迭代3） | `https://search.cnbc.com/rs/search/combinedcms/view.xml?partnerId=wrss01&id=10001054` | Tier-1 | ⚠️ B 级 | ~30 条 | 英文权威财经，设计/综合；含大量非芯片主题，靠 gate G5 过滤 |
+| SemiAnalysis（迭代3） | `https://semianalysis.com/feed/` | Tier-1 | ✅ A 级 | ~10 条 | 全球行业风向标深度分析；付费墙文章仅标题作线索 |
 
 **调用**：`python -c "import sys; sys.path.insert(0,'scripts/multi_source'); import collector; [print(i.source_id, i.title) for i in collector.collect(mode='online')]"`（断网自动降级离线样例，不阻塞）。
+
+**门禁调用**：`python scripts/multi_source/gate.py`（读 `data/fused_events.json` → 写 `state/gate_report.json`）。端到端（2026-08-15 实测）：86 条原始 → 候选 7 条 / 拒 79 条（low_confidence 60 + irrelevant 19），候选池全部为芯片/AI/EDA 主题。
 
 ### 踩坑记录（已实证，避免重蹈）
 
@@ -313,3 +317,7 @@
 2. **AMD 官方新闻**（amd.com）判 B 级 → 用财联社等 A 级中文源承载，或标注多源。
 3. **时效基准 = 系统当日日期**：生成日报前先确认系统日期，超 72h 的新闻（如周五生成、本周一/二新闻）必须标 `[回顾]`，校验脚本会按日期差硬查。
 4. **催化剂时点**：台积电月营收日固定每月 10 日（节假日顺延），TSMC 投资者日历有完整列表，直接引用即可；中芯国际 Q2 业绩说明会公告在巨潮/上交所，可搜"中芯国际 业绩说明会 预告公告"。
+5. **DigiTimes 反爬不可自动化抓取**（迭代3 实测 2026-08-15）：`/rss/news.xml` HTTP 200 但内容是 HTML 反爬壳，`/rss/` 403 Forbidden，**未接入在线采集器**。台系产能信号继续用 `site:digitimes.com` WebSearch 兜底（实战命中率高），白名单域名 digitimes.com 保留不浪费 A 级名额。
+6. **RSS 实体容错**（迭代3 修复 2026-08-15）：部分 feed（如 SemiEngineering/SemiAnalysis）含裸 `&` 或未定义 HTML 实体（`&nbsp;`），XML 解析会 not well-formed / undefined entity。collector 已做预处理（裸 `&` → `&amp;` + html5 实体注册进 XMLParser.entity）。
+7. **health_check CLI 直跑只探 2 源**（迭代3 修复 2026-08-15）：`python scripts/multi_source/health_check.py` 时模块为 `__main__`，`from . import collector` 相对导入失败，旧实现静默走 fallback 只探 SEC EDGAR + AIHOT。已改双路径导入（相对 → 绝对），自动化场景可探到全部 6 源。
+8. **gate 关键词短英文词必须词边界匹配**（迭代3 修复 2026-08-15）：`INCLUDE_KW` 里 "ai"、"sic" 等 ≤4 字符英文词做子串匹配会误命中 "again"、"basic" 等单词，导致 CNBC 跑车新闻混入候选池。已改 `_kw_in()` 词边界匹配（ASCII 短词 `(?<![a-z0-9])kw(?![a-z0-9])`）。

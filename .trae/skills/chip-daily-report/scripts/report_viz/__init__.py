@@ -10,6 +10,7 @@ report_viz — 芯片行业日报可视化前端（可扩展装配器）。
     dimensions_view.py  多维透视（市场/政策/资本）
     trend_view.py       趋势图（历史走势+质量聚合+环节分布+持续追踪）
     weekly_view.py      周报对比（跨期表+走势+环节堆叠+追踪对比）
+    forecast_timeline_view.py  前瞻催化剂时间轴（v5.11 方向3：未来14天密集窗口高亮）
     _charts.py          SVG 折线/条形/堆叠条 共用工具
     __init__.py         VIEW_REGISTRY（扩展点）
   build_report_html.py  CLI 入口
@@ -157,8 +158,30 @@ header.top h1{margin:0 0 6px;font-size:23px;letter-spacing:.5px}
 .tl-period{font-size:13.5px;font-weight:800;color:#134e4a;margin-bottom:3px}
 .tl-desc{margin:0;font-size:12.5px;color:#475569;line-height:1.55;text-align:justify}
 
+/* 前瞻时间轴（v5.11 方向3） */
+.tl-block{background:#fff;border:1px solid var(--line);border-radius:14px;padding:16px 18px;margin-bottom:18px}
+.tl-title{font-size:16.5px;margin:0 0 12px;color:#1d4ed8}
+.tl-sub{font-size:12.5px;color:var(--muted);font-weight:500;margin-left:8px}
+.tl-summary{display:flex;flex-wrap:wrap;gap:12px;margin-bottom:16px}
+.tl-stat{background:#f8fafc;border:1px solid var(--line);border-radius:10px;padding:8px 16px;text-align:center;min-width:120px}
+.tl-stat-num{font-size:22px;font-weight:800;color:#1d4ed8}
+.tl-stat-lab{font-size:12px;color:var(--muted);margin-top:2px}
+.tl-axis{position:relative;margin-left:8px;padding-left:28px;border-left:3px solid #cbd5e1}
+.tl-node{position:relative;margin-bottom:14px;padding:2px 0}
+.tl-node::before{content:"";position:absolute;left:-37px;top:8px;width:13px;height:13px;border-radius:50%;background:#fff;border:3px solid #94a3b8}
+.tl-node.near::before{border-color:#1d4ed8;background:#1d4ed8}
+.tl-node.near{background:#eff6ff;border-radius:10px;border:1px solid #bfdbfe;padding:10px 12px;margin-left:-12px;padding-left:12px}
+.tl-date{font-weight:700;color:#1e293b;font-size:14.5px}
+.tl-window{font-size:11px;font-weight:700;color:#1d4ed8;background:#dbeafe;border-radius:999px;padding:0 9px;margin-left:8px;white-space:nowrap}
+.tl-event{font-size:14px;color:#334155;margin:5px 0}
+.tl-meta{display:flex;flex-wrap:wrap;gap:6px;align-items:center;font-size:12px;margin-top:4px}
+.tl-seg{font-weight:700;padding:1px 9px;border-radius:999px;font-size:11.5px;white-space:nowrap}
+.tl-imp{font-weight:700;border:1.5px solid;border-radius:999px;padding:0 9px;font-size:11px;white-space:nowrap}
+.tl-cert{font-size:11.5px;padding:1px 8px;border-radius:999px;font-weight:600;white-space:nowrap}
+.tl-src{color:#1d4ed8;text-decoration:none;font-weight:600}
+.tl-src:hover{text-decoration:underline}
+.tl-empty{padding:20px;text-align:center;color:var(--muted);background:#fff;border:1px solid var(--line);border-radius:12px}
 /* 导师课堂（v5.8） */
-.tutor-view{display:grid;gap:16px}
 .tu-intro{background:#fff;border:1px solid var(--line);border-radius:12px;padding:12px 16px;font-size:13.5px;color:#475569;line-height:1.7}
 .tu-intro b{color:#7c3aed}
 .tu-block{background:#fff;border:1px solid var(--line);border-radius:14px;padding:16px 18px}

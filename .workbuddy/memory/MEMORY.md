@@ -37,6 +37,7 @@
 - signal_history.py（Step6 每日跑）→ state/signal_history.json；weekly_review.py（Step7 周五）→ delivery/芯片行业周度复盘_YYYYMMDD.md/.html（需 state/weekly_insights_*.txt 注入）。信号曲线 svg Y=-2..2。测试 113 passed。
 
 ## 自动化落地
+- ⚠ **2026-09-25 现状：以下两个 automation 均已停摆**（最后产出 2026-09-10；WorkBuddy 环境不再运行，当前 ZCode 环境也无定时任务）——日报停摆中，待重建（需求：失败要响）。
 - F4=automation-1786184607023（周一至五 08:00）：生成→validate→build_report_html→quality_dashboard→multi_source 三件套→archive_to_kb→中文汇报。
 - F9=quality_dashboard.py → delivery/quality_dashboard.md/.json（计算 A 占比+5 环节覆盖+X 信号+自述 vs 计算对账）。
 - 周质量看板=automation-1786185290346（每周五 18:00）。
@@ -60,3 +61,12 @@
 - 东方财富妙想MCP（`mcp__mx-ds-mcp__mx_macro_data`）：市场章节量化数据，**已验证可用**（短关键词 DRAM合约价格/NAND闪存价格/半导体设备销售额/集成电路产量；长句返回空），fail-soft 回退新闻引用。
 - ima 知识库（`mcp__ima-mcp`）：导师课云镜像，`create_media`→COS→`add_knowledge`，`knowledge_base_id` 由用户配，fail-soft。
 - 铁律：任一外部通道不可用，静默回退既有 WebSearch+AIHOT+多源采集，绝不阻塞交付。
+
+## 2026-09-25 洁癖收尾快照（ZCode 会话，勇谚在场）
+- **版本终态**：master = v5.13 + 安全加固 + **v6.0 理解优先版草案**（写作层已实现，样例 26/26 过门禁 + 学生冷读 pass，**待用户拍板启用**）。产物：`delivery/日报理解优先改造方案.md`（决策文档）、`delivery/日报理解优先改造方案_规范.md`、`delivery/芯片行业日报_20260910_理解优先版.md`。
+- **v6.0 核心**（响应勇谚原话"谁涨价谁降价我根本理解不了"）：四层新闻写法（主行事实不动 + 🧠课内搭桥 + 🎯对你意味着什么 + 🎓💼考研/就业双视角）；黑话三档治理（`references/jargon_bridge.md`，C 档正文禁裸用）；今日一课前移第一屏；条数收紧 15-16；主线必读 11.5 分钟。零门禁改动路线：validate_report.py 零改动，四条链路实测无需改；`validate_understanding.py` 是第二阶段规划占位（尚未创建）。
+- **安全加固（本轮，Mimosa 深扫 9→0）**：collector/health_check = https+域名白名单+私网IP拦截+5MB上限；RSS 解析 defusedxml 禁 DTD/实体；forecast_audit/tracker/cross_validate 写入路径锚定 `__file__` 派生常量。安全钩子写法教训：路径类修复只有"写入位置完全固定"能过判定器。
+- **远端备份**：`github.com/668li/chip-daily-report`（私有），master+evolve 双分支；推送走本机代理 127.0.0.1:7897，仓库级 git proxy 已配；evolve/20260719-2130 为历史演化分支（含 12 期日报）。
+- **测试真相（修正旧记载）**：上文"132/134 passed"是 2026-08-15 时代数值，已失真。现状：全量 pytest 因 3 个脚本式测试（test_m1_crossvalidate/test_m3_scenarios/test_m4_m5_m6，模块顶层 sys.exit）收集即 INTERNALERROR → 需 --ignore 三文件后跑（当前 136 passed + 4 failed 存量：weekly_review KeyError 'scenario_review'）；m1/m3 独立跑全过，m4_m5_m6 独立跑 1 个状态依赖失败。**跑 pytest 必污染真实 state**（source_health.yaml/leak_report.*），跑完 `git checkout --` 还原。
+- **镜像**：5 个脚本（build_report_html/report_viz/__init__/parser/views/__init__/weekly_review）历史漂移已清零；references 补齐（evolution_plan/forecast_timeline_v2/glossary/schema.json/jargon_bridge）。X7 硬检查通过。
+- **待拍板**：① v6.0 启用（生成首期）② 每日自动化在 ZCode 重建 ③ multi_source 上线 or 归档 ④ 存量测试债。

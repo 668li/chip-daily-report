@@ -22,3 +22,10 @@ desktop.ini
 *.tmp
 *.bak
 *.log
+
+# Tool state（ZCode/Mimosa/video_agent 会话状态与工作流草稿，不入库）
+.mimosa/
+.video_agent/
+.zcode/
+.zcodeignore
+nul

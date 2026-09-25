@@ -193,6 +193,86 @@ def collect_catalysts(reps: list) -> list[dict]:
     return out
 
 
+# ---------------- 多剧本并行打分（M3→M5 强化）----------------
+
+STANCE_ORDER = ["真趋势", "炒作", "被绕开"]
+
+# 各立场「理想」命中方向（与 forecast_calibrator 完全一致，单一真相源）：
+# 真趋势/被绕开应被印证（一致），炒作应被打脸（有偏差）。
+try:
+    from forecast_calibrator import STANCE_HOPEFUL
+except Exception:  # pragma: no cover - 校准器缺失时退化为默认
+    STANCE_HOPEFUL = {"真趋势": "一致", "炒作": "有偏差", "被绕开": "一致"}
+
+
+def load_forecast_log() -> dict:
+    """读取 state/forecast_log.json（fail-soft：缺失/损坏返回空）。"""
+    p = STATE_DIR / "forecast_log.json"
+    try:
+        return json.loads(p.read_text(encoding="utf-8"))
+    except Exception:
+        return {}
+
+
+def build_scenario_review(log: dict) -> dict:
+    """从前瞻日志构建「多剧本并行打分」复盘数据。
+
+    返回：
+      events: [{event, segment, certainty, verdict, scenarios:[{stance,statement,verdict}]}]
+      stance_stats: {stance: {total, consistent, deviated, hit_rate}}
+    无剧本数据时 events 空、stance_stats 全 0。
+    """
+    entries = (log or {}).get("entries", []) or []
+    events = []
+    for e in entries:
+        if not e.get("verified"):
+            continue
+        scs = []
+        for s in e.get("scenarios") or []:
+            if not s.get("verified"):
+                continue
+            scs.append(
+                {
+                    "stance": s.get("stance", "真趋势"),
+                    "statement": s.get("statement", ""),
+                    "verdict": s.get("verdict", ""),
+                }
+            )
+        # 顶层事件本身也算一条「主剧本」（无 scenarios 时仍有意义）
+        events.append(
+            {
+                "event": e.get("event", ""),
+                "segment": e.get("segment", ""),
+                "certainty": e.get("certainty", ""),
+                "verdict": e.get("verdict", ""),
+                "scenarios": scs,
+            }
+        )
+
+    stance_stats: dict[str, dict] = {st: {"total": 0, "consistent": 0, "deviated": 0} for st in STANCE_ORDER}
+    for ev in events:
+        for s in ev.get("scenarios") or []:
+            st = s["stance"]
+            if st not in stance_stats:
+                continue
+            stance_stats[st]["total"] += 1
+            if str(s["verdict"]).startswith("一致"):
+                stance_stats[st]["consistent"] += 1
+            elif "偏差" in str(s["verdict"]):
+                stance_stats[st]["deviated"] += 1
+    # 命中 = 该立场「理想方向」被印证（与 forecast_calibrator 同口径）
+    all_scen = [s for ev in events for s in (ev.get("scenarios") or [])]
+    for st, d in stance_stats.items():
+        if not d["total"]:
+            d["hit_rate"] = None
+            continue
+        hopeful = STANCE_HOPEFUL[st][:2]
+        hit = sum(1 for s in all_scen if s["stance"] == st
+                  and str(s["verdict"]).startswith(hopeful))
+        d["hit_rate"] = round(hit / d["total"], 3)
+    return {"events": events, "stance_stats": stance_stats}
+
+
 # ---------------- Markdown 渲染 ----------------
 
 def _md_rows(agg: dict, reps: list, start: date, end: date) -> str:
@@ -281,6 +361,44 @@ def _md_catalysts(cats: list) -> str:
     return "| 日期 | 事件 | 环节 | 重要度 | 来源 |\n|---|--|--|--|--|\n" + "\n".join(rows)
 
 
+def _md_scenario_review(rev: dict) -> str:
+    """多剧本并行打分复盘（M3→M5 强化）。"""
+    events = rev.get("events", [])
+    stance = rev.get("stance_stats", {})
+    if not any(s["total"] for s in stance.values()):
+        return ("（本期前瞻日志暂无互斥剧本数据 —— 用 `python scripts/forecast_tracker.py add "
+                "--scenarios '[...]'` 为关键前瞻挂 2~3 个互斥剧本，下期现实逐一打分，"
+                "即可在此看到「升级/淘汰」复盘。）")
+    # 事件维度
+    rows = []
+    for ev in events:
+        top = f"{ev['event']}（{ev['verdict'] or '—'}）"
+        if ev["scenarios"]:
+            for s in ev["scenarios"]:
+                rows.append(f"| {ev['event']} | {s['stance']} | {s['statement']} | {s['verdict'] or '—'} |")
+        else:
+            rows.append(f"| {ev['event']} | — | （单一预判，未挂互斥剧本） | {ev['verdict'] or '—'} |")
+    ev_tbl = ("| 事件 | 立场 | 剧本陈述 | 验证 |\n|---|--|--|--|\n" + "\n".join(rows)) if rows else ""
+    # 立场维度
+    srows = []
+    for st in STANCE_ORDER:
+        d = stance.get(st, {})
+        if not d.get("total"):
+            continue
+        hr = f"{d['hit_rate']:.0%}" if d["hit_rate"] is not None else "—"
+        srows.append(f"| {st} | {d['total']} | {d['consistent']} | {d['deviated']} | {hr} |")
+    st_tbl = ("| 立场 | 剧本数 | 印证 | 被打脸 | 命中率 |\n|---|--|--|--|--|\n" + "\n".join(srows)) if srows else ""
+    # 升级/淘汰信号
+    active = {st: d["hit_rate"] for st, d in stance.items() if d.get("hit_rate") is not None}
+    signal = ""
+    if active:
+        best = max(active, key=active.get)
+        worst = min(active, key=active.get)
+        signal = (f"\n> **升级信号**：`{best}` 剧本命中率最高（{active[best]:.0%}），下期可优先采信；\n"
+                  f"> **淘汰信号**：`{worst}` 剧本命中率最低（{active[worst]:.0%}），需收紧其触发标准或强制反向证据。")
+    return f"{ev_tbl}\n\n{st_tbl}{signal}"
+
+
 def render_md(ctx: dict) -> str:
     start, end = ctx["start"], ctx["end"]
     gen = datetime.now().strftime("%Y-%m-%d %H:%M")
@@ -320,6 +438,13 @@ def render_md(ctx: dict) -> str:
 ## 六、下周前瞻催化剂
 
 {_md_catalysts(ctx['catalysts'])}
+
+## 七、前瞻剧本复盘（多剧本并行打分 · M3→M5）
+
+> 把每条关键前瞻挂 2~3 个互斥剧本（真趋势/炒作/被绕开），下期现实逐一打分：
+> 谁被印证 → 升级；谁被打脸 → 淘汰。这是把 L4 情景推演固化为周度闭环。
+
+{_md_scenario_review(ctx['scenario_review'])}
 
 ---
 *本文档由 chip-daily-report · weekly_review.py 生成 · 认知资产（迭代5）*
@@ -484,6 +609,56 @@ def _html_catalysts(cats: list) -> str:
 <tbody>{trs}</tbody></table></div>"""
 
 
+def _html_scenario_review(rev: dict) -> str:
+    events = rev.get("events", [])
+    stance = rev.get("stance_stats", {})
+    if not any(s["total"] for s in stance.values()):
+        return ('<p class="rv-note">本期前瞻日志暂无互斥剧本数据 —— 用 '
+                '<code>python scripts/forecast_tracker.py add --scenarios \'[...]\'</code> '
+                '为关键前瞻挂 2~3 个互斥剧本（真趋势/炒作/被绕开），下期现实逐一打分，'
+                '即可在此看到「升级/淘汰」复盘。</p>')
+    erows = []
+    for ev in events:
+        if ev["scenarios"]:
+            for s in ev["scenarios"]:
+                erows.append(
+                    f'<tr><td class="wk-topic">{esc(ev["event"])}</td>'
+                    f"<td>{esc(s['stance'])}</td>"
+                    f'<td class="wk-detail">{esc(s["statement"])}</td>'
+                    f"<td>{esc(s['verdict'] or '—')}</td></tr>"
+                )
+        else:
+            erows.append(
+                f'<tr><td class="wk-topic">{esc(ev["event"])}</td><td>—</td>'
+                f'<td class="wk-detail">（单一预判，未挂互斥剧本）</td>'
+                f"<td>{esc(ev['verdict'] or '—')}</td></tr>"
+            )
+    srows = []
+    for st in STANCE_ORDER:
+        d = stance.get(st, {})
+        if not d.get("total"):
+            continue
+        hr = f"{d['hit_rate']:.0%}" if d["hit_rate"] is not None else "—"
+        srows.append(
+            f"<tr><td class=\"wk-topic\">{esc(st)}</td><td>{d['total']}</td>"
+            f"<td>{d['consistent']}</td><td>{d['deviated']}</td><td>{esc(hr)}</td></tr>"
+        )
+    active = {st: d["hit_rate"] for st, d in stance.items() if d.get("hit_rate") is not None}
+    sig = ""
+    if active:
+        best, worst = max(active, key=active.get), min(active, key=active.get)
+        sig = (f'<p class="rv-note"><b>升级信号</b>：`{esc(best)}` 命中率最高'
+               f'（{active[best]:.0%}），下期优先采信；'
+               f'<b>淘汰信号</b>：`{esc(worst)}` 命中率最低'
+               f'（{active[worst]:.0%}），需收紧触发标准。</p>')
+    return f"""<div class="chart-card"><table class="wk-table">
+<thead><tr><th>事件</th><th>立场</th><th>剧本陈述</th><th>验证</th></tr></thead>
+<tbody>{''.join(erows)}</tbody></table></div>
+<div class="chart-card" style="margin-top:12px;overflow-x:auto"><table class="wk-table">
+<thead><tr><th>立场</th><th>剧本数</th><th>印证</th><th>被打脸</th><th>命中率</th></tr></thead>
+<tbody>{''.join(srows)}</tbody></table></div>{sig}"""
+
+
 def render_html(ctx: dict) -> str:
     start, end = ctx["start"], ctx["end"]
     gen = datetime.now().strftime("%Y-%m-%d %H:%M")
@@ -533,6 +708,11 @@ def render_html(ctx: dict) -> str:
     {_html_catalysts(ctx['catalysts'])}
   </section>
 
+  <section class="rv-block">
+    <h2 class="rv-title">🎭 前瞻剧本复盘 <span class="rv-sub">多剧本并行打分（L4 情景推演 · M3→M5）</span></h2>
+    {_html_scenario_review(ctx['scenario_review'])}
+  </section>
+
   <footer class="foot">由 chip-daily-report · weekly_review.py 生成 · 认知资产（迭代5）</footer>
 </div>
 </body>
@@ -560,6 +740,7 @@ def run(end_date: str | None = None, days: int | None = None, out_dir: Path | No
             for ln in insights_file.read_text(encoding="utf-8").splitlines()
             if ln.strip()
         ]
+    scenario_review = build_scenario_review(load_forecast_log())
     ctx = {
         "reps": reps,
         "start": start_d,
@@ -568,6 +749,7 @@ def run(end_date: str | None = None, days: int | None = None, out_dir: Path | No
         "dates": dates,
         "matrix": matrix,
         "catalysts": collect_catalysts(reps),
+        "scenario_review": scenario_review,
         "insights": insights,
     }
 

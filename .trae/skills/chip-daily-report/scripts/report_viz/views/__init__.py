@@ -14,7 +14,7 @@
   weekly     周报对比     跨期对比表 + 条数×质量走势 + 环节堆叠 + 追踪对比（v5.5）
   tutor      导师课堂     今日速览 + 深度第一课 + 必懂概念 + 课后思考（v5.8）
 """
-from . import report_view, chain_view, dimensions_view, trend_view, weekly_view, tutor_view
+from . import report_view, chain_view, dimensions_view, trend_view, weekly_view, tutor_view, forecast_timeline_view
 
 # (view_id, 标签文字, render 函数) —— 顺序即标签页顺序
 VIEW_REGISTRY = [
@@ -24,4 +24,5 @@ VIEW_REGISTRY = [
     ("trend", "趋势图", trend_view.render),
     ("weekly", "周报对比", weekly_view.render),
     ("tutor", "导师课堂", tutor_view.render),
+    ("timeline", "前瞻时间轴", forecast_timeline_view.render),
 ]
