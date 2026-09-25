@@ -65,7 +65,17 @@ def _render_news(it: dict) -> str:
     if signal:
         tail += f" | 信号: {signal['importance']}/{signal['impact']}/{signal['sentiment']}"
 
-    return f"- **{title}** — {summary}{source_seg}{tail}"
+    # v6.0 理解优先：teach 三槽写回为缩进子行（槽值=子行原文，含 emoji 与标签，与 parser 互逆）
+    teach = it.get("teach") or {}
+    sub_lines = [
+        f"  - {teach[slot]}"
+        for slot in ("principle", "impact", "career")
+        if teach.get(slot)
+    ]
+    main_line = f"- **{title}** — {summary}{source_seg}{tail}"
+    if sub_lines:
+        return "\n".join([main_line] + sub_lines)
+    return main_line
 
 
 def _compute_source_stats(report: dict) -> dict:
@@ -164,7 +174,10 @@ def render_markdown(report: dict) -> str:
             for key, text in it.get("parts", []):
                 out.append(f"- **{key}**：{text}")
         if fr.get("summary"):
-            out.append(f"**闭环小结**：{fr['summary']}")
+            out.append(f"**{fr.get('summary_label') or '闭环小结'}**：{fr['summary']}")
+        # v6.0：未识别行（预判成绩单块/表格/结论等）原样写回，与 parser 的 extra 互逆
+        for line in fr.get("extra", []):
+            out.append(line)
         out.append("")
 
     # 前瞻催化剂（v5.11，含确定性列 + 前瞻解读块）
@@ -277,7 +290,7 @@ def roundtrip(md_path, out_path=None, validate=False) -> str:
     if out_path:
         Path(out_path).write_text(md, encoding="utf-8")
     if validate:
-        vpy = repo_root / "validate_report.py"
+        vpy = repo_root / "scripts" / "validate_report.py"
         r = subprocess.run(
             [sys.executable, str(vpy), out_path or md_path],
             capture_output=True,

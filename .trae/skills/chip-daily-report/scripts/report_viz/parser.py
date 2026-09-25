@@ -35,6 +35,8 @@ SUBHEADING_RE = re.compile(r"^###\s+(.+?)\s*$")
 SELFCHECK_ROW_RE = re.compile(r"^\|\s*(\d+)\s*\|\s*([^|]+?)\s*\|\s*(PASS|FAIL|WARN)\s*\|\s*([^|]*?)\s*\|\s*$")
 # v5.2 信号层：信号: 重要性/影响方向/情绪（与 validate_report.py 的 SIGNAL_RE 一致）
 SIGNAL_RE = re.compile(r"信号[:：]\s*(高|中|低)\s*/\s*(利好|利空|中性)\s*/\s*(正面|负面|中性)")
+# v6.0 理解优先：新闻主行下的缩进子行（🧠 背后原理 / 🎯 对你意味着什么 / 🎓💼 考研·就业）
+TEACH_RE = re.compile(r"^\s{2,}-\s+(.+?)\s*$")
 
 # 5 个标准产业链环节（顺序即产业链流向）
 SEG_ORDER = ["设计", "制造", "封测", "EDA", "材料"]
@@ -43,8 +45,9 @@ SEG_ORDER = ["设计", "制造", "封测", "EDA", "材料"]
 DIM_ORDER = ["市场与需求", "政策与监管", "资本与投融资"]
 
 # v5.3 附加小节：持续追踪（B）/ 前瞻兑现回顾（v5.10 方向1）/ 前瞻催化剂（C）；
-# v5.4 费曼解释（F1.3）；v5.6 深度解读/未来借鉴；v5.8 今日导师课
-EXTRA_ORDER = ["持续追踪", "前瞻兑现回顾", "前瞻催化剂", "费曼解释", "深度解读", "未来借鉴", "今日导师课"]
+# v6.1 未来推演（推演型前瞻，取代前两者的新版承载节）；v5.4 费曼解释（F1.3）；
+# v5.6 深度解读/未来借鉴；v5.8 今日导师课
+EXTRA_ORDER = ["持续追踪", "前瞻兑现回顾", "前瞻催化剂", "未来推演", "费曼解释", "深度解读", "未来借鉴", "今日导师课"]
 
 
 def _seg_of(heading: str):
@@ -84,8 +87,12 @@ def _classify(domain: str) -> str:
 
 
 def _extract_list(buf):
+    # v6.0：缩进子行（如今日要点的「为什么值得你花时间」）不收为独立要点——
+    # strip 后会被误判成顶格条目、往返时膨胀成多条；IR 侧暂不承载，需 HTML 化时再扩槽。
     items = []
     for ln in buf:
+        if ln[:1] in (" ", "\t"):
+            continue
         s = ln.strip()
         if s.startswith("- "):
             items.append(s[2:].strip())
@@ -115,11 +122,29 @@ def urlparse_netloc(url: str) -> str:
     return urlparse(url).netloc.lower().lstrip("www.")
 
 
+# v6.0 理解优先：teach 三槽按首 emoji 分类；槽值存子行原文（含 emoji 与标签），
+# 解析/渲染互逆；同槽首现为准，不重复收录。
+_TEACH_SLOT_BY_EMOJI = {"🧠": "principle", "🎯": "impact", "🎓": "career", "💼": "career"}
+
+
+def _attach_teach(item, text):
+    for emoji, slot in _TEACH_SLOT_BY_EMOJI.items():
+        if text.startswith(emoji):
+            if not item["teach"][slot]:
+                item["teach"][slot] = text
+            return
+
+
 def _parse_news(buf):
     items = []
     for ln in buf:
         m = NEWS_RE.match(ln)
         if not m:
+            # v6.0：主行后的缩进子行归入上一条新闻的 teach 三槽（不计条目）
+            if items:
+                tm = TEACH_RE.match(ln)
+                if tm:
+                    _attach_teach(items[-1], tm.group(1).strip())
             continue
         title = m.group(1).strip()
         summary = m.group(2).strip()
@@ -166,6 +191,7 @@ def _parse_news(buf):
                 "level": level,
                 "timestamp": timestamp,
                 "signal": signal,
+                "teach": {"principle": None, "impact": None, "career": None},
             }
         )
     return items
@@ -353,7 +379,7 @@ def _parse_catalyst(buf):
 
 
 def _parse_catalyst_notes(buf):
-    """解析 '## 前瞻催化剂' 下的 '### 前瞻 N：标题' 解读块（v5.11 高/中重要度催化剂配解读）。
+    """解析 '## 前瞻催化剂'（v5.11）/'## 未来推演'（v6.1）下的 '### 前瞻/推演 N：标题' 解读块。
 
     每条解读含 '- **这意味着什么（看点）**' / '- **到时候盯什么（关注信号）**' /
     '- **可能影响什么（潜在影响）**' 三部分，提取为 {title, parts:[(key, text)]}。
@@ -361,7 +387,7 @@ def _parse_catalyst_notes(buf):
     items = []
     cur = None
     for ln in buf:
-        hm = re.match(r"^###\s+前瞻\s*\d*\s*[：:.]?\s*(.*)$", ln.strip())
+        hm = re.match(r"^###\s+(?:前瞻|推演)\s*\d*\s*[：:.]?\s*(.*)$", ln.strip())
         if hm:
             if cur is not None:
                 items.append(cur)
@@ -375,16 +401,66 @@ def _parse_catalyst_notes(buf):
     return items
 
 
+def _parse_future(buf):
+    """解析 '## 未来推演' 小节（v6.1 推演型前瞻）三分区。
+
+    '### 推演 N' → catalyst_notes（复用解读块结构，剧本/窗口为 parts）；
+    '### 确定时点' 表格行 → catalysts（复用 _parse_catalyst）；
+    '### 兑现回顾' → forward_review（复用 _parse_forward_review 子块解析）。
+    分区前的引言 blockquote 存 future_intro；未知行保留在 forward_review['extra']，
+    往返零丢失。
+    """
+    intro_lines = []
+    proj_buf = []
+    cal_buf = []
+    rev_buf = []
+    sub = None  # None=引言区 / "proj" / "cal" / "rev" / "other"
+    for ln in buf:
+        hm = re.match(r"^###\s+(.*)$", ln.strip())
+        if hm:
+            head = hm.group(1)
+            if head.startswith("推演"):
+                sub = "proj"
+                proj_buf.append(ln)
+            elif head.startswith("确定时点"):
+                sub = "cal"
+                cal_buf.append(ln)
+            elif head.startswith("兑现回顾"):
+                sub = "rev"
+                rev_buf.append(ln)
+            else:
+                sub = "other"
+                rev_buf.append(ln)
+            continue
+        if sub == "proj":
+            proj_buf.append(ln)
+        elif sub == "cal":
+            cal_buf.append(ln)
+        elif sub == "rev" or sub == "other":
+            rev_buf.append(ln)
+        else:
+            if ln.strip():
+                intro_lines.append(ln)
+    return {
+        "future_intro": "\n".join(intro_lines).strip(),
+        "catalyst_notes": _parse_catalyst_notes(proj_buf),
+        "catalysts": _parse_catalyst(cal_buf),
+        "forward_review": _parse_forward_review(rev_buf),
+    }
+
+
 def _parse_forward_review(buf):
     """解析 '## 前瞻兑现回顾' 小节（v5.10 方向1·预告→验证闭环）。
 
     提取：开头 blockquote 说明（intro）、'### 回看 N：标题' 条目（含
-    '- **发生了没**' / '- **和我们当时判断是否一致**' 两部分）、结尾 '**闭环小结**'。
+    '- **发生了没**' / '- **和我们当时判断是否一致**' 两部分）、结尾 '**闭环小结**'（v6.0 起兼容人话版标签'**预判成绩单**'）。
     返回 {intro, items:[{title, parts:[(key,text)]}], summary}。
     """
     intro_lines = []
     items = []
     summary = ""
+    summary_label = ""  # v6.0：闭环小结人话版改名「预判成绩单」，标签原文随写回保留
+    extra = []  # v6.0：未识别的非空行原样保留（如「预判成绩单」块/表格/结论行），往返零丢失
     cur = None
     for ln in buf:
         s = ln.strip()
@@ -397,19 +473,24 @@ def _parse_forward_review(buf):
                 items.append(cur)
             cur = {"title": hm.group(1).strip() or "回看", "parts": []}
             continue
-        sm = re.match(r"^\*\*\s*闭环小结\s*\*\*\s*[：:]?\s*(.*)$", ln.strip())
+        sm = re.match(r"^\*\*\s*(闭环小结|预判成绩单)\s*\*\*\s*[：:]?\s*(.*)$", ln.strip())
         if sm:
-            summary = sm.group(1).strip()
+            summary_label = sm.group(1).strip()
+            summary = sm.group(2).strip()
             continue
         pm = re.match(r"^-\s*\*\*(.+?)\*\*\s*[：:]\s*(.+)$", ln.strip())
         if cur is not None and pm:
             cur["parts"].append((pm.group(1).strip(), pm.group(2).strip()))
+        elif ln.strip():
+            extra.append(ln.strip())
     if cur is not None:
         items.append(cur)
     return {
         "intro": "\n".join(intro_lines).strip(),
         "items": items,
+        "summary_label": summary_label or "闭环小结",
         "summary": summary,
+        "extra": extra,
     }
 
 
@@ -452,6 +533,7 @@ def parse_report(path) -> dict:
         "tutor": [],
         "forward_review": None,  # v5.10 方向1：预告→验证闭环
         "catalyst_notes": [],  # v5.11：高/中重要度催化剂前瞻解读块
+        "future_intro": "",  # v6.1：未来推演小节引言
         "source_stats": {"A": 0, "B": 0, "C": 0},
     }
 
@@ -476,6 +558,8 @@ def parse_report(path) -> dict:
     in_selfcheck = False
     buf = []
 
+    # 设计约束（v6.0）：首个 ## 标题之前不得有自由段落——cur=None 时 _flush 无落点，
+    # buf 整体丢弃；「读前须知」必须写在「今日导师课 → 今日速览」body 内（_parse_tutor 原样捕获）。
     def _flush():
         nonlocal buf
         if cur == "今日要点":
@@ -490,6 +574,8 @@ def parse_report(path) -> dict:
             report["tracking"].extend(_parse_tracking(buf))
         elif cur == "前瞻兑现回顾":
             report["forward_review"] = _parse_forward_review(buf)
+        elif cur == "未来推演":
+            report.update(_parse_future(buf))
         elif cur == "前瞻催化剂":
             report["catalysts"].extend(_parse_catalyst(buf))
             report["catalyst_notes"].extend(_parse_catalyst_notes(buf))

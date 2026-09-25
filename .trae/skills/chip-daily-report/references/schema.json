@@ -50,6 +50,15 @@
                 "impact": {"type": "string", "enum": ["利好", "利空", "中性"]},
                 "sentiment": {"type": "string", "enum": ["正面", "负面", "中性"]}
               }
+            },
+            "teach": {
+              "type": ["object", "null"],
+              "description": "v6.0 理解优先三层子行；无则 null。槽值=子行去掉缩进与 '- ' 后的原文（含 emoji 与标签，如 '🧠 背后原理（课内搭桥）：…'），parser 解析与 renderer 写回互逆",
+              "properties": {
+                "principle": {"type": ["string", "null"], "description": "🧠 背后原理（课内搭桥）子行原文"},
+                "impact": {"type": ["string", "null"], "description": "🎯 对你意味着什么子行原文"},
+                "career": {"type": ["string", "null"], "description": "🎓💼 考研·就业视角子行原文"}
+              }
             }
           }
         }
@@ -99,7 +108,9 @@
             }
           }
         },
-        "summary": {"type": "string", "description": "闭环小结"}
+        "summary": {"type": "string", "description": "闭环小结（v6.0 兼容人话版「预判成绩单」）"},
+        "summary_label": {"type": "string", "description": "v6.0：小结标签原文（闭环小结/预判成绩单），写回时保留"},
+        "extra": {"type": "array", "items": {"type": "string"}, "description": "v6.0：未识别的非空行原样保留（预判成绩单块/表格/结论行等），往返零丢失"}
       }
     },
     "catalysts": {

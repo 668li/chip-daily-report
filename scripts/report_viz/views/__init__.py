@@ -17,12 +17,13 @@
 from . import report_view, chain_view, dimensions_view, trend_view, weekly_view, tutor_view, forecast_timeline_view
 
 # (view_id, 标签文字, render 函数) —— 顺序即标签页顺序
+# v6.0 理解优先：「导师课堂」从第 6 位提到第 1 位（对齐 md 把今日导师课前移为全文第一节）
 VIEW_REGISTRY = [
+    ("tutor", "导师课堂", tutor_view.render),
     ("report", "日报视图", report_view.render),
     ("chain", "产业链全貌", chain_view.render),
     ("dimensions", "多维透视", dimensions_view.render),
     ("trend", "趋势图", trend_view.render),
     ("weekly", "周报对比", weekly_view.render),
-    ("tutor", "导师课堂", tutor_view.render),
     ("timeline", "前瞻时间轴", forecast_timeline_view.render),
 ]

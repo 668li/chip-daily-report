@@ -736,15 +736,31 @@ def check_tracking_section(content):
 
 
 def check_catalyst_section(content):
-    """检查22（C·v5.3 前瞻催化剂，软指标）：检测到 '## 前瞻催化剂' 小节时验证结构。
+    """检查22（C·v5.3 → v6.1 未来推演，软指标）：双轨识别。
 
-    小节出现时须含表头 '| 日期 |' 与 '| 来源 |'；0 条标注 '近期无已知催化剂' → PASS；
-    标题缺失 → WARN 不改变退出码。
+    新版 '## 未来推演'：须含 '### 推演 N' 推演块（每块带 剧本/验证窗口）；
+    旧版 '## 前瞻催化剂'：历史日报兼容（F6+F14 历史不崩），须含催化剂表或降级标注。
+    两者皆缺 → WARN 不改变退出码。
     """
-    match = re.search(r'^##\s+前瞻催化剂\s*$', content, re.MULTILINE)
-    if not match:
-        return 'WARN', "未检测到 '## 前瞻催化剂' 小节（C 催化剂日历，建议覆盖）"
-    section_start = match.end()
+    new_m = re.search(r'^##\s+未来推演\s*$', content, re.MULTILINE)
+    old_m = re.search(r'^##\s+前瞻催化剂\s*$', content, re.MULTILINE)
+    if not new_m and not old_m:
+        return 'WARN', "未检测到 '## 未来推演' 小节（v6.1 推演型前瞻，建议覆盖）"
+    if new_m:
+        section_start = new_m.end()
+        next_section = re.search(r'^##\s+', content[section_start:], re.MULTILINE)
+        section_content = (
+            content[section_start : section_start + next_section.start()]
+            if next_section
+            else content[section_start:]
+        )
+        has_projection = bool(re.search(r'^###\s+推演\s*\d', section_content, re.MULTILINE))
+        has_window = '验证窗口' in section_content
+        if has_projection and has_window:
+            n_proj = len(re.findall(r'^###\s+推演\s*\d', section_content, re.MULTILINE))
+            return 'PASS', f"未来推演小节存在，含 {n_proj} 条推演块且均带验证窗口（推演型前瞻）"
+        return 'WARN', "未来推演小节存在但结构不全（每条推演块须含 '### 推演 N' 标题与 '验证窗口' 要素）"
+    section_start = old_m.end()
     next_section = re.search(r'^##\s+', content[section_start:], re.MULTILINE)
     section_content = (
         content[section_start : section_start + next_section.start()]
@@ -1162,8 +1178,8 @@ def main():
     else:
         print(f"  ✓ PASS  {tr_msg}")
 
-    # 检查22: 前瞻催化剂（C v5.3 软指标）
-    print("\n【检查22】前瞻催化剂（C v5.3 催化剂日历，软指标）")
+    # 检查22: 未来推演（C v5.3 催化剂日历 → v6.1 推演型前瞻，软指标；兼容旧版前瞻催化剂）
+    print("\n【检查22】未来推演（v6.1 推演型前瞻，软指标）")
     ct_status, ct_msg = check_catalyst_section(content)
     if ct_status == 'WARN':
         print(f"  ⚠ WARN  {ct_msg}")

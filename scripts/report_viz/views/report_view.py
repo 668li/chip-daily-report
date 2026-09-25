@@ -2,10 +2,13 @@
 """report_viz.views.report_view — 日报卡片视图渲染器。
 
 把解析后的日报 dict 渲染为卡片式 HTML：
+  - 读前须知图例条（v6.0，取导师课「今日速览」body，fail-soft）
+  - 今日一课摘要卡（v6.0，取「深度第一课」，完整版在「导师课堂」Tab）
   - 今日要点高亮卡
+  - 费曼解释卡（v6.0 前移到新闻之前，对齐 md 阅读曲线）
   - 5 环节分区（分色），每区下为新闻卡
-  - 新闻卡含：回顾徽章、标题、摘要、技术注解高亮、来源级别徽章、时间戳、原始出处追溯
-  - 自检结果折叠区
+  - 新闻卡含：回顾徽章、标题、摘要、技术注解高亮、teach 三层子行（v6.0）、来源级别徽章、时间戳、原始出处追溯
+  - 持续追踪 / 前瞻催化剂 / 前瞻兑现回顾（v6.0 新增渲染）/ 深度解读 / 未来借鉴 / 自检结果折叠区
 
 扩展方式：本文件导出的 render(report) 即在 VIEW_REGISTRY 中注册的一个视图，
 新增视图只需新建一个 render(report)->str 的模块并在 views/__init__.py 注册即可。
@@ -85,6 +88,61 @@ def _highlight_card(text: str) -> str:
     return f'<li class="hl-item">{_esc(text)}</li>'
 
 
+def _tutor_module(report: dict, prefix: str) -> dict | None:
+    """从 report["tutor"] 按模块名前缀取模块（module 为 ### 子标题原文）。"""
+    for mod in report.get("tutor", []):
+        if str(mod.get("module", "")).startswith(prefix):
+            return mod
+    return None
+
+
+def _read_first_banner(report: dict) -> str:
+    """v6.0 读前须知图例条：取「今日速览」body 内以 **读前须知** 开头的段落；
+    取不到不渲染（fail-soft）。数据链路：_parse_tutor 对模块 body 原样捕获。"""
+    mod = _tutor_module(report, "今日速览")
+    if not mod:
+        return ""
+    para: list[str] = []
+    for ln in mod.get("body", []):
+        s = ln.strip()
+        if not s:
+            if para:
+                break
+            continue
+        if para or s.startswith("**读前须知**"):
+            para.append(s)
+    if not para:
+        return ""
+    text = "<br>".join(_esc(p) for p in para)
+    return f'<div class="read-first">📖 {text}</div>'
+
+
+def _lesson_card(report: dict) -> str:
+    """v6.0 今日一课摘要卡：「深度第一课」标题 + 先记住一句话；取不到不渲染。"""
+    mod = _tutor_module(report, "深度第一课")
+    if not mod:
+        return ""
+    module_name = str(mod.get("module", ""))
+    title = re.split("[：:]", module_name, maxsplit=1)[-1].strip()
+    hook = ""
+    for ln in mod.get("body", []):
+        s = ln.strip()
+        if "先记住一句话" in s:
+            hook = s.strip("*").strip()
+            break
+    title_html = f'<div class="lesson-title">{_esc(title)}</div>' if title else ""
+    hook_html = f'<div class="lesson-hook">{_esc(hook)}</div>' if hook else ""
+    if not title_html and not hook_html:
+        return ""
+    return f"""
+    <div class="lesson-card">
+      <div class="lesson-tag">今日一课</div>
+      {title_html}
+      {hook_html}
+      <div class="lesson-more">完整版见「导师课堂」标签页</div>
+    </div>"""
+
+
 def _news_card(item: dict) -> str:
     review = '<span class="badge badge-review">回顾</span>' if item["is_review"] else ""
     annotation = ""
@@ -113,6 +171,15 @@ def _news_card(item: dict) -> str:
     )
     ts = f'<span class="ts">🕒 {_esc(item["timestamp"])}</span>' if item["timestamp"] else ""
 
+    # v6.0 理解优先：teach 三层子行（槽值=子行原文含 emoji，旧 IR 无此键时跳过）
+    teach = item.get("teach") or {}
+    teach_lines = "".join(
+        f'<div class="teach-line">{_esc(teach[slot])}</div>'
+        for slot in ("principle", "impact", "career")
+        if teach.get(slot)
+    )
+    teach_html = f'<div class="teach">{teach_lines}</div>' if teach_lines else ""
+
     return f"""
     <article class="news" data-seg="{_esc(item.get('_seg',''))}">
       <div class="news-head">
@@ -123,6 +190,7 @@ def _news_card(item: dict) -> str:
       </div>
       <p class="news-summary">{_esc(item["summary"])}</p>
       {annotation}
+      {teach_html}
       <div class="news-meta">
         <span class="srcs">{src_html}</span>
         {ts}
@@ -196,7 +264,7 @@ def _tracking_block(items: list) -> str:
 
 
 def _catalyst_block(rows: list) -> str:
-    """前瞻催化剂（C·v5.3）：未来 7 天确定时点表格。"""
+    """确定时点表格（C·v5.3，v6.1 起为「未来推演」节内的子表）。"""
     if not rows:
         return ""
     imp_style = {"高": "#b91c1c", "中": "#b45309", "低": "#64748b"}
@@ -216,17 +284,47 @@ def _catalyst_block(rows: list) -> str:
             f'<td>{links}</td></tr>'
         )
     return f"""
-    <section class="catalyst-block">
-      <h2 class="ct-title">🗓 前瞻催化剂 <span class="ct-sub">未来 7 天确定时点</span></h2>
       <table class="ct-table">
         <thead><tr><th>日期</th><th>事件</th><th>环节</th><th>重要度</th><th>来源</th></tr></thead>
         <tbody>{"".join(trs)}</tbody>
-      </table>
+      </table>"""
+
+
+def _future_block(report: dict) -> str:
+    """未来推演（v6.1 推演型前瞻）：引言 + 推演卡（现状锚点/剧本/验证窗口）+ 确定时点表。
+
+    三类数据任一存在即渲染；全空返回空串（兼容旧版仅催化剂表的历史报告）。
+    """
+    intro = (report.get("future_intro") or "").strip()
+    notes = report.get("catalyst_notes") or []
+    rows = report.get("catalysts") or []
+    if not intro and not notes and not rows:
+        return ""
+    part_label = {"现状锚点": "fx-anchor", "推演链": "fx-chain"}
+    cards = []
+    for n in notes:
+        parts = "".join(
+            f'<div class="fx-part"><span class="fx-key">{_esc(k)}</span>'
+            f'<span class="fx-val">{_esc(v)}</span></div>'
+            for k, v in n.get("parts", [])
+        )
+        cls = "fx-card"
+        cards.append(f'<div class="{cls}"><div class="fx-title">{_esc(n["title"])}</div>{parts}</div>')
+    intro_html = f'<p class="fx-intro">{_esc(intro)}</p>' if intro else ""
+    cards_html = f'<div class="fx-grid">{"".join(cards)}</div>' if cards else ""
+    table_html = _catalyst_block(rows)
+    sub = "推演块（剧本+验证窗口）+ 确定时点"
+    return f"""
+    <section class="catalyst-block">
+      <h2 class="ct-title">🔮 未来推演 <span class="ct-sub">{sub}</span></h2>
+      {intro_html}
+      {cards_html}
+      {table_html}
     </section>"""
 
 
 def _feynman_block(items: list) -> str:
-    """费曼解释（F1.3·v5.4）：大白话术语卡片，放在前瞻催化剂之后、自检结果之前。"""
+    """费曼解释（F1.3·v5.4，v6.0 前移到新闻之前）：大白话术语卡片。"""
     if not items:
         return ""
     cards = []
@@ -344,8 +442,42 @@ def _future_lessons_block(items: list) -> str:
     </section>"""
 
 
+def _forward_review_block(fr: dict | None) -> str:
+    """前瞻兑现回顾（v5.10，v6.0 起在日报视图渲染，对齐 md 曲线）：回看卡 + 预判成绩单。"""
+    if not fr:
+        return ""
+    cards = []
+    for it in fr.get("items", []):
+        parts = "".join(
+            f'<div class="fr-part"><b>{_esc(key)}</b>：{_esc(text)}</div>'
+            for key, text in it.get("parts", [])
+        )
+        cards.append(
+            f'<div class="fr-card"><div class="fr-title">{_esc(it.get("title", ""))}</div>{parts}</div>'
+        )
+    if not cards and not fr.get("summary"):
+        return ""
+    intro = f'<div class="fr-intro">{_esc(fr.get("intro", ""))}</div>' if fr.get("intro") else ""
+    summary = ""
+    if fr.get("summary"):
+        label = fr.get("summary_label") or "闭环小结"
+        summary = f'<div class="fr-summary">{_esc(label)}：{_esc(fr["summary"])}</div>'
+    return f"""
+    <section class="fr-block">
+      <h2 class="fr-title">✅ 兑现回顾 <span class="tk-sub">预告 → 验证闭环 · 允许打脸</span></h2>
+      {intro}
+      <div class="fr-grid">{"".join(cards)}</div>
+      {summary}
+    </section>"""
+
+
 def render(report: dict) -> str:
-    """渲染日报视图 HTML 片段。"""
+    """渲染日报视图 HTML 片段（v6.0 理解优先曲线，对齐 md 章节顺序：
+    读前须知 → 今日一课 → 今日要点 → 费曼解释 → 五环节新闻 → 持续追踪
+    → 前瞻催化剂 → 前瞻兑现回顾 → 深度解读 → 未来借鉴 → 自检折叠）。
+    产业链关联/横向维度属独立 Tab（chain/dimensions），不在本视图重复。"""
+    read_first = _read_first_banner(report)
+    lesson = _lesson_card(report)
     hl = "".join(_highlight_card(h) for h in report.get("highlights", []))
     highlights = (
         f'<div class="highlights"><h2 class="hl-title">今日要点</h2>'
@@ -362,19 +494,23 @@ def render(report: dict) -> str:
     seg_html = "\n".join(segs)
 
     tracking = _tracking_block(report.get("tracking", []))
-    catalysts = _catalyst_block(report.get("catalysts", []))
+    catalysts = _future_block(report)
     feynman = _feynman_block(report.get("feynman", []))
+    forward_review = _forward_review_block(report.get("forward_review"))
     deep_dive = _deep_dive_block(report.get("deep_dive", []))
     future_lessons = _future_lessons_block(report.get("future_lessons", []))
     selfcheck = _selfcheck_block(report.get("selfcheck", []))
 
     return f"""
     <div class="report-view">
+      {read_first}
+      {lesson}
       {highlights}
+      {feynman}
       {seg_html}
       {tracking}
       {catalysts}
-      {feynman}
+      {forward_review}
       {deep_dive}
       {future_lessons}
       {selfcheck}

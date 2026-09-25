@@ -20,6 +20,10 @@ build_report_html(report) 读取 VIEW_REGISTRY，为每个视图生成标签页 
 新增视图 = 在 views/ 加一个文件并在 VIEW_REGISTRY 注册，装配器零改动即可生效。
 
 产物为零依赖的单文件 HTML（内联样式与 SVG），可直接双击打开或部署。
+
+v6.0 理解优先（2026-09-25）：导师课堂 Tab 提到第 1 位；日报视图重排为
+读前须知图例条→今日一课卡→要点→费曼→新闻（含 teach 三层）→追踪→前瞻→兑现回顾→深度→借鉴→自检折叠；
+新增 CSS .read-first/.lesson-card/.teach-line/.fr-*。
 """
 from __future__ import annotations
 
@@ -108,10 +112,17 @@ header.top h1{margin:0 0 6px;font-size:23px;letter-spacing:.5px}
 .tk-dir{font-size:11.5px;font-weight:700;color:#0f766e;background:#ccfbf1;border-radius:999px;padding:1px 8px;white-space:nowrap}
 .tk-topic{font-weight:700;font-size:14px;color:#134e4a}
 .tk-detail{margin:0;font-size:13px;color:#475569;line-height:1.5}
-/* 前瞻催化剂（C v5.3） */
+/* 前瞻催化剂（C v5.3）→ v6.1 未来推演 */
 .catalyst-block{margin-top:18px;background:#fff;border:1px solid var(--line);border-radius:12px;padding:14px 16px}
 .ct-title{font-size:16.5px;margin:0 0 10px;color:#1d4ed8}
 .ct-sub{font-size:12.5px;color:var(--muted);font-weight:500;margin-left:8px}
+.fx-intro{margin:0 0 10px;font-size:13px;color:#475569;line-height:1.6}
+.fx-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:10px;margin:0 0 12px}
+.fx-card{border:1px solid var(--line);border-radius:10px;padding:10px 12px;background:#f8fafc}
+.fx-title{font-weight:700;font-size:13.5px;color:#1e293b;margin:0 0 8px}
+.fx-part{margin:0 0 6px;font-size:12.5px;line-height:1.55}
+.fx-key{display:inline-block;font-weight:700;color:#1d4ed8;margin-right:6px}
+.fx-val{color:#334155}
 .ct-table{width:100%;border-collapse:collapse;font-size:13.5px}
 .ct-table th,.ct-table td{border-bottom:1px solid var(--line);padding:8px 9px;text-align:left}
 .ct-table th{color:var(--muted);font-weight:600}
@@ -295,6 +306,28 @@ header.top h1{margin:0 0 6px;font-size:23px;letter-spacing:.5px}
 .wk-detail{font-size:12.5px;color:#64748b;max-width:380px}
 
 footer.foot{margin-top:30px;text-align:center;font-size:12px;color:var(--muted)}
+
+/* 理解优先（v6.0）：读前须知图例条 / 今日一课摘要卡 / 新闻 teach 三层子行 / 前瞻兑现回顾 */
+.read-first{background:#f3e8ff;border:1px solid #e9d5ff;border-left:4px solid #7c3aed;border-radius:10px;padding:12px 14px;font-size:13px;line-height:1.7;color:#4c1d95;margin-bottom:14px}
+.read-first br{line-height:2}
+.lesson-card{background:#faf5ff;border:1px solid #e9d5ff;border-radius:12px;padding:14px 16px;margin-bottom:18px}
+.lesson-tag{display:inline-block;background:#7c3aed;color:#fff;font-size:12px;font-weight:700;border-radius:999px;padding:2px 10px;margin-bottom:8px}
+.lesson-title{font-size:15.5px;font-weight:700;color:#6b21a8;margin-bottom:6px}
+.lesson-hook{font-size:13.5px;color:#475569;line-height:1.65;margin-bottom:6px}
+.lesson-more{font-size:12px;color:#a78bfa}
+.news .teach{margin:10px 0 2px;border-top:1px dashed #e9d5ff;padding-top:8px}
+.teach-line{font-size:12.5px;line-height:1.65;color:#57534e;padding:3px 0 3px 2px}
+.fr-block{margin-top:18px}
+.fr-title{font-size:16.5px;margin:0 0 10px;color:#0f766e}
+.fr-intro{font-size:12.5px;color:var(--muted);margin-bottom:10px}
+.fr-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:10px}
+.fr-card{background:#f0fdfa;border:1px solid #ccfbf1;border-radius:10px;padding:10px 12px}
+.fr-title .tk-sub{font-size:12px;color:var(--muted);font-weight:400}
+.fr-card .fr-title{font-size:13.5px;margin:0}
+.fr-card{margin-bottom:0}
+.fr-part{font-size:12.5px;color:#475569;line-height:1.6;margin-top:6px}
+.fr-part b{color:#0f766e}
+.fr-summary{margin-top:12px;background:#ecfdf5;border:1px solid #bbf7d0;border-radius:10px;padding:10px 12px;font-size:13px;color:#065f46}
 
 @media(max-width:720px){
   .seg-strip{grid-template-columns:repeat(2,1fr)}

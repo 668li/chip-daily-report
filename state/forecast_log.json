@@ -253,6 +253,117 @@
       "verdict": null,
       "verified_note": null,
       "scenarios": null
+    },
+    {
+      "id": "20260925-hbm-price",
+      "report_date": "2026-09-25",
+      "event_date": "2026-11-24",
+      "event": "HBM 挤占推高终端内存价格（60 天推演）",
+      "segment": "制造",
+      "importance": "高",
+      "certainty": "中确定性",
+      "source": "https://www.techtimes.com",
+      "when_judged": "60 天内主流存储月度合约价环比 ≥+5% 或至少一款主流手机机型公开调价",
+      "verified": false,
+      "verified_date": null,
+      "verdict": null,
+      "verified_note": null,
+      "scenarios": [
+        {
+          "id": "20260925-hbm-price-s1",
+          "stance": "挤占延续",
+          "statement": "至 11-24 存储月度合约价环比 ≥+5% 或至少一款主流机型公开调价",
+          "certainty": "中确定性",
+          "verified": false,
+          "verified_date": null,
+          "verdict": null,
+          "verified_note": null
+        },
+        {
+          "id": "20260925-hbm-price-s2",
+          "stance": "扩产对冲",
+          "statement": "至 11-24 合约价环比 ≤0 且无终端调价公告",
+          "certainty": "中确定性",
+          "verified": false,
+          "verified_date": null,
+          "verdict": null,
+          "verified_note": null
+        }
+      ]
+    },
+    {
+      "id": "20260925-cowos-relief",
+      "report_date": "2026-09-25",
+      "event_date": "2026-12-24",
+      "event": "先进封装紧缺 90 天内出现缓解信号（90 天推演）",
+      "segment": "封测",
+      "importance": "中",
+      "certainty": "中确定性",
+      "source": "https://www.trendforce.com",
+      "when_judged": "90 天内出现 CoWoS 月产能公开口径突破 15 万片或封测厂产能不再紧张表态",
+      "verified": false,
+      "verified_date": null,
+      "verdict": null,
+      "verified_note": null,
+      "scenarios": [
+        {
+          "id": "20260925-cowos-relief-s1",
+          "stance": "紧缺延续",
+          "statement": "至 12-24 出现先进封装涨价或上量延后公开报道",
+          "certainty": "中确定性",
+          "verified": false,
+          "verified_date": null,
+          "verdict": null,
+          "verified_note": null
+        },
+        {
+          "id": "20260925-cowos-relief-s2",
+          "stance": "缓解信号",
+          "statement": "至 12-24 CoWoS 月产能公开口径突破 15 万片或主要封测厂表态产能不紧",
+          "certainty": "中确定性",
+          "verified": false,
+          "verified_date": null,
+          "verdict": null,
+          "verified_note": null
+        }
+      ]
+    },
+    {
+      "id": "20260925-bis-gaafet",
+      "report_date": "2026-09-25",
+      "event_date": "2026-10-14",
+      "event": "BIS GAAFET EDA 管制如期生效（14 天推演）",
+      "segment": "EDA",
+      "importance": "高",
+      "certainty": "高确定性",
+      "source": "https://www.eet-china.com",
+      "when_judged": "10-14 前后官方或主流媒体确认管制生效，国产 EDA 公开获客动作可查",
+      "verified": false,
+      "verified_date": null,
+      "verdict": null,
+      "verified_note": null,
+      "scenarios": [
+        {
+          "id": "20260925-bis-gaafet-s1",
+          "stance": "如期生效",
+          "statement": "10-14 前后确认生效且国产 EDA 获客动作可查",
+          "certainty": "高确定性",
+          "verified": false,
+          "verified_date": null,
+          "verdict": null,
+          "verified_note": null
+        },
+        {
+          "id": "20260925-bis-gaafet-s2",
+          "stance": "延期豁免",
+          "statement": "出现官方延期公告或豁免清单报道",
+          "certainty": "高确定性",
+          "verified": false,
+          "verified_date": null,
+          "verdict": null,
+          "verified_note": null
+        }
+      ]
     }
   ]
 }
