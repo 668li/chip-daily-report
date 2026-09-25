@@ -736,9 +736,9 @@ def check_tracking_section(content):
 
 
 def check_catalyst_section(content):
-    """检查22（C·v5.3 → v6.1 未来推演，软指标）：双轨识别。
+    """检查22（C·v5.3 → v6.1 未来推演 → v6.2 身份化，软指标）：双轨识别。
 
-    新版 '## 未来推演'：须含 '### 推演 N' 推演块（每块带 剧本/验证窗口）；
+    新版 '## 未来推演'：须含 '### 推演 N' 推演块（每块带 剧本/验证窗口/知识锚/成长含义）；
     旧版 '## 前瞻催化剂'：历史日报兼容（F6+F14 历史不崩），须含催化剂表或降级标注。
     两者皆缺 → WARN 不改变退出码。
     """
@@ -754,11 +754,26 @@ def check_catalyst_section(content):
             if next_section
             else content[section_start:]
         )
-        has_projection = bool(re.search(r'^###\s+推演\s*\d', section_content, re.MULTILINE))
+        parts = re.split(r'^###\s+', section_content, flags=re.MULTILINE)
+        proj_blocks = [p for p in parts if re.match(r'推演\s*\d', p)]
+        has_projection = bool(proj_blocks)
         has_window = '验证窗口' in section_content
         if has_projection and has_window:
-            n_proj = len(re.findall(r'^###\s+推演\s*\d', section_content, re.MULTILINE))
-            return 'PASS', f"未来推演小节存在，含 {n_proj} 条推演块且均带验证窗口（推演型前瞻）"
+            n_proj = len(proj_blocks)
+            missing = [
+                i
+                for i, b in enumerate(proj_blocks, 1)
+                if '知识锚' not in b or '成长含义' not in b
+            ]
+            if not missing:
+                return (
+                    'PASS',
+                    f"未来推演小节存在，含 {n_proj} 条推演块且均带验证窗口/知识锚/成长含义（推演型前瞻·身份化）",
+                )
+            return (
+                'WARN',
+                f"未来推演小节存在但身份化不全（推演 {'、'.join(map(str, missing))} 缺 '知识锚' 或 '成长含义' 要素）",
+            )
         return 'WARN', "未来推演小节存在但结构不全（每条推演块须含 '### 推演 N' 标题与 '验证窗口' 要素）"
     section_start = old_m.end()
     next_section = re.search(r'^##\s+', content[section_start:], re.MULTILINE)
