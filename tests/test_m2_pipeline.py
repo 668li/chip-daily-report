@@ -28,10 +28,6 @@ from validate_ir import validate        # noqa: E402
 GOLDEN = REPO / "芯片行业日报_20260817.md"
 
 
-def _run(cmd):
-    return subprocess.run([sys.executable, *cmd], capture_output=True, text=True)
-
-
 def test_preflight_pass():
     rep = parser.parse_report(str(GOLDEN))
     rows, n_fail, n_warn = validate(rep)
@@ -44,7 +40,11 @@ def test_render_safety_net():
     md = render_markdown(rep)
     tmp = REPO / "tests" / "_m2_tmp.md"
     tmp.write_text(md, encoding="utf-8")
-    r = _run([str(SCRIPTS / "validate_report.py"), str(tmp)])
+    # 列表参数 + 显式 shell=False：不经过 shell，杜绝命令注入面
+    r = subprocess.run(
+        [sys.executable, str(SCRIPTS / "validate_report.py"), str(tmp)],
+        capture_output=True, text=True, shell=False,
+    )
     tmp.unlink(missing_ok=True)
     assert r.returncode == 0, f"render→validate_report 应 26 PASS，rc={r.returncode}\n{r.stdout[-400:]}"
     print("  ✓ 渲染 md → validate_report.py 安全网 26 PASS")
