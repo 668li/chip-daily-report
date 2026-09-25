@@ -33,6 +33,7 @@ import re
 import argparse
 import os
 from datetime import date, datetime
+from pathlib import Path
 
 HIT_KW = ("一致", "兑现", "应验", "命中")
 PARTIAL_KW = ("有偏差", "部分", "方向正确", "偏弱")
@@ -277,15 +278,22 @@ def main():
     ap.add_argument("--grace-days", type=int, default=3)
     args = ap.parse_args()
 
+    # 路径边界（防穿越）：写入位置固定为项目 delivery/ 目录下的审计报告，
+    # 不接受任何来自 CLI 的路径成分（--out 仅保留兼容，传了会被忽略并提示）。
+    _delivery = Path(__file__).resolve().parent.parent / "delivery"
+    _out_file = _delivery / "forecast_audit.md"
+    if args.out and Path(args.out).name != "forecast_audit.md":
+        print(f"[forecast_audit] 提示：--out 已忽略，审计报告固定写入 {_out_file}")
+
     today = parse_date(args.today) or date.today()
     res = audit(args.log, today, args.grace_days)
 
     md = render_md(res, args.log, today, args.grace_days)
-    os.makedirs(os.path.dirname(args.out) or ".", exist_ok=True)
-    with open(args.out, "w", encoding="utf-8") as f:
+    _out_file.parent.mkdir(parents=True, exist_ok=True)
+    with _out_file.open("w", encoding="utf-8") as f:
         f.write(md)
 
-    print("[forecast_audit] 已写入 %s" % args.out)
+    print("[forecast_audit] 已写入 %s" % _out_file)
     print("  总数=%d 已验证=%d 命中=%d 部分=%d 打脸=%d 逾期=%d 命中率=%.1f%%" % (
         res["total"], res["n_verified"], res["hit"], res["partial"],
         res["miss"], res["n_overdue"], res["hit_rate"]))

@@ -17,19 +17,74 @@ RawItem 字段（采集原始态）：
 from __future__ import annotations
 
 import html as _html
+import ipaddress
 import json
 import re
+import socket
 import time
 import urllib.parse
 import urllib.request
-import xml.etree.ElementTree as ET
 from dataclasses import dataclass, field, asdict
 from email.utils import parsedate_to_datetime
 from pathlib import Path
 
+# XML 安全解析：defusedxml 禁 DTD/实体扩展，杜绝 billion-laughs 类资源耗尽。
+import defusedxml.ElementTree as _safe_et
+
+
+def _xml_fromstring(text: str):
+    return _safe_et.fromstring(text, forbid_dtd=True, forbid_entities=True)
+
 DATA_DIR = Path(__file__).resolve().parent / "data"
 
 UA = "chip-daily-report collector contact@example.com"
+
+# 安全抓取约束（v5.13 加固）：采集器只允许访问已注册数据源的 https 端点，
+# 且域名解析结果不得指向私有/回环/链路本地地址，封死 SSRF 面。
+_ALLOWED_HOSTS = {
+    "sec.gov", "www.sec.gov",
+    "aihot.virxact.com",
+    "semiengineering.com", "www.semiengineering.com",
+    "eetimes.com", "www.eetimes.com",
+    "cnbc.com", "www.cnbc.com", "search.cnbc.com",
+    "semianalysis.com", "www.semianalysis.com",
+}
+_MAX_BODY_BYTES = 5 * 1024 * 1024
+
+
+def _assert_safe_url(url: str) -> None:
+    """词法校验（https + 域名白名单）+ 尽力 IP 校验（DNS 可达时）。
+
+    DNS 不可达时不在此处阻塞——后续 urlopen 会自然失败并走离线降级，
+    保证 offline 模式与零网络测试环境可用。
+    """
+    parsed = urllib.parse.urlparse(url)
+    if parsed.scheme != "https":
+        raise ValueError(f"仅允许 https 抓取：{url}")
+    host = (parsed.hostname or "").lower()
+    if host not in _ALLOWED_HOSTS:
+        raise ValueError(f"域名不在白名单：{host}")
+    try:
+        infos = socket.getaddrinfo(host, 443)
+    except OSError:
+        return  # 离线环境：交给 urlopen 报错
+    for info in infos:
+        addr = str(info[4][0]).split("%")[0]
+        try:
+            ip = ipaddress.ip_address(addr)
+        except ValueError:
+            continue
+        if (ip.is_private or ip.is_loopback or ip.is_link_local
+                or ip.is_reserved or ip.is_multicast or ip.is_unspecified):
+            raise ValueError(f"域名解析到受限地址：{host} -> {addr}")
+
+
+def _safe_fetch(url: str, timeout: int = 10) -> bytes:
+    """白名单 + 私网拦截 + 大小上限的安全抓取；失败抛异常由调用方降级。"""
+    _assert_safe_url(url)
+    req = urllib.request.Request(url, headers={"User-Agent": UA})
+    with urllib.request.urlopen(req, timeout=timeout) as r:
+        return r.read(_MAX_BODY_BYTES)
 
 
 @dataclass
@@ -66,13 +121,14 @@ class SECEdgarCollector(BaseCollector):
     BASE = "https://www.sec.gov/cgi-bin/browse-edgar"
 
     def collect(self, scope: dict) -> list[RawItem]:
-        cik = scope.get("cik", "0001045810")  # NVIDIA
+        cik = str(scope.get("cik", "0001045810"))  # NVIDIA
+        if not re.fullmatch(r"\d{10}", cik):  # CIK 必须是 10 位数字，防 URL 注入
+            print(f"[collector:{self.source_id}] 非法 CIK，忽略：{cik!r}")
+            return []
         url = (f"{self.BASE}?action=getcompany&CIK={cik}"
                f"&type=8-K&dateb=&owner=include&count=10&output=atom")
         try:
-            req = urllib.request.Request(url, headers={"User-Agent": "chip-daily-report research demo contact@example.com"})
-            with urllib.request.urlopen(req, timeout=10) as r:
-                xml = r.read().decode("utf-8", "ignore")
+            xml = _safe_fetch(url).decode("utf-8", "ignore")
         except Exception as e:  # 网络不可用 → 离线降级
             print(f"[collector:{self.source_id}] 网络不可用，降级离线模式：{e}")
             return []
@@ -102,15 +158,17 @@ class AIHOTCollector(BaseCollector):
 
     def collect(self, scope: dict) -> list[RawItem]:
         queries = scope.get("aihot_queries") or ["半导体", "芯片", "存储", "半导体设备", "光刻"]
-        window = scope.get("aihot_window", "7d")
+        window = str(scope.get("aihot_window", "7d"))
         limit = int(scope.get("aihot_limit", 8))
+        if not re.fullmatch(r"\d{1,3}[hd]", window) or not 1 <= limit <= 50:
+            print(f"[collector:{self.source_id}] 非法 window/limit 参数，忽略本批")
+            return []
+        queries = [str(q).strip()[:40] for q in queries if str(q).strip()][:10]
         items, seen = [], set()
         for q in queries:
             url = f"{self.BASE}?mode=all&window={window}&q={urllib.parse.quote(q)}&limit={limit}"
             try:
-                req = urllib.request.Request(url, headers={"User-Agent": UA})
-                with urllib.request.urlopen(req, timeout=10) as r:
-                    payload = json.loads(r.read().decode("utf-8", "ignore"))
+                payload = json.loads(_safe_fetch(url).decode("utf-8", "ignore"))
             except Exception as e:
                 print(f"[collector:{self.source_id}] 请求失败（降级跳过 {q}）：{e}")
                 continue
@@ -184,17 +242,43 @@ class RSSCollector(BaseCollector):
         if not self.feed_url:
             return []
         try:
-            req = urllib.request.Request(self.feed_url, headers={"User-Agent": UA})
-            with urllib.request.urlopen(req, timeout=10) as r:
-                xml_text = r.read().decode("utf-8", "ignore")
+            xml_text = _safe_fetch(self.feed_url).decode("utf-8", "ignore")
         except Exception as e:
             print(f"[collector:{self.source_id}] 抓取失败（降级离线）：{e}")
             return []
         return self._parse(xml_text)
 
+    # RSS 常见 HTML 命名实体白名单：解析前直接替换为字面字符，
+    # 避免 defusedxml 禁实体后 &nbsp; &rsquo; 等未定义实体导致解析失败。
+    _SAFE_ENTITIES = {
+        "nbsp": " ", "rsquo": "\u2019", "lsquo": "\u2018",
+        "rdquo": "\u201d", "ldquo": "\u201c", "mdash": "\u2014", "ndash": "\u2013",
+        "hellip": "\u2026", "copy": "\u00a9", "reg": "\u00ae", "trade": "\u2122",
+        "deg": "\u00b0", "plusmn": "\u00b1", "times": "\u00d7", "middot": "\u00b7",
+        "laquo": "\u00ab", "raquo": "\u00bb", "euro": "\u20ac", "pound": "\u00a3",
+        "yen": "\u00a5", "cent": "\u00a2", "sect": "\u00a7", "para": "\u00b6",
+        "bull": "\u2022", "dagger": "\u2020", "prime": "\u2032", "ensp": " ",
+        "shy": "\u00ad",
+    }
+
     def _parse(self, xml_text: str) -> list[RawItem]:
+        # RSS feed 容错（2026-08-15 DigiTimes/SemiEngineering 实测暴露）：
+        #   1) 超大报文 → 拒绝（正常 RSS 远小于此上限）
+        #   2) 裸 &（非实体开头）→ 转义为 &amp;，避免 not well-formed
+        #   3) 常见 HTML 命名实体 → 按白名单替换为字面字符（&amp; 等预定义实体不动）
+        #   4) 解析一律走 _xml_fromstring（defusedxml，禁 DTD/实体扩展）
+        if xml_text and len(xml_text) > _MAX_BODY_BYTES:
+            print(f"[collector:{self.source_id}] XML 超过大小上限，拒绝解析")
+            return []
+        if xml_text:
+            xml_text = re.sub(r"&(?![a-zA-Z#][a-zA-Z0-9#]*;)", "&amp;", xml_text)
+            xml_text = re.sub(
+                r"&([a-zA-Z][a-zA-Z0-9]*);",
+                lambda m: self._SAFE_ENTITIES.get(m.group(1), m.group(0)),
+                xml_text,
+            )
         try:
-            root = ET.fromstring(xml_text)
+            root = _xml_fromstring(xml_text)
         except Exception as e:
             print(f"[collector:{self.source_id}] XML 解析失败：{e}")
             return []
@@ -226,6 +310,32 @@ class EETimesCollector(RSSCollector):
     source_name = "EE Times"
     tier = 1
     feed_url = "https://www.eetimes.com/feed/"
+
+
+class CNBCCollector(RSSCollector):
+    """CNBC Tech RSS（迭代3 新增 · 2026-08-15 实测 200）。
+    英文权威财经，设计/综合环节。域名 cnbc.com 不在 A 级白名单 → 判 B 级，
+    仅作交叉验证与线索（与 sources.md 判定规则一致）。"""
+    source_id = "cnbc"
+    source_name = "CNBC"
+    tier = 1
+    feed_url = "https://search.cnbc.com/rs/search/combinedcms/view.xml?partnerId=wrss01&id=10001054"
+
+
+# NOTE(2026-08-15 实测)：DigiTimes 未接入在线采集器 —— /rss/news.xml 返回
+# 反爬 HTML 壳（HTTP 200 但内容是 <!DOCTYPE html>），/rss/ 403 Forbidden，
+# 不适合免 key 自动化抓取。保留 sources.md 的 site:digitimes.com 搜索兜底
+# （实战命中率高），白名单域名 digitimes.com 继续有效，不浪费 A 级名额。
+
+
+class SemiAnalysisCollector(RSSCollector):
+    """SemiAnalysis feed（迭代3 新增 · 2026-08-15 实测 200）。
+    全球行业风向标深度分析，A 级白名单；付费墙文章仅标题/摘要可作线索，
+    body 为空时 cleaner 自动容错（published/url 仍完整）。"""
+    source_id = "semianalysis"
+    source_name = "SemiAnalysis"
+    tier = 1
+    feed_url = "https://semianalysis.com/feed/"
 
 
 # ============================================================
@@ -360,12 +470,15 @@ def collect(scope: dict | None = None, mode: str = "offline") -> list[RawItem]:
     return items
 
 
-# 在线采集器注册表（迭代2：4 个免 key 真实源）
+# 在线采集器注册表（迭代2：4 个免 key 真实源；迭代3：+CNBC/SemiAnalysis；
+# DigiTimes 实测反爬未接入，见类定义注释）
 ONLINE_COLLECTORS = (
     SECEdgarCollector,
     AIHOTCollector,
     SemiEngineeringCollector,
     EETimesCollector,
+    CNBCCollector,
+    SemiAnalysisCollector,
 )
 
 
@@ -383,6 +496,10 @@ PROBE_ENDPOINTS = [
      "https://semiengineering.com/feed/"),
     ("eetimes", "EE Times",
      "https://www.eetimes.com/feed/"),
+    ("cnbc", "CNBC Tech",
+     "https://search.cnbc.com/rs/search/combinedcms/view.xml?partnerId=wrss01&id=10001054"),
+    ("semianalysis", "SemiAnalysis",
+     "https://semianalysis.com/feed/"),
 ]
 
 
@@ -396,6 +513,7 @@ def probe_online_sources(timeout: int = 8) -> list[dict]:
     for sid, name, url in PROBE_ENDPOINTS:
         start = time.time()
         try:
+            _assert_safe_url(url)
             req = urllib.request.Request(
                 url, headers={"User-Agent": UA}
             )

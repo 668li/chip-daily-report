@@ -47,7 +47,7 @@ def test_aihot_parse_real_payload(monkeypatch):
         class R:
             def __enter__(self): return self
             def __exit__(self, *a): return False
-            def read(self):
+            def read(self, n=-1):
                 import json
                 return json.dumps(AIHOT_PAYLOAD).encode("utf-8")
         return R()
@@ -83,7 +83,7 @@ def test_aihot_duplicate_dedup(monkeypatch):
         class R:
             def __enter__(self): return self
             def __exit__(self, *a): return False
-            def read(self): return json.dumps(payload).encode("utf-8")
+            def read(self, n=-1): return json.dumps(payload).encode("utf-8")
         return R()
 
     monkeypatch.setattr(collector.urllib.request, "urlopen", fake_urlopen)

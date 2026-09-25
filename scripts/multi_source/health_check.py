@@ -83,8 +83,11 @@ def collect_probes() -> list[dict]:
 
 
 def _fallback_probe() -> list[dict]:
+    import urllib.parse
     import urllib.request
     import time
+    # 探针端点固定白名单：仅允许访问已注册数据源的 https 端点（防 SSRF）
+    _safe_hosts = {"www.sec.gov", "aihot.virxact.com"}
     results = []
     for sid, name, url in [
         ("sec_edgar", "SEC EDGAR",
@@ -94,6 +97,9 @@ def _fallback_probe() -> list[dict]:
     ]:
         start = time.time()
         try:
+            _u = urllib.parse.urlparse(url)
+            if _u.scheme != "https" or (_u.hostname or "").lower() not in _safe_hosts:
+                raise ValueError(f"端点不在白名单：{_u.hostname}")
             req = urllib.request.Request(url, headers={"User-Agent": "chip-daily-report health-check contact@example.com"})
             with urllib.request.urlopen(req, timeout=8) as r:
                 status_code = getattr(r, "status", 200)

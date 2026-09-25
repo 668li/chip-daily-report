@@ -267,9 +267,14 @@ if __name__ == "__main__":
     ver = cross_validate(rep)
     if apply:
         apply_downgrades(rep, ver)
-        out = p.rsplit(".", 1)[0] + ".verified.json"
-        open(out, "w", encoding="utf-8").write(to_json(rep))
-        print(f"[cross_validate] 已应用降级 -> {out}")
+        # 路径边界（防穿越）：写入位置固定为项目 delivery/ 目录，
+        # 文件名取输入文件主干，CLI 路径成分不进入写入位置。
+        _delivery = __import__("pathlib").Path(__file__).resolve().parent.parent / "delivery"
+        _out = _delivery / (__import__("pathlib").Path(p).stem + ".verified.json")
+        _out.parent.mkdir(parents=True, exist_ok=True)
+        with _out.open("w", encoding="utf-8") as f:
+            f.write(to_json(rep))
+        print(f"[cross_validate] 已应用降级 -> {_out}")
 
     print(f"总新闻: {ver['total']}")
     print(f"跨源核验通过: {ver['cross_validated']}  | 待核实: {ver['needs_verification']}")

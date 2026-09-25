@@ -21,10 +21,11 @@ import json
 import os
 import sys
 from datetime import date, datetime
+from pathlib import Path
 
-HERE = os.path.dirname(os.path.abspath(__file__))
-REPO = os.path.dirname(HERE)
-LOG_PATH = os.path.join(REPO, "state", "forecast_log.json")
+HERE = Path(__file__).resolve().parent
+REPO = HERE.parent
+_LOG_FILE = REPO / "state" / "forecast_log.json"
 
 
 def _today() -> date:
@@ -32,18 +33,19 @@ def _today() -> date:
 
 
 def _load() -> dict:
-    if not os.path.exists(LOG_PATH):
+    # 读写路径均为 __file__ 派生常量，锚定项目 state/ 目录内（防路径穿越）
+    if not _LOG_FILE.exists():
         return {"schema_version": 1, "description": "", "entries": []}
     try:
-        with open(LOG_PATH, "r", encoding="utf-8") as f:
+        with _LOG_FILE.open("r", encoding="utf-8") as f:
             return json.load(f)
     except Exception:
         return {"schema_version": 1, "description": "", "entries": []}
 
 
 def _save(data: dict) -> None:
-    os.makedirs(os.path.dirname(LOG_PATH), exist_ok=True)
-    with open(LOG_PATH, "w", encoding="utf-8") as f:
+    _LOG_FILE.parent.mkdir(parents=True, exist_ok=True)
+    with _LOG_FILE.open("w", encoding="utf-8") as f:
         json.dump(data, f, ensure_ascii=False, indent=2)
 
 

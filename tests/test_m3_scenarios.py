@@ -67,14 +67,14 @@ check("无剧本周度复盘返回空提示（不崩）",
 check("无剧本周度复盘 html 不崩",
       isinstance(wr._html_scenario_review(rev2), str))
 
-# 3) forecast_tracker：挂剧本 + 按剧本验证（进程内 monkeypatch LOG_PATH 测功能，不污染真实数据）
+# 3) forecast_tracker：挂剧本 + 按剧本验证（进程内 monkeypatch _LOG_FILE 测功能，不污染真实数据）
 import forecast_tracker as ft
 
 with tempfile.TemporaryDirectory() as td:
     logp = Path(td) / "forecast_log.json"
     logp.write_text(json.dumps({"schema_version": 1, "entries": []}, ensure_ascii=False),
                     encoding="utf-8")
-    ft.LOG_PATH = str(logp)  # 指向临时日志
+    ft._LOG_FILE = logp  # 指向临时日志（_load/_save 读写 _LOG_FILE）
     scen_json = json.dumps([
         {"stance": "真趋势", "statement": "A 事件如期落地", "certainty": "高确定性"},
         {"stance": "炒作", "statement": "B 叙事被证伪", "certainty": "中确定性"},
