@@ -354,7 +354,8 @@
 
 ### 生命周期规则（抄 Miniflux 设计）
 
-- **状态机**：`candidate --探测通过--> trial --连续 2 次通过--> active`；frozen 重探通过 → 复活回 trial。探测四道门：feed 自动发现（首页 `<link rel="alternate">` → `/feed/` `/rss` 等路径清单兜底）→ 合法性（HTML 反爬壳/非 feed/无条目拒绝）→ 新鲜度（最新条目 90 天内）→ 相关性（不同芯片关键词命中 ≥3 且有命中条目 ≥2）。
+- **状态机**：`candidate --探测通过--> trial --连续 2 次通过--> active`；frozen 重探通过 → 复活回 trial。探测四道门：feed 自动发现（首页 `<link rel="alternate">` → `/feed/` `/rss` 等路径清单兜底）→ 合法性（HTML 反爬壳/非 feed/无条目拒绝）→ 新鲜度（最新条目 90 天内）→ 相关性（三条件缺一不可：不同芯片关键词命中 ≥3 且有命中条目 ≥2 且**命中条目占比 ≥30%**——密度线防全站消防水管 feed 靠绝对数刷过，0.30 依据 2026-09-26 实测谱：真垂类 0.35-0.5，芯片强相关综合站 0.3，businesskorea 类全站混排仅 0.25）。英文关键词按词边界匹配（chiptune 不命中 chip），中文按子串；国产链/政策词已补齐（台积电/中芯国际/北方华创/实体清单/大基金/靶材/载板等）。
+- **门禁升级复判**：`--mode rescore` 用当前门禁对全池 trial/active 复判，确定性不达标降回 candidate（计数归零），瞬时失败不动——每次升级相关性门禁后跑一次，池子即被新门禁清洗，无需等待自然退避。
 - **确定性失败**（html_shell / not_a_feed / no_entries / low_relevance / stale_feed）：error_count+1，指数退避 `30min×2^n` **封顶 7 天**；**连续 3 败 → frozen 冻结**（池保留不删除，到期重探通过即翻案）。
 - **瞬时失败**（fetch_failed / probe_error：断网/超时/WAF 抖动）：单独计数，退避封顶 24h，**不冻结、不改变 state**——断网一个下午不冻死全池。
 - 探测通过后 12h 复查；状态文件原子写回（先写 .tmp 再 os.replace）。
