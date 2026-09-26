@@ -29,6 +29,13 @@
                  热点过滤硬性偏好一致）
   G6 数量上限     按 confidence 降序取前 top_n（默认 24），超出者
                  → REJECT(reason=top_n_cap)
+  G7 话题去重     v8 P2-F：已过 G1/G5 的候选按标题指纹（中英 bigram+词元，
+                 overlap≥0.7）去重，同题只留最高置信
+                 → REJECT(reason=duplicate_topic)。收窄网定位：只抓融合
+                 漏网的强相似同题；语义级防复读归写作纪律（SKILL.md Step 4）
+  G3+ v8 P1-D     publisher_domain 消费：单源 tier4 但出版方域为 A 级官方
+                 域（rule_registry 运行时读取，X8 父域口径）→ 标
+                 official_primary 替代 single_low_tier
 
 输出：state/gate_report.json（fail-soft，任何异常不阻塞下游）
   {
@@ -130,6 +137,33 @@ def _days_since(published: str, today: date | None = None) -> int | None:
 
 def _title_has_review_tag(title: str) -> bool:
     return bool(re.search(r"\[(回顾|译|独家)\]", title or ""))
+
+
+# ---- v8 P2-F（2026-09-26）：G7 话题去重辅助 ----
+def _title_tokens(t: str) -> set:
+    """标题指纹：数字归一 + 词元 + 中文 bigram（中文无空格，bigram 才能比相似度）。"""
+    t = re.sub(r"\d+", "#", (t or "").lower())
+    t = re.sub(r"[^a-z0-9\u4e00-\u9fff#]+", " ", t)
+    toks: set = set()
+    for w in t.split():
+        if len(w) > 1:
+            toks.add(w)
+        if re.search(r"[\u4e00-\u9fff]", w) and len(w) >= 2:
+            toks.update(w[i:i + 2] for i in range(len(w) - 1))
+    return toks
+
+
+def _jaccard(a: set, b: set) -> float:
+    if not a and not b:
+        return 1.0
+    union = a | b
+    return len(a & b) / len(union) if union else 1.0
+
+
+def _overlap(a: set, b: set) -> float:
+    """overlap 系数：|A∩B|/min(|A|,|B|)——对「同故事+附加从句」比 jaccard 准。"""
+    m = min(len(a), len(b))
+    return len(a & b) / m if m else 1.0
 
 
 # ---- v8 P1-D（2026-09-26）：publisher_domain 消费点 ----
@@ -249,6 +283,23 @@ def gate(events: list[dict], conf_min: float = 60.0, stale_days: int = STALE_DAY
         }
         passed.append(entry)
 
+    # G7 话题去重（v8 P2-F，抄 Horizon topic_dedup）：已过 G1/G5 的候选按标题
+    # 指纹（中英 bigram + 词元，overlap≥0.7）去重，同题只留最高置信。
+    # 定位：收窄网，只抓融合漏网的强相似同题（逐字级/后缀变体）；
+    # 语义级「同一事件多处展开」防复读归写作纪律（SKILL.md Step 4），不在此层。
+    passed.sort(key=lambda e: e["confidence"], reverse=True)
+    deduped: list[dict] = []
+    kept_tokens: list[set] = []
+    for ev in passed:
+        toks = _title_tokens(ev["title"])
+        if any(_overlap(toks, kt) >= 0.70 for kt in kept_tokens):
+            _reject({**ev, "event_id": ev["event_id"], "title": ev["title"],
+                     "confidence": ev["confidence"]}, "duplicate_topic")
+            continue
+        kept_tokens.append(toks)
+        deduped.append(ev)
+    passed = deduped
+
     # G4 环节配额：核心 5 环节每环节至多 max_per_segment 条（按 confidence 降序）；
     # 综合/未知作横切线索（政策/市场维度），不占配额。
     passed.sort(key=lambda e: e["confidence"], reverse=True)
@@ -297,7 +348,7 @@ def _max_tier(ev: dict) -> int:
 
 
 def main() -> int:
-    ap = argparse.ArgumentParser(description="multi_source 选择性纳入门禁（G1-G6）")
+    ap = argparse.ArgumentParser(description="multi_source 选择性纳入门禁（G1-G7）")
     ap.add_argument("--events", default=str(DEFAULT_EVENTS))
     ap.add_argument("--conf-min", type=float, default=60.0)
     ap.add_argument("--stale-days", type=int, default=STALE_DAYS)

@@ -116,7 +116,12 @@ def test_g5_short_ascii_word_boundary():
 
 def test_g4_core_segments_only_quota():
     """G4 配额只对核心 5 环节计数；综合/未知作横切线索不占配额。"""
-    evs = [_mk_ev(f"EV{i:02d}", seg="综合", conf=80 - i) for i in range(10)]
+    # v8 G7 后夹具需异题（同题会被 duplicate_topic 去重）
+    comps = ["台积电", "美光", "三星电子", "英特尔", "中芯国际", "华虹半导体", "长电科技", "通富微电", "日月光集团", "ASML控股"]
+    kws = ["7纳米制程量产爬坡", "HBM4封装产能扩张", "成熟制程存储减产", "先进封装资本开支", "特色工艺平台竞争", "12英寸产线利用率", "封装测试订单回温", "扇出型封装良率", "系统级封装订单", "极紫外光刻出货"]
+    obs = ["资本开支上修两成", "长约客户锁定产能", "库存去化接近尾声", "折旧压力边际缓解", "国产设备导入加速", "报价止跌信号浮现", "稼动率重回满载", "新月产能开出", "客户结构多元化", "中国区收入占比升"]
+    evs = [_mk_ev(f"EV{i:02d}", seg="综合", conf=80 - i,
+                  title=f"{comps[i]}{kws[i]}：{obs[i]}") for i in range(10)]
     rep = gate_mod.gate(evs, max_per_segment=3, top_n=10)
     # 10 条综合全部保留（不占配额），仅 top_n 生效
     assert rep["stats"]["candidates"] == 10
@@ -125,7 +130,11 @@ def test_g4_core_segments_only_quota():
 # ---------------- C4: G4 环节配额 ----------------
 
 def test_g4_segment_quota():
-    evs = [_mk_ev(f"EV{i:02d}", seg="制造", conf=95 - i * 5) for i in range(8)]
+    comps = ["台积电", "美光", "三星电子", "英特尔", "中芯国际", "华虹半导体", "长电科技", "通富微电"]
+    kws = ["7纳米制程量产爬坡", "HBM4封装产能扩张", "成熟制程存储减产", "先进封装资本开支", "特色工艺平台竞争", "12英寸产线利用率", "封装测试订单回温", "扇出型封装良率"]
+    obs = ["资本开支上修两成", "长约客户锁定产能", "库存去化接近尾声", "折旧压力边际缓解", "国产设备导入加速", "报价止跌信号浮现", "稼动率重回满载", "新月产能开出"]
+    evs = [_mk_ev(f"EV{i:02d}", seg="制造", conf=95 - i * 5,
+                  title=f"{comps[i]}{kws[i]}：{obs[i]}") for i in range(8)]
     rep = gate_mod.gate(evs, max_per_segment=3, top_n=10)
     cands = [e for e in rep["candidates"] if e["segment"] == "制造"]
     assert len(cands) == 3
@@ -138,8 +147,12 @@ def test_g4_segment_quota():
 # ---------------- C5: G6 数量上限 ----------------
 
 def test_g6_top_n_cap():
+    comps = ["台积电", "美光", "三星电子", "英特尔", "中芯国际", "华虹半导体", "长电科技", "通富微电", "日月光集团", "ASML控股"]
+    kws = ["7纳米制程量产爬坡", "HBM4封装产能扩张", "成熟制程存储减产", "先进封装资本开支", "特色工艺平台竞争", "12英寸产线利用率", "封装测试订单回温", "扇出型封装良率", "系统级封装订单", "极紫外光刻出货"]
+    obs = ["资本开支上修两成", "长约客户锁定产能", "库存去化接近尾声", "折旧压力边际缓解", "国产设备导入加速", "报价止跌信号浮现", "稼动率重回满载", "新月产能开出", "客户结构多元化", "中国区收入占比升"]
     evs = [_mk_ev(f"EV{i:02d}", seg="制造" if i % 2 else "设计",
-                  conf=80 - i) for i in range(10)]
+                  conf=80 - i,
+                  title=f"{comps[i]}{kws[i]}：{obs[i]}") for i in range(10)]
     rep = gate_mod.gate(evs, max_per_segment=10, top_n=4)
     assert rep["stats"]["candidates"] == 4
     assert len([r for r in rep["rejected"] if r["reason"] == "top_n_cap"]) == 6
@@ -183,6 +196,30 @@ def test_g3_non_official_single_source_keeps_old_flag():
     rep = gate_mod.gate([ev], top_n=10)
     assert "single_low_tier" in rep["candidates"][0]["flags"]
     assert "official_primary" not in rep["candidates"][0]["flags"]
+
+
+def test_g7_duplicate_topic_dedup():
+    """P2-F G7：融合漏网的强相似同题（逐字级+后缀变体）只留最高置信。"""
+    evs = [
+        _mk_ev("EV01", title="台积电 2027 年晶圆代工价格再涨 3%-6%", conf=88.0),
+        _mk_ev("EV02", title="台积电 2027 年晶圆代工价格再涨 3%-6%（快讯）", conf=72.0),
+        _mk_ev("EV03", title="美光 HBM4 良率爬坡超预期 月产能翻倍", conf=70.0),
+    ]
+    rep = gate_mod.gate(evs, top_n=10)
+    ids = [c["event_id"] for c in rep["candidates"]]
+    assert "EV01" in ids and "EV02" not in ids and "EV03" in ids
+    dup = [r for r in rep["rejected"] if r["reason"] == "duplicate_topic"]
+    assert len(dup) == 1 and dup[0]["event_id"] == "EV02"
+
+
+def test_g7_distinct_topics_not_deduped():
+    """P2-F G7 反例：不同事件共享公司词但主题不同 → 互不去重。"""
+    evs = [
+        _mk_ev("EV01", title="台积电扩产先进封装产能", conf=85.0),
+        _mk_ev("EV02", title="台积电公布月度营收报告", conf=80.0),
+    ]
+    rep = gate_mod.gate(evs, top_n=10)
+    assert rep["stats"]["candidates"] == 2
 
 
 def test_review_tag_exempts_stale():
