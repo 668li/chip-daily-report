@@ -364,6 +364,54 @@
           "verified_note": null
         }
       ]
+    },
+    {
+      "id": "20260926-intel-14a-customer",
+      "report_date": "2026-09-26",
+      "event_date": "2026-12-25",
+      "event": "英特尔 14A 在 90 天内拿下首个具名外部大客户官宣（公司官方渠道确认试产或合作）",
+      "segment": "制造",
+      "importance": "高",
+      "certainty": "中确定性",
+      "source": "Tom's Hardware 2026-09-25；判据源：intel newsroom 与客户官方公告",
+      "when_judged": "剧本A官宣：90天内≥1家具名客户在官方渠道确认14A试产/合作；剧本B仅意向：窗口内无官方渠道官宣，仅匿名信源报道；判据空档情形对账记偏差",
+      "verified": false,
+      "verified_date": null,
+      "verdict": null,
+      "verified_note": null,
+      "scenarios": null
+    },
+    {
+      "id": "20260926-semi-capex-bfsi",
+      "report_date": "2026-09-26",
+      "event_date": "2026-12-31",
+      "event": "台积电 capex 上修至约 640 亿美元传导为 2026Q4 SEMI 北美设备商出货 ≥2 个月环比正增长",
+      "segment": "材料",
+      "importance": "高",
+      "certainty": "中确定性",
+      "source": "AD HOC NEWS 2026-09-26（capex）；判据源：SEMI 每月北美设备商出货统计（BFSI）",
+      "when_judged": "剧本A传导兑现：SEMI BFSI 2026Q4内≥2个月环比正增长；剧本B滞后扰动：正增长月份不足2个",
+      "verified": false,
+      "verified_date": null,
+      "verdict": null,
+      "verified_note": null,
+      "scenarios": null
+    },
+    {
+      "id": "20260926-samsung-2nm-customer",
+      "report_date": "2026-09-26",
+      "event_date": "2026-12-25",
+      "event": "三星代工 90 天内官宣 ≥1 个高通以外的 2nm 量产客户（官方渠道或具名行业媒体确认）",
+      "segment": "设计",
+      "importance": "中",
+      "certainty": "中确定性",
+      "source": "TrendForce 2026-09-24（高通定案台积电）；判据源：三星半导体官方新闻室、TrendForce 确认报道",
+      "when_judged": "剧本A新客户官宣：90天内≥1个高通以外2nm量产客户获官方或具名媒体确认；剧本B格局固化：窗口内无新客户官宣",
+      "verified": false,
+      "verified_date": null,
+      "verdict": null,
+      "verified_note": null,
+      "scenarios": null
     }
   ]
 }

@@ -23,13 +23,13 @@
 - `.trae/skills/chip-daily-report/` — 镜像，须与根目录逐字节一致（X1/X2，`check_rules_consistency.py` 的 R1 段监督）
 - `.workbuddy/memory/MEMORY.md` — 项目长期约定与运行铁律的唯一权威（含用户画像、四条链路同步法）
 
-## 当前状态（2026-09-26 洁癖收尾后）
-- master = v5.13 + 安全加固（Mimosa 深扫 0 finding）+ **v6.0/v6.1/v6.2 已落地**（46d7d02 试产第 1 期过 26 项门禁；77252ad 前瞻三词分立；25326cb 推演知识锚+成长含义）+ **v7 自主源发现层（106e311，2026-09-26 推送）**
-- v7 发现层：discover.py 三引擎（Google News 中英 / OPML 种子 / newsnow）自动发现→四道验证（拒 HTML 壳/90 天新鲜度/相关性三条件含密度≥30%/重定向逐跳校验）→ Miniflux 式生命周期（candidate→trial→active，确定性 3 败冻结，瞬时失败不惩罚）；state/discovered_sources.json 已入库（每次运行更新属预期 git 噪音）；实测终池 6 active 全部密度≥0.30；collector online 6→16 源 + 动态白名单（trial/active 并入、www 变体互补），动态源 tier=4 走 gate G3 降级线
-- 对抗审查四轮全部闭环（workflow 内 13 发现 9 修复 + 主会话第 4 轮 rescore 机制/密度门禁/www 变体/tomshardware http 重定向）；复盘见 `delivery/复盘_自主发现层_20260926.md`
-- **评审回路首次运行（2026-09-26）**：试产第 1 期经独立调研员对抗式评审（判定"有条件值得读"，P0×3/P1×4/P2×5）后产出**评审优化版**（14→18 条、补 2 条 72h 内动态、来源统计如实披露文章级/首页级、推演注记），26 项门禁复验 exit 0；评审全文见 `delivery/日报质量评审_20260926.md`
-- **v7.1 门禁升级（2026-09-26，评审产物已落地）**：validate_report.py v5.0→v5.1——[G-1] 来源须**文章级 URL**（域名根=伪追溯 FAIL）[G-2] 时效诚实化（覆盖范围须标 `≤72h 条目: N`；N=0 未标"周报"FAIL；日期待确认≥3 WARN）[G-3] 高信号单源 WARN [G-4] 推演判据禁"公开报道"式措辞 WARN；rubric.md/SKILL.md 同步、镜像一致；评审报告第四节 3 条规则级待办**已全部落地**
-- 自动化现状：**F4 每日生成已死**（原跑在 WorkBuddy，2026-09-10 后无产出），当前环境也无定时任务——日报停摆中（v7 的 quick 发现命令已可挂进每日流程，只差定时器）
-- 存量测试债（不阻塞）：pytest 4 个 weekly_review 失败（KeyError 'scenario_review'）；test_m4_m5_m6 独立跑 1 个状态依赖失败
-- **待用户拍板**：① 每日自动化在本环境重建（失败要响）② gate→日报候选链路接入日常生成（v7 只上线了发现+采集层）③ newsnow 自部署（公共实例已 403）④ 存量测试债是否修
-- 已知债：gnews 中文组候选几乎全被 WAF 拒（国产链发现靠 cninfo+AIHOT 补）；publisher_domain 落盘但管线暂无消费点；`scripts/validate_understanding.py` 仍为规划占位
+## 当前状态（2026-09-27 护城河冲刺后）
+- master = v7.1 + **v8 护城河冲刺（2026-09-26/27，已推送）**：心跳恢复 + 理解层门禁 + 采集准入 + 测试债清零 + 试产第 2 期
+- **每日心跳已恢复**：`scripts/daily_runner.py`（`--stage prepare|verify`/`--all`，fatal 步失败非零退出指明炸哪步）+ 本 harness 定时任务 automation-fe364622（周一至五 08:00，工作日口径；删除方法=对 harness 说删除该 automation 或 CronDelete automation-fe364622-b7a5-4d6a-81de-e5650026c57d）；dry-run 全绿 9 步 exit 0（531s）；runner 只做机械链路，正文生成=定时会话按 SKILL.md 六步（ADR-002）
+- **门禁族 = 26 项硬校验 + 理解层存在性校验**：`scripts/validate_understanding.py` v1（U1-U6：导师课/第一课非空/费曼节/推演块知识锚+成长含义+验证窗口）由 runner verify 串联强制，26 数不变（ADR-004）；带 9 个第 1 期缺陷样本回归红灯（tests/test_validate_understanding.py）
+- **采中准入**：无文章级 URL 的候选不入池（cleaner.admit_article_level，口径同 [G-1]）+ gate G7 话题去重（overlap≥0.7 收窄网）+ G3 publisher_domain 消费（官方一手域标 official_primary，registry 运行时读取）——第 1 期「回填 9 处」成本归零的机制保证
+- **测试真相（2026-09-27 实测）**：全量 pytest **196 passed + 0 failed**（历史首次全绿；--ignore 三脚本式测试后）；m1/m3 独立跑 ✓，m4_m5_m6 独立跑 1 败（状态依赖，ADR-003 记账不修）；跑 pytest 后照例 `git checkout --` 还原 state 污染
+- **试产第 2 期（20260926）**：16 条全 72h 窗口、文章级 16/16（11 直链+6 gnews 分享链如实标注降级证据）、A 级 31.3%、26 门禁+理解层 exit 0；评审=主上下文自评（独立 critic 代理配额全程超限待补），自评判定「值得读」、P0=0、P1×3/P2×4 全部处置，全文见 `delivery/日报质量评审_20260926_第2期.md`
+- **对标结论**（`delivery/对标报告_护城河_20260926.md`）：五论点判决——推演可问责/批评代谢=独占（开源零同类），诚实性工程=领先（最接近物 citation-check-skill 248★），教学层=独占（C 组搜索最高 5★），自主发现层=持平（TrendRadar 62.5k★/Horizon 9.5k★ 为规模天花板），心跳=持平（恢复后成立）。注意：本轮调研为 WebFetch 直读降级口径
+- 台账：`delivery/迭代台账.md`（9 指标基线→终版，含 A 级占比负 delta 与 pytest 基线口径偏差的诚实注记）；交接：`delivery/会话交接_20260926.md`
+- 已知债（更新）：①gnews 分享链 6 条未端到端验证+中文权威源直链化（下期优先）②A 级占比 31.3% 踩线（中文源域名定级走 rule_registry 通道）③m4_m5_m6 状态依赖 1 败 ④newsnow 自部署待拍板 ⑤「独立评审待补」——配额恢复会话补跑第 2 期独立评审 ⑥理解层 v2（语义一致性+课程清单 schema）未动
