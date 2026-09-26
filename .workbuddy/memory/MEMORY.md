@@ -70,3 +70,11 @@
 - **测试真相（修正旧记载）**：上文"132/134 passed"是 2026-08-15 时代数值，已失真。现状：全量 pytest 因 3 个脚本式测试（test_m1_crossvalidate/test_m3_scenarios/test_m4_m5_m6，模块顶层 sys.exit）收集即 INTERNALERROR → 需 --ignore 三文件后跑（当前 136 passed + 4 failed 存量：weekly_review KeyError 'scenario_review'）；m1/m3 独立跑全过，m4_m5_m6 独立跑 1 个状态依赖失败。**跑 pytest 必污染真实 state**（source_health.yaml/leak_report.*），跑完 `git checkout --` 还原。
 - **镜像**：5 个脚本（build_report_html/report_viz/__init__/parser/views/__init__/weekly_review）历史漂移已清零；references 补齐（evolution_plan/forecast_timeline_v2/glossary/schema.json/jargon_bridge）。X7 硬检查通过。
 - **待拍板**：① v6.0 启用（生成首期）② 每日自动化在 ZCode 重建 ③ multi_source 上线 or 归档 ④ 存量测试债。
+
+## 2026-09-26 v7 自主源发现层快照（ZCode 会话，勇谚睡梦中全权执行）
+- **版本终态**：master = v6.2 + **v7 自主源发现层（106e311 已推送）**。v6.0/v6.1/v6.2 均已落地（待拍板①已了结，③部分了结：发现层+采集层上线，gate→日报候选链路仍未接入日常生成）。
+- **v7 核心**（响应勇谚"打破信息茧房，不要总我喂你"）：`scripts/multi_source/discover.py` 三引擎（Google News RSS 中英 / OPML 种子 / newsnow 热榜）自动发现新域→四道验证（HTML 壳拒/90 天新鲜度/相关性三条件：词边界关键词≥3+命中条目≥2+**密度≥30%**/重定向逐跳校验）→ Miniflux 式生命周期（candidate→trial→active，确定性 3 败冻结，瞬时失败不惩罚退避 24h）；状态 `state/discovered_sources.json` 已入库（运行更新属预期噪音）。终池 6 active 全部实测密度≥0.30。
+- **collector**：online 6→16 源（+IEEE Spectrum/Tom's Hardware(用 /feeds.xml，/feeds/all 会 301 到 http)/Nikkei RDF(dc:date)/KoreaHerald/Yonhap/Yahoo NVDA+TSM/GoogleNews/巨潮 GBK 绕代理/newsnow）+ 动态白名单（trial/active 并入、**www 变体互补**）；动态源一律 tier=4 走 gate G3 降级线；人工定级唯一通道=录 rule_registry→gen_rules→X7。
+- **对抗审查四轮**：workflow 内对抗审查员 13 发现（5 high：词边界/OPML 搬运伪装发现/tier 同级/302 重定向 SSRF/冻结参数）9 修复；主会话第 4 轮验证修复真身+新增 rescore 模式（门禁升级全池复判）+密度门禁 0.30（实测谱：真垂类 0.35-0.5）+www 变体+tomshardware 修复。Mimosa 深扫 0 finding。
+- **测试**：tests/test_discover.py 40 用例全离线；全量 176 passed + 4 存量（weekly_review）；test_health_check 污染真实 state 的根因已修（HEALTH_FILE 指 tmp），leak_report 系仍需还原。
+- **新待拍板**：① 每日自动化重建（quick 发现已可挂每日流程）② gate 候选链路接入日常生成 ③ newsnow 自部署（公共实例 403）④ 存量测试债。
