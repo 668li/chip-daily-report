@@ -41,6 +41,7 @@ VALIDATE_U = ROOT / "scripts" / "validate_understanding.py"
 BUILD_HTML = ROOT / "scripts" / "build_report_html.py"
 SIGNAL_HISTORY = ROOT / "scripts" / "signal_history.py"
 QUALITY_DASH = ROOT / "scripts" / "quality_dashboard.py"
+FORECAST_DUE = ROOT / "scripts" / "forecast_due.py"
 GATE_REPORT = ROOT / "state" / "gate_report.json"
 
 PREPARE_TIMEOUT = 1200  # 发现层含网络探测，给足预算
@@ -91,6 +92,10 @@ def stage_prepare() -> bool:
               [sys.executable, str(PREPARE)], fatal=True, timeout=PREPARE_TIMEOUT)
     if not ok:
         return False
+    # 推演到期点名（prepare 阶段容错预警：逾期未判在此可见，生成会话应先补判定）
+    if Path(FORECAST_DUE).exists():
+        _run("forecast-due", "prepare",
+             [sys.executable, str(FORECAST_DUE)], fatal=False, timeout=VERIFY_TIMEOUT)
     # prepare_candidates 内部 fail-soft 永远 exit 0——问责看产物：空候选=淡日WARN，
     # 带 error 的空池=链路 FAIL
     try:
@@ -129,6 +134,13 @@ def stage_verify(report: Path, dry_run: bool) -> bool:
                 [sys.executable, str(VALIDATE), str(report)],
                 fatal=True, timeout=VERIFY_TIMEOUT):
         return False
+
+    # 推演到期点名（verify 阶段强制：日报兑现回顾写完仍有人逾期未判 = 不许收工）
+    if Path(FORECAST_DUE).exists():
+        if not _run("forecast-due", "verify",
+                    [sys.executable, str(FORECAST_DUE)],
+                    fatal=True, timeout=VERIFY_TIMEOUT):
+            return False
 
     if VALIDATE_U.exists():
         if not _run("validate-understanding", "verify",

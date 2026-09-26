@@ -119,10 +119,10 @@
       "certainty": "中确定性",
       "source": "台积电官方新闻室 pr.tsmc.com",
       "when_judged": "7 月同比+44.7% 高基数后，8 月数据验证'供给瓶颈'叙事：若维持 40%+ 增速确认景气延续；若骤降则为全产业链最早的需求预警。盯同比增速、环比、9 月法说会 2nm/CoWoS 表述",
-      "verified": false,
-      "verified_date": null,
-      "verdict": null,
-      "verified_note": null,
+      "verified": true,
+      "verified_date": "2026-09-25",
+      "verdict": "✅ 命中（真趋势剧本）",
+      "verified_note": "8 月收入 5148.8 亿新台币、同比 +53.3%（判据 ≥40% 满足），创单月新高；判定于试产第 1 期（20260925）作出，本次补记回写日志。证据：tsmc.com 投资者关系月度营收页",
       "deferred_note": "【不顺延结案】公告日 9-10 已至但本期检索未取得台积电 8 月营收具体数字（官网月度营收页仅列历史）。未拿到数据=未验证，不得标记 verified。下期必须补数并与 7 月同比+44.7% 基线对照，逾期则计入 OVERDUE",
       "scenarios": [
         {
@@ -232,10 +232,10 @@
       "certainty": "中确定性",
       "source": "行业会议议程（SemiAnalysis/各厂官网预告）",
       "when_judged": "盯算力供给（GPU/ASIC 路线图）、高带宽内存（HBM4）供给承诺、先进封装（CoWoS/面板级）产能指引、互连（NVLink Fusion/硅光）标准化信号；观察是否释放 2027 供给宽松 or 延续紧缺的新口径",
-      "verified": false,
-      "verified_date": null,
-      "verdict": null,
-      "verified_note": null,
+      "verified": true,
+      "verified_date": "2026-09-26",
+      "verdict": "⏳ 逾期（待补源）",
+      "verified_note": "窗口 9-15 已过，连续两期未取得会议复盘素材，按四态口径升级为逾期；下期仍无素材则按'信息不可得'结案。判定于试产第 2 期（20260926）",
       "scenarios": null
     },
     {
@@ -248,10 +248,10 @@
       "certainty": "低确定性",
       "source": "电子工程专辑 eet-china.com / 半导体工程（英文）semiengineering.com",
       "when_judged": "关税是否落地、对在华产能/对华出口的实际税率；若与'在美制造'挂钩则加剧产能区域化、推高全球设备与材料成本。盯美国商务部官方公告",
-      "verified": false,
-      "verified_date": null,
-      "verdict": null,
-      "verified_note": null,
+      "verified": true,
+      "verified_date": "2026-09-26",
+      "verdict": "⏳ 逾期（待补源）",
+      "verified_note": "审议窗口 9-10~17 已过，两期检索未取得生效结果的确切报道，升级为逾期；下期列为优先补验项。判定于试产第 2 期（20260926）",
       "scenarios": null
     },
     {
