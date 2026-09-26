@@ -25,6 +25,7 @@ import time
 import urllib.parse
 import urllib.request
 from dataclasses import dataclass, field, asdict
+from datetime import datetime, timedelta, timezone
 from email.utils import parsedate_to_datetime
 from pathlib import Path
 
@@ -48,8 +49,52 @@ _ALLOWED_HOSTS = {
     "eetimes.com", "www.eetimes.com",
     "cnbc.com", "www.cnbc.com", "search.cnbc.com",
     "semianalysis.com", "www.semianalysis.com",
+    # ---- v7 自主发现层配套内置源（2026-09-25 实测可活的官方 feed 域名）----
+    "ieee.org", "spectrum.ieee.org",                          # IEEE Spectrum
+    "tomshardware.com", "www.tomshardware.com",               # Tom's Hardware
+    "asia.nikkei.com",                                        # Nikkei Asia（RDF）
+    "koreaherald.com", "www.koreaherald.com",                 # Korea Herald
+    "yna.co.kr", "en.yna.co.kr",                              # Yonhap EN
+    "finance.yahoo.com", "feeds.finance.yahoo.com",           # Yahoo Finance 个股
+    "cninfo.com.cn", "www.cninfo.com.cn", "static.cninfo.com.cn",  # 巨潮公告
+    "newsnow.busiyi.world",                                   # newsnow 热榜
+    "news.google.com",                                        # Google News RSS
 }
 _MAX_BODY_BYTES = 5 * 1024 * 1024
+
+ROOT = Path(__file__).resolve().parent.parent.parent  # -> 项目根
+# 自主发现层状态文件（discover.py 维护；本模块只读，fail-soft）
+_DISCOVERED_STATE_PATH = ROOT / "state" / "discovered_sources.json"
+
+
+def _dynamic_hosts(path=None) -> set:
+    """v7 自主发现层：读 state/discovered_sources.json，返回
+    state ∈ {trial, active} 的源域名及其 feed 域名（并入抓取白名单）。
+    fail-soft：文件不存在 / 损坏 / 字段异常 → 空集（退回纯静态白名单）。"""
+    hosts: set = set()
+    try:
+        data = json.loads(
+            Path(path or _DISCOVERED_STATE_PATH).read_text(encoding="utf-8"))
+        for s in data.get("sources", []) or []:
+            if not isinstance(s, dict) or s.get("state") not in ("trial", "active"):
+                continue
+            d = str(s.get("domain") or "").lower().strip()
+            fh = (urllib.parse.urlparse(str(s.get("feed_url") or "")).hostname or "").lower()
+            for h in {d, fh}:
+                if not h:
+                    continue
+                hosts.add(h)
+                # www 变体互补（2026-09-26 回测发现）：state 存裸域
+                # techpowerup.com 而 feed 实际在 www.techpowerup.com（或反之），
+                # 只记域名本体会让动态源全部被白名单拒绝、采集静默缺失。
+                # 同一注册域的 www 前后缀仍受 https + 解析 IP 拒私网约束。
+                if h.startswith("www."):
+                    hosts.add(h[4:])
+                else:
+                    hosts.add("www." + h)
+    except Exception:
+        return set()
+    return hosts
 
 
 def _assert_safe_url(url: str) -> None:
@@ -62,7 +107,8 @@ def _assert_safe_url(url: str) -> None:
     if parsed.scheme != "https":
         raise ValueError(f"仅允许 https 抓取：{url}")
     host = (parsed.hostname or "").lower()
-    if host not in _ALLOWED_HOSTS:
+    # v7：静态白名单 ∪ 发现层动态白名单（state trial/active 源，fail-soft 空集）
+    if host not in (_ALLOWED_HOSTS | _dynamic_hosts()):
         raise ValueError(f"域名不在白名单：{host}")
     try:
         infos = socket.getaddrinfo(host, 443)
@@ -79,10 +125,64 @@ def _assert_safe_url(url: str) -> None:
             raise ValueError(f"域名解析到受限地址：{host} -> {addr}")
 
 
+class _SafeRedirectHandler(urllib.request.HTTPRedirectHandler):
+    """重定向逐跳安全校验（对抗审查 #4）：301/302/307 的落点必须重新通过
+    _assert_safe_url（https + 白名单∪动态白名单 + 解析 IP 拒私网/回环），
+    否则阻断——首跳校验不覆盖重定向落点 = 攻击者可 302 把请求带去内网
+    或任意地址（本地 PoC 已复现：/feed 302 → 他域 /secret 被自动跟随）。"""
+
+    def redirect_request(self, req, fp, code, msg, headers, newurl):
+        _assert_safe_url(str(newurl))  # 不通过则抛异常，请求按失败降级
+        return super().redirect_request(req, fp, code, msg, headers, newurl)
+
+
+# 安装进程级安全 opener：让所有经由 urllib.request.urlopen 的请求
+# （collector 四条抓取路径 / health_check 探针）都带上重定向逐跳校验。
+# 测试桩 monkeypatch 的是 urlopen 函数本身，不受全局 opener 影响。
+urllib.request.install_opener(
+    urllib.request.build_opener(_SafeRedirectHandler()))
+
+
 def _safe_fetch(url: str, timeout: int = 10) -> bytes:
     """白名单 + 私网拦截 + 大小上限的安全抓取；失败抛异常由调用方降级。"""
     _assert_safe_url(url)
     req = urllib.request.Request(url, headers={"User-Agent": UA})
+    with urllib.request.urlopen(req, timeout=timeout) as r:
+        return r.read(_MAX_BODY_BYTES)
+
+
+def _safe_fetch_ex(url: str, timeout: int = 10, no_proxy: bool = False) -> bytes:
+    """v7 扩展抓取：no_proxy=True 时用 ProxyHandler({}) 绕过系统代理直连
+    （巨潮 / newsnow 等国内站实测必须，走系统代理会被拦）。
+
+    安全校验按 _assert_safe_url 的同一防线显式内联展开（https-only + 白名单
+    ∪ 动态白名单 + 解析 IP 拒私网/回环/链路本地/保留/多播），满足静态审计
+    对「发请求前校验」的同函数可见性要求；末尾仍调用 _assert_safe_url 双保险。"""
+    parsed = urllib.parse.urlparse(url)
+    if parsed.scheme != "https":
+        raise ValueError(f"仅允许 https 抓取：{url}")
+    host = (parsed.hostname or "").lower()
+    if not host or host not in (_ALLOWED_HOSTS | _dynamic_hosts()):
+        raise ValueError(f"域名不在白名单：{host}")
+    try:
+        infos = socket.getaddrinfo(host, 443)
+    except OSError:
+        infos = []  # 离线环境：DNS 不可达不在此阻塞，交给 urlopen 自然失败
+    for info in infos:
+        addr = str(info[4][0]).split("%")[0]
+        try:
+            ip = ipaddress.ip_address(addr)
+        except ValueError:
+            continue
+        if (ip.is_private or ip.is_loopback or ip.is_link_local
+                or ip.is_reserved or ip.is_multicast or ip.is_unspecified):
+            raise ValueError(f"域名解析到受限地址：{host} -> {addr}")
+    _assert_safe_url(url)  # 集中式校验双保险
+    req = urllib.request.Request(url, headers={"User-Agent": UA})
+    if no_proxy:
+        opener = urllib.request.build_opener(urllib.request.ProxyHandler({}))
+        with opener.open(req, timeout=timeout) as r:
+            return r.read(_MAX_BODY_BYTES)
     with urllib.request.urlopen(req, timeout=timeout) as r:
         return r.read(_MAX_BODY_BYTES)
 
@@ -232,6 +332,42 @@ def _strip_html(s: str) -> str:
     return re.sub(r"\s+", " ", s).strip()
 
 
+def _decode_tolerant(body: bytes) -> str:
+    """容错解码：先 UTF-8，失败回退 GBK（巨潮实测 GBK 编码），再不行 ignore。"""
+    for enc in ("utf-8", "gbk"):
+        try:
+            return body.decode(enc)
+        except UnicodeDecodeError:
+            continue
+    return body.decode("utf-8", "ignore")
+
+
+def _ms_ts_to_date(v) -> str:
+    """毫秒时间戳 → YYYY-MM-DD（北京时间，巨潮 announcementTime 契约）。
+    非法输入返回空串。"""
+    try:
+        ms = int(str(v).strip())
+    except (TypeError, ValueError):
+        return ""
+    if ms <= 0:
+        return ""
+    tz_cn = timezone(timedelta(hours=8))
+    return datetime.fromtimestamp(ms / 1000, tz=tz_cn).strftime("%Y-%m-%d")
+
+
+def _find_child(el, name):
+    """按本地名找 el 的直接子元素（兼容 RDF/Atom 命名空间，v7 Nikkei RDF 需要）。"""
+    for child in el:
+        if isinstance(child.tag, str) and child.tag.rsplit("}", 1)[-1] == name:
+            return child
+    return None
+
+
+def _child_text(el, name) -> str:
+    child = _find_child(el, name)
+    return (child.text or "") if child is not None else ""
+
+
 class RSSCollector(BaseCollector):
     source_id = "rss_base"
     source_name = "RSS"
@@ -283,17 +419,40 @@ class RSSCollector(BaseCollector):
             print(f"[collector:{self.source_id}] XML 解析失败：{e}")
             return []
         items = []
-        for item in root.iter("item"):
-            title = (item.findtext("title") or "").strip()
+        # v7 兼容 RDF/RSS1.0（Nikkei nar 实测）：条目可能带命名空间
+        # （{http://purl.org/rss/1.0/}item），故按「本地名 == item」匹配。
+        for item in root.iter():
+            if not isinstance(item.tag, str) or item.tag.rsplit("}", 1)[-1] != "item":
+                continue
+            title = _child_text(item, "title").strip()
             if not title:
                 continue
-            link = (item.findtext("link") or "").strip()
+            link = _child_text(item, "link").strip()
+            if not link:  # Atom 形态：链接在 href 属性
+                lc = _find_child(item, "link")
+                if lc is not None:
+                    link = (lc.get("href") or "").strip()
+            # v7 日期兜底扩 dc:date 命名空间（Nikkei RDF 用 dc:date）与 Atom
+            pub = (_child_text(item, "pubDate") or _child_text(item, "date")
+                   or _child_text(item, "published") or "")
+            # v7 Google News 条目带 <source url="出版方域名">，原样存入
+            # raw_payload.publisher_domain（随 data/raw_events.json 落盘）。
+            # 如实说明（对抗审查 #8）：当前 cleaner/fusion/gate 管线暂无消费点，
+            # 日报引用回溯属已知待接入项；发现层计频走 discover.parse_feed_entries
+            # 独立提取，不经由本字段。条目 link 为 news.google.com 跳转链（可点击）。
+            raw: dict = {}
+            src = _find_child(item, "source")
+            if src is not None:
+                pdomain = (src.get("url") or "").strip()
+                if pdomain:
+                    raw["publisher_domain"] = pdomain
             items.append(RawItem(
                 source_id=self.source_id, source_name=self.source_name, tier=self.tier,
                 type="news", segment=_guess_segment(title),
                 title=title, url=link,
-                published=_rfc822_to_date(item.findtext("pubDate") or ""),
-                body=_strip_html(item.findtext("description") or ""),
+                published=_rfc822_to_date(pub),
+                body=_strip_html(_child_text(item, "description")),
+                raw_payload=raw,
             ))
         return items
 
@@ -336,6 +495,236 @@ class SemiAnalysisCollector(RSSCollector):
     source_name = "SemiAnalysis"
     tier = 1
     feed_url = "https://semianalysis.com/feed/"
+
+
+# ============================================================
+# v7 自主发现层配套内置源（2026-09-25 实测可活的官方 feed，免 key）
+# 实测已死/不可用（勿接，省探测预算）：TrendForce RSS(404)、The Elec(403/502)、
+# AnandTech(关站)、36kr /feed、虎嗅 /rss/0.xml、Bing News RSS(仅12条)。
+# ============================================================
+class IEEESpectrumCollector(RSSCollector):
+    """IEEE Spectrum 半导体专题（实测 200）。Tier-1 英文权威。"""
+    source_id = "ieee_spectrum"
+    source_name = "IEEE Spectrum"
+    tier = 1
+    feed_url = "https://spectrum.ieee.org/feeds/topic/semiconductors.rss"
+
+
+class TomshardwareCollector(RSSCollector):
+    """Tom's Hardware 全站 feed（实测 200）。Tier-1，偏设计/消费硬件环节。
+    注意（2026-09-26 回测发现）：/feeds/all 会 301 到 http:// 的 feeds.xml
+    （站点方重定向配置问题，会被 https 门禁正确拦下导致零产出），
+    故直接用 https 直出的 /feeds.xml。"""
+    source_id = "tomshardware"
+    source_name = "Tom's Hardware"
+    tier = 1
+    feed_url = "https://www.tomshardware.com/feeds.xml"
+
+
+class NikkeiAsiaCollector(RSSCollector):
+    """Nikkei Asia（实测 200）。RDF/RSS1.0 格式，日期在 dc:date 命名空间
+    （_parse 已按本地名兼容）。补日韩产业视角。"""
+    source_id = "nikkei_asia"
+    source_name = "Nikkei Asia"
+    tier = 1
+    feed_url = "https://asia.nikkei.com/rss/feed/nar"
+
+
+class KoreaHeraldCollector(RSSCollector):
+    """The Korea Herald（实测 200）。韩媒英文源，补存储/韩厂视角。"""
+    source_id = "korea_herald"
+    source_name = "The Korea Herald"
+    tier = 1
+    feed_url = "https://www.koreaherald.com/rss/allCh.xml"
+
+
+class YonhapCollector(RSSCollector):
+    """韩联社英文（实测 200）。通讯社口径，补三星/海力士官方侧信息。"""
+    source_id = "yonhap_en"
+    source_name = "Yonhap News (EN)"
+    tier = 1
+    feed_url = "https://en.yna.co.kr/RSS/news.xml"
+
+
+class YahooFinanceCollector(RSSCollector):
+    """Yahoo Finance 个股新闻 feed（v7）。财经媒体、跨行业来源，仅当标的
+    命中芯片关键词时才相关 → tier=3 线索级。s= 参数指定标的，
+    NVDA / TSM 两个子类都采（覆盖 AI 算力与代工双主线）。"""
+    source_id = "yahoo_nvda"
+    source_name = "Yahoo Finance (NVDA)"
+    tier = 3
+    feed_url = "https://feeds.finance.yahoo.com/rss/2.0/headline?s=NVDA&region=US&lang=en-US"
+
+
+class YahooFinanceTSMCollector(YahooFinanceCollector):
+    source_id = "yahoo_tsm"
+    source_name = "Yahoo Finance (TSM)"
+    feed_url = "https://feeds.finance.yahoo.com/rss/2.0/headline?s=TSM&region=US&lang=en-US"
+
+
+# Google News RSS 的语言参数（ceid 决定中文/英文版面）
+_GNEWS_LANG_PARAMS = {
+    "zh-CN": {"hl": "zh-CN", "gl": "CN", "ceid": "CN:zh-Hans"},
+    "en-US": {"hl": "en-US", "gl": "US", "ceid": "US:en"},
+}
+
+
+class GoogleNewsCollector(RSSCollector):
+    """Google News RSS 线索源（v7 · tier=4 仅线索）。
+    中英 2 组 when:1d query；条目 <source url="出版方域名"> 原样存入
+    raw_payload.publisher_domain（随 raw_events.json 落盘，管线暂无消费点，
+    日报引用回溯为已知待接入项）；条目 link 是 news.google.com 跳转链。
+    出版方计频由 discover.parse_feed_entries 独立完成（不经由本字段）。"""
+    source_id = "google_news"
+    source_name = "Google News"
+    tier = 4
+    QUERY_INTERVAL = 2.0          # 相邻 query 礼貌间隔 ≥2s
+    QUERIES = (
+        ("zh-CN", "(半导体 OR 芯片 OR 晶圆厂) when:1d"),
+        ("en-US", "(semiconductor OR chip OR wafer) when:1d"),
+    )
+    _LAST_QUERY_HIT = [0.0]       # 可变容器跨实例记录上次请求时刻
+
+    def collect(self, scope: dict) -> list[RawItem]:
+        items: list[RawItem] = []
+        for i, (lang, q) in enumerate(self.QUERIES):
+            if i:  # 相邻 query 间隔（测试可把 QUERY_INTERVAL 调 0）
+                wait = self.QUERY_INTERVAL - (time.time() - self._LAST_QUERY_HIT[0])
+                if wait > 0:
+                    time.sleep(wait)
+            self._LAST_QUERY_HIT[0] = time.time()
+            p = _GNEWS_LANG_PARAMS[lang]
+            url = (f"https://news.google.com/rss/search?q={urllib.parse.quote(q)}"
+                   f"&hl={p['hl']}&gl={p['gl']}&ceid={p['ceid']}")
+            try:
+                xml_text = _safe_fetch(url).decode("utf-8", "ignore")
+            except Exception as e:
+                print(f"[collector:{self.source_id}] 查询失败跳过（{lang}）：{e}")
+                continue
+            items.extend(self._parse(xml_text))
+        return items
+
+
+class CninfoCollector(BaseCollector):
+    """巨潮资讯公告检索（v7 · tier=3 type=filing，2026-09-25 实测契约）：
+      GET /new/fulltextSearch/full?searchkey=芯片&pageNum=1
+    实测纪律：
+      * 响应 GBK 编码 → _decode_tolerant 容错解码
+      * 国内站必须绕过系统代理：no_proxy 直连（_safe_fetch_ex）
+      * announcements[].announcementTitle 含 <em> 高亮标签 → 清洗
+      * adjunctUrl 拼 https://static.cninfo.com.cn/ 前缀得 PDF 链接
+      * announcementTime 为毫秒时间戳
+    """
+    source_id = "cninfo"
+    source_name = "巨潮资讯公告"
+    tier = 3
+    BASE = "https://www.cninfo.com.cn/new/fulltextSearch/full"
+    PDF_PREFIX = "https://static.cninfo.com.cn/"
+
+    def collect(self, scope: dict) -> list[RawItem]:
+        key = str(scope.get("cninfo_searchkey", "芯片")).strip()[:40]
+        url = f"{self.BASE}?searchkey={urllib.parse.quote(key)}&pageNum=1"
+        try:
+            body = _safe_fetch_ex(url, timeout=12, no_proxy=True)
+        except Exception as e:
+            print(f"[collector:{self.source_id}] 请求失败（跳过）：{e}")
+            return []
+        try:
+            payload = json.loads(_decode_tolerant(body))
+        except Exception as e:
+            print(f"[collector:{self.source_id}] JSON 解析失败（跳过）：{e}")
+            return []
+        items = []
+        for row in (payload.get("announcements") or [])[:15]:
+            if not isinstance(row, dict):
+                continue
+            # <em> 高亮标签清洗 + HTML 剥离
+            title = _strip_html(re.sub(r"</?em>", "",
+                                       str(row.get("announcementTitle") or "")))
+            if not title:
+                continue
+            adjunct = str(row.get("adjunctUrl") or "").strip()
+            link = self.PDF_PREFIX + adjunct.lstrip("/") if adjunct else url
+            items.append(RawItem(
+                source_id=self.source_id, source_name=self.source_name, tier=self.tier,
+                type="filing", segment=_guess_segment(title),
+                title=title, url=link,
+                published=_ms_ts_to_date(row.get("announcementTime")),
+                body=str(row.get("secName") or "").strip(),
+            ))
+        return items
+
+
+class NewsnowCollector(BaseCollector):
+    """newsnow 热榜聚合（v7 · tier=4 线索，2026-09-25 实测契约）：
+      GET https://newsnow.busiyi.world/api/s?id=<id>
+      可用 id：cls-hot / wallstreetcn-hot / gelonghui
+      返回 {"status":...,"items":[{"title","url"}]}
+    纪律：no_proxy 直连失败 → 走系统代理重试一次 → 再失败跳过该榜。
+    （RSSHub/DailyHotApi/60s API 公共实例实测被 Cloudflare 拦，勿换源）"""
+    source_id = "newsnow"
+    source_name = "Newsnow 热榜"
+    tier = 4
+    BASE = "https://newsnow.busiyi.world/api/s"
+    IDS = ("cls-hot", "wallstreetcn-hot", "gelonghui")
+
+    def collect(self, scope: dict) -> list[RawItem]:
+        items: list[RawItem] = []
+        seen = set()
+        for nid in self.IDS:
+            url = f"{self.BASE}?id={urllib.parse.quote(nid)}"
+            payload = None
+            last_err = ""
+            for no_proxy in (True, False):  # 先绕代理直连，失败走系统代理重试一次
+                try:
+                    payload = json.loads(_decode_tolerant(
+                        _safe_fetch_ex(url, timeout=12, no_proxy=no_proxy)))
+                    break
+                except Exception as e:
+                    last_err = str(e)
+                    payload = None
+            if not isinstance(payload, dict):
+                print(f"[collector:{self.source_id}] {nid} 拉取失败（跳过）：{last_err}")
+                continue
+            for row in (payload.get("items") or [])[:15]:
+                title = str(row.get("title") or "").strip()
+                if not title or title in seen:
+                    continue
+                seen.add(title)
+                items.append(RawItem(
+                    source_id=self.source_id, source_name=self.source_name, tier=self.tier,
+                    type="news", segment=_guess_segment(title),
+                    title=title, url=str(row.get("url") or "").strip() or url,
+                    published="", body=nid,
+                ))
+        return items
+
+
+def dynamic_rss_collectors(path=None) -> list:
+    """v7：把发现层已验证（state ∈ {trial, active}）且有 feed_url 的源
+    实例化为 RSSCollector 子类，供 online 模式动态纳入采集。
+    动态源 tier=4（线索级，对抗审查 #3）：零人工审核的自动发现源不得与
+    registry 里 A 级中文权威（tier=3）同级——tier=4 才会被 gate G3 打
+    single_low_tier 标记进日报候选降级线；人工定级后应录入 registry。
+    fail-soft：状态文件缺失/损坏 → []。"""
+    try:
+        data = json.loads(
+            Path(path or _DISCOVERED_STATE_PATH).read_text(encoding="utf-8"))
+    except Exception:
+        return []
+    out = []
+    for s in data.get("sources", []) or []:
+        if not isinstance(s, dict) or s.get("state") not in ("trial", "active"):
+            continue
+        feed_url = str(s.get("feed_url") or "").strip()
+        domain = str(s.get("domain") or "discovered").strip()
+        if not feed_url:
+            continue
+        sid = f"dyn_{s.get('id') or domain}"
+        out.append(type(sid, (RSSCollector,), dict(
+            source_id=sid, source_name=domain, tier=4, feed_url=feed_url,
+        )))
+    return out
 
 
 # ============================================================
@@ -457,11 +846,17 @@ def collect(scope: dict | None = None, mode: str = "offline") -> list[RawItem]:
     scope = scope or {}
     items: list[RawItem] = []
     if mode == "online":
-        for cls in ONLINE_COLLECTORS:
+        # v7：发现层动态源（trial/active）并入在线采集（fail-soft，空集则无影响）
+        try:
+            dyn = tuple(dynamic_rss_collectors())
+        except Exception as e:
+            print(f"[collector] 动态源加载失败跳过：{e}")
+            dyn = ()
+        for cls in tuple(ONLINE_COLLECTORS) + dyn:
             try:
                 items.extend(cls().collect(scope))
             except Exception as e:
-                print(f"[collector:{cls.source_id}] 采集失败：{e}")
+                print(f"[collector:{getattr(cls, 'source_id', '?')}] 采集失败：{e}")
         if not items:
             print("[collector] 在线采集为空，自动回退离线样例")
             items = load_offline(scope)
@@ -471,6 +866,7 @@ def collect(scope: dict | None = None, mode: str = "offline") -> list[RawItem]:
 
 
 # 在线采集器注册表（迭代2：4 个免 key 真实源；迭代3：+CNBC/SemiAnalysis；
+# v7：+发现层配套内置源（2026-09-25 实测可活）+动态源见 collect()；
 # DigiTimes 实测反爬未接入，见类定义注释）
 ONLINE_COLLECTORS = (
     SECEdgarCollector,
@@ -479,6 +875,17 @@ ONLINE_COLLECTORS = (
     EETimesCollector,
     CNBCCollector,
     SemiAnalysisCollector,
+    # ---- v7 自主发现层配套内置源 ----
+    IEEESpectrumCollector,
+    TomshardwareCollector,
+    NikkeiAsiaCollector,
+    KoreaHeraldCollector,
+    YonhapCollector,
+    YahooFinanceCollector,
+    YahooFinanceTSMCollector,
+    GoogleNewsCollector,
+    CninfoCollector,
+    NewsnowCollector,
 )
 
 
@@ -500,6 +907,27 @@ PROBE_ENDPOINTS = [
      "https://search.cnbc.com/rs/search/combinedcms/view.xml?partnerId=wrss01&id=10001054"),
     ("semianalysis", "SemiAnalysis",
      "https://semianalysis.com/feed/"),
+    # ---- v7 自主发现层配套内置源（2026-09-25 实测可活） ----
+    ("ieee_spectrum", "IEEE Spectrum",
+     "https://spectrum.ieee.org/feeds/topic/semiconductors.rss"),
+    ("tomshardware", "Tom's Hardware",
+     "https://www.tomshardware.com/feeds/all"),
+    ("nikkei_asia", "Nikkei Asia",
+     "https://asia.nikkei.com/rss/feed/nar"),
+    ("korea_herald", "Korea Herald",
+     "https://www.koreaherald.com/rss/allCh.xml"),
+    ("yonhap_en", "Yonhap EN",
+     "https://en.yna.co.kr/RSS/news.xml"),
+    ("yahoo_nvda", "Yahoo Finance (NVDA)",
+     "https://feeds.finance.yahoo.com/rss/2.0/headline?s=NVDA&region=US&lang=en-US"),
+    ("yahoo_tsm", "Yahoo Finance (TSM)",
+     "https://feeds.finance.yahoo.com/rss/2.0/headline?s=TSM&region=US&lang=en-US"),
+    ("google_news", "Google News",
+     "https://news.google.com/rss/search?q=%E5%8D%8A%E5%AF%BC%E4%BD%93+when:1d&hl=zh-CN&gl=CN&ceid=CN:zh-Hans"),
+    ("cninfo", "巨潮资讯公告",
+     "https://www.cninfo.com.cn/new/fulltextSearch/full?searchkey=%E8%8A%AF%E7%89%87&pageNum=1"),
+    ("newsnow", "Newsnow 热榜",
+     "https://newsnow.busiyi.world/api/s?id=cls-hot"),
 ]
 
 

@@ -1,0 +1,1386 @@
+{
+  "version": 1,
+  "updated": "2026-09-26T02:50:15Z",
+  "sources": [
+    {
+      "id": "wccftech.com",
+      "domain": "wccftech.com",
+      "feed_url": "https://wccftech.com/feed/",
+      "homepage": "https://wccftech.com/",
+      "discovered_via": "hint",
+      "state": "active",
+      "score": {
+        "kw_hits": 10,
+        "entry_hits": 7
+      },
+      "error_count": 0,
+      "consecutive_ok": 2,
+      "last_checked": "2026-09-26T02:43:22Z",
+      "next_check_at": 1790427770.8964741,
+      "last_entry_date": "2026-09-25",
+      "evidence": {
+        "http_ok": true,
+        "entry_count": 20,
+        "sample_titles": [
+          "Intel CEO Lip-Bu Tan Is Impressed By Photonic Quantum Computing – Says He Now Le",
+          "ROG Astral GeForce RTX 5090 Edition 20, That Costs $10,849.96 As An Exclusive Bu",
+          "Resident Evil Requiem Crosses $500M as Fastest-Selling Entry, yet the Record-Set"
+        ],
+        "rescore": "2026-09-26T02:43:22Z kept"
+      }
+    },
+    {
+      "id": "finance.biggo.com",
+      "domain": "finance.biggo.com",
+      "feed_url": "",
+      "homepage": "https://finance.biggo.com/",
+      "discovered_via": "gnews",
+      "state": "candidate",
+      "score": {
+        "kw_hits": 0,
+        "entry_hits": 0
+      },
+      "error_count": 1,
+      "consecutive_ok": 0,
+      "last_checked": "2026-09-26T02:50:15Z",
+      "next_check_at": 1790394615.9685128,
+      "last_entry_date": "",
+      "evidence": {},
+      "last_error": "fetch_failed:HTTPError",
+      "transient_errors": 1
+    },
+    {
+      "id": "finance.sina.cn",
+      "domain": "finance.sina.cn",
+      "feed_url": "",
+      "homepage": "https://finance.sina.cn/",
+      "discovered_via": "gnews",
+      "state": "candidate",
+      "score": {
+        "kw_hits": 0,
+        "entry_hits": 0
+      },
+      "error_count": 1,
+      "consecutive_ok": 0,
+      "last_checked": "2026-09-26T02:50:15Z",
+      "next_check_at": 1790394615.9685128,
+      "last_entry_date": "",
+      "evidence": {},
+      "last_error": "fetch_failed:HTTPError",
+      "transient_errors": 1
+    },
+    {
+      "id": "seekingalpha.com",
+      "domain": "seekingalpha.com",
+      "feed_url": "https://seekingalpha.com/feed/",
+      "homepage": "https://seekingalpha.com/",
+      "discovered_via": "gnews",
+      "state": "candidate",
+      "score": {
+        "kw_hits": 0,
+        "entry_hits": 0
+      },
+      "error_count": 2,
+      "consecutive_ok": 0,
+      "last_checked": "2026-09-26T02:50:15Z",
+      "next_check_at": 1790398215.9685128,
+      "last_entry_date": "",
+      "evidence": {},
+      "last_error": "low_relevance"
+    },
+    {
+      "id": "gelonghui.com",
+      "domain": "gelonghui.com",
+      "feed_url": "",
+      "homepage": "https://gelonghui.com/",
+      "discovered_via": "newsnow",
+      "state": "candidate",
+      "score": {
+        "kw_hits": 0,
+        "entry_hits": 0
+      },
+      "error_count": 1,
+      "consecutive_ok": 0,
+      "last_checked": "2026-09-26T02:50:15Z",
+      "next_check_at": 1790394615.9685128,
+      "last_entry_date": "",
+      "evidence": {},
+      "last_error": "fetch_failed:HTTPError",
+      "transient_errors": 1
+    },
+    {
+      "id": "marketscreener.com",
+      "domain": "marketscreener.com",
+      "feed_url": "",
+      "homepage": "https://marketscreener.com/",
+      "discovered_via": "gnews",
+      "state": "candidate",
+      "score": {
+        "kw_hits": 0,
+        "entry_hits": 0
+      },
+      "error_count": 1,
+      "consecutive_ok": 0,
+      "last_checked": "2026-09-26T02:50:15Z",
+      "next_check_at": 1790394615.9685128,
+      "last_entry_date": "",
+      "evidence": {},
+      "last_error": "fetch_failed:HTTPError",
+      "transient_errors": 1
+    },
+    {
+      "id": "tradingview.com",
+      "domain": "tradingview.com",
+      "feed_url": "https://tradingview.com/feed/",
+      "homepage": "https://tradingview.com/",
+      "discovered_via": "gnews",
+      "state": "candidate",
+      "score": {
+        "kw_hits": 0,
+        "entry_hits": 0
+      },
+      "error_count": 2,
+      "consecutive_ok": 0,
+      "last_checked": "2026-09-26T02:50:15Z",
+      "next_check_at": 1790398215.9685128,
+      "last_entry_date": "",
+      "evidence": {},
+      "last_error": "low_relevance"
+    },
+    {
+      "id": "en.sedaily.com",
+      "domain": "en.sedaily.com",
+      "feed_url": "https://en.sedaily.com/rss/newsall",
+      "homepage": "https://en.sedaily.com/",
+      "discovered_via": "gnews",
+      "state": "candidate",
+      "score": {
+        "kw_hits": 0,
+        "entry_hits": 0
+      },
+      "error_count": 2,
+      "consecutive_ok": 0,
+      "last_checked": "2026-09-26T02:50:15Z",
+      "next_check_at": 1790398215.9685128,
+      "last_entry_date": "",
+      "evidence": {},
+      "last_error": "low_relevance"
+    },
+    {
+      "id": "techpowerup.com",
+      "domain": "techpowerup.com",
+      "feed_url": "https://techpowerup.com/rss/news",
+      "homepage": "https://techpowerup.com/",
+      "discovered_via": "hint",
+      "state": "active",
+      "score": {
+        "kw_hits": 11,
+        "entry_hits": 9
+      },
+      "error_count": 0,
+      "consecutive_ok": 2,
+      "last_checked": "2026-09-26T02:43:22Z",
+      "next_check_at": 1790429093.8938973,
+      "last_entry_date": "2026-09-26",
+      "evidence": {
+        "http_ok": true,
+        "entry_count": 138,
+        "sample_titles": [
+          "Meta Unveils AI Tools That Build Playable Games From Text Prompts",
+          "Microsoft CEO Satya Nadella Calls Copilot a \"New OS for Work\" in Biggest Update ",
+          "Reverse Engineering Without CAD Data: How MetroY Ultra Turns Physical Parts into"
+        ],
+        "rescore": "2026-09-26T02:43:22Z kept"
+      }
+    },
+    {
+      "id": "fool.com",
+      "domain": "fool.com",
+      "feed_url": "",
+      "homepage": "https://fool.com/",
+      "discovered_via": "gnews",
+      "state": "candidate",
+      "score": {
+        "kw_hits": 0,
+        "entry_hits": 0
+      },
+      "error_count": 1,
+      "consecutive_ok": 0,
+      "last_checked": "2026-09-26T02:50:15Z",
+      "next_check_at": 1790394615.9685128,
+      "last_entry_date": "",
+      "evidence": {},
+      "last_error": "fetch_failed:HTTPError",
+      "transient_errors": 1
+    },
+    {
+      "id": "laoyaoba.com",
+      "domain": "laoyaoba.com",
+      "feed_url": "",
+      "homepage": "https://laoyaoba.com/",
+      "discovered_via": "gnews",
+      "state": "candidate",
+      "score": {
+        "kw_hits": 0,
+        "entry_hits": 0
+      },
+      "error_count": 2,
+      "consecutive_ok": 0,
+      "last_checked": "2026-09-26T02:50:15Z",
+      "next_check_at": 1790398215.9685128,
+      "last_entry_date": "",
+      "evidence": {},
+      "last_error": "html_shell"
+    },
+    {
+      "id": "sg.finance.yahoo.com",
+      "domain": "sg.finance.yahoo.com",
+      "feed_url": "",
+      "homepage": "https://sg.finance.yahoo.com/",
+      "discovered_via": "gnews",
+      "state": "candidate",
+      "score": {
+        "kw_hits": 0,
+        "entry_hits": 0
+      },
+      "error_count": 1,
+      "consecutive_ok": 0,
+      "last_checked": "2026-09-26T02:50:15Z",
+      "next_check_at": 1790394615.9685128,
+      "last_entry_date": "",
+      "evidence": {},
+      "last_error": "fetch_failed:HTTPError",
+      "transient_errors": 1
+    },
+    {
+      "id": "benzinga.com",
+      "domain": "benzinga.com",
+      "feed_url": "https://benzinga.com/feed/",
+      "homepage": "https://benzinga.com/",
+      "discovered_via": "gnews",
+      "state": "candidate",
+      "score": {
+        "kw_hits": 0,
+        "entry_hits": 0
+      },
+      "error_count": 2,
+      "consecutive_ok": 0,
+      "last_checked": "2026-09-26T02:50:15Z",
+      "next_check_at": 1790398215.9685128,
+      "last_entry_date": "",
+      "evidence": {},
+      "last_error": "low_relevance"
+    },
+    {
+      "id": "247wallst.com",
+      "domain": "247wallst.com",
+      "feed_url": "https://247wallst.com/feed/",
+      "homepage": "https://247wallst.com/",
+      "discovered_via": "gnews",
+      "state": "candidate",
+      "score": {
+        "kw_hits": 0,
+        "entry_hits": 0
+      },
+      "error_count": 2,
+      "consecutive_ok": 0,
+      "last_checked": "2026-09-26T02:50:15Z",
+      "next_check_at": 1790398215.9685128,
+      "last_entry_date": "",
+      "evidence": {},
+      "last_error": "low_relevance"
+    },
+    {
+      "id": "moomoo.com",
+      "domain": "moomoo.com",
+      "feed_url": "",
+      "homepage": "https://moomoo.com/",
+      "discovered_via": "gnews",
+      "state": "candidate",
+      "score": {
+        "kw_hits": 0,
+        "entry_hits": 0
+      },
+      "error_count": 1,
+      "consecutive_ok": 0,
+      "last_checked": "2026-09-26T01:16:42Z",
+      "next_check_at": 1790389002.7252307,
+      "last_entry_date": "",
+      "evidence": {},
+      "last_error": "fetch_failed:URLError"
+    },
+    {
+      "id": "biz.chosun.com",
+      "domain": "biz.chosun.com",
+      "feed_url": "",
+      "homepage": "https://biz.chosun.com/",
+      "discovered_via": "gnews",
+      "state": "candidate",
+      "score": {
+        "kw_hits": 0,
+        "entry_hits": 0
+      },
+      "error_count": 1,
+      "consecutive_ok": 0,
+      "last_checked": "2026-09-26T01:16:42Z",
+      "next_check_at": 1790389002.7252307,
+      "last_entry_date": "",
+      "evidence": {},
+      "last_error": "fetch_failed:HTTPError"
+    },
+    {
+      "id": "ad-hoc-news.de",
+      "domain": "ad-hoc-news.de",
+      "feed_url": "https://www.ad-hoc-news.de/rss/nachrichten.xml",
+      "homepage": "https://ad-hoc-news.de/",
+      "discovered_via": "gnews",
+      "state": "candidate",
+      "score": {
+        "kw_hits": 0,
+        "entry_hits": 0
+      },
+      "error_count": 1,
+      "consecutive_ok": 0,
+      "last_checked": "2026-09-26T01:16:42Z",
+      "next_check_at": 1790389002.7252307,
+      "last_entry_date": "",
+      "evidence": {},
+      "last_error": "low_relevance"
+    },
+    {
+      "id": "barchart.com",
+      "domain": "barchart.com",
+      "feed_url": "",
+      "homepage": "https://barchart.com/",
+      "discovered_via": "gnews",
+      "state": "candidate",
+      "score": {
+        "kw_hits": 0,
+        "entry_hits": 0
+      },
+      "error_count": 1,
+      "consecutive_ok": 0,
+      "last_checked": "2026-09-26T01:16:42Z",
+      "next_check_at": 1790389002.7252307,
+      "last_entry_date": "",
+      "evidence": {},
+      "last_error": "not_a_feed"
+    },
+    {
+      "id": "cj.sina.cn",
+      "domain": "cj.sina.cn",
+      "feed_url": "",
+      "homepage": "https://cj.sina.cn/",
+      "discovered_via": "gnews",
+      "state": "candidate",
+      "score": {
+        "kw_hits": 0,
+        "entry_hits": 0
+      },
+      "error_count": 1,
+      "consecutive_ok": 0,
+      "last_checked": "2026-09-26T01:16:42Z",
+      "next_check_at": 1790389002.7252307,
+      "last_entry_date": "",
+      "evidence": {},
+      "last_error": "fetch_failed:HTTPError"
+    },
+    {
+      "id": "pcguide.com",
+      "domain": "pcguide.com",
+      "feed_url": "https://www.pcguide.com/feed/",
+      "homepage": "https://pcguide.com/",
+      "discovered_via": "hint",
+      "state": "candidate",
+      "score": {
+        "kw_hits": 4,
+        "entry_hits": 4
+      },
+      "error_count": 0,
+      "consecutive_ok": 0,
+      "last_checked": "2026-09-26T02:38:56Z",
+      "next_check_at": 1790392285.473518,
+      "last_entry_date": "2026-09-26",
+      "evidence": {
+        "http_ok": true,
+        "entry_count": 20,
+        "sample_titles": [
+          "Whilst memory prices continue to remain sky high, this 32GB DDR4 RAM deal for ju",
+          "Razer BlackWidow V4 X keyboard with yellow switches has price slashed in this Am",
+          "High-end NVIDIA RTX 5080 gaming PC with AMD Ryzen 7 9800X3D gets huge $500 disco"
+        ],
+        "rescore": "2026-09-26T02:41:25Z demoted:low_relevance"
+      }
+    },
+    {
+      "id": "k.sina.com.cn",
+      "domain": "k.sina.com.cn",
+      "feed_url": "",
+      "homepage": "https://k.sina.com.cn/",
+      "discovered_via": "gnews",
+      "state": "candidate",
+      "score": {
+        "kw_hits": 0,
+        "entry_hits": 0
+      },
+      "error_count": 1,
+      "consecutive_ok": 0,
+      "last_checked": "2026-09-26T01:24:53Z",
+      "next_check_at": 1790389493.8938973,
+      "last_entry_date": "",
+      "evidence": {},
+      "last_error": "html_shell"
+    },
+    {
+      "id": "reuters.com",
+      "domain": "reuters.com",
+      "feed_url": "",
+      "homepage": "https://reuters.com/",
+      "discovered_via": "gnews",
+      "state": "candidate",
+      "score": {
+        "kw_hits": 0,
+        "entry_hits": 0
+      },
+      "error_count": 1,
+      "consecutive_ok": 0,
+      "last_checked": "2026-09-26T01:24:53Z",
+      "next_check_at": 1790389493.8938973,
+      "last_entry_date": "",
+      "evidence": {},
+      "last_error": "fetch_failed:URLError"
+    },
+    {
+      "id": "evertiq.com",
+      "domain": "evertiq.com",
+      "feed_url": "",
+      "homepage": "https://evertiq.com/",
+      "discovered_via": "gnews",
+      "state": "candidate",
+      "score": {
+        "kw_hits": 0,
+        "entry_hits": 0
+      },
+      "error_count": 1,
+      "consecutive_ok": 0,
+      "last_checked": "2026-09-26T01:24:53Z",
+      "next_check_at": 1790389493.8938973,
+      "last_entry_date": "",
+      "evidence": {},
+      "last_error": "fetch_failed:HTTPError"
+    },
+    {
+      "id": "tspasemiconductor.substack.com",
+      "domain": "tspasemiconductor.substack.com",
+      "feed_url": "https://tspasemiconductor.substack.com/feed",
+      "homepage": "https://tspasemiconductor.substack.com/",
+      "discovered_via": "hint",
+      "state": "active",
+      "score": {
+        "kw_hits": 6,
+        "entry_hits": 9
+      },
+      "error_count": 0,
+      "consecutive_ok": 2,
+      "last_checked": "2026-09-26T02:43:22Z",
+      "next_check_at": 1790429519.638434,
+      "last_entry_date": "2026-09-25",
+      "evidence": {
+        "http_ok": true,
+        "entry_count": 20,
+        "sample_titles": [
+          "Happy Mid-Autumn Festival: The Moon Is Becoming a Technology Story",
+          "When Everyone Wants to Replicate Taiwan: The Semiconductor Supply Chain Enters t",
+          "Microchip Acquires Hailo: The Next Edge AI Battle Is Not About TOPS — It Is Abou"
+        ],
+        "rescore": "2026-09-26T02:43:22Z kept"
+      }
+    },
+    {
+      "id": "finance.ifeng.com",
+      "domain": "finance.ifeng.com",
+      "feed_url": "",
+      "homepage": "https://finance.ifeng.com/",
+      "discovered_via": "gnews",
+      "state": "candidate",
+      "score": {
+        "kw_hits": 0,
+        "entry_hits": 0
+      },
+      "error_count": 1,
+      "consecutive_ok": 0,
+      "last_checked": "2026-09-26T01:24:53Z",
+      "next_check_at": 1790389493.8938973,
+      "last_entry_date": "",
+      "evidence": {},
+      "last_error": "fetch_failed:HTTPError"
+    },
+    {
+      "id": "androidheadlines.com",
+      "domain": "androidheadlines.com",
+      "feed_url": "https://www.androidheadlines.com/feed",
+      "homepage": "https://androidheadlines.com/",
+      "discovered_via": "gnews",
+      "state": "candidate",
+      "score": {
+        "kw_hits": 0,
+        "entry_hits": 0
+      },
+      "error_count": 1,
+      "consecutive_ok": 0,
+      "last_checked": "2026-09-26T01:24:53Z",
+      "next_check_at": 1790389493.8938973,
+      "last_entry_date": "",
+      "evidence": {},
+      "last_error": "low_relevance"
+    },
+    {
+      "id": "news.futunn.com",
+      "domain": "news.futunn.com",
+      "feed_url": "",
+      "homepage": "https://news.futunn.com/",
+      "discovered_via": "gnews",
+      "state": "candidate",
+      "score": {
+        "kw_hits": 0,
+        "entry_hits": 0
+      },
+      "error_count": 1,
+      "consecutive_ok": 0,
+      "last_checked": "2026-09-26T01:24:53Z",
+      "next_check_at": 1790389493.8938973,
+      "last_entry_date": "",
+      "evidence": {},
+      "last_error": "fetch_failed:HTTPError"
+    },
+    {
+      "id": "eenewseurope.com",
+      "domain": "eenewseurope.com",
+      "feed_url": "https://eenewseurope.com/feed/",
+      "homepage": "https://eenewseurope.com/",
+      "discovered_via": "hint",
+      "state": "active",
+      "score": {
+        "kw_hits": 8,
+        "entry_hits": 5
+      },
+      "error_count": 0,
+      "consecutive_ok": 2,
+      "last_checked": "2026-09-26T02:43:22Z",
+      "next_check_at": 1790429519.638434,
+      "last_entry_date": "2026-09-25",
+      "evidence": {
+        "http_ok": true,
+        "entry_count": 10,
+        "sample_titles": [
+          "DF150 Power Supply for Extreme Environments",
+          "AdaCore GNAT Foundry puts AI code through formal proof",
+          "Edge AI shifts onto MCUs at EWNA 2026"
+        ],
+        "rescore": "2026-09-26T02:43:22Z kept"
+      }
+    },
+    {
+      "id": "timeline.sohu.com",
+      "domain": "timeline.sohu.com",
+      "feed_url": "",
+      "homepage": "https://timeline.sohu.com/",
+      "discovered_via": "gnews",
+      "state": "candidate",
+      "score": {
+        "kw_hits": 0,
+        "entry_hits": 0
+      },
+      "error_count": 1,
+      "consecutive_ok": 0,
+      "last_checked": "2026-09-26T01:24:53Z",
+      "next_check_at": 1790389493.8938973,
+      "last_entry_date": "",
+      "evidence": {},
+      "last_error": "fetch_failed:HTTPError"
+    },
+    {
+      "id": "electronicsweekly.com",
+      "domain": "electronicsweekly.com",
+      "feed_url": "https://www.electronicsweekly.com/feed/",
+      "homepage": "https://electronicsweekly.com/",
+      "discovered_via": "hint",
+      "state": "active",
+      "score": {
+        "kw_hits": 8,
+        "entry_hits": 4
+      },
+      "error_count": 0,
+      "consecutive_ok": 2,
+      "last_checked": "2026-09-26T02:43:22Z",
+      "next_check_at": 1790429519.638434,
+      "last_entry_date": "2026-09-25",
+      "evidence": {
+        "http_ok": true,
+        "entry_count": 10,
+        "sample_titles": [
+          "The Bringer Of Peace, Love And A Kicking",
+          "Google’s Suncatcher aims for datacentres in space with TPU moonshot",
+          "QSM603FCP smart board supports AIoT for Android, Linux"
+        ],
+        "rescore": "2026-09-26T02:43:22Z kept"
+      }
+    },
+    {
+      "id": "electronicsforyou.biz",
+      "domain": "electronicsforyou.biz",
+      "feed_url": "https://electronicsforyou.biz/feed/",
+      "homepage": "https://electronicsforyou.biz/",
+      "discovered_via": "hint",
+      "state": "active",
+      "score": {
+        "kw_hits": 5,
+        "entry_hits": 4
+      },
+      "error_count": 0,
+      "consecutive_ok": 2,
+      "last_checked": "2026-09-26T02:43:22Z",
+      "next_check_at": 1790429519.638434,
+      "last_entry_date": "2026-09-25",
+      "evidence": {
+        "http_ok": true,
+        "entry_count": 10,
+        "sample_titles": [
+          "High-End Semiconductor Packaging Market to Surpass $51bn by 2031",
+          "India Launches Plan for Indigenous Power Grid Semiconductors",
+          "Electric Mining Fleet Market Set to Exceed $27bn by 2047"
+        ],
+        "rescore": "2026-09-26T02:43:22Z kept"
+      }
+    },
+    {
+      "id": "stocktwits.com",
+      "domain": "stocktwits.com",
+      "feed_url": "",
+      "homepage": "https://stocktwits.com/",
+      "discovered_via": "gnews",
+      "state": "candidate",
+      "score": {
+        "kw_hits": 0,
+        "entry_hits": 0
+      },
+      "error_count": 1,
+      "consecutive_ok": 0,
+      "last_checked": "2026-09-26T01:24:53Z",
+      "next_check_at": 1790389493.8938973,
+      "last_entry_date": "",
+      "evidence": {},
+      "last_error": "fetch_failed:HTTPError"
+    },
+    {
+      "id": "indexbox.io",
+      "domain": "indexbox.io",
+      "feed_url": "",
+      "homepage": "https://indexbox.io/",
+      "discovered_via": "gnews",
+      "state": "candidate",
+      "score": {
+        "kw_hits": 0,
+        "entry_hits": 0
+      },
+      "error_count": 1,
+      "consecutive_ok": 0,
+      "last_checked": "2026-09-26T01:24:53Z",
+      "next_check_at": 1790389493.8938973,
+      "last_entry_date": "",
+      "evidence": {},
+      "last_error": "fetch_failed:HTTPError"
+    },
+    {
+      "id": "aol.com",
+      "domain": "aol.com",
+      "feed_url": "",
+      "homepage": "https://aol.com/",
+      "discovered_via": "gnews",
+      "state": "candidate",
+      "score": {
+        "kw_hits": 0,
+        "entry_hits": 0
+      },
+      "error_count": 1,
+      "consecutive_ok": 0,
+      "last_checked": "2026-09-26T01:24:53Z",
+      "next_check_at": 1790389493.8938973,
+      "last_entry_date": "",
+      "evidence": {},
+      "last_error": "fetch_failed:HTTPError"
+    },
+    {
+      "id": "economictimes.com",
+      "domain": "economictimes.com",
+      "feed_url": "",
+      "homepage": "https://economictimes.com/",
+      "discovered_via": "gnews",
+      "state": "candidate",
+      "score": {
+        "kw_hits": 0,
+        "entry_hits": 0
+      },
+      "error_count": 1,
+      "consecutive_ok": 0,
+      "last_checked": "2026-09-26T01:24:53Z",
+      "next_check_at": 1790389493.8938973,
+      "last_entry_date": "",
+      "evidence": {},
+      "last_error": "fetch_failed:HTTPError"
+    },
+    {
+      "id": "cleanroomtechnology.com",
+      "domain": "cleanroomtechnology.com",
+      "feed_url": "https://cleanroomtechnology.com/rss",
+      "homepage": "https://cleanroomtechnology.com/",
+      "discovered_via": "hint",
+      "state": "candidate",
+      "score": {
+        "kw_hits": 4,
+        "entry_hits": 2
+      },
+      "error_count": 0,
+      "consecutive_ok": 0,
+      "last_checked": "2026-09-26T02:38:56Z",
+      "next_check_at": 1790392285.473518,
+      "last_entry_date": "2026-09-25",
+      "evidence": {
+        "http_ok": true,
+        "entry_count": 20,
+        "sample_titles": [
+          "ABN to build 100 sqm ISO Class 7 cleanroom for SES Satellites in Luxembourg",
+          "Firefly Aerospace completes ISO Class 8 cleanroom to scale spacecraft production",
+          "How is cleanroom qualification  changing in a digital world?"
+        ],
+        "rescore": "2026-09-26T02:41:25Z demoted:low_relevance"
+      }
+    },
+    {
+      "id": "wallstreetcn.com",
+      "domain": "wallstreetcn.com",
+      "feed_url": "",
+      "homepage": "https://wallstreetcn.com/",
+      "discovered_via": "gnews",
+      "state": "candidate",
+      "score": {
+        "kw_hits": 0,
+        "entry_hits": 0
+      },
+      "error_count": 1,
+      "consecutive_ok": 0,
+      "last_checked": "2026-09-26T01:24:53Z",
+      "next_check_at": 1790389493.8938973,
+      "last_entry_date": "",
+      "evidence": {},
+      "last_error": "fetch_failed:HTTPError"
+    },
+    {
+      "id": "konsulteer.com",
+      "domain": "konsulteer.com",
+      "feed_url": "",
+      "homepage": "https://konsulteer.com/",
+      "discovered_via": "gnews",
+      "state": "candidate",
+      "score": {
+        "kw_hits": 0,
+        "entry_hits": 0
+      },
+      "error_count": 1,
+      "consecutive_ok": 0,
+      "last_checked": "2026-09-26T01:31:59Z",
+      "next_check_at": 1790389919.638434,
+      "last_entry_date": "",
+      "evidence": {},
+      "last_error": "fetch_failed:URLError"
+    },
+    {
+      "id": "sohu.com",
+      "domain": "sohu.com",
+      "feed_url": "",
+      "homepage": "https://sohu.com/",
+      "discovered_via": "gnews",
+      "state": "candidate",
+      "score": {
+        "kw_hits": 0,
+        "entry_hits": 0
+      },
+      "error_count": 1,
+      "consecutive_ok": 0,
+      "last_checked": "2026-09-26T01:31:59Z",
+      "next_check_at": 1790389919.638434,
+      "last_entry_date": "",
+      "evidence": {},
+      "last_error": "fetch_failed:HTTPError"
+    },
+    {
+      "id": "memeburn.com",
+      "domain": "memeburn.com",
+      "feed_url": "https://memeburn.com/feed/",
+      "homepage": "https://memeburn.com/",
+      "discovered_via": "gnews",
+      "state": "candidate",
+      "score": {
+        "kw_hits": 3,
+        "entry_hits": 4
+      },
+      "error_count": 0,
+      "consecutive_ok": 0,
+      "last_checked": "2026-09-26T01:31:59Z",
+      "next_check_at": 1790392136.7251232,
+      "last_entry_date": "2026-09-26",
+      "evidence": {
+        "http_ok": true,
+        "entry_count": 10,
+        "sample_titles": [
+          "Best Laptop Under $1000 in 2026: The Price Where You Finally Stop Settling for 8",
+          "Best Samsung Watch in 2026: Top 5 Models Fully Compared",
+          "Best Free Cloud Storage 2026: Where the Free Gigabytes Still Are"
+        ],
+        "rescore": "2026-09-26T02:38:56Z demoted:low_relevance"
+      }
+    },
+    {
+      "id": "investing.com",
+      "domain": "investing.com",
+      "feed_url": "",
+      "homepage": "https://investing.com/",
+      "discovered_via": "gnews",
+      "state": "candidate",
+      "score": {
+        "kw_hits": 0,
+        "entry_hits": 0
+      },
+      "error_count": 1,
+      "consecutive_ok": 0,
+      "last_checked": "2026-09-26T01:31:59Z",
+      "next_check_at": 1790389919.638434,
+      "last_entry_date": "",
+      "evidence": {},
+      "last_error": "fetch_failed:HTTPError"
+    },
+    {
+      "id": "businesskorea.co.kr",
+      "domain": "businesskorea.co.kr",
+      "feed_url": "https://www.businesskorea.co.kr/rss/gns_allArticle.xml",
+      "homepage": "https://businesskorea.co.kr/",
+      "discovered_via": "gnews",
+      "state": "candidate",
+      "score": {
+        "kw_hits": 8,
+        "entry_hits": 7
+      },
+      "error_count": 0,
+      "consecutive_ok": 0,
+      "last_checked": "2026-09-26T02:41:25Z",
+      "next_check_at": 1790392402.092151,
+      "last_entry_date": "2026-09-25",
+      "evidence": {
+        "http_ok": true,
+        "entry_count": 50,
+        "sample_titles": [
+          "명륜당·이종근 대표 관련 형사사건 수사 마무리… 검찰·경찰 ‘혐의없음’",
+          "라이즈(RIIZE) 성찬, 보테가 베네타로 완성한 캐주얼 공항 패션",
+          "대전 현대직업전문학교, ‘전기내선공사 관리자 양성과정’ 10월 개강"
+        ],
+        "rescore": "2026-09-26T02:43:22Z demoted:low_relevance"
+      }
+    },
+    {
+      "id": "finance.sina.com.cn",
+      "domain": "finance.sina.com.cn",
+      "feed_url": "",
+      "homepage": "https://finance.sina.com.cn/",
+      "discovered_via": "gnews",
+      "state": "candidate",
+      "score": {
+        "kw_hits": 0,
+        "entry_hits": 0
+      },
+      "error_count": 1,
+      "consecutive_ok": 0,
+      "last_checked": "2026-09-26T01:31:59Z",
+      "next_check_at": 1790389919.638434,
+      "last_entry_date": "",
+      "evidence": {},
+      "last_error": "fetch_failed:HTTPError"
+    },
+    {
+      "id": "news.alphastreet.com",
+      "domain": "news.alphastreet.com",
+      "feed_url": "https://news.alphastreet.com/feed/",
+      "homepage": "https://news.alphastreet.com/",
+      "discovered_via": "gnews",
+      "state": "candidate",
+      "score": {
+        "kw_hits": 0,
+        "entry_hits": 0
+      },
+      "error_count": 1,
+      "consecutive_ok": 0,
+      "last_checked": "2026-09-26T01:31:59Z",
+      "next_check_at": 1790389919.638434,
+      "last_entry_date": "",
+      "evidence": {},
+      "last_error": "low_relevance"
+    },
+    {
+      "id": "gagadget.com",
+      "domain": "gagadget.com",
+      "feed_url": "https://gagadget.com/rss",
+      "homepage": "https://gagadget.com/",
+      "discovered_via": "gnews",
+      "state": "candidate",
+      "score": {
+        "kw_hits": 3,
+        "entry_hits": 3
+      },
+      "error_count": 0,
+      "consecutive_ok": 0,
+      "last_checked": "2026-09-26T02:38:56Z",
+      "next_check_at": 1790392285.473518,
+      "last_entry_date": "2026-09-25",
+      "evidence": {
+        "http_ok": true,
+        "entry_count": 64,
+        "sample_titles": [
+          "В августе электромобили заняли 29% рынка новых авто в Европе",
+          "Производство Acura MDX Type S приостановят из-за неопределенности экологических ",
+          "Завод на 50 000 грузовиков: Tesla начала поставки серийных Semi"
+        ],
+        "rescore": "2026-09-26T02:41:25Z demoted:low_relevance"
+      }
+    },
+    {
+      "id": "au.investing.com",
+      "domain": "au.investing.com",
+      "feed_url": "",
+      "homepage": "https://au.investing.com/",
+      "discovered_via": "gnews",
+      "state": "candidate",
+      "score": {
+        "kw_hits": 0,
+        "entry_hits": 0
+      },
+      "error_count": 1,
+      "consecutive_ok": 0,
+      "last_checked": "2026-09-26T01:31:59Z",
+      "next_check_at": 1790389919.638434,
+      "last_entry_date": "",
+      "evidence": {},
+      "last_error": "fetch_failed:HTTPError"
+    },
+    {
+      "id": "cnnews.chosun.com",
+      "domain": "cnnews.chosun.com",
+      "feed_url": "",
+      "homepage": "https://cnnews.chosun.com/",
+      "discovered_via": "gnews",
+      "state": "candidate",
+      "score": {
+        "kw_hits": 0,
+        "entry_hits": 0
+      },
+      "error_count": 1,
+      "consecutive_ok": 0,
+      "last_checked": "2026-09-26T01:31:59Z",
+      "next_check_at": 1790389919.638434,
+      "last_entry_date": "",
+      "evidence": {},
+      "last_error": "html_shell"
+    },
+    {
+      "id": "pluang.com",
+      "domain": "pluang.com",
+      "feed_url": "",
+      "homepage": "https://pluang.com/",
+      "discovered_via": "gnews",
+      "state": "candidate",
+      "score": {
+        "kw_hits": 0,
+        "entry_hits": 0
+      },
+      "error_count": 1,
+      "consecutive_ok": 0,
+      "last_checked": "2026-09-26T01:31:59Z",
+      "next_check_at": 1790389919.638434,
+      "last_entry_date": "",
+      "evidence": {},
+      "last_error": "fetch_failed:HTTPError"
+    },
+    {
+      "id": "mbiz.heraldcorp.com",
+      "domain": "mbiz.heraldcorp.com",
+      "feed_url": "https://biz.heraldcorp.com/rss/google/newsAll",
+      "homepage": "https://mbiz.heraldcorp.com/",
+      "discovered_via": "gnews",
+      "state": "candidate",
+      "score": {
+        "kw_hits": 0,
+        "entry_hits": 0
+      },
+      "error_count": 1,
+      "consecutive_ok": 0,
+      "last_checked": "2026-09-26T01:31:59Z",
+      "next_check_at": 1790389919.638434,
+      "last_entry_date": "",
+      "evidence": {},
+      "last_error": "low_relevance"
+    },
+    {
+      "id": "simplywall.st",
+      "domain": "simplywall.st",
+      "feed_url": "",
+      "homepage": "https://simplywall.st/",
+      "discovered_via": "gnews",
+      "state": "candidate",
+      "score": {
+        "kw_hits": 0,
+        "entry_hits": 0
+      },
+      "error_count": 1,
+      "consecutive_ok": 0,
+      "last_checked": "2026-09-26T01:31:59Z",
+      "next_check_at": 1790389919.638434,
+      "last_entry_date": "",
+      "evidence": {},
+      "last_error": "fetch_failed:HTTPError"
+    },
+    {
+      "id": "fr.tradingview.com",
+      "domain": "fr.tradingview.com",
+      "feed_url": "https://fr.tradingview.com/feed/",
+      "homepage": "https://fr.tradingview.com/",
+      "discovered_via": "gnews",
+      "state": "candidate",
+      "score": {
+        "kw_hits": 0,
+        "entry_hits": 0
+      },
+      "error_count": 1,
+      "consecutive_ok": 0,
+      "last_checked": "2026-09-26T01:31:59Z",
+      "next_check_at": 1790389919.638434,
+      "last_entry_date": "",
+      "evidence": {},
+      "last_error": "low_relevance"
+    },
+    {
+      "id": "photonics.com",
+      "domain": "photonics.com",
+      "feed_url": "",
+      "homepage": "https://photonics.com/",
+      "discovered_via": "gnews",
+      "state": "candidate",
+      "score": {
+        "kw_hits": 0,
+        "entry_hits": 0
+      },
+      "error_count": 1,
+      "consecutive_ok": 0,
+      "last_checked": "2026-09-26T01:31:59Z",
+      "next_check_at": 1790389919.638434,
+      "last_entry_date": "",
+      "evidence": {},
+      "last_error": "fetch_failed:HTTPError"
+    },
+    {
+      "id": "qz.com",
+      "domain": "qz.com",
+      "feed_url": "https://qz.com/feed/",
+      "homepage": "https://qz.com/",
+      "discovered_via": "gnews",
+      "state": "candidate",
+      "score": {
+        "kw_hits": 0,
+        "entry_hits": 0
+      },
+      "error_count": 1,
+      "consecutive_ok": 0,
+      "last_checked": "2026-09-26T01:31:59Z",
+      "next_check_at": 1790389919.638434,
+      "last_entry_date": "",
+      "evidence": {},
+      "last_error": "low_relevance"
+    },
+    {
+      "id": "businesswire.com",
+      "domain": "businesswire.com",
+      "feed_url": "",
+      "homepage": "https://businesswire.com/",
+      "discovered_via": "gnews",
+      "state": "candidate",
+      "score": {
+        "kw_hits": 0,
+        "entry_hits": 0
+      },
+      "error_count": 1,
+      "consecutive_ok": 0,
+      "last_checked": "2026-09-26T01:31:59Z",
+      "next_check_at": 1790389919.638434,
+      "last_entry_date": "",
+      "evidence": {},
+      "last_error": "fetch_failed:HTTPError"
+    },
+    {
+      "id": "ifeng.com",
+      "domain": "ifeng.com",
+      "feed_url": "",
+      "homepage": "https://ifeng.com/",
+      "discovered_via": "gnews",
+      "state": "candidate",
+      "score": {
+        "kw_hits": 0,
+        "entry_hits": 0
+      },
+      "error_count": 1,
+      "consecutive_ok": 0,
+      "last_checked": "2026-09-26T01:31:59Z",
+      "next_check_at": 1790389919.638434,
+      "last_entry_date": "",
+      "evidence": {},
+      "last_error": "fetch_failed:HTTPError"
+    },
+    {
+      "id": "theglobeandmail.com",
+      "domain": "theglobeandmail.com",
+      "feed_url": "",
+      "homepage": "https://theglobeandmail.com/",
+      "discovered_via": "gnews",
+      "state": "candidate",
+      "score": {
+        "kw_hits": 0,
+        "entry_hits": 0
+      },
+      "error_count": 0,
+      "consecutive_ok": 0,
+      "last_checked": "2026-09-26T02:50:15Z",
+      "next_check_at": 1790394615.9685128,
+      "last_entry_date": "",
+      "evidence": {},
+      "last_error": "fetch_failed:HTTPError",
+      "transient_errors": 1
+    },
+    {
+      "id": "huxiu.com",
+      "domain": "huxiu.com",
+      "feed_url": "",
+      "homepage": "https://huxiu.com/",
+      "discovered_via": "gnews",
+      "state": "candidate",
+      "score": {
+        "kw_hits": 0,
+        "entry_hits": 0
+      },
+      "error_count": 1,
+      "consecutive_ok": 0,
+      "last_checked": "2026-09-26T02:50:15Z",
+      "next_check_at": 1790394615.9685128,
+      "last_entry_date": "",
+      "evidence": {},
+      "last_error": "not_a_feed"
+    },
+    {
+      "id": "bisinfotech.com",
+      "domain": "bisinfotech.com",
+      "feed_url": "",
+      "homepage": "https://bisinfotech.com/",
+      "discovered_via": "gnews",
+      "state": "candidate",
+      "score": {
+        "kw_hits": 0,
+        "entry_hits": 0
+      },
+      "error_count": 0,
+      "consecutive_ok": 0,
+      "last_checked": "2026-09-26T02:50:15Z",
+      "next_check_at": 1790394615.9685128,
+      "last_entry_date": "",
+      "evidence": {},
+      "last_error": "fetch_failed:HTTPError",
+      "transient_errors": 1
+    },
+    {
+      "id": "engineering.com",
+      "domain": "engineering.com",
+      "feed_url": "https://engineering.com/feed/",
+      "homepage": "https://engineering.com/",
+      "discovered_via": "gnews",
+      "state": "candidate",
+      "score": {
+        "kw_hits": 0,
+        "entry_hits": 0
+      },
+      "error_count": 1,
+      "consecutive_ok": 0,
+      "last_checked": "2026-09-26T02:50:15Z",
+      "next_check_at": 1790394615.9685128,
+      "last_entry_date": "",
+      "evidence": {},
+      "last_error": "low_relevance"
+    },
+    {
+      "id": "shattered.io",
+      "domain": "shattered.io",
+      "feed_url": "https://shattered.io/feed/",
+      "homepage": "https://shattered.io/",
+      "discovered_via": "gnews",
+      "state": "trial",
+      "score": {
+        "kw_hits": 3,
+        "entry_hits": 3
+      },
+      "error_count": 0,
+      "consecutive_ok": 1,
+      "last_checked": "2026-09-26T02:50:15Z",
+      "next_check_at": 1790434215.9685128,
+      "last_entry_date": "2026-09-26",
+      "evidence": {
+        "http_ok": true,
+        "entry_count": 10,
+        "sample_titles": [
+          "Thermal Grizzly LGA 1954 Water Block Hits $116.88 [2026]",
+          "Gemini 4 Arrives With 0 Specs, Only a Timeline Vow [2026]",
+          "Zelda 40th Anniversary Switch 2: 62,980 Yen [2026]"
+        ]
+      }
+    },
+    {
+      "id": "t.cj.sina.cn",
+      "domain": "t.cj.sina.cn",
+      "feed_url": "",
+      "homepage": "https://t.cj.sina.cn/",
+      "discovered_via": "gnews",
+      "state": "candidate",
+      "score": {
+        "kw_hits": 0,
+        "entry_hits": 0
+      },
+      "error_count": 0,
+      "consecutive_ok": 0,
+      "last_checked": "2026-09-26T02:50:15Z",
+      "next_check_at": 1790394615.9685128,
+      "last_entry_date": "",
+      "evidence": {},
+      "last_error": "fetch_failed:HTTPError",
+      "transient_errors": 1
+    },
+    {
+      "id": "datacenterdynamics.com",
+      "domain": "datacenterdynamics.com",
+      "feed_url": "https://datacenterdynamics.com/en/rss/",
+      "homepage": "https://datacenterdynamics.com/",
+      "discovered_via": "gnews",
+      "state": "candidate",
+      "score": {
+        "kw_hits": 0,
+        "entry_hits": 0
+      },
+      "error_count": 1,
+      "consecutive_ok": 0,
+      "last_checked": "2026-09-26T02:50:15Z",
+      "next_check_at": 1790394615.9685128,
+      "last_entry_date": "",
+      "evidence": {},
+      "last_error": "low_relevance"
+    },
+    {
+      "id": "basenor.com",
+      "domain": "basenor.com",
+      "feed_url": "",
+      "homepage": "https://basenor.com/",
+      "discovered_via": "gnews",
+      "state": "candidate",
+      "score": {
+        "kw_hits": 0,
+        "entry_hits": 0
+      },
+      "error_count": 0,
+      "consecutive_ok": 0,
+      "last_checked": "2026-09-26T02:50:15Z",
+      "next_check_at": 1790394615.9685128,
+      "last_entry_date": "",
+      "evidence": {},
+      "last_error": "fetch_failed:HTTPError",
+      "transient_errors": 1
+    },
+    {
+      "id": "sammobile.com",
+      "domain": "sammobile.com",
+      "feed_url": "https://sammobile.com/feed/",
+      "homepage": "https://sammobile.com/",
+      "discovered_via": "gnews",
+      "state": "candidate",
+      "score": {
+        "kw_hits": 0,
+        "entry_hits": 0
+      },
+      "error_count": 1,
+      "consecutive_ok": 0,
+      "last_checked": "2026-09-26T02:50:15Z",
+      "next_check_at": 1790394615.9685128,
+      "last_entry_date": "",
+      "evidence": {},
+      "last_error": "low_relevance"
+    },
+    {
+      "id": "nbd.com.cn",
+      "domain": "nbd.com.cn",
+      "feed_url": "",
+      "homepage": "https://nbd.com.cn/",
+      "discovered_via": "gnews",
+      "state": "candidate",
+      "score": {
+        "kw_hits": 0,
+        "entry_hits": 0
+      },
+      "error_count": 0,
+      "consecutive_ok": 0,
+      "last_checked": "2026-09-26T02:50:15Z",
+      "next_check_at": 1790394615.9685128,
+      "last_entry_date": "",
+      "evidence": {},
+      "last_error": "fetch_failed:HTTPError",
+      "transient_errors": 1
+    },
+    {
+      "id": "globalsources.com",
+      "domain": "globalsources.com",
+      "feed_url": "",
+      "homepage": "https://globalsources.com/",
+      "discovered_via": "gnews",
+      "state": "candidate",
+      "score": {
+        "kw_hits": 0,
+        "entry_hits": 0
+      },
+      "error_count": 1,
+      "consecutive_ok": 0,
+      "last_checked": "2026-09-26T02:50:15Z",
+      "next_check_at": 1790394615.9685128,
+      "last_entry_date": "",
+      "evidence": {},
+      "last_error": "not_a_feed"
+    },
+    {
+      "id": "manufacturing.economictimes.indiatimes.com",
+      "domain": "manufacturing.economictimes.indiatimes.com",
+      "feed_url": "",
+      "homepage": "https://manufacturing.economictimes.indiatimes.com/",
+      "discovered_via": "gnews",
+      "state": "candidate",
+      "score": {
+        "kw_hits": 0,
+        "entry_hits": 0
+      },
+      "error_count": 0,
+      "consecutive_ok": 0,
+      "last_checked": "2026-09-26T02:50:15Z",
+      "next_check_at": 1790394615.9685128,
+      "last_entry_date": "",
+      "evidence": {},
+      "last_error": "fetch_failed:HTTPError",
+      "transient_errors": 1
+    }
+  ]
+}

@@ -29,3 +29,4 @@
 - 自动化现状：**F4 每日生成已死**（原跑在 WorkBuddy，2026-09-10 后无产出），当前环境也无定时任务——日报停摆中
 - 存量测试债（不阻塞）：pytest 4 个 weekly_review 失败（KeyError 'scenario_review'）；test_m4_m5_m6 独立跑 1 个状态依赖失败
 - **待用户拍板**：① v6.0 落地启用（生成首期新格式日报）② 每日自动化在本环境重建（失败要响）③ multi_source 管线「真上线 or 归档」二选一 ④ 存量测试债是否修
+- 2026-09-25 自主源发现层上线（discover.py：Google News/OPML/newsnow 三引擎 + Miniflux 式生命周期，state/discovered_sources.json）

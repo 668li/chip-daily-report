@@ -85,14 +85,20 @@ def test_compute_global_metrics_missing_files(monkeypatch, tmp_path):
     assert g["gap_cells"] == 0
 
 
-def test_probe_failsoft(monkeypatch):
-    """探针内部异常 → 返回 down 列表，不抛出。"""
+def test_probe_failsoft(monkeypatch, tmp_path):
+    """探针内部异常 → 返回 down 列表，不抛出。
+    HEALTH_FILE/STATE_DIR 必须指向 tmp_path：run() 末尾会 write_health 真实
+    落盘，不 patch 会覆盖受跟踪的 state/source_health.yaml 并删掉 4 个源的
+    历史（对抗审查 #9 披露的存量污染缺陷，此处修根因）。"""
     def boom(timeout=8):
         raise RuntimeError("network unreachable")
+    monkeypatch.setattr(hc, "HEALTH_FILE", tmp_path / "source_health.yaml")
+    monkeypatch.setattr(hc, "STATE_DIR", tmp_path)
     monkeypatch.setattr(hc, "collect_probes", boom)
     try:
         # collect_probes 本身抛异常由 run() 处理：这里验证 run 不炸
         health = hc.run()
         assert isinstance(health, dict)
+        assert (tmp_path / "source_health.yaml").exists()  # 落盘走 tmp
     except Exception:
         raise AssertionError("run() 在探针异常时应 fail-soft，不应抛出")

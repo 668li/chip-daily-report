@@ -321,3 +321,62 @@
 6. **RSS 实体容错**（迭代3 修复 2026-08-15）：部分 feed（如 SemiEngineering/SemiAnalysis）含裸 `&` 或未定义 HTML 实体（`&nbsp;`），XML 解析会 not well-formed / undefined entity。collector 已做预处理（裸 `&` → `&amp;` + html5 实体注册进 XMLParser.entity）。
 7. **health_check CLI 直跑只探 2 源**（迭代3 修复 2026-08-15）：`python scripts/multi_source/health_check.py` 时模块为 `__main__`，`from . import collector` 相对导入失败，旧实现静默走 fallback 只探 SEC EDGAR + AIHOT。已改双路径导入（相对 → 绝对），自动化场景可探到全部 6 源。
 8. **gate 关键词短英文词必须词边界匹配**（迭代3 修复 2026-08-15）：`INCLUDE_KW` 里 "ai"、"sic" 等 ≤4 字符英文词做子串匹配会误命中 "again"、"basic" 等单词，导致 CNBC 跑车新闻混入候选池。已改 `_kw_in()` 词边界匹配（ASCII 短词 `(?<![a-z0-9])kw(?![a-z0-9])`）。
+
+---
+
+## 自主源发现层（2026-09-25 接入）
+
+> **作用**：打破「人工供源」信息茧房——`scripts/multi_source/discover.py` 让系统自己 发现→验证→纳入 新数据源，状态落 `state/discovered_sources.json`；已验证（trial/active）源由 collector online 采集动态纳入（`dynamic_rss_collectors()`，一律 tier=4 线索级，过 gate G3 打 single_low_tier 降级线）。
+> **⚠ 白名单纪律**：**采集层新源不自动进 A 级白名单**——发现层只解决「能不能抓」，引用分级仍按本文件「来源级别判定规则」与 `rules/rule_registry.yaml` 白名单执行；零人工审核的自动源引用时按线索（B 级以下）处理，人工核实定级后方可录入注册表升级。
+
+### 发现引擎（3 个，fail-soft，单引擎失败跳过）
+
+| 引擎 | 做法 | 备注 |
+|------|------|------|
+| gnews_domains（Google News RSS 中英） | zh `(半导体 OR 芯片 OR 晶圆厂) when:7d` / en `(semiconductor OR chip OR wafer fab) when:7d`（full 模式追加先进封装/出口管制、TSMC/Samsung/SK hynix、HBM/chiplet、硬件垂类共 3 组），从条目 `<source url="出版方域名">` 直接提取域名计频 | 万能发现源：无需解重定向链；相邻 query 间隔 ≥2s |
+| opml_candidates（OPML 种子） | 公开 OPML 订阅清单（awesome-rss-feeds-list / tidings-rss）按文档序采样 xmlUrl 上限 60 条，作候选域的 feed 提示 | 仅 `--mode full` 启用 |
+| newsnow_domains（newsnow 热榜） | 热榜 3 个 id（cls-hot / wallstreetcn-hot / gelonghui）的 items[].url 提取域名，no_proxy 直连 | 仅 `--mode full` 启用 |
+
+### 本轮内置新增源（collector.py，2026-09-25 实测可活，随 v7 一并接入）
+
+| 源 | 端点（已验证） | tier | 备注 |
+|----|--------------|------|------|
+| IEEE Spectrum | `https://spectrum.ieee.org/feeds/topic/semiconductors.rss` | 1 | 半导体专题，英文权威 |
+| Tom's Hardware | `https://www.tomshardware.com/feeds/all` | 1 | 设计/消费硬件环节 |
+| Nikkei Asia | `https://asia.nikkei.com/rss/feed/nar` | 1 | **RDF/RSS1.0 格式，日期在 dc:date 命名空间**（collector/discover 均已按本地名兼容） |
+| Korea Herald | `https://www.koreaherald.com/rss/allCh.xml` | 1 | 韩媒英文，存储/韩厂视角 |
+| Yonhap EN | `https://en.yna.co.kr/RSS/news.xml` | 1 | 韩联社英文，通讯社口径 |
+| Yahoo Finance | `https://feeds.finance.yahoo.com/rss/2.0/headline?s=NVDA&region=US&lang=en-US`（TSM 同形换 `s=`） | 3 | 个股新闻，仅标的命中芯片词才相关，线索级 |
+| 巨潮资讯 GET 全文搜索 | `GET https://www.cninfo.com.cn/new/fulltextSearch/full?searchkey=芯片&pageNum=1` | 3 | type=filing 公告；**响应 GBK**（容错解码）；**必须绕系统代理直连**；announcementTime 为毫秒时间戳；PDF 链拼 `https://static.cninfo.com.cn/` 前缀；标题含 `<em>` 高亮需清洗 |
+| newsnow 热榜 | `GET https://newsnow.busiyi.world/api/s?id=<id>`（cls-hot / wallstreetcn-hot / gelonghui） | 4 | 线索级；先直连、失败走系统代理重试一次 |
+
+> 同批还接入 Google News 线索 collector（`https://news.google.com/rss/search?q=…&ceid=…`，tier=4）：条目出版方域名存 `raw_payload.publisher_domain`（管线暂无消费点，发现层计频由 discover 独立提取）；发现层专用探测无静态白名单，防线 = https-only + 解析 IP 拒私网/回环 + 重定向逐跳校验 + 响应体上限 + 每域礼貌间隔 ≥0.8s。
+
+### 生命周期规则（抄 Miniflux 设计）
+
+- **状态机**：`candidate --探测通过--> trial --连续 2 次通过--> active`；frozen 重探通过 → 复活回 trial。探测四道门：feed 自动发现（首页 `<link rel="alternate">` → `/feed/` `/rss` 等路径清单兜底）→ 合法性（HTML 反爬壳/非 feed/无条目拒绝）→ 新鲜度（最新条目 90 天内）→ 相关性（不同芯片关键词命中 ≥3 且有命中条目 ≥2）。
+- **确定性失败**（html_shell / not_a_feed / no_entries / low_relevance / stale_feed）：error_count+1，指数退避 `30min×2^n` **封顶 7 天**；**连续 3 败 → frozen 冻结**（池保留不删除，到期重探通过即翻案）。
+- **瞬时失败**（fetch_failed / probe_error：断网/超时/WAF 抖动）：单独计数，退避封顶 24h，**不冻结、不改变 state**——断网一个下午不冻死全池。
+- 探测通过后 12h 复查；状态文件原子写回（先写 .tmp 再 os.replace）。
+
+### 运行命令
+
+```bash
+python scripts/multi_source/discover.py --mode quick    # 每日生成前：gnews 2 组 query + 新域探测上限 8
+python scripts/multi_source/discover.py --mode full     # 每周一：全引擎（+OPML +newsnow）+ 新域上限 18
+python scripts/multi_source/discover.py --mode status   # 只打印现有状态表，不联网
+```
+
+结尾固定打印 `[discover] SUMMARY net_new=X validated=Y promoted=A state_total=T known_domains=K`（供门禁 grep）；任何异常 fail-soft，进程 exit 0。
+
+### 实测黑名单（2026-09-25 调研，勿再接入，省探测预算）
+
+| 源 | 死因 |
+|----|------|
+| TrendForce RSS | 404 |
+| The Elec | 403 / 502 |
+| AnandTech | 已关站；HTTP 200 + HTML 反爬壳陷阱（200 ≠ 活 feed 的教训，探测须验内容形态） |
+| 36kr `/feed` | 实测不可用（黑名单清单在列，未注明具体错误码） |
+| 虎嗅 `/rss/0.xml` | 实测不可用（同上） |
+| Bing News RSS | 仅返回 12 条，池太小 |
+| RSSHub / DailyHotApi / 60s API 公共实例 | 均被 Cloudflare 拦截 |
