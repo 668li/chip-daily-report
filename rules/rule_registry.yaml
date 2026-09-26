@@ -34,10 +34,11 @@ meta:
 # -----------------------------------------------------------------------------
 domains:
 
-  # A 级：权威源（官方/行业组织/权威媒体/学术会议），共 44 个
+  # A 级：权威源（官方/行业组织/权威媒体/学术会议），共 46 个
   # 构建规则：
   #   - 根目录脚本原有 39 个（X1 以根目录为权威）
   #   + X7 补齐 5 个学术域名（isscc.org / vlsisymposium.org / dac.com / ieee-iedm.org / nature.com）
+  #   + v7.1（2026-09-26）补录 2 个官方一手域（asml.com / amkor.com，评审溯源回填产物）
   #   - X8 统一为 samsung.com 父域（覆盖 news.samsung.com / semiconductor.samsung.com）
   a_level:
     - domain: "tsmc.com"

@@ -97,10 +97,10 @@ A_LEVEL_DOMAINS = [
     'skhynix.com',  # SK hynix 官方
     'news.skhynix.com',  # SK hynix 新闻室
     'intel.com',  # Intel Newsroom
-    'nvidia.com',  # NVIDIA 官方
-    'nvidianews.nvidia.com',  # NVIDIA Newsroom
     'asml.com',  # ASML 官方
     'amkor.com',  # Amkor 官方（父域，公告含 ir.amkor.com）
+    'nvidia.com',  # NVIDIA 官方
+    'nvidianews.nvidia.com',  # NVIDIA Newsroom
     'semi.org',  # SEMI
     'semi.org.cn',  # SEMI 大半导体产业网
     'techinsights.com',  # TechInsights

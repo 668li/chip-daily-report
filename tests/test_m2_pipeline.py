@@ -25,7 +25,9 @@ from report_viz import parser          # noqa: E402
 from report_renderer import render_markdown, to_json  # noqa: E402
 from validate_ir import validate        # noqa: E402
 
-GOLDEN = REPO / "芯片行业日报_20260817.md"
+# golden=当期合规样例（v8 冲刺换金：20260817 旧格式不满足 v7.1 [G-1]/[G-2] 门禁，
+# 安全网应永远钉在最新通过 26 门禁的报告上；历史报告不改不追）
+GOLDEN = REPO / "芯片行业日报_20260925.md"
 
 
 def test_preflight_pass():

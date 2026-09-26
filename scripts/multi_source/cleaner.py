@@ -119,6 +119,7 @@ def normalize(items: list[RawItem]) -> list[dict]:
             "segment": norm_segment(it.segment or ""),
             "title": clean_title(it.title),
             "url": norm_url(it.url),
+            "publisher_domain": (getattr(it, "raw_payload", {}) or {}).get("publisher_domain", ""),
             "published": norm_date(it.published),
             "body": body,
             "fingerprint": make_fingerprint(clean_title(it.title)),

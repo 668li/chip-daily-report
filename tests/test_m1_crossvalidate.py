@@ -32,11 +32,11 @@ def check(name, cond):
         fail += 1
 
 
-rep = parser.parse_report("芯片行业日报_20260817.md")
+rep = parser.parse_report("芯片行业日报_20260925.md")  # v8 换金：钉在最新过 26 门禁的报告
 ver = cross_validate(rep)
 
 # 1) 基础判定
-check("黄金 15 条全被评估", ver["total"] == 15)
+check("黄金条目全被评估（20260925=18 条）", ver["total"] == rep["news_count"] == 18)
 check("交叉项聚类未误并成巨型组（组数<=3）", len(ver["clusters"]) <= 3)
 check("单源数量>0（黄金多为单源）", ver["single_source"] > 0)
 
@@ -56,7 +56,7 @@ check("M1 仅 WARN/PASS、无 FAIL", all(r[2] in ("WARN", "PASS") for r in m1_ro
 check("26 项硬校验 FAIL 数=0（M1 不破坏）", n_fail == 0)
 
 # 4) apply_downgrades 就地降级
-rep2 = parser.parse_report("芯片行业日报_20260817.md")
+rep2 = parser.parse_report("芯片行业日报_20260925.md")  # v8 换金：钉在最新过 26 门禁的报告
 v2 = cross_validate(rep2)
 apply_downgrades(rep2, v2)
 downgraded = [it for seg, items in rep2["segments"].items() for it in items

@@ -52,6 +52,7 @@ import re
 import sys
 from datetime import date, datetime
 from pathlib import Path
+from urllib.parse import urlparse
 
 ROOT = Path(__file__).resolve().parent.parent.parent
 STATE_DIR = ROOT / "state"
@@ -131,6 +132,55 @@ def _title_has_review_tag(title: str) -> bool:
     return bool(re.search(r"\[(回顾|译|独家)\]", title or ""))
 
 
+# ---- v8 P1-D（2026-09-26）：publisher_domain 消费点 ----
+# Google News 条目的 <source url=出版方域> 经 cleaner/fusion 透传到事件源条目。
+# 消费点：G3 单源分级——若出版方域是 A 级官方一手域（rule_registry.yaml 唯一
+# 权威源，X8 父域匹配口径），不该因「经聚合 feed 发现」被打 single_low_tier。
+_OFFICIAL_DOMAINS: set[str] | None = None
+
+
+def _official_domains() -> set[str]:
+    """A 级域名集合（运行时读 rule_registry.yaml 即权威，无手工同步）。"""
+    global _OFFICIAL_DOMAINS
+    if _OFFICIAL_DOMAINS is None:
+        try:
+            import yaml
+            reg = yaml.safe_load(
+                (ROOT / "rules" / "rule_registry.yaml").read_text(encoding="utf-8")) or {}
+            _OFFICIAL_DOMAINS = {
+                (d.get("domain") or "").lower()
+                for d in ((reg.get("domains") or {}).get("a_level") or [])
+                if d.get("domain")}
+        except Exception:
+            _OFFICIAL_DOMAINS = set()  # fail-soft：读不到就维持旧行为
+    return _OFFICIAL_DOMAINS
+
+
+def _host_of(u: str) -> str:
+    u = (u or "").strip()
+    if not u:
+        return ""
+    if "://" not in u:
+        u = "https://" + u
+    host = urlparse(u).netloc.lower()
+    host = host.rsplit("@", 1)[-1].split(":", 1)[0]
+    if host.startswith("www."):
+        host = host[4:]
+    return host
+
+
+def _is_official_domain(url: str = "", publisher_domain: str = "") -> bool:
+    """url 或出版方域命中 A 级域（== 或 endswith('.'+域)）即官方一手。"""
+    doms = _official_domains()
+    if not doms:
+        return False
+    for cand in (publisher_domain, url):
+        host = _host_of(cand)
+        if host and any(host == d or host.endswith("." + d) for d in doms):
+            return True
+    return False
+
+
 def gate(events: list[dict], conf_min: float = 60.0, stale_days: int = STALE_DAYS,
          max_per_segment: int = 6, top_n: int = 24) -> dict:
     """执行选择性纳入门禁。events 为 fusion.fuse() 输出结构（dict 列表）。
@@ -181,7 +231,11 @@ def gate(events: list[dict], conf_min: float = 60.0, stale_days: int = STALE_DAY
         if days is not None and days > stale_days and not _title_has_review_tag(title):
             flags.append("stale")  # 降级：日报生成方决定是否标[回顾]
         if ev.get("verification") == "single_source" and _max_tier(ev) == 4:
-            flags.append("single_low_tier")  # 仅作线索
+            ps = ev.get("primary_source") or {}
+            if _is_official_domain(ps.get("url", ""), ps.get("publisher_domain", "")):
+                flags.append("official_primary")  # P1-D：官方一手域，单源不降级
+            else:
+                flags.append("single_low_tier")  # 仅作线索
         entry = {
             "event_id": ev.get("event_id"),
             "title": title[:80],

@@ -163,6 +163,28 @@ def test_g3_single_low_tier_flag_not_rejected():
     assert "single_low_tier" in rep["candidates"][0]["flags"]
 
 
+def test_g3_official_publisher_domain_not_low_tier():
+    """P1-D：tier4 单源但出版方域是 A 级官方域（父域匹配）→ official_primary。"""
+    ev = _mk_ev("EV01", ver="single_source", n=1, tier=4)
+    ev["primary_source"] = {"url": "https://news.skhynix.com/hbm-announce-2026",
+                            "publisher_domain": "https://news.skhynix.com"}
+    rep = gate_mod.gate([ev], top_n=10)
+    assert rep["stats"]["candidates"] == 1
+    flags = rep["candidates"][0]["flags"]
+    assert "official_primary" in flags
+    assert "single_low_tier" not in flags
+
+
+def test_g3_non_official_single_source_keeps_old_flag():
+    """P1-D 反例：出版方域非 A 级 → 维持 single_low_tier 旧行为。"""
+    ev = _mk_ev("EV01", ver="single_source", n=1, tier=4)
+    ev["primary_source"] = {"url": "https://random-blog.example.com/post/1",
+                            "publisher_domain": "https://random-blog.example.com"}
+    rep = gate_mod.gate([ev], top_n=10)
+    assert "single_low_tier" in rep["candidates"][0]["flags"]
+    assert "official_primary" not in rep["candidates"][0]["flags"]
+
+
 def test_review_tag_exempts_stale():
     from datetime import date, timedelta
     old = (date.today() - timedelta(days=15)).isoformat()

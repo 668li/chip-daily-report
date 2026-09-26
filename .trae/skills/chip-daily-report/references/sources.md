@@ -25,6 +25,8 @@
 | SK hynix 官方 | 权威源 | https://www.skhynix.com | 制造/封测 | HBM 相关官方公告 |
 | SK hynix 新闻室 | 权威源 | https://news.skhynix.com | 制造/封测 | HBM 相关官方新闻 |
 | Intel Newsroom | 权威源 | https://www.intel.com | 设计/制造 | 英特尔官方新闻 |
+| ASML 官方 | 权威源 | https://www.asml.com | 材料/设备 | 光刻设备官方新闻稿（2026-09-26 评审回路补录：唯一 EUV 厂商一手来源） |
+| Amkor 官方（父域，公告含 ir.amkor.com） | 权威源 | https://www.amkor.com | 封测 | 封测厂官方公告/投资者关系页（2026-09-26 评审回路补录，与 tsmc.com 同类一手来源） |
 | NVIDIA 官方 | 权威源 | https://www.nvidia.com | 设计 | GPU/AI 芯片官方发布 |
 | NVIDIA Newsroom | 权威源 | https://nvidianews.nvidia.com | 设计 | NVIDIA 官方新闻室 |
 | SEMI | 权威源 | https://www.semi.org | 材料/设备 | 设备销售预测、行业数据 |

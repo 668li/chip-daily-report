@@ -444,7 +444,7 @@ def render_md(ctx: dict) -> str:
 > 把每条关键前瞻挂 2~3 个互斥剧本（真趋势/炒作/被绕开），下期现实逐一打分：
 > 谁被印证 → 升级；谁被打脸 → 淘汰。这是把 L4 情景推演固化为周度闭环。
 
-{_md_scenario_review(ctx['scenario_review'])}
+{_md_scenario_review(ctx.get('scenario_review') or {})}
 
 ---
 *本文档由 chip-daily-report · weekly_review.py 生成 · 认知资产（迭代5）*
@@ -710,7 +710,7 @@ def render_html(ctx: dict) -> str:
 
   <section class="rv-block">
     <h2 class="rv-title">🎭 前瞻剧本复盘 <span class="rv-sub">多剧本并行打分（L4 情景推演 · M3→M5）</span></h2>
-    {_html_scenario_review(ctx['scenario_review'])}
+    {_html_scenario_review(ctx.get('scenario_review') or {})}
   </section>
 
   <footer class="foot">由 chip-daily-report · weekly_review.py 生成 · 认知资产（迭代5）</footer>

@@ -70,7 +70,8 @@ def parse_sources_alevel_domains(text):
 def test_X1_registry_is_single_source_of_truth():
     reg = load_registry()
     a = reg["domains"]["a_level"]
-    assert len(a) == 44, f"X1/X7: A 级域名应为 44 个，实际 {len(a)}"
+    # v7.1（2026-09-26）补录 asml.com / amkor.com：39 根目录 + 5 学术 + 2 = 46
+    assert len(a) == 46, f"X1/X7: A 级域名应为 46 个，实际 {len(a)}"
 
 
 def test_X7_bidirectional_diff_zero():

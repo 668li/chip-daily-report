@@ -264,7 +264,8 @@ def fuse(cleaned: list[dict]) -> list[dict]:
         sources = sorted(
             [{"source_id": it["source_id"], "source_name": it["source_name"],
               "tier": it["tier"], "type": it["type"], "title": it["title"],
-              "url": it["url"], "published": it["published"]}
+              "url": it["url"], "published": it["published"],
+              "publisher_domain": it.get("publisher_domain", "")}
              for it in uniq],
             key=lambda s: TIER_SCORE.get(s["tier"], 0), reverse=True,
         )

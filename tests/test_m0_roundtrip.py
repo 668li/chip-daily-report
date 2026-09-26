@@ -23,7 +23,9 @@ sys.path.insert(0, str(SCRIPTS))
 from report_viz import parser  # noqa: E402
 from report_renderer import render_markdown, from_json, to_json  # noqa: E402
 
-GOLDEN = REPO / "芯片行业日报_20260817.md"
+# golden=当期合规样例（v8 冲刺换金：20260817 旧格式不满足 v7.1 [G-1]/[G-2] 门禁，
+# 往返安全网应永远钉在最新通过 26 门禁的报告上；历史报告不改不追）
+GOLDEN = REPO / "芯片行业日报_20260925.md"
 VALIDATE = REPO / "scripts" / "validate_report.py"
 TMP = REPO / "delivery" / "_m0_roundtrip_test.md"
 
@@ -41,9 +43,10 @@ def test_parse_render_roundtrip_is_lossless_for_validation():
         assert back["news_count"] == report["news_count"]
 
         # 关键结构字段必须被 parser 完整捕获（M0 完整性门槛）
-        assert len(report["catalysts"]) >= 1, "前瞻催化剂表格未被捕获"
-        # v5.11 确定性列：至少有一条标了确定性
-        assert any(c.get("certainty") for c in report["catalysts"]), "v5.11 确定性列丢失"
+        # v6.1 起确定时点是「未来 7 天窗口内已公告日期」——窗口空时 catalysts=0
+        # 属合法状态（如实写「窗口内无已知时点」），故此断言允许 0；
+        # 结构捕获由 forward_review/catalyst_notes 承担。
+        assert isinstance(report["catalysts"], list), "确定时点字段缺失"
         assert report["forward_review"] and report["forward_review"]["items"], "前瞻兑现回顾未被捕获"
         assert report["catalyst_notes"], "前瞻解读块未被捕获"
 

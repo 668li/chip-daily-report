@@ -1,26 +1,26 @@
 {
   "aggregate": {
-    "report_count": 12,
+    "report_count": 13,
     "date_range": [
       "20260720",
-      "20260910"
+      "20260925"
     ],
-    "avg_computed_a_ratio": 0.647,
+    "avg_computed_a_ratio": 0.627,
     "declared_a_ratio_count": 1,
     "avg_declared_a_ratio": 0.333,
     "avg_ratio_gap": 0.394,
     "max_ratio_gap": 0.394,
-    "avg_news_count": 15.3,
+    "avg_news_count": 15.5,
     "news_min": 9,
     "news_max": 22,
     "segment_coverage_matrix": {
-      "设计": 12,
-      "制造": 12,
-      "封测": 12,
-      "EDA": 12,
-      "材料设备": 12
+      "设计": 13,
+      "制造": 13,
+      "封测": 13,
+      "EDA": 13,
+      "材料设备": 13
     },
-    "segment_full_coverage_count": 12,
+    "segment_full_coverage_count": 13,
     "x_signals": {
       "X11_今日要点含股价": 2,
       "X14_独立来源统计小节": 1,
@@ -30,7 +30,7 @@
     "x12_distribution": {
       "WARN": 2,
       "FAIL": 1,
-      "PASS": 9
+      "PASS": 10
     },
     "avg_selfcheck_pass_rate": 1.0,
     "selfcheck_missing_count": 0
@@ -446,6 +446,42 @@
       "c_count": 0,
       "u_count": 0,
       "a_ratio": 1.0,
+      "segment_coverage": {
+        "设计": true,
+        "制造": true,
+        "封测": true,
+        "EDA": true,
+        "材料设备": true
+      },
+      "segment_coverage_count": 5,
+      "selfcheck_present": true,
+      "selfcheck_total": 26,
+      "selfcheck_pass": 26,
+      "selfcheck_fail": 0,
+      "selfcheck_warn": 0,
+      "declared_a_ratio": null,
+      "ratio_gap": null,
+      "x11": false,
+      "x14": false,
+      "x15": false,
+      "x16_title": true,
+      "chain_present": true,
+      "x12_grade": "PASS"
+    },
+    {
+      "file": "芯片行业日报_20260925.md",
+      "date": "20260925",
+      "title": "# 芯片行业日报 — 2026年9月25日",
+      "title_has_date": true,
+      "meta_blockquote": true,
+      "declared_news": 18,
+      "computed_news": 18,
+      "sources_total": 18,
+      "a_count": 7,
+      "b_count": 1,
+      "c_count": 0,
+      "u_count": 10,
+      "a_ratio": 0.389,
       "segment_coverage": {
         "设计": true,
         "制造": true,
