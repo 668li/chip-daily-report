@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-芯片行业日报校验脚本（硬约束校验器）v5.0
+芯片行业日报校验脚本（硬约束校验器）v5.1
 用法: python validate_report.py <日报文件路径>
 
 v3.1 修复（基于对抗审查报告）:
@@ -63,6 +63,16 @@ v5.8 升级（未来借鉴强化 + 今日导师课）:
         须含 今日速览/深度第一课/必懂概念/课后思考 四模块；缺失 WARN；不改变退出码
   - 脚本覆盖 15/15 项 Rubric + 11 项 X 裁决软检查（16-26）
 
+v5.1 升级（v7.1 门禁升级，2026-09-26 评审回路产物——治"作者自查永远查不出来"类问题）:
+  - [G-1] #3 来源可追溯升级：链接存在性 → 文章级 URL 门禁。来源链接全部为站点首页
+        （域名根/仅斜杠）判 FAIL——伪追溯（评审 P0-1：11/14 首页链接曾全数通过旧检查）
+  - [G-2] #5 时效诚实化：覆盖范围须含 72h 条目数标注（缺失 WARN）；0 条 72h 内条目
+        且头部未标注'周报'判 FAIL（0 条新鲜条目不得自称日报）；'日期待确认'≥3 条 WARN
+  - [G-3] #10 新增高信号单源软检测：重要性=高 的条目单一域名来源 WARN
+        （建议 ≥2 独立域名交叉；官方一手来源可人工豁免）
+  - [G-4] #22 推演判据硬化：剧本判据含'公开报道/媒体报道'式措辞 WARN（应绑定具名数据源）；
+        多剧本含量化阈值时提示确认中间态归属（空档对账记'偏差'）
+
 退出码：
   0 = 全部通过
   1 = 存在未通过项
@@ -89,6 +99,8 @@ A_LEVEL_DOMAINS = [
     'intel.com',  # Intel Newsroom
     'nvidia.com',  # NVIDIA 官方
     'nvidianews.nvidia.com',  # NVIDIA Newsroom
+    'asml.com',  # ASML 官方
+    'amkor.com',  # Amkor 官方（父域，公告含 ir.amkor.com）
     'semi.org',  # SEMI
     'semi.org.cn',  # SEMI 大半导体产业网
     'techinsights.com',  # TechInsights
@@ -272,12 +284,27 @@ def extract_news_items(content):
 
 
 def check_source_links(items):
-    """检查3: 来源可追溯（每条新闻是否有可点击链接）"""
+    """检查3: 来源可追溯（v7.1 升级：域名根链接视为伪追溯）。
+
+    每条新闻的来源须含至少一个**文章级 URL**（域名后带路径）；
+    链接全部为站点首页（域名根或仅斜杠）判 FAIL——点开回不到原始报道，
+    这是"链接存在性检查"永远测不出的伪追溯（2026-09-26 评审 P0-1）。
+    返回 (title, status)，status ∈ {'ok', 'homepage', 'none'}。
+    """
     checks = []
     for item in items:
         title = item['title'][:30]
-        has_link = bool(re.search(r'\[.+?\]\(https?://.+?\)', item['source']))
-        checks.append((title, has_link))
+        urls = re.findall(r'\[.+?\]\((https?://[^)\s]+)\)', item['source'])
+        has_link = bool(urls)
+        # 文章级 = netloc 之后有真实路径（长度 >1，即不止一个根斜杠）
+        has_article = any(re.search(r'https?://[^/]+/.+', u) for u in urls)
+        if has_article:
+            status = 'ok'
+        elif has_link:
+            status = 'homepage'
+        else:
+            status = 'none'
+        checks.append((title, status))
     return checks
 
 
@@ -293,35 +320,54 @@ def check_summary_sentences(items):
 
 
 def check_timeliness(content, items, gen_time):
-    """检查5: 时效性（超72h标注[回顾]，未来日期FAIL）"""
+    """检查5: 时效性（超72h标注[回顾]，未来日期FAIL）+ v7.1 时效诚实化。
+
+    v7.1 新增三项（2026-09-26 评审 P0-3）：
+      - 覆盖范围须标注 "≤72h 条目: N"（缺失 WARN）
+      - N=0 且头部未标注"周报" → FAIL（0 条新鲜条目不得自称日报）
+      - "日期待确认" ≥3 条 → WARN（日期空洞过多，应逐条补源）
+    返回 (checks, skip, extras)；extras 含 fresh_count / has_fresh_annotation /
+    pending_date_count / weekly_labeled，供 main 打印新增判定。
+    """
     checks = []
+    extras = {
+        'fresh_count': 0,
+        'has_fresh_annotation': bool(re.search(r'覆盖范围[:：][^\n]*72', content)),
+        'pending_date_count': 0,
+        'weekly_labeled': bool(re.search(r'周报', content[:2500])),
+    }
     if not gen_time:
-        return checks, False
-    
+        return checks, False, extras
+
     skip = True
     for item in items:
         title = item['title'][:30]
         timestamp = item['timestamp']
-        
+
         # 跳过"日期待确认"
         if '日期待确认' in timestamp or not timestamp:
+            extras['pending_date_count'] += 1
             continue
-        
+
         # 提取日期
         date_match = re.search(r'(\d{4}-\d{2}-\d{2})', timestamp)
         if not date_match:
+            extras['pending_date_count'] += 1
             continue
-        
+
         try:
             news_date = datetime.strptime(date_match.group(1), "%Y-%m-%d")
             diff_hours = (gen_time - news_date).total_seconds() / 3600
             skip = False
-            
+
             # 未来日期检测
             if diff_hours < 0:
                 checks.append((title, False, f'未来日期{abs(diff_hours):.0f}h'))
                 continue
-            
+
+            if 0 <= diff_hours <= 72:
+                extras['fresh_count'] += 1
+
             if diff_hours > 72:
                 # 超72小时，应标注[回顾]
                 has_review_tag = '[回顾]' in item['title']
@@ -333,8 +379,8 @@ def check_timeliness(content, items, gen_time):
                     checks.append((title, False, '误标[回顾]'))
         except ValueError:
             pass
-    
-    return checks, skip
+
+    return checks, skip, extras
 
 
 def check_today_highlight(content, actual_news_count=0):
@@ -664,6 +710,26 @@ def check_title_date(content):
 SIGNAL_RE = re.compile(r"信号[:：]\s*(高|中|低)\s*/\s*(利好|利空|中性)\s*/\s*(正面|负面|中性)")
 
 
+def high_signal_single_source(items):
+    """v7.1 软指标：高信号条目单源检测。
+
+    重要性=高 的条目牵动全链，理应有 ≥2 个独立域名交叉来源；
+    单一域名 → 建议补交叉来源（官方一手来源可人工豁免，不做机器豁免以免维护白名单）。
+    返回条目标题列表。
+    """
+    flagged = []
+    for item in items:
+        if '今日暂无' in item['title']:
+            continue
+        m = SIGNAL_RE.search(item['timestamp'])
+        if not m or m.group(1) != '高':
+            continue
+        domains = set(extract_urls(item['source']))
+        if len(domains) < 2:
+            flagged.append(item['title'][:25])
+    return flagged
+
+
 def check_signal_layer(items):
     """检查20（v5.2 信号层，软指标）：每条新闻应标注 '| 信号: 重要性/影响方向/情绪'。
 
@@ -766,6 +832,30 @@ def check_catalyst_section(content):
                 if '知识锚' not in b or '成长含义' not in b
             ]
             if not missing:
+                # v7.1 判据硬化（软提示，2026-09-26 评审 P1-1）
+                scenario_lines = [
+                    ln for ln in section_content.splitlines()
+                    if re.match(r'\s*-\s*\*\*剧本', ln)
+                ]
+                weak = [
+                    ln for ln in scenario_lines
+                    if '公开报道' in ln or '媒体报道' in ln
+                ]
+                numeric = [
+                    ln for ln in scenario_lines
+                    if re.search(r'[≥≤><]\s*\+?\d+%?', ln)
+                ]
+                warns = []
+                if weak:
+                    warns.append(
+                        f"{len(weak)} 处剧本判据使用'公开报道'式措辞（v7.1 判据硬化：应绑定具名数据源，如 TrendForce/CFM/官方纪要）"
+                    )
+                if len(numeric) >= 2:
+                    warns.append(
+                        "多个剧本含量化阈值——请确认中间态归属（判据空档情形对账记'偏差'，不得判命中）"
+                    )
+                if warns:
+                    return ('WARN', "；".join(warns))
                 return (
                     'PASS',
                     f"未来推演小节存在，含 {n_proj} 条推演块且均带验证窗口/知识锚/成长含义（推演型前瞻·身份化）",
@@ -929,7 +1019,7 @@ def main():
     content = read_file(filepath)
     
     print("=" * 70)
-    print(f"  芯片行业日报校验报告 v5.0")
+    print(f"  芯片行业日报校验报告 v5.1")
     print(f"  文件: {filepath}")
     print("=" * 70)
     
@@ -970,16 +1060,17 @@ def main():
         else:
             print(f"  ✓ PASS  新闻总数一致：{actual_count}条")
     
-    # 检查3: 来源可追溯
-    print("\n【检查3】来源可追溯")
+    # 检查3: 来源可追溯（v7.1: 文章级 URL 门禁，域名根=伪追溯）
+    print("\n【检查3】来源可追溯（v7.1: 须文章级 URL，域名根=伪追溯 FAIL）")
     source_checks = check_source_links(items)
-    fail_count = 0
-    for title, has_link in source_checks:
-        if not has_link:
-            print(f"  ✗ FAIL  {title}... 缺少来源链接")
-            fail_count += 1
-    if fail_count == 0:
-        print(f"  ✓ PASS  全部{len(source_checks)}条新闻均有来源链接")
+    homepage_items = [t for t, s in source_checks if s == 'homepage']
+    missing_items = [t for t, s in source_checks if s == 'none']
+    for title in missing_items:
+        print(f"  ✗ FAIL  {title}... 缺少来源链接")
+    for title in homepage_items:
+        print(f"  ✗ FAIL  {title}... 来源仅为站点首页（伪追溯），须补文章级 URL")
+    if not missing_items and not homepage_items:
+        print(f"  ✓ PASS  全部{len(source_checks)}条新闻均有文章级来源链接")
     else:
         all_pass = False
     
@@ -1003,9 +1094,9 @@ def main():
     else:
         all_pass = False
     
-    # 检查5: 时效性
-    print("\n【检查5】时效性（超72h标注[回顾]，未来日期FAIL）")
-    time_checks, skipped = check_timeliness(content, items, gen_time)
+    # 检查5: 时效性（v7.1: 标签检查 + 时效诚实化）
+    print("\n【检查5】时效性（超72h标注[回顾]，未来日期FAIL；v7.1 时效诚实化）")
+    time_checks, skipped, time_extras = check_timeliness(content, items, gen_time)
     if skipped:
         print("  ⚠ SKIP  无可判定时间的新闻，跳过时效性检查")
     else:
@@ -1020,6 +1111,20 @@ def main():
             print(f"  ✓ PASS  时效标签检查通过")
         else:
             all_pass = False
+
+    # v7.1 时效诚实化判定
+    if actual_count > 0:
+        if not time_extras['has_fresh_annotation']:
+            print("  ⚠ WARN  覆盖范围未标注 '≤72h 条目: N'（v7.1 时效诚实化要求，供读者判断日报/周报形态）")
+        if time_extras['fresh_count'] == 0 and not time_extras['weekly_labeled']:
+            print("  ✗ FAIL  0 条 72 小时内条目且头部未标注'周报'——不得以'日报'形态交付（v7.1 时效诚实化）")
+            all_pass = False
+        elif time_extras['fresh_count'] == 0:
+            print("  ⚠ WARN  0 条 72 小时内条目（已标注周报形态，PASS 但建议补鲜）")
+        else:
+            print(f"  ✓ PASS  72h 内条目: {time_extras['fresh_count']} 条")
+        if time_extras['pending_date_count'] >= 3:
+            print(f"  ⚠ WARN  {time_extras['pending_date_count']} 条'日期待确认'（≥3，应逐条补源定日期）")
     
     # 检查6: 今日要点（新增）
     print("\n【检查6】今日要点（1-3条，0条新闻自动PASS）")
@@ -1085,6 +1190,11 @@ def main():
     else:
         print(f"  ✗ FAIL  A级占比{quality['a_ratio']:.1f}% < 30%（需补充权威源）")
         all_pass = False
+
+    # v7.1: 高信号条目单源检测（软指标，2026-09-26 评审 P0-2）
+    hs_single = high_signal_single_source(items)
+    if hs_single:
+        print(f"  ⚠ WARN  {len(hs_single)}条高信号条目为单一域名来源（建议 ≥2 独立域名交叉；官方一手来源可人工豁免）: {'、'.join(hs_single[:5])}")
 
     # 检查11: 免责声明与分隔线（E-4修复）
     print("\n【检查11】免责声明与结构完整性")
