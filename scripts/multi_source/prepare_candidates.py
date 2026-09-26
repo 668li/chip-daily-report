@@ -54,9 +54,16 @@ def run(conf_min: float = 60.0, top_n: int = 24, max_per_segment: int = 6,
         }
         items = collector.collect(mode="online", scope=scope)
         cleaned = cleaner.normalize(items)
+        # v8 P1-C 采中准入：无文章级 URL 不入池（G-1 前移，评审 P0-1 伪追溯断根）
+        cleaned, admission_dropped = cleaner.admit_article_level(cleaned)
         events = fusion.fuse(cleaned)
         report = gate_mod.gate(events, conf_min=conf_min,
                                max_per_segment=max_per_segment, top_n=top_n)
+        report["stats"]["admission_dropped"] = len(admission_dropped)
+        if admission_dropped:
+            report.setdefault("rejected_by_admission", []) .extend(
+                {"title": c.get("title", "")[:80], "url": c.get("url", ""),
+                 "reason": "homepage_or_empty_url"} for c in admission_dropped)
 
         out = out_file or DEFAULT_OUT
         out.parent.mkdir(parents=True, exist_ok=True)
@@ -99,7 +106,7 @@ def main() -> int:
 
     s = gate["stats"]
     print(f"[prepare_candidates] online 采集 → 候选 {s['candidates']} 条 / 拒 {s['rejected']} 条"
-          f"（raw {s['raw']}）")
+          f"（raw {s['raw']}，准入拦首页级 {s.get('admission_dropped', 0)} 条）")
     if s["by_reason"]:
         print(f"[prepare_candidates] 拒绝原因: {s['by_reason']}")
     by_seg = Counter(c["segment"] for c in gate["candidates"])

@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated": "2026-09-26T04:50:13Z",
+  "updated": "2026-09-26T15:17:49Z",
   "sources": [
     {
       "id": "wccftech.com",
@@ -468,11 +468,12 @@
       },
       "error_count": 1,
       "consecutive_ok": 0,
-      "last_checked": "2026-09-26T01:24:53Z",
-      "next_check_at": 1790389493.8938973,
+      "last_checked": "2026-09-26T15:17:49Z",
+      "next_check_at": 1790439469.872273,
       "last_entry_date": "",
       "evidence": {},
-      "last_error": "fetch_failed:HTTPError"
+      "last_error": "fetch_failed:HTTPError",
+      "transient_errors": 1
     },
     {
       "id": "tspasemiconductor.substack.com",
@@ -514,11 +515,12 @@
       },
       "error_count": 1,
       "consecutive_ok": 0,
-      "last_checked": "2026-09-26T01:24:53Z",
-      "next_check_at": 1790389493.8938973,
+      "last_checked": "2026-09-26T15:17:49Z",
+      "next_check_at": 1790439469.872273,
       "last_entry_date": "",
       "evidence": {},
-      "last_error": "fetch_failed:HTTPError"
+      "last_error": "fetch_failed:HTTPError",
+      "transient_errors": 1
     },
     {
       "id": "androidheadlines.com",
@@ -531,10 +533,10 @@
         "kw_hits": 0,
         "entry_hits": 0
       },
-      "error_count": 1,
+      "error_count": 2,
       "consecutive_ok": 0,
-      "last_checked": "2026-09-26T01:24:53Z",
-      "next_check_at": 1790389493.8938973,
+      "last_checked": "2026-09-26T15:17:49Z",
+      "next_check_at": 1790443069.872273,
       "last_entry_date": "",
       "evidence": {},
       "last_error": "low_relevance"
@@ -552,11 +554,12 @@
       },
       "error_count": 1,
       "consecutive_ok": 0,
-      "last_checked": "2026-09-26T01:24:53Z",
-      "next_check_at": 1790389493.8938973,
+      "last_checked": "2026-09-26T15:17:49Z",
+      "next_check_at": 1790439469.872273,
       "last_entry_date": "",
       "evidence": {},
-      "last_error": "fetch_failed:HTTPError"
+      "last_error": "fetch_failed:HTTPError",
+      "transient_errors": 1
     },
     {
       "id": "eenewseurope.com",
@@ -598,11 +601,12 @@
       },
       "error_count": 1,
       "consecutive_ok": 0,
-      "last_checked": "2026-09-26T01:24:53Z",
-      "next_check_at": 1790389493.8938973,
+      "last_checked": "2026-09-26T15:17:49Z",
+      "next_check_at": 1790439469.872273,
       "last_entry_date": "",
       "evidence": {},
-      "last_error": "fetch_failed:HTTPError"
+      "last_error": "fetch_failed:HTTPError",
+      "transient_errors": 1
     },
     {
       "id": "electronicsweekly.com",
@@ -671,11 +675,12 @@
       },
       "error_count": 1,
       "consecutive_ok": 0,
-      "last_checked": "2026-09-26T01:24:53Z",
-      "next_check_at": 1790389493.8938973,
+      "last_checked": "2026-09-26T15:17:49Z",
+      "next_check_at": 1790439469.872273,
       "last_entry_date": "",
       "evidence": {},
-      "last_error": "fetch_failed:HTTPError"
+      "last_error": "fetch_failed:HTTPError",
+      "transient_errors": 1
     },
     {
       "id": "indexbox.io",
@@ -690,11 +695,12 @@
       },
       "error_count": 1,
       "consecutive_ok": 0,
-      "last_checked": "2026-09-26T01:24:53Z",
-      "next_check_at": 1790389493.8938973,
+      "last_checked": "2026-09-26T15:17:49Z",
+      "next_check_at": 1790439469.872273,
       "last_entry_date": "",
       "evidence": {},
-      "last_error": "fetch_failed:HTTPError"
+      "last_error": "fetch_failed:HTTPError",
+      "transient_errors": 1
     },
     {
       "id": "aol.com",
@@ -709,11 +715,12 @@
       },
       "error_count": 1,
       "consecutive_ok": 0,
-      "last_checked": "2026-09-26T01:24:53Z",
-      "next_check_at": 1790389493.8938973,
+      "last_checked": "2026-09-26T15:17:49Z",
+      "next_check_at": 1790439469.872273,
       "last_entry_date": "",
       "evidence": {},
-      "last_error": "fetch_failed:HTTPError"
+      "last_error": "fetch_failed:HTTPError",
+      "transient_errors": 1
     },
     {
       "id": "economictimes.com",
@@ -1542,6 +1549,165 @@
       "last_entry_date": "",
       "evidence": {},
       "last_error": "fetch_failed:URLError",
+      "transient_errors": 1
+    },
+    {
+      "id": "analyticsindiamag.com",
+      "domain": "analyticsindiamag.com",
+      "feed_url": "",
+      "homepage": "https://analyticsindiamag.com/",
+      "discovered_via": "gnews",
+      "state": "candidate",
+      "score": {
+        "kw_hits": 0,
+        "entry_hits": 0
+      },
+      "error_count": 0,
+      "consecutive_ok": 0,
+      "last_checked": "2026-09-26T15:17:49Z",
+      "next_check_at": 1790439469.872273,
+      "last_entry_date": "",
+      "evidence": {},
+      "last_error": "fetch_failed:HTTPError",
+      "transient_errors": 1
+    },
+    {
+      "id": "finance.eastmoney.com",
+      "domain": "finance.eastmoney.com",
+      "feed_url": "",
+      "homepage": "https://finance.eastmoney.com/",
+      "discovered_via": "gnews",
+      "state": "candidate",
+      "score": {
+        "kw_hits": 0,
+        "entry_hits": 0
+      },
+      "error_count": 0,
+      "consecutive_ok": 0,
+      "last_checked": "2026-09-26T15:17:49Z",
+      "next_check_at": 1790439469.872273,
+      "last_entry_date": "",
+      "evidence": {},
+      "last_error": "fetch_failed:HTTPError",
+      "transient_errors": 1
+    },
+    {
+      "id": "thestar.com.my",
+      "domain": "thestar.com.my",
+      "feed_url": "",
+      "homepage": "https://thestar.com.my/",
+      "discovered_via": "gnews",
+      "state": "candidate",
+      "score": {
+        "kw_hits": 0,
+        "entry_hits": 0
+      },
+      "error_count": 0,
+      "consecutive_ok": 0,
+      "last_checked": "2026-09-26T15:17:49Z",
+      "next_check_at": 1790439469.872273,
+      "last_entry_date": "",
+      "evidence": {},
+      "last_error": "fetch_failed:HTTPError",
+      "transient_errors": 1
+    },
+    {
+      "id": "moneycontrol.com",
+      "domain": "moneycontrol.com",
+      "feed_url": "",
+      "homepage": "https://moneycontrol.com/",
+      "discovered_via": "gnews",
+      "state": "candidate",
+      "score": {
+        "kw_hits": 0,
+        "entry_hits": 0
+      },
+      "error_count": 0,
+      "consecutive_ok": 0,
+      "last_checked": "2026-09-26T15:17:49Z",
+      "next_check_at": 1790439469.872273,
+      "last_entry_date": "",
+      "evidence": {},
+      "last_error": "fetch_failed:HTTPError",
+      "transient_errors": 1
+    },
+    {
+      "id": "bgr.com",
+      "domain": "bgr.com",
+      "feed_url": "https://www.bgr.com/category/news/feed/",
+      "homepage": "https://bgr.com/",
+      "discovered_via": "gnews",
+      "state": "candidate",
+      "score": {
+        "kw_hits": 0,
+        "entry_hits": 0
+      },
+      "error_count": 1,
+      "consecutive_ok": 0,
+      "last_checked": "2026-09-26T15:17:49Z",
+      "next_check_at": 1790439469.872273,
+      "last_entry_date": "",
+      "evidence": {},
+      "last_error": "low_relevance"
+    },
+    {
+      "id": "guancha.cn",
+      "domain": "guancha.cn",
+      "feed_url": "",
+      "homepage": "https://guancha.cn/",
+      "discovered_via": "gnews",
+      "state": "candidate",
+      "score": {
+        "kw_hits": 0,
+        "entry_hits": 0
+      },
+      "error_count": 0,
+      "consecutive_ok": 0,
+      "last_checked": "2026-09-26T15:17:49Z",
+      "next_check_at": 1790439469.872273,
+      "last_entry_date": "",
+      "evidence": {},
+      "last_error": "fetch_failed:URLError",
+      "transient_errors": 1
+    },
+    {
+      "id": "scmp.com",
+      "domain": "scmp.com",
+      "feed_url": "",
+      "homepage": "https://scmp.com/",
+      "discovered_via": "gnews",
+      "state": "candidate",
+      "score": {
+        "kw_hits": 0,
+        "entry_hits": 0
+      },
+      "error_count": 0,
+      "consecutive_ok": 0,
+      "last_checked": "2026-09-26T15:17:49Z",
+      "next_check_at": 1790439469.872273,
+      "last_entry_date": "",
+      "evidence": {},
+      "last_error": "fetch_failed:HTTPError",
+      "transient_errors": 1
+    },
+    {
+      "id": "thebossmagazine.com",
+      "domain": "thebossmagazine.com",
+      "feed_url": "",
+      "homepage": "https://thebossmagazine.com/",
+      "discovered_via": "gnews",
+      "state": "candidate",
+      "score": {
+        "kw_hits": 0,
+        "entry_hits": 0
+      },
+      "error_count": 0,
+      "consecutive_ok": 0,
+      "last_checked": "2026-09-26T15:17:49Z",
+      "next_check_at": 1790439469.872273,
+      "last_entry_date": "",
+      "evidence": {},
+      "last_error": "fetch_failed:HTTPError",
       "transient_errors": 1
     }
   ]

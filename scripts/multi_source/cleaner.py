@@ -82,6 +82,31 @@ def clean_title(t: str) -> str:
     return t
 
 
+# v8 P1-C（2026-09-26）：采集准入前移——文章级 URL 判定，口径同 validate_report
+# [G-1]（https?://[^/]+/.+）：域名根/仅斜杠 = 站点首页 = 伪追溯（评审 P0-1 断根）
+ARTICLE_URL_RE = re.compile(r"https?://[^/]+/.+")
+
+
+def is_article_url(url: str) -> bool:
+    """文章级 = netloc 之后有真实路径；域名根、仅斜杠、空串都不算。"""
+    return bool(ARTICLE_URL_RE.match((url or "").strip()))
+
+
+def admit_article_level(cleaned: list[dict]) -> tuple[list[dict], list[dict]]:
+    """采中准入：无文章级 URL 的条目不入候选池（G-1 从验后拦截前移到采中）。
+
+    返回 (准入, 拒绝)；拒绝项原样保留，供 gate_report 披露拒绝原因。
+    """
+    admitted: list[dict] = []
+    dropped: list[dict] = []
+    for c in cleaned:
+        if is_article_url(c.get("url", "")):
+            admitted.append(c)
+        else:
+            dropped.append(c)
+    return admitted, dropped
+
+
 def normalize(items: list[RawItem]) -> list[dict]:
     out = []
     for it in items:
