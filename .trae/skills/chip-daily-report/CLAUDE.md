@@ -5,7 +5,7 @@
 
 ## 怎么跑
 - 生成日报：skill 触发词（"芯片日报"等）启动 SKILL.md 六步流程（v4.0 起 10 步合并为 6 步 + Step 7 周度复盘）；生成前先跑 `<系统Python> scripts/daily_runner.py --stage prepare`（含发现层 quick + 候选池；每周一 `discover.py --mode full`）刷新
-- 校验日报：`C:/Users/李勇谚/AppData/Local/Programs/Python/Python312/python.exe scripts/daily_runner.py --stage verify --report <日报路径>`（串联 validate_report 26 项 + validate_understanding 理解层 + build_report_html；退出码 0=全过；一律用系统 Python 3.12，勿碰旧 venv）
+- 校验日报：`C:/Users/李勇谚/AppData/Local/Programs/Python/Python312/python.exe scripts/daily_runner.py --stage verify --report <日报路径>`（串联 validate_report 26 项 + validate_understanding 理解层 + forecast_due 推演到期点名——**有逾期未判的推演会非零退出** + build_report_html；退出码 0=全过；一律用系统 Python 3.12，勿碰旧 venv）
 - 跑测试：`<系统Python> -m pytest tests/ -q --ignore=tests/test_m1_crossvalidate.py --ignore=tests/test_m3_scenarios.py --ignore=tests/test_m4_m5_m6.py`（后三个是脚本式测试，独立跑 `python tests/test_mX.py`）
 - ⚠ 跑 pytest 会污染真实 state（source_health.yaml / leak_report.*）——跑完必须 `git checkout --` 还原这几个文件（test_health_check 污染根因已于 v7 修复，但 leak_report 系仍会被写）
 - 规则治理：改域名/环节只改 `rules/rule_registry.yaml` → 跑 `scripts/gen_rules.py` → 跑 `scripts/check_rules_consistency.py`（X7 硬门禁）；**禁止手工同步**注册表↔脚本↔sources.md

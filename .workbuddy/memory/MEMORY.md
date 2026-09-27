@@ -10,8 +10,8 @@
 
 ## 规则治理核心
 - `rules/rule_registry.yaml` = X1–X16 裁决与全部规则唯一权威源。改域名/规则只改它，再跑 `python scripts/gen_rules.py`（重写 validate_report.py 的 `GEN:RULES` 块 + sources.md `GEN:ALEVEL` 表）。**禁止手工同步两处**。
-- X7 一致性：`check_rules_consistency.py` 是 CI 硬门禁（H1–H5 任一不一致退出码 1）。A 级域名=44（脚本 39+学术 5 域）；Samsung 统一 `samsung.com`。
-- 镜像同步：`.trae/skills/chip-daily-report/` 8 文件须与根目录逐字节一致；references 文件 cp 进镜像 references/（cp 到根级成幽灵被 R1 跳过）。
+- X7 一致性：`check_rules_consistency.py` 是 CI 硬门禁（H1–H5 任一不一致退出码 1）。A 级域名=46（脚本 39+学术 5+官方一手 2：asml.com/amkor.com 为 v7.1 补录）；Samsung 统一 `samsung.com`。
+- 镜像同步：`.trae/skills/chip-daily-report/` 为精选子集（CLAUDE.md/SKILL.md+references+运行时脚本），镜像已有的文件须与根目录逐字节一致、**勿新增文件**；同步一律 Read+Write 工具逐文件写（Bash cp/heredoc 写源码或配置会被安全钩子拦；注意 R1 段不覆盖 CLAUDE.md，该文件靠人工纪律保持一致）。
 
 ## 关键裁决速查
 - X3 摘要 3-5 句 PASS/6 WARN/≥7 FAIL。X9 HBM 归制造。X10 产能 IPO 纳入/纯融资不纳。X11 股价仅一句佐证，不作主体/标题/今日要点。
@@ -37,7 +37,7 @@
 - signal_history.py（Step6 每日跑）→ state/signal_history.json；weekly_review.py（Step7 周五）→ delivery/芯片行业周度复盘_YYYYMMDD.md/.html（需 state/weekly_insights_*.txt 注入）。信号曲线 svg Y=-2..2。测试 113 passed。
 
 ## 自动化落地
-- ⚠ **2026-09-25 现状：以下两个 automation 均已停摆**（最后产出 2026-09-10；WorkBuddy 环境不再运行，当前 ZCode 环境也无定时任务）——日报停摆中，待重建（需求：失败要响）。
+- ⚠ **2026-09-25 现状：以下两个 automation 均已停摆**（最后产出 2026-09-10；WorkBuddy 环境不再运行，当前 ZCode 环境也无定时任务）——日报停摆中，待重建（需求：失败要响）。**（2026-09-27 更新：心跳已在 ZCode harness 重建为 daily_runner+定时任务，见文末 v8 快照；F4/F9 历史形态仍停摆）**
 - F4=automation-1786184607023（周一至五 08:00）：生成→validate→build_report_html→quality_dashboard→multi_source 三件套→archive_to_kb→中文汇报。
 - F9=quality_dashboard.py → delivery/quality_dashboard.md/.json（计算 A 占比+5 环节覆盖+X 信号+自述 vs 计算对账）。
 - 周质量看板=automation-1786185290346（每周五 18:00）。
@@ -78,3 +78,12 @@
 - **对抗审查四轮**：workflow 内对抗审查员 13 发现（5 high：词边界/OPML 搬运伪装发现/tier 同级/302 重定向 SSRF/冻结参数）9 修复；主会话第 4 轮验证修复真身+新增 rescore 模式（门禁升级全池复判）+密度门禁 0.30（实测谱：真垂类 0.35-0.5）+www 变体+tomshardware 修复。Mimosa 深扫 0 finding。
 - **测试**：tests/test_discover.py 40 用例全离线；全量 176 passed + 4 存量（weekly_review）；test_health_check 污染真实 state 的根因已修（HEALTH_FILE 指 tmp），leak_report 系仍需还原。
 - **新待拍板**：① 每日自动化重建（quick 发现已可挂每日流程）② gate 候选链路接入日常生成 ③ newsnow 自部署（公共实例 403）④ 存量测试债。
+
+## 2026-09-27 v8 护城河冲刺快照（ZCode 会话，勇谚发射提示词全自动执行）
+- **版本终态**：master = v7.1 + **v8 冲刺（推送至 c5b9449）**。上文 v7 快照「新待拍板」①②④ 已了结，③ newsnow 自部署仍待；评审优化版回填类工作此后由机制承担。
+- **心跳已恢复**：`scripts/daily_runner.py`（prepare=发现+候选池+到期点名预警 / verify=26 门禁+理解层+到期点名+HTML，fatal 非零退出指明炸哪步）+ ZCode 定时任务 automation-fe364622（周一至五 08:00，首跳 2026-09-28；删除=CronDelete 该 id）。runner 只做机械链路，正文生成=定时 LLM 会话按 SKILL.md 六步（ADR-002）。**推演到期点名 forecast_due.py 已接 verify 强制链：有逾期未判推演则日报不许收工。**
+- **门禁族**：26 项硬校验 + `validate_understanding.py` v1（U1-U6 存在性，带第 1 期缺陷样本 9 红灯，26 数不变）+ 采中准入（无文章级 URL 不入候选池）+ gate G7 话题去重 + G3 official_primary（publisher_domain 消费）。
+- **测试真相**：全量 pytest **199 绿 0 败（历史首次全绿）**；m1/m3 独立跑 ✓；m4_m5_m6 独立跑 1 败（状态依赖）记账不修。跑 pytest 后照例还原 state 污染。**教训：交接时点必须现场复跑门禁再报数**（v7.1 会话曾报绿但实际遗留 3 败）。
+- **试产第 2 期（20260926）**：16 条全 72h 窗口/文章级 16/16/A 级 31.3%，26+理解层 exit 0，自评 P0=0；**独立 critic 评审待补**（当日子代理配额全程超限，对标调研同因降级为 WebFetch 直读——ADR-007）。
+- **现役待办**（详见 delivery/会话交接_20260926.md）：周一首跳验证、补独立评审、gnews 分享链降级证据治理+中文权威源直链化（A 级占比 31.3% 踩线，负 delta 已记台账）、理解层 v2 语义校验、加时池②-⑤。
+- 权威文档：台账 delivery/迭代台账.md；对标 delivery/对标报告_护城河_20260926.md（五论点判决：推演问责/批评代谢独占、诚实性领先、教学层独占、发现层持平）；ADR-001~007 在 delivery/ADR_20260926.md。

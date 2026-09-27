@@ -38,7 +38,8 @@ description: >-
 | `scripts/multi_source/report_viz.py` | 多源融合报告可视化（迭代1）：事件卡片/漏聚候选/源覆盖矩阵/缺口清单 → `delivery/multi_source_report.html` | Step 6 保存日报后运行 |
 | `scripts/multi_source/gate.py` | 选择性纳入门禁（迭代3）：把融合事件提纯为日报候选池（G1 置信度/G2 时效/G3 单源/G4 环节配额/G5 主题关键词/G6 数量上限），输出 `state/gate_report.json`，全部拒绝可解释 | Step 2 搜索前查看候选池 |
 | `scripts/multi_source/prepare_candidates.py` | 候选池一键流水线（迭代3）：online 采集→清洗（含 v8 采中准入：无文章级 URL 不入池）→融合→gate 门禁，全程不落盘 data/ 回归基线，只写 `state/gate_report.json`，fail-soft | Step 2 搜索前运行 |
-| `scripts/daily_runner.py` | **每日心跳一条命令（v8）**：`--stage prepare`（发现层 quick+候选池，生成前）/ `--stage verify --report <md>`（26 项门禁+理解层校验+HTML，fatal 步失败非零退出并指明炸哪步）/ `--all`；runner 只做机械链路，内容生成仍是本 SKILL 六步流程 | 每日定时会话入口与验收器 |
+| `scripts/daily_runner.py` | **每日心跳一条命令（v8）**：`--stage prepare`（发现层 quick+候选池，生成前）/ `--stage verify --report <md>`（26 项门禁+理解层校验+推演到期点名+HTML，fatal 步失败非零退出并指明炸哪步）/ `--all`；runner 只做机械链路，内容生成仍是本 SKILL 六步流程 | 每日定时会话入口与验收器 |
+| `scripts/forecast_due.py` | 推演到期对账点名器（v8 加时①）：扫 `state/forecast_log.json` 分拣逾期/今日/7 天内，**逾期未判非零退出响铃**，`--md` 输出可贴进兑现回顾的点名草稿；被 runner verify 阶段强制调用 | Step 4 写兑现回顾前 / 每日心跳 |
 | `scripts/signal_history.py` | 信号历史累积（迭代5）：把 report_state.yaml 当日追踪主题快照追加到 `state/signal_history.json`（幂等同日覆盖），是信号强度曲线/周度复盘的数据源 | Step 6 保存日报后运行 |
 | `scripts/weekly_review.py` | 周度复盘聚合器（迭代5）：聚合本周日报+信号历史+质量看板 → `delivery/芯片行业周度复盘_YYYYMMDD.md/.html`（概览/主线/信号演进台账+曲线/认知素材/风险/催化剂），洞察区留 AI 润色 | Step 7 周五运行 |
 | `rules/rule_registry.yaml` | 单一权威规则注册表（A/B/C 域名、环节、X1–X16 裁决） | 规则变更时加载 |
