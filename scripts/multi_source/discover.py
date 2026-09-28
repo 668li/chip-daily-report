@@ -664,7 +664,7 @@ def is_relevant(score: dict) -> bool:
     """判定（三条件，缺一不可）：
       1) 不同关键词命中 ≥3（单一条目堆砌一个话题刷不满）；
       2) 有命中的条目数 ≥2（孤条偶然命中不算垂类）；
-      3) 命中条目占比 ≥25%（对抗审查复判发现：businesskorea/gagadget 类
+      3) 命中条目占比 ≥30%（RELEVANCE_MIN_RATIO=0.30；对抗审查复判发现：businesskorea/gagadget 类
          全站消防水管 feed 靠几十条里凑 2 条提 Samsung/芯片刷过绝对数门槛
          ——密度才度量「这是不是芯片垂类 feed」）。"""
     return (score.get("kw_hits", 0) >= 3

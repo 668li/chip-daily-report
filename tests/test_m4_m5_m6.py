@@ -52,7 +52,8 @@ check("M4 软规则WARN→relax_or_prompt", acts.get("信号层") == "relax_or_p
 
 # 真实 7 期不崩
 r4 = rg.run()
-check("M4 run() 真实数据期数=7", r4["reports_analyzed"] == 7)
+check("M4 run() 真实数据期数≥7（随根目录日报累计增长，2026-09-28 去快照化——债③闭账）",
+      r4["reports_analyzed"] >= 7)
 check("M4 run() 写出 rule_growth.json", (REPO / "state" / "rule_growth.json").exists())
 
 # ---------------- M5 ----------------

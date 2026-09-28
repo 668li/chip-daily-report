@@ -16,19 +16,54 @@ import re
 import sys
 from pathlib import Path
 
+
+def _registry_thresholds(section, required_keys):
+    """读 rules/rule_registry.yaml thresholds.<section>（唯一权威，债⑧模式）。
+    缺小节/缺键/读不到 → None，调用方诚实降级。"""
+    try:
+        import yaml
+        reg = yaml.safe_load((Path(__file__).resolve().parent.parent / "rules" / "rule_registry.yaml")
+                             .read_text(encoding="utf-8")) or {}
+        node = (reg.get("thresholds") or {}).get(section) or {}
+        if required_keys <= node.keys():
+            return node
+    except Exception:
+        pass
+    return None
+
+
+def _registry_str_list(*keys):
+    """读 rule_registry.yaml 的字符串列表（唯一权威，债⑧延伸收编 2026-09-28）。
+    读不到/格式不对返回 None——调用方回退紧邻字面量兜底（兜底仅保证 registry
+    缺失时校验不静默失效，不参与日常同步）。"""
+    try:
+        import yaml
+        reg = yaml.safe_load((Path(__file__).resolve().parent.parent / "rules" / "rule_registry.yaml")
+                             .read_text(encoding="utf-8")) or {}
+        node = reg
+        for k in keys:
+            node = (node or {}).get(k)
+        if isinstance(node, list) and node and all(isinstance(x, str) for x in node):
+            return [str(x) for x in node]
+    except Exception:
+        pass
+    return None
+
 # 标准 5 环节（+综合可选）
 CORE_SEGS = ["设计", "制造", "封测", "EDA", "材料"]
 
-# 中立性：投资建议关键词（与 validate_report.py INVESTMENT_ADVICE_KEYWORDS 一致）
-INVESTMENT_ADVICE_KEYWORDS = [
+# 中立性：投资建议关键词（唯一权威=registry keywords.investment_advice，债⑧延伸收编；
+# 字面量仅 registry 不可读时的降级兜底）
+INVESTMENT_ADVICE_KEYWORDS = _registry_str_list("keywords", "investment_advice") or [
     "建议买入", "值得投资", "前景光明", "看涨", "看跌",
     "强烈推荐", "买入评级", "目标价", "预测涨", "预计下跌",
     "股价有望", "建议卖出", "增持", "减持", "建议加仓",
     "建议减仓", "投资价值", "上涨空间", "下跌空间",
 ]
 
-# 越界附录关键词（与 validate_report.py FORBIDDEN_APPENDICES 一致）
-FORBIDDEN_APPENDICES = ["投资建议", "股价分析", "市场预测"]
+# 越界附录关键词（唯一权威=registry keywords.forbidden_appendices，2026-09-28 已纠偏同口径；
+# 字面量仅 registry 不可读时的降级兜底）
+FORBIDDEN_APPENDICES = _registry_str_list("keywords", "forbidden_appendices") or ["投资建议", "股价分析", "市场预测"]
 
 SEG_HEADINGS = {
     "设计": "设计", "制造": "制造", "封测": "封测",
@@ -137,19 +172,26 @@ def run_checks(report: dict):
                  f"{total_news} 条均有来源" if not no_src else f"{len(no_src)} 条缺来源: {no_src[0]}…"))
 
     # 4. 摘要规范（3-5 句；6 句 WARN；≥7 句 FAIL）
-    bad4, warn4 = [], 0
-    for it in news:
-        c = _count_sentences(it.get("summary", ""))
-        if c >= 7:
-            bad4.append((it["title"][:20], c))
-        elif c == 6:
-            warn4 += 1
-    if bad4:
-        rows.append((4, "摘要规范", "FAIL", f"{len(bad4)} 条≥7句(过长): {bad4[0]}…"))
-    elif warn4:
-        rows.append((4, "摘要规范", "WARN", f"{warn4} 条 6 句，建议压到 3-5 句"))
+    th4 = _registry_thresholds("summary_sentences", {"pass_min", "pass_max", "warn_at", "fail_at"})
+    if th4 is None:
+        rows.append((4, "摘要规范", "WARN", "X3 阈值源 rule_registry.yaml 不可读，句数未机检（人工核对）"))
     else:
-        rows.append((4, "摘要规范", "PASS", f"{total_news} 条句数合格"))
+        warn_at4, fail_at4 = int(th4["warn_at"]), int(th4["fail_at"])
+        bad4, warn4 = [], 0
+        for it in news:
+            c = _count_sentences(it.get("summary", ""))
+            if c >= fail_at4:
+                bad4.append((it["title"][:20], c))
+            elif c == warn_at4:
+                warn4 += 1
+        if bad4:
+            rows.append((4, "摘要规范", "FAIL", f"{len(bad4)} 条≥{fail_at4}句(过长): {bad4[0]}…"))
+        elif warn4:
+            rows.append((4, "摘要规范", "WARN",
+                         f"{warn4} 条 {warn_at4} 句，建议压到 {int(th4['pass_min'])}-{int(th4['pass_max'])} 句"))
+        else:
+            rows.append((4, "摘要规范", "PASS",
+                         f"{total_news} 条句数合格（{int(th4['pass_min'])}-{int(th4['pass_max'])} 句）"))
 
     # 5. 时效性（is_review 与 gen_time - timestamp 一致性；用完整 gen_time 含时分，
     #    与 validate_report.check_timeliness 口径一致：diff_hours>72 须标[回顾]）
@@ -272,11 +314,17 @@ def run_checks(report: dict):
     rows.append((19, "标题日期", "PASS" if has_date else "FAIL",
                  "标题含日期" if has_date else "标题缺日期"))
 
-    # 20. 信号层（覆盖率 ≥80%）
+    # 20. 信号层（覆盖率目标≥80%；v5.2 [R-5] 成文裁决：覆盖率<80% WARN、0 条新闻 PASS——
+    #     2026-09-28 修复：pre-render 门禁此前误判 FAIL，与终门禁 WARN 口径打架）
     sig = sum(1 for it in news if it.get("signal"))
     cov = (sig / total_news * 100) if total_news else 0
-    rows.append((20, "信号层", "PASS" if total_news and cov >= 80 else "FAIL",
-                 f"覆盖率 {cov:.0f}%（{sig}/{total_news}，目标≥80%）" if total_news else "无新闻"))
+    if not total_news:
+        rows.append((20, "信号层", "PASS", "0 条新闻（节假日口径，[R-5]）"))
+    elif cov >= 80:
+        rows.append((20, "信号层", "PASS", f"覆盖率 {cov:.0f}%（{sig}/{total_news}）"))
+    else:
+        rows.append((20, "信号层", "WARN",
+                     f"覆盖率 {cov:.0f}%（{sig}/{total_news}，目标≥80%）"))
 
     # 21-26 软指标（缺失即 WARN，不阻断）
     tr = report.get("tracking", []) or []

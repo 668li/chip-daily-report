@@ -45,7 +45,7 @@ def test_20260727_core_metrics():
     # 数据完整性对账：计算 72.7% vs 自述 33.3% 偏差 ~0.394
     assert r["declared_a_ratio"] is not None
     assert abs(r["ratio_gap"] - 0.394) < 0.02
-    # X12：22 条 -> FAIL（>16，超路线 C 上限+缓冲；历史报告按现役口径回望）
+    # X12：22 条 -> FAIL（>20，超路线 C 上限+缓冲；历史报告按现役口径回望）
     assert r["x12_grade"] == "FAIL"
 
 

@@ -84,6 +84,24 @@ from datetime import datetime, timedelta
 from pathlib import Path
 
 
+def _registry_str_list(*keys):
+    """读 rules/rule_registry.yaml 的字符串列表（唯一权威，债⑧延伸收编 2026-09-28）。
+    读不到/格式不对返回 None——调用方回退紧邻字面量兜底（兜底仅保证 registry 缺失时
+    校验不静默失效，不参与日常同步）。"""
+    try:
+        import yaml
+        reg_path = Path(__file__).resolve().parent.parent / "rules" / "rule_registry.yaml"
+        reg = yaml.safe_load(reg_path.read_text(encoding="utf-8")) or {}
+        node = reg
+        for k in keys:
+            node = (node or {}).get(k)
+        if isinstance(node, list) and node and all(isinstance(x, str) for x in node):
+            return [str(x) for x in node]
+    except Exception:
+        pass
+    return None
+
+
 # ============================================================
 # 配置区
 # ============================================================
@@ -159,13 +177,16 @@ SEGMENTS = ['设计', '制造', '封测', 'EDA', '材料']
 # === GEN:RULES:END ===
 
 # 越界附录关键词（仅含真正违反中立性的"预测/建议"类标题；
-# 客观的"市场/政策/资本"事实维度已合法化，不再禁止，见 SKILL.md 边界与反例7）
-FORBIDDEN_APPENDICES = [
+# 客观的"市场/政策/资本"事实维度已合法化，不再禁止，见 SKILL.md 边界与反例7。
+# 唯一权威=registry keywords.forbidden_appendices（2026-09-28 已纠偏为同口径）；
+# 下方字面量仅 registry 不可读时的降级兜底）
+FORBIDDEN_APPENDICES = _registry_str_list("keywords", "forbidden_appendices") or [
     '投资建议', '股价分析', '市场预测',
 ]
 
-# 投资建议关键词（用于中立性检查）
-INVESTMENT_ADVICE_KEYWORDS = [
+# 投资建议关键词（用于中立性检查；唯一权威=registry keywords.investment_advice，
+# 债⑧延伸收编 2026-09-28；字面量仅 registry 不可读时的降级兜底）
+INVESTMENT_ADVICE_KEYWORDS = _registry_str_list("keywords", "investment_advice") or [
     '建议买入', '值得投资', '前景光明', '看涨', '看跌',
     '强烈推荐', '买入评级', '目标价', '预测涨', '预计下跌',
     '股价有望', '建议卖出', '增持', '减持', '建议加仓',
@@ -310,12 +331,16 @@ def check_source_links(items):
 
 
 def check_summary_sentences(items):
-    """检查4: 摘要句数（v5.0: 目标3-5句，6句WARN，≥7句FAIL）"""
+    """检查4: 摘要句数（目标带=registry thresholds.summary_sentences pass_min/max，
+    债⑧延伸收编 2026-09-28；WARN/FAIL 判级在主流程按 warn_at/fail_at 执行）"""
+    th = _summary_thresholds() or {}
+    lo = int(th.get("pass_min", 3))
+    hi = int(th.get("pass_max", 5))
     checks = []
     for item in items:
         title = item['title'][:30]
         sent_count = count_sentences(item['summary'])
-        ok = 3 <= sent_count <= 5
+        ok = lo <= sent_count <= hi
         checks.append((title, ok, sent_count))
     return checks
 
@@ -558,8 +583,9 @@ def check_dedup(items):
     return duplicates
 
 
-# v5.0新增：需要技术注解的专业术语关键词
-TECH_TERM_KEYWORDS = [
+# v5.0新增：需要技术注解的专业术语关键词（唯一权威=registry keywords.tech_terms，
+# 债⑧延伸收编 2026-09-28；字面量仅 registry 不可读时的降级兜底）
+TECH_TERM_KEYWORDS = _registry_str_list("keywords", "tech_terms") or [
     # 晶体管结构
     'GAA', 'FinFET', 'TFET', 'Gate-All-Around',
     # 封装技术
@@ -643,19 +669,29 @@ def check_industry_chain(content):
 # v5.0 增强检查（X12 / X14 / X15 / X16 裁决固化，F3）
 # ============================================================
 
-def _news_count_thresholds():
-    """X12 阈值唯一权威 = rules/rule_registry.yaml thresholds.news_count（运行时读取，
-    消灭脚本硬编码租界——债⑧接线，2026-09-28 对齐轮）。读不到返回 None（诚实降级）。"""
+def _registry_thresholds(section, required_keys):
+    """读 thresholds.<section>（唯一权威=rules/rule_registry.yaml，X12/债⑧模式：
+    懒加载+键校验，缺小节/缺键/读不到返回 None，调用方诚实降级）。"""
     try:
         import yaml
         reg_path = Path(__file__).resolve().parent.parent / "rules" / "rule_registry.yaml"
         reg = yaml.safe_load(reg_path.read_text(encoding="utf-8")) or {}
-        nc = (reg.get("thresholds") or {}).get("news_count") or {}
-        if {"target_min", "target_max", "fail_below", "fail_above"} <= nc.keys():
-            return nc
+        node = (reg.get("thresholds") or {}).get(section) or {}
+        if required_keys <= node.keys():
+            return node
     except Exception:
         pass
     return None
+
+
+def _news_count_thresholds():
+    """X12 阈值 = thresholds.news_count（2026-09-28 对齐轮接线）。读不到返回 None。"""
+    return _registry_thresholds("news_count", {"target_min", "target_max", "fail_below", "fail_above"})
+
+
+def _summary_thresholds():
+    """X3 摘要句数阈值 = thresholds.summary_sentences（债⑧延伸收编）。读不到返回 None。"""
+    return _registry_thresholds("summary_sentences", {"pass_min", "pass_max", "warn_at", "fail_at"})
 
 
 def check_news_count(actual_count):
@@ -1097,18 +1133,28 @@ def main():
     
     # 检查4: 摘要句数
     print("\n【检查4】摘要规范（v5.0: 3-5句PASS，6句WARN，≥7句FAIL）")
+    summary_th = _summary_thresholds()
     summary_checks = check_summary_sentences(items)
     fail_count = 0
     warn_count = 0
-    for title, ok, sent_count in summary_checks:
-        if sent_count >= 7:
-            print(f"  ✗ FAIL  {title}... 句数={sent_count}（过长）")
-            fail_count += 1
-        elif sent_count == 6:
-            print(f"  ⚠ WARN  {title}... 句数={sent_count}（建议压缩到3-5句）")
-            warn_count += 1
+    if summary_th is None:
+        print("  ⚠ WARN  X3 阈值源 rules/rule_registry.yaml 不可读，句数未机检（人工核对）")
+    else:
+        warn_at = int(summary_th["warn_at"])
+        fail_at = int(summary_th["fail_at"])
+        band_lo = int(summary_th["pass_min"])
+        band_hi = int(summary_th["pass_max"])
+        for title, ok, sent_count in summary_checks:
+            if sent_count >= fail_at:
+                print(f"  ✗ FAIL  {title}... 句数={sent_count}（过长）")
+                fail_count += 1
+            elif sent_count == warn_at:
+                print(f"  ⚠ WARN  {title}... 句数={sent_count}（建议压缩到{band_lo}-{band_hi}句）")
+                warn_count += 1
     if fail_count == 0:
-        if warn_count > 0:
+        if summary_th is None:
+            pass  # 阈值源不可读：上方已 WARN，不破退出码（X12 降级同款）
+        elif warn_count > 0:
             print(f"  ✓ PASS  句数检查通过（{warn_count}条WARN）")
         else:
             print(f"  ✓ PASS  全部{len(summary_checks)}条摘要句数合格")

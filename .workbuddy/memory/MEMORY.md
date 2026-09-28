@@ -14,7 +14,7 @@
 - 镜像同步：`.trae/skills/chip-daily-report/` 为精选子集（CLAUDE.md/SKILL.md+references+运行时脚本），镜像已有的文件须与根目录逐字节一致、**勿新增文件**；同步一律 Read+Write 工具逐文件写（Bash cp/heredoc 写源码或配置会被安全钩子拦；注意 R1 段不覆盖 CLAUDE.md，该文件靠人工纪律保持一致）。
 
 ## 关键裁决速查
-- X3 摘要 3-5 句 PASS/6 WARN/≥7 FAIL。X9 HBM 归制造。X10 产能 IPO 纳入/纯融资不纳。X11 股价仅一句佐证，不作主体/标题/今日要点。
+- X3 摘要句数阈值=registry thresholds.summary_sentences（3-5 句 PASS/6 WARN/≥7 FAIL，2026-09-28 接线；校验器侧另有 forbidden_appendices/investment_advice/tech_terms 三表同日改运行时读取）。X9 HBM 归制造。X10 产能 IPO 纳入/纯融资不纳。X11 股价仅一句佐证，不作主体/标题/今日要点。
 - X12 条数阈值唯一权威=registry thresholds.news_count（目标 8-13 PASS / WARN 14-20 / FAIL <8、>20；validate_report+quality_dashboard+validate_ir 运行时读取，2026-09-28 接线）。X15 环节全称。X16 标题附日期+blockquote 半角冒号。X17 信号层（每条 `| 信号: 重要性/影响方向/情绪`，覆盖≥80%）。B 持续追踪 / C 前瞻催化剂（Step2 只搜已公告，禁预测）。
 - 校验器=26 项（15 Rubric+检查 16-26），后 8 项软 WARN 不破退出码。
 
@@ -108,3 +108,9 @@
 - 三件冻结期内加固：①**pytest 零污染**——leak_detector.main(out_dir) 参数化+测试写 tmp_path，「跑完 git checkout -- 还原」仪式废止（CLAUDE.md/自动化 prompt/台账/本记忆四面销账）；②**heartbeat.json 伪造测试值删除**——文件现不存在=死亡开关如实「从未成功」红灯，09-29 首跳成功写首颗真实心跳；③**债⑧ X12 闭账**——thresholds.news_count 唯一权威（8-13 目标/WARN 14-20/FAIL <8、>20，缓冲 20 承接 15-20 过渡报告，golden 0925 18 条回望 WARN），validate_report+quality_dashboard+validate_ir 三处运行时读 registry（阈值源不可读诚实降级，不留陈旧字面量），X3 等其余硬编码留冻结期满收编。
 - **教训**：改 FAIL 轨前先核 golden 实际条数（曾把 fail_above 定 16 → golden 18 条把 m0/m2 打挂，上限回撤 20 后 229 绿）；kazike 06 会诊三视角（架构/SRE/主编）判决「超配但自洽，风险在运行连续性与元层吞噬」——冻结期纪律即其处方。
 - 洁癖收尾同轮完成：自动化 prompt 移除 pytest 还原仪式句；仓库根 `nul` 垃圾文件（Git Bash 误执行 `dir /s /b` 产物）列为删除候选待勇谚确认。
+
+## 2026-09-28 深夜 阈值租界收编（校验器侧）+测试卫生快照（ZCode 会话，勇谚拍板现在做+全量盘点两探索代理）
+- **registry 死字段激活**：thresholds.summary_sentences（原五字段零消费）→ validate_report/validate_ir X3 接线（WARN 降级同款）；keywords.forbidden_appendices 纠偏为 3 词现役口径（**原 6 词与脚本互相都错**：多 4 个已合法化词、漏"市场预测"）；investment_advice/tech_terms 手工抄写→运行时读取（registry 主供+字面量兜底，兜底仅防 registry 缺失时静默失效）。
+- **唯一行为变更=X17**：validate_ir 检查 20 覆盖率<80% FAIL→WARN、0 条新闻 FAIL→PASS——恢复 v5.2 [R-5] 成文裁决，pre-render 门禁与终门禁口径打架终结。预检确认无测试钉旧行为。
+- **债③闭账**：m4_m5_m6 断言「期数==7」是数据快照（根目录日报 15 份只增不减必挂）→ 去快照化为 ≥7 下限，独立跑 exit 0。文档漂移两处：discover 相关性 docstring 25%→30%（常量 0.30）、test_quality_dashboard 注释 >16→>20。
+- **教训**：盘点发现 registry 死文档最危险（summary_sentences 五字段没人读、forbidden_appendices 没人消费所以错半年没人发现）——「写进 registry」≠「生效」，收编的验收标准是消费方存在+X7/测试背书。**管线侧阈值族（gate/discover/fusion/value_score/segments 五副本/G2-72h 口径）留 10-12 首批**，清单录 CLAUDE.md 债⑧；运维常量（超时/上限/截断）永久留代码。
