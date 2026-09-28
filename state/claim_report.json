@@ -1,0 +1,291 @@
+{
+  "report": "芯片行业日报_20260926.md",
+  "generated_at": "2026-09-28 07:56:48",
+  "stats": {
+    "entries": 16,
+    "redirect_only": 3,
+    "no_claims": 9,
+    "partial": 2,
+    "ok": 2,
+    "verifiable_ratio": 0.25
+  },
+  "entries": [
+    {
+      "title": "高通定案：已发布 2nm 旗舰芯片将由台积电代工，对三星仍留门",
+      "claims": [
+        "2nm",
+        "N2"
+      ],
+      "n_claims": 2,
+      "direct_urls": [],
+      "gnews_urls": [
+        "https://news.google.com/rss/articles/CBMiywFBVV95cUxPUEluc2FQLXhJVHFUbkhiaVZCamlVVFprdGhXRElmZzJqelYwOFBqRDlXbVdNVWlRaUZ3ai1FWFRoUFJMcFBWMU5rb3NlZG0yNWNmRDhndHBVR2U5bEVzRVQ5Znk5NnctYTR6OVR4N2ZSNmw5bEJValFpZE9hbzNiazhvTDFyZ1lTaEFad09FUFM4bVBkbmd0enhMSlV2LTlvUmF6Smx5dHFfWFdGZGluT2xfdWp0bVFIenhfZWdXYlpSRVZZNVBSSDFYYw?oc=5"
+      ],
+      "verdict": "redirect_only",
+      "coverage": null,
+      "missing": [],
+      "sources": []
+    },
+    {
+      "title": "英伟达申请专利：用自然语言聊天机器人帮开发者优化游戏 GPU 性能",
+      "claims": [],
+      "n_claims": 0,
+      "direct_urls": [
+        "https://www.tomshardware.com/video-games/pc-gaming/an-nvidia-chatbot-could-one-day-help-developers-better-optimize-their-games-patent-filing-show-requests-can-be-made-in-plain-english"
+      ],
+      "gnews_urls": [],
+      "verdict": "no_claims",
+      "coverage": null,
+      "missing": [],
+      "sources": []
+    },
+    {
+      "title": "多裸片系统需要\"跨芯片的道路网\"：Arteris 提出 NoC 直穿裸片边界",
+      "claims": [],
+      "n_claims": 0,
+      "direct_urls": [
+        "https://semiengineering.com/a-network-on-chip-noc-for-multi-die-devices/"
+      ],
+      "gnews_urls": [],
+      "verdict": "no_claims",
+      "coverage": null,
+      "missing": [],
+      "sources": []
+    },
+    {
+      "title": "台积电年度资本开支上修至约 640 亿美元，代工对手进一步落后",
+      "claims": [
+        "640 亿美元",
+        "2027",
+        "2028"
+      ],
+      "n_claims": 3,
+      "direct_urls": [],
+      "gnews_urls": [
+        "https://news.google.com/rss/articles/CBMi3AFBVV95cUxQZHpXcjcyTXowRVZRUWlMN3oyb3BBM1Z0TC0wRmFSQnl6WklVSFJIclRxNnBrUl9YQi1hRHNQeFlWRmVwYjFlZ3ptU09tcWJXT1htenFlczE5dllQbFhRZmZsSVg1MGE2N2M0U0NmMlQxclJBYndPM29rQ2FSMTNqRXhNLWNXYk1kS2RUMGEtTXBsLUlEaFEyR1ptN2RSbjZxeUtqUlN5SEdBOHoyWXBuckEzRlBVWTZaYmJORjk3TGJDSDlFZ0p3MXJBN0RXYnNyQkVlWlF5OEtDa2c5?oc=5"
+      ],
+      "verdict": "redirect_only",
+      "coverage": null,
+      "missing": [],
+      "sources": []
+    },
+    {
+      "title": "英特尔放话：14A 性能与台积电 A14 差距 5% 以内，苹果/英伟达/亚马逊据报表现兴趣",
+      "claims": [
+        "5%",
+        "220%",
+        "1.4nm",
+        "14A",
+        "A14",
+        "18A"
+      ],
+      "n_claims": 6,
+      "direct_urls": [
+        "https://www.tomshardware.com/tech-industry/semiconductors/intel-expects-14a-to-be-within-5-percent-the-performance-of-tsmcs-a14-conservative-forecast-clashes-with-18as-frequency-lead-and-promised-20-percent-gains"
+      ],
+      "gnews_urls": [
+        "https://news.google.com/rss/articles/CBMingFBVV95cUxOak1fSWhvOU1OUnRwSG5jNXlLa0tRc2Y1bjUxZ2stVHZWUE5tY3Z5aGZxVnNnbG9vMzRVY1FDY1dham5OY0R5NTRuTV9HYzBiSVNvbU5QTmFYUEV5bGE1YzFBRkJkUTh4eG94Tl8wQzZJZ0xaQTNRaTJSTkQ0X190U2w2UWluWkl5ZlVjcFRpcFBMbjg3SVkzN1ItRDJEQdIBmgFBVV95cUxPaDI2ejhoZnRPRWRLbmRQd3VjTHhLSXN2ODJCdDFnbG1Yc1VOZmpQSy1halVkOEUxRExDRHd0ZS1ZaWktRHBVaG9IVUt0ZFZsZ2dlZDVTdHlPcVZtZTAxYm4xTTFUdjlyTWdJQWNIWkhpOVp2aEFqenVrUjZOSnJIb3dFYV94SEVaRnNmdFVNTTBfdEJDbGcwUWRB?oc=5"
+      ],
+      "verdict": "partial",
+      "coverage": 0.8333333333333334,
+      "missing": [
+        "220%"
+      ],
+      "sources": [
+        {
+          "url": "https://www.tomshardware.com/tech-industry/semiconductors/intel-expects-14a-to-be-within-5-percent-the-performance-of-tsmcs-a14-conservative-forecast-clashes-with-18as-frequency-lead-and-promised-20-percent-gains",
+          "status": "cached",
+          "text_len": 20554,
+          "error": null
+        }
+      ]
+    },
+    {
+      "title": "[上期已报·本期多源确认] 台积电 2027 年 1 月起晶圆代工涨价 3%-6%，主要落在先进制程",
+      "claims": [
+        "3%",
+        "6%",
+        "2027"
+      ],
+      "n_claims": 3,
+      "direct_urls": [
+        "https://www.ithome.com/1/006/598.htm",
+        "https://finance.yahoo.com/markets/stocks/articles/why-taiwan-semiconductor-manufacturing-tsm-001759290.html"
+      ],
+      "gnews_urls": [],
+      "verdict": "ok",
+      "coverage": 1.0,
+      "missing": [],
+      "sources": [
+        {
+          "url": "https://www.ithome.com/1/006/598.htm",
+          "status": "cached",
+          "text_len": 1231,
+          "error": null
+        },
+        {
+          "url": "https://finance.yahoo.com/markets/stocks/articles/why-taiwan-semiconductor-manufacturing-tsm-001759290.html",
+          "status": "cached",
+          "text_len": 10701,
+          "error": null
+        }
+      ]
+    },
+    {
+      "title": "台积电高雄封装验证中心：把封测供应商\"拉到家门口\"认证",
+      "claims": [],
+      "n_claims": 0,
+      "direct_urls": [
+        "https://finance.yahoo.com/markets/stocks/articles/tsmc-stocks-rise-packaging-moves-155700706.html"
+      ],
+      "gnews_urls": [],
+      "verdict": "no_claims",
+      "coverage": null,
+      "missing": [],
+      "sources": []
+    },
+    {
+      "title": "日月光（ASE）：英伟达、AMD 芯片的\"封装后道\"担当",
+      "claims": [],
+      "n_claims": 0,
+      "direct_urls": [
+        "https://finance.yahoo.com/m/b8eae4aa-f7ed-33bb-9966-deffb558b2ed/nvidia%2C-amd-love-this.html"
+      ],
+      "gnews_urls": [],
+      "verdict": "no_claims",
+      "coverage": null,
+      "missing": [],
+      "sources": []
+    },
+    {
+      "title": "3D-IC 时代的设计管理题：Siemens EDA 强调多裸片 IP 的数据与版本控制",
+      "claims": [],
+      "n_claims": 0,
+      "direct_urls": [
+        "https://semiengineering.com/managing-3d-ic-design-and-ip/"
+      ],
+      "gnews_urls": [],
+      "verdict": "no_claims",
+      "coverage": null,
+      "missing": [],
+      "sources": []
+    },
+    {
+      "title": "以色列 Tower 半导体把日本打造成光芯片主枢纽",
+      "claims": [],
+      "n_claims": 0,
+      "direct_urls": [],
+      "gnews_urls": [
+        "https://news.google.com/rss/articles/CBMiyAFBVV95cUxOZHVIdDV5a0RZSTJzUlVUNkI0OVlhaXgtWnVwclVia05qRjJiZkNDWmpGWDJUZFdJNVpBdUtjSEMtb2oyRFU2bjU4cDY4UU5NSzhlS2JMY1dSMkZsNjhXUURDNzYwdjItVHJ0ZzFOZEJ2Q0NCOTdDcGJGSXZBekZwVGRxZmVoRFNKMXlrbzVXQWRaYUxKUFdyMkhKUW9OLWtzdWFMNV9JbUt2VVR4ckhvMlo0amRYSDhIUDNjaDRIUGtYeG40LU5KTg?oc=5"
+      ],
+      "verdict": "no_claims",
+      "coverage": null,
+      "missing": [],
+      "sources": []
+    },
+    {
+      "title": "当 AI 智能体跨过芯片设计孤岛：专业化与编排成新考题",
+      "claims": [],
+      "n_claims": 0,
+      "direct_urls": [
+        "https://semiengineering.com/when-ai-agents-cross-chip-design-silos/"
+      ],
+      "gnews_urls": [],
+      "verdict": "no_claims",
+      "coverage": null,
+      "missing": [],
+      "sources": []
+    },
+    {
+      "title": "下一代晶体管可靠性大考：A7 CFET 与 A10 NSFET 的寄生与老化评估",
+      "claims": [
+        "A7",
+        "A10",
+        "2030"
+      ],
+      "n_claims": 3,
+      "direct_urls": [
+        "https://semiengineering.com/comparing-a7-cfet-and-a10-nanosheet-fets-from-parasitics-to-chip-reliability-tum-unimore-applied-materials/"
+      ],
+      "gnews_urls": [],
+      "verdict": "partial",
+      "coverage": 0.6666666666666666,
+      "missing": [
+        "2030"
+      ],
+      "sources": [
+        {
+          "url": "https://semiengineering.com/comparing-a7-cfet-and-a10-nanosheet-fets-from-parasitics-to-chip-reliability-tum-unimore-applied-materials/",
+          "status": "cached",
+          "text_len": 14128,
+          "error": null
+        }
+      ]
+    },
+    {
+      "title": "台积电 Q2 晶圆代工份额约 72.5%：一超一强格局的\"数字注脚\"",
+      "claims": [
+        "72.5%",
+        "2nm",
+        "2026"
+      ],
+      "n_claims": 3,
+      "direct_urls": [],
+      "gnews_urls": [
+        "https://news.google.com/rss/articles/CBMiigFBVV95cUxPSl9HVjFMWjFoODhqQU5ZM3lyN3pMc01DeWtjQzlxOXY4dzN4NWQ4Z0RNRGdOaVJGUDlHS3MxcVVkNm0wNXE2NnMwZ3hTZlFnakpLOG54MmVBdUdzQ0tZdk1uQ3Q2M2VCSWtCQjRUdktpaExnMFJuR0NPUkthdmRWVkgzYndTcWdnUHc?oc=5"
+      ],
+      "verdict": "redirect_only",
+      "coverage": null,
+      "missing": [],
+      "sources": []
+    },
+    {
+      "title": "SemiEngineering 周报：中国加大 AI 算力与内存投入",
+      "claims": [],
+      "n_claims": 0,
+      "direct_urls": [
+        "https://semiengineering.com/chip-industry-week-in-review-157/"
+      ],
+      "gnews_urls": [],
+      "verdict": "no_claims",
+      "coverage": null,
+      "missing": [],
+      "sources": []
+    },
+    {
+      "title": "微软 Surface 悄然放弃 Copilot+ 品牌：AI PC 营销降温的信号",
+      "claims": [
+        "40 TOPS"
+      ],
+      "n_claims": 1,
+      "direct_urls": [
+        "https://www.tomshardware.com/tablets/microsoft-surface/microsoft-quietly-drops-copilot-branding-from-its-new-laptops-surface-cvp-confirms-new-devices-meet-hardware-requirements-but-lack-controversial-branding"
+      ],
+      "gnews_urls": [],
+      "verdict": "ok",
+      "coverage": 1.0,
+      "missing": [],
+      "sources": [
+        {
+          "url": "https://www.tomshardware.com/tablets/microsoft-surface/microsoft-quietly-drops-copilot-branding-from-its-new-laptops-surface-cvp-confirms-new-devices-meet-hardware-requirements-but-lack-controversial-branding",
+          "status": "cached",
+          "text_len": 20352,
+          "error": null
+        }
+      ]
+    },
+    {
+      "title": "特朗普称台积电亚利桑那厂将扩大一倍规模，台官方\"交由公司回应\"",
+      "claims": [],
+      "n_claims": 0,
+      "direct_urls": [],
+      "gnews_urls": [
+        "https://news.google.com/rss/articles/CBMiW0FVX3lxTE5mZkFUaE9LSmlMVzZjSkF1ODQ2c3BFNnYwU3M5cFJaMWxaSS10dU5FUk9mXy1yUTdsWmNyR1Z1Y3FFQkczYUhEWmZ1VnBuNmJZYkNRVmpGUnNmS0U?oc=5"
+      ],
+      "verdict": "no_claims",
+      "coverage": null,
+      "missing": [],
+      "sources": []
+    }
+  ]
+}

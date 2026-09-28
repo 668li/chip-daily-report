@@ -987,6 +987,46 @@ def run_discovery(mode: str = "quick", max_domains: int | None = None,
             "known_domains": known_total}
 
 
+# ============================================================
+# v8 R4 产出问责（2026-09-28）：「机制自主≠产出自主」的记账断根。
+# 每次运行按「首次发现渠道」给 validated 池对账：非种子渠道
+# （gnews/newsnow 等自主发现）validated=0 时如实宣布「发现层=机制演示」。
+# ============================================================
+VALIDATED_STATES = ("trial", "active")
+
+
+def production_accounting(state_path=None) -> dict:
+    """validated 池按发现渠道拆分对账（只读状态文件，不联网）。"""
+    state = load_state(state_path)
+    srcs = [s for s in state.get("sources", []) if isinstance(s, dict)]
+    validated = [s for s in srcs if s.get("state") in VALIDATED_STATES]
+    # 宁严勿宽：非种子渠道取显式名单（gnews*/newsnow），缺失/未知渠道
+    # 一律按种子计——demo_mode 判定宁苛刻勿粉饰
+    nonseed = []
+    for s in validated:
+        via = str(s.get("discovered_via") or "")
+        if via.startswith("gnews") or via == "newsnow":
+            nonseed.append(s)
+    return {
+        "state_total": len(srcs),
+        "validated": len(validated),
+        "seed_validated": len(validated) - len(nonseed),
+        "nonseed_validated": len(nonseed),
+        "nonseed_domains": [str(s.get("domain") or "") for s in nonseed],
+        "demo_mode": len(nonseed) == 0,
+    }
+
+
+def print_accounting(acc: dict) -> None:
+    tag = "机制演示" if acc["demo_mode"] else "有产出"
+    print(f"[discover:问责] 产出状态={tag} validated={acc['validated']} "
+          f"(种子 {acc['seed_validated']} / 非种子 {acc['nonseed_validated']}) "
+          f"非种子域={', '.join(acc['nonseed_domains']) or '无'}")
+    if acc["demo_mode"]:
+        print("[discover:问责] ⚠ 发现层=机制演示：非种子渠道 validated=0——"
+              "自主发现零产出，如实宣布不粉饰（v7 复盘教训的记账断根）")
+
+
 def print_status(state_path=None) -> None:
     """status 模式：只打印现有状态表，不联网。"""
     state = load_state(state_path)
@@ -1004,6 +1044,7 @@ def print_status(state_path=None) -> None:
         print("  （空——先跑 --mode quick 产出候选）")
     print(f"[discover] SUMMARY net_new=0 validated=0 promoted=0 "
           f"state_total={len(sources)} known_domains={len(known_domains(state))}")
+    print_accounting(production_accounting(state_path))
 
 
 def rescore_pool(state_path=None) -> dict:
@@ -1092,6 +1133,7 @@ def main(argv=None) -> int:
             rescore_pool()
         else:
             run_discovery(args.mode, args.max_domains)
+            print_accounting(production_accounting())  # v8 R4 产出问责
     except Exception as e:  # fail-soft：任何异常不改变退出码
         print(f"[discover] 运行异常（fail-soft）：{e}")
     return 0

@@ -59,6 +59,7 @@ _ALLOWED_HOSTS = {
     "cninfo.com.cn", "www.cninfo.com.cn", "static.cninfo.com.cn",  # 巨潮公告
     "newsnow.busiyi.world",                                   # newsnow 热榜
     "news.google.com",                                        # Google News RSS
+    "ithome.com", "www.ithome.com",                           # IT之家（v8 R3 中文直链）
 }
 _MAX_BODY_BYTES = 5 * 1024 * 1024
 
@@ -546,6 +547,17 @@ class YonhapCollector(RSSCollector):
     feed_url = "https://en.yna.co.kr/RSS/news.xml"
 
 
+class ITHomeCollector(RSSCollector):
+    """IT之家 RSS（v8 R3 · 2026-09-28 实测 200，60 条全文章级直链）。
+    中文生态直链化第一个活水源：财联社等中文权威站无 RSS/API（快讯页为
+    JS 壳，端点全 404/签名墙），IT之家转载链提供带文章级 URL 的中文条目。
+    registry 定级 B 级（转载源，引用时须追溯权威原始来源）。"""
+    source_id = "ithome"
+    source_name = "IT之家"
+    tier = 1
+    feed_url = "https://www.ithome.com/rss/"
+
+
 class YahooFinanceCollector(RSSCollector):
     """Yahoo Finance 个股新闻 feed（v7）。财经媒体、跨行业来源，仅当标的
     命中芯片关键词时才相关 → tier=3 线索级。s= 参数指定标的，
@@ -881,6 +893,7 @@ ONLINE_COLLECTORS = (
     NikkeiAsiaCollector,
     KoreaHeraldCollector,
     YonhapCollector,
+    ITHomeCollector,
     YahooFinanceCollector,
     YahooFinanceTSMCollector,
     GoogleNewsCollector,
@@ -918,6 +931,8 @@ PROBE_ENDPOINTS = [
      "https://www.koreaherald.com/rss/allCh.xml"),
     ("yonhap_en", "Yonhap EN",
      "https://en.yna.co.kr/RSS/news.xml"),
+    ("ithome", "IT之家",
+     "https://www.ithome.com/rss/"),
     ("yahoo_nvda", "Yahoo Finance (NVDA)",
      "https://feeds.finance.yahoo.com/rss/2.0/headline?s=NVDA&region=US&lang=en-US"),
     ("yahoo_tsm", "Yahoo Finance (TSM)",

@@ -36,15 +36,41 @@ import collector  # noqa: E402
 import cleaner  # noqa: E402
 import fusion  # noqa: E402
 import gate as gate_mod  # noqa: E402
+import article_fetch  # noqa: E402
 
 ROOT = Path(__file__).resolve().parent.parent.parent
 STATE_DIR = ROOT / "state"
 DEFAULT_OUT = STATE_DIR / "gate_report.json"
 
 
+def enrich_top_candidates(report: dict, top_n: int = 8, timeout: int = 10,
+                          cache_dir: Path | None = None) -> int:
+    """v8 R2 源深水区：给 top 候选抓原文全文（body_full），让生成会话读原文
+    而不是 160 字 RSS 摘要。fail-soft：单条失败原样跳过，绝不阻塞候选池。
+    只抓直链文章级 URL（gnews 跳转链直接跳过）；返回成功条数。"""
+    if top_n <= 0:
+        return 0
+    done = 0
+    for c in report.get("candidates", []):
+        if done >= top_n:
+            break
+        url = str(c.get("primary_source") or "").strip()
+        if not url or article_fetch.is_gnews_link(url):
+            continue
+        res = article_fetch.get_article_text(
+            url, cache_dir=cache_dir or article_fetch.ROOT / "state" / "article_cache",
+            timeout=timeout, allow_fetch=True)
+        if res.get("text"):
+            # 截断到 4000 字符：够生成会话读原文，gate_report.json 不膨胀
+            c["body_full"] = res["text"][:4000]
+            c["body_full_len"] = res["text_len"]
+            done += 1
+    return done
+
+
 def run(conf_min: float = 60.0, top_n: int = 24, max_per_segment: int = 6,
         aihot_queries: str = "半导体,芯片,存储,光刻", aihot_limit: int = 6,
-        out_file: Path | None = None) -> dict:
+        out_file: Path | None = None, enrich_top: int = 8) -> dict:
     """执行完整候选池流水线，返回 gate 报告 dict（fail-soft）。"""
     result: dict = {"ok": False, "error": None, "gate": None}
     try:
@@ -64,6 +90,9 @@ def run(conf_min: float = 60.0, top_n: int = 24, max_per_segment: int = 6,
             report.setdefault("rejected_by_admission", []) .extend(
                 {"title": c.get("title", "")[:80], "url": c.get("url", ""),
                  "reason": "homepage_or_empty_url"} for c in admission_dropped)
+        # v8 R2：top 候选附原文全文（fail-soft，失败不影响候选池本身）
+        report["stats"]["enriched_full_text"] = enrich_top_candidates(
+            report, top_n=enrich_top)
 
         out = out_file or DEFAULT_OUT
         out.parent.mkdir(parents=True, exist_ok=True)
@@ -93,11 +122,14 @@ def main() -> int:
     ap.add_argument("--max-per-segment", type=int, default=6)
     ap.add_argument("--aihot-queries", default="半导体,芯片,存储,光刻")
     ap.add_argument("--aihot-limit", type=int, default=6)
+    ap.add_argument("--enrich-top", type=int, default=8,
+                    help="给前 N 条直链候选抓原文全文（0=关闭）")
     ap.add_argument("--out", default=str(DEFAULT_OUT))
     args = ap.parse_args()
 
     result = run(args.conf_min, args.top_n, args.max_per_segment,
-                 args.aihot_queries, args.aihot_limit, Path(args.out))
+                 args.aihot_queries, args.aihot_limit, Path(args.out),
+                 enrich_top=args.enrich_top)
     gate = result["gate"]
 
     if not result["ok"]:

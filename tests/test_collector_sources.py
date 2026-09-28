@@ -168,3 +168,35 @@ def test_probe_fail_soft(monkeypatch):
     assert len(results) == len(collector.PROBE_ENDPOINTS)
     assert all(r["status"] == "down" for r in results)
     assert all("network unreachable" in (r["error"] or "") for r in results)
+
+
+# ---------------- v8 R3: IT之家直链源 ----------------
+
+ITHOME_XML = """<?xml version="1.0" encoding="utf-8"?>
+<rss version="2.0"><channel><title>IT之家</title>
+<item><title>台积电 2027 年起晶圆代工涨价 3%-6%</title>
+<link>https://www.ithome.com/1/006/598.htm</link>
+<pubDate>Wed, 24 Sep 2026 08:00:00 GMT</pubDate>
+<description>&lt;p&gt;据财联社报道，涨价主要落在先进制程。&lt;/p&gt;</description>
+</item>
+<item><title>寒武纪发布新款推理芯片</title>
+<link>https://www.ithome.com/0/987/041.htm</link>
+<pubDate>Wed, 24 Sep 2026 09:00:00 GMT</pubDate>
+<description>思元系列落地智算中心。</description>
+</item>
+</channel></rss>"""
+
+
+def test_ithome_registered_and_parse():
+    """IT之家（v8 R3）：注册在在线采集表与探针表；中文条目解析正确。"""
+    assert collector.ITHomeCollector in collector.ONLINE_COLLECTORS
+    assert any(sid == "ithome" for sid, _, _ in collector.PROBE_ENDPOINTS)
+    items = collector.ITHomeCollector()._parse(ITHOME_XML)
+    assert len(items) == 2
+    a = items[0]
+    assert a.source_id == "ithome"
+    assert a.title == "台积电 2027 年起晶圆代工涨价 3%-6%"
+    assert a.url == "https://www.ithome.com/1/006/598.htm"
+    assert a.published == "2026-09-24"
+    assert "涨价主要落在先进制程" in a.body  # HTML 剥离后正文保留
+    assert collector._guess_segment(a.title) == "制造"

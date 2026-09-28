@@ -16,9 +16,12 @@ prepare → 按 SKILL.md 生成当期日报 → 再跑本脚本 verify → commi
   prepare:  ① discover.py --mode quick（fatal）② prepare_candidates.py（fatal；
             但候选=0 只 WARN——新闻淡日合法，链路炸了才是 FAIL）
   verify:   ① validate_report.py 26 项（fatal，须 exit 0）
-            ② validate_understanding.py 理解层存在性校验（脚本存在则 fatal）
-            ③ build_report_html.py（fatal）
-            ④ 后置 fail-soft：signal_history / quality_dashboard（只 WARN 不破退出码）
+            ② forecast_due.py 推演到期点名（fatal，逾期未判不许收工）
+            ③ validate_understanding.py 理解层存在性校验（脚本存在则 fatal）
+            ④ validate_claims.py 声明级对账（v8 R2：承重数字对照原文，
+               对不上不出版；脚本存在则 fatal，首跑含真实网络抓取）
+            ⑤ build_report_html.py（fatal）
+            ⑥ 后置 fail-soft：signal_history / quality_dashboard（只 WARN 不破退出码）
 
 诚实性约定：prepare 失败时定时会话应如实响铃，但仍可按 SKILL.md fail-soft
 继续生成当期日报（交付韧性归 SKILL 流程管，问责归本脚本管）。
@@ -38,6 +41,7 @@ DISCOVER = ROOT / "scripts" / "multi_source" / "discover.py"
 PREPARE = ROOT / "scripts" / "multi_source" / "prepare_candidates.py"
 VALIDATE = ROOT / "scripts" / "validate_report.py"
 VALIDATE_U = ROOT / "scripts" / "validate_understanding.py"
+VALIDATE_CLAIMS = ROOT / "scripts" / "validate_claims.py"
 BUILD_HTML = ROOT / "scripts" / "build_report_html.py"
 SIGNAL_HISTORY = ROOT / "scripts" / "signal_history.py"
 QUALITY_DASH = ROOT / "scripts" / "quality_dashboard.py"
@@ -149,6 +153,14 @@ def stage_verify(report: Path, dry_run: bool) -> bool:
             return False
     else:
         _results.append(("verify", "validate-understanding", "WARN 未安装，跳过"))
+
+    # 声明级对账（v8 R2 源深水区）：承重数字逐条对照来源原文，对不上不出版。
+    # 首跑含真实网络抓取（≤max-fetch 条 × 10s），给长超时；缓存命中后变快。
+    if VALIDATE_CLAIMS.exists():
+        if not _run("validate-claims", "verify",
+                    [sys.executable, str(VALIDATE_CLAIMS), str(report)],
+                    fatal=True, timeout=PREPARE_TIMEOUT):
+            return False
 
     html_out = Path(tempfile.mkdtemp(prefix="daily_runner_dryrun_")) if dry_run else ROOT / "delivery"
     if not _run("build-html", "verify",

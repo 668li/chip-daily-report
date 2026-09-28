@@ -306,6 +306,10 @@ domains:
       name: "腾讯新闻"
       url: "https://news.qq.com"
       note: "需追溯原始来源"
+    - domain: "ithome.com"
+      name: "IT之家"
+      url: "https://www.ithome.com"
+      note: "v8 R3 补录（2026-09-28）：转载源 B 级；RSS https://www.ithome.com/rss/ 实测 200、60 条全文章级直链——中文链直链化的第一个活水（财联社等权威仍需追溯原始来源）"
 
   # C 级：禁止源（社交媒体/未验证），一律不使用
   c_level:
