@@ -50,8 +50,45 @@ GATE_REPORT = ROOT / "state" / "gate_report.json"
 
 PREPARE_TIMEOUT = 1200  # 发现层含网络探测，给足预算
 VERIFY_TIMEOUT = 300
+HEARTBEAT_FILE = ROOT / "state" / "heartbeat.json"   # 死亡开关状态（v8 R5-C）
+HEARTBEAT_STALE_HOURS = 48  # 超过 48h 无成功心跳记录 → 红灯（工作日口径下两个跳距）
 
 _results: list[tuple[str, str, str]] = []  # (stage, step, OK/WARN/FAIL + 备注)
+
+
+def _write_heartbeat(stage: str) -> None:
+    """v8 R5-C 死亡开关（四维审查最优先建议落地）：每次 runner 成功完成任一阶段
+    就刷新最后成功时间——心跳死了，这个文件的时间戳就是尸体温度。
+    fail-soft：写失败不阻塞流程，但打印。"""
+    try:
+        import json
+        HEARTBEAT_FILE.parent.mkdir(parents=True, exist_ok=True)
+        HEARTBEAT_FILE.write_text(json.dumps({
+            "last_ok_stage": stage,
+            "last_ok_ts": time.time(),
+            "last_ok_date": time.strftime("%F %T"),
+        }, ensure_ascii=False, indent=2), encoding="utf-8")
+    except Exception as e:  # noqa: BLE001
+        print(f"[daily_runner] ⚠ heartbeat 写入失败（不阻塞）：{e}")
+
+
+def check_heartbeat() -> None:
+    """启动时读死亡开关：>48h 无成功记录 → 静默红灯打印（不阻塞本次运行——
+    本次就是来救活它的）；文件不存在=从未成功过，同样红灯。
+    消费者不止本脚本：任何会话（CLAUDE.md 约定）启动时都可读此文件亮红灯。"""
+    import json
+    try:
+        rec = json.loads(HEARTBEAT_FILE.read_text(encoding="utf-8"))
+        age_h = (time.time() - float(rec["last_ok_ts"])) / 3600.0
+        last = rec.get("last_ok_date", "?")
+    except Exception:
+        print("[daily_runner] ⛔ 心跳红灯：state/heartbeat.json 不存在或不可读"
+              "——从未有过成功心跳记录（死亡开关，v8 R5-C）")
+        return
+    if age_h > HEARTBEAT_STALE_HOURS:
+        print(f"[daily_runner] ⛔ 心跳红灯：上次成功心跳在 {last}"
+              f"（{age_h:.0f}h 前 > {HEARTBEAT_STALE_HOURS}h 阈值）"
+              "——心跳可能已静默死亡，请人工核查定时任务与配额")
 
 
 def _run(step: str, stage: str, cmd: list[str], *, fatal: bool = True,
@@ -87,6 +124,7 @@ def _run(step: str, stage: str, cmd: list[str], *, fatal: bool = True,
 
 
 def stage_prepare() -> bool:
+    check_heartbeat()  # v8 R5-C 死亡开关：先验尸再干活
     ok = _run("discover-quick", "prepare",
               [sys.executable, str(DISCOVER), "--mode", "quick"],
               fatal=True, timeout=PREPARE_TIMEOUT)
@@ -120,6 +158,7 @@ def stage_prepare() -> bool:
         _results.append(("prepare", "gate-report", f"FAIL 产物不可读: {e}"))
         print(f"[daily_runner] ✗ prepare/gate-report 不可读: {e}")
         return False
+    _write_heartbeat("prepare")
     return True
 
 
@@ -176,6 +215,7 @@ def stage_verify(report: Path, dry_run: bool) -> bool:
     for cmd in post:
         if Path(cmd[1]).exists():
             _run(Path(cmd[1]).stem, "verify-post", cmd, fatal=False, timeout=VERIFY_TIMEOUT)
+    _write_heartbeat("verify")
     return True
 
 

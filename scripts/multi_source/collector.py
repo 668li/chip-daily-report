@@ -60,6 +60,7 @@ _ALLOWED_HOSTS = {
     "newsnow.busiyi.world",                                   # newsnow 热榜
     "news.google.com",                                        # Google News RSS
     "ithome.com", "www.ithome.com",                           # IT之家（v8 R3 中文直链）
+    "trendforce.com", "www.trendforce.com",                   # TrendForce 直连 RSS（v8 R5-C：四维审查发现长期借道 gnews，实为 feed_v2 直连可用）
 }
 _MAX_BODY_BYTES = 5 * 1024 * 1024
 
@@ -558,6 +559,17 @@ class ITHomeCollector(RSSCollector):
     feed_url = "https://www.ithome.com/rss/"
 
 
+class TrendForceCollector(RSSCollector):
+    """TrendForce 直连 RSS（v8 R5-C 路线裁决落地 · 2026-09-28 实测 200）。
+    历史讽刺：日报引用 TrendForce 三期全走 gnews 跳转链（不可机核+单源），
+    四维审查实测 feed_v2 直连可用（21 条 100% 半导体产业内容、文章级直链）
+    ——引用了三期的源，免费直连管道一直在。A 级白名单域（registry 已录）。"""
+    source_id = "trendforce"
+    source_name = "TrendForce"
+    tier = 1
+    feed_url = "https://www.trendforce.com/news/feed_v2/"
+
+
 class YahooFinanceCollector(RSSCollector):
     """Yahoo Finance 个股新闻 feed（v7）。财经媒体、跨行业来源，仅当标的
     命中芯片关键词时才相关 → tier=3 线索级。s= 参数指定标的，
@@ -894,6 +906,7 @@ ONLINE_COLLECTORS = (
     KoreaHeraldCollector,
     YonhapCollector,
     ITHomeCollector,
+    TrendForceCollector,
     YahooFinanceCollector,
     YahooFinanceTSMCollector,
     GoogleNewsCollector,
@@ -933,6 +946,8 @@ PROBE_ENDPOINTS = [
      "https://en.yna.co.kr/RSS/news.xml"),
     ("ithome", "IT之家",
      "https://www.ithome.com/rss/"),
+    ("trendforce", "TrendForce",
+     "https://www.trendforce.com/news/feed_v2/"),
     ("yahoo_nvda", "Yahoo Finance (NVDA)",
      "https://feeds.finance.yahoo.com/rss/2.0/headline?s=NVDA&region=US&lang=en-US"),
     ("yahoo_tsm", "Yahoo Finance (TSM)",

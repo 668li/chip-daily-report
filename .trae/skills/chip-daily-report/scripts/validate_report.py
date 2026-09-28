@@ -105,6 +105,7 @@ A_LEVEL_DOMAINS = [
     'semi.org.cn',  # SEMI 大半导体产业网
     'techinsights.com',  # TechInsights
     'semianalysis.com',  # SemiAnalysis
+    'trendforce.com',  # TrendForce 集邦咨询
     'edn.com',  # EDN
     'semiengineering.com',  # Semiconductor Engineering
     'eet-china.com',  # EET-China

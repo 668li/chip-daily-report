@@ -106,6 +106,11 @@ domains:
       url: "https://www.semianalysis.com"
       segment: "综合"
       note: "深度行业分析"
+    - domain: "trendforce.com"
+      name: "TrendForce 集邦咨询"
+      url: "https://www.trendforce.com"
+      segment: "综合"
+      note: "v8 R5-C 补录（2026-09-28）：行业研究机构，与 TechInsights/SemiAnalysis 同级；直连 RSS https://www.trendforce.com/news/feed_v2/ 实测 200（四维审查发现：日报引用其内容三期全走 gnews 跳转链，直连管道一直存在）；注意 feed pubDate 自报日期可能是列表缓存日（实测全部 2026-07-01 而内容滚动更新），引用时以文章页日期为准"
     - domain: "edn.com"
       name: "EDN"
       url: "https://www.edn.com"
@@ -445,14 +450,15 @@ thresholds:
     warn_at: 6          # 6 句 WARN
     fail_at: 7          # ≥7 句 FAIL
     fail_below: 3       # ≤2 句 FAIL（与 pass_min 一致边界）
-  # X12：单期新闻条数（软指标）
+  # X12：单期新闻条数（软指标；2026-09-28 路线 C 分层混合口径）
   news_count:
-    target_min: 15
-    target_max: 20
-    warn_min: 10        # 10–14 条 WARN
-    warn_max: 25        # 21–25 条 WARN
-    fail_below: 10      # <10 条 FAIL
-    fail_above: 25      # >25 条 FAIL
+    target_min: 10
+    target_max: 14
+    warn_min: 8         # 8–9 条 WARN
+    warn_max: 16        # 15–16 条 WARN
+    fail_below: 8       # <8 条 FAIL
+    fail_above: 16      # >16 条 FAIL
+    layered_note: "路线 C（读者 2026-09-28 仲裁）：承重层 3-5 条（双源+先记住一句话）+ 背景层 5-8 条（单源+⚠行内标注）＝总 8-13 条；单极叙事断根（四维审查：台积电×48 次）"
     holiday_zero_pass: true   # 0 条（节假日）按既有兜底自动 PASS
 
 # -----------------------------------------------------------------------------

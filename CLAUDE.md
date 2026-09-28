@@ -10,6 +10,7 @@
 - ⚠ 跑 pytest 会污染真实 state（source_health.yaml / leak_report.*）——跑完必须 `git checkout --` 还原这几个文件（test_health_check 污染根因已于 v7 修复，但 leak_report 系仍会被写）
 - 规则治理：改域名/环节只改 `rules/rule_registry.yaml` → 跑 `scripts/gen_rules.py` → 跑 `scripts/check_rules_consistency.py`（X7 硬门禁）；**禁止手工同步**注册表↔脚本↔sources.md
 - 发现层运维：`discover.py --mode quick|full|status|rescore`——rescore 用于每次升级相关性门禁后对全池复判清洗；发现源人工定级唯一通道 = 录 rule_registry.yaml → gen_rules → X7
+- **心跳死亡开关（v8 R5-C）**：`state/heartbeat.json` 记录最后成功心跳（runner 两阶段自动刷新）；**任何会话启动时读它，>48h 无成功记录即亮红灯**（daily_runner prepare 开头自动验尸；其他会话手动读文件核对 last_ok_ts）
 
 ## 技术栈
 - Markdown（SKILL.md 主控 + references/ 知识库）+ Python 3.12（scripts/ 全部本地脚本，系统 Python 已装 pyyaml/pytest/defusedxml）
@@ -32,6 +33,7 @@
 - **测试真相（2026-09-28 实测）**：全量 pytest **228 passed + 0 failed**（--ignore 三脚本式测试后；v8 收尾曾误记 196，实测基线 199 + 补课轮新增 29 用例）；m1/m3 独立跑 ✓，m4_m5_m6 独立跑 1 败（状态依赖，ADR-003 记账不修）；跑 pytest 后照例 `git checkout --` 还原 state 污染
 - **试产第 2 期（20260926）**：16 条全 72h 窗口、文章级 16/16（11 直链+6 gnews 分享链如实标注降级证据）、A 级 31.3%、26 门禁+理解层 exit 0；评审=主上下文自评（判定「值得读」、P0=0、P1×3/P2×4 全部处置）+ **2026-09-28 补记**：独立评审探针两发仍败（project-critic=钉死供应商 bigmodel-start-plan 缺失——配置问题非配额，该通道需先修供应商配置；general-purpose=并发配额超限），机器侧声明级对账 mismatch=0 佐证 P0=0 但抓出挂靠数字，全文见 `delivery/日报质量评审_20260926_第2期.md`
 - **中文源直链（v8 R3）**：ithome RSS（`www.ithome.com/rss/`）实测 200·60 条全文章级 → collector ITHomeCollector + registry **B 级**补录（引用须溯源权威原文）；财联社/证券时报免 key 通道不存在（404/JS 壳/签名墙），eet-china 本环境双路超时——见 `delivery/中文源直链调研_20260928.md`
+- **路线 C 分层混合（2026-09-28 读者仲裁落地）**：新闻条目=承重层 3-5 条（◆，双源交叉+「→ 一句话」结论）+ 背景层 5-8 条（◇，单源行内标「⚠单源待证」）；X12 新区间 8-13 条（registry thresholds 已改+gen_rules 重生成+金测试 47 域断言已同步）；**交叉验证率基线 12.5%（2/16）为台账第 2 指标**；TrendForce 直连 RSS 已接入（A 级 47 域，feed pubDate 是列表缓存日须以文章页日期为准）；**220% 挂靠数字已回改**（外部口径 200%+ 并注明对账处置）；心跳死亡开关已装（state/heartbeat.json + 48h 红灯）——四维审查（delivery/四维对抗审查_子代理版_20260928.md）最优先项全部落地
 - **发现层产出问责（v8 R4）**：discover.py `production_accounting`——validated 按 discovered_via 拆种子/非种子（缺失/未知渠道宁按种子计），quick/full/status 每次打印问责行，非种子=0 时横幅宣布「发现层=机制演示」；真实基线非种子=1（shattered.io）；prepare_candidates 给 top8 直链候选附 body_full（≤4000 字，生成读原文不看 160 字摘要）
 - **对标结论**（`delivery/对标报告_护城河_20260926.md`）：五论点判决——推演可问责/批评代谢=独占（开源零同类），诚实性工程=领先（最接近物 citation-check-skill 248★），教学层=独占（C 组搜索最高 5★），自主发现层=持平（TrendRadar 62.5k★/Horizon 9.5k★ 为规模天花板），心跳=持平（恢复后成立）。注意：本轮调研为 WebFetch 直读降级口径
 - 台账：`delivery/迭代台账.md`（9 指标基线→终版，含 A 级占比负 delta 与 pytest 基线口径偏差的诚实注记）；交接：`delivery/会话交接_20260926.md`

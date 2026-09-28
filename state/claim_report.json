@@ -1,6 +1,6 @@
 {
   "report": "芯片行业日报_20260926.md",
-  "generated_at": "2026-09-28 07:56:48",
+  "generated_at": "2026-09-28 15:01:17",
   "stats": {
     "entries": 16,
     "redirect_only": 3,
@@ -73,13 +73,15 @@
       "title": "英特尔放话：14A 性能与台积电 A14 差距 5% 以内，苹果/英伟达/亚马逊据报表现兴趣",
       "claims": [
         "5%",
+        "200%",
         "220%",
         "1.4nm",
         "14A",
         "A14",
-        "18A"
+        "18A",
+        "2026"
       ],
-      "n_claims": 6,
+      "n_claims": 8,
       "direct_urls": [
         "https://www.tomshardware.com/tech-industry/semiconductors/intel-expects-14a-to-be-within-5-percent-the-performance-of-tsmcs-a14-conservative-forecast-clashes-with-18as-frequency-lead-and-promised-20-percent-gains"
       ],
@@ -87,8 +89,9 @@
         "https://news.google.com/rss/articles/CBMingFBVV95cUxOak1fSWhvOU1OUnRwSG5jNXlLa0tRc2Y1bjUxZ2stVHZWUE5tY3Z5aGZxVnNnbG9vMzRVY1FDY1dham5OY0R5NTRuTV9HYzBiSVNvbU5QTmFYUEV5bGE1YzFBRkJkUTh4eG94Tl8wQzZJZ0xaQTNRaTJSTkQ0X190U2w2UWluWkl5ZlVjcFRpcFBMbjg3SVkzN1ItRDJEQdIBmgFBVV95cUxPaDI2ejhoZnRPRWRLbmRQd3VjTHhLSXN2ODJCdDFnbG1Yc1VOZmpQSy1halVkOEUxRExDRHd0ZS1ZaWktRHBVaG9IVUt0ZFZsZ2dlZDVTdHlPcVZtZTAxYm4xTTFUdjlyTWdJQWNIWkhpOVp2aEFqenVrUjZOSnJIb3dFYV94SEVaRnNmdFVNTTBfdEJDbGcwUWRB?oc=5"
       ],
       "verdict": "partial",
-      "coverage": 0.8333333333333334,
+      "coverage": 0.75,
       "missing": [
+        "200%",
         "220%"
       ],
       "sources": [
