@@ -21,7 +21,7 @@
 - `scripts/validate_report.py` — 26 项硬校验（Mimosa 安全加固后 0 finding）；`scripts/validate_understanding.py` — 理解层存在性校验 v1（U1-U6，带第 1 期缺陷样本红灯，由 runner 串联强制，ADR-004）
 - `scripts/daily_runner.py` — **每日心跳一条命令**（prepare=生成前发现+候选池 / verify=生成后校验+HTML；fatal 步失败非零退出指明炸哪步）；`scripts/multi_source/` — discover.py（v7 三引擎+生命周期）/collector/cleaner（含 v8 采中准入）/fusion/gate（G1-G7+official_primary）/leak_detector/value_score/health_check/gap_analyzer/prepare_candidates
 - `scripts/build_report_html.py` + `report_viz/` — 视图 HTML 构建器；`archive_to_kb.py` — Obsidian 归档（`D:\我的知识库\07-芯片行业日报\`）
-- `state/` — 跨日记忆与运行数据（report_state/signal_history/forecast_log/discovered_sources/gate_report 等）；`data/`（multi_source 下）是回归基线，online 抓取勿覆盖
+- `state/` — 跨日记忆与运行数据（report_state/signal_history/forecast_log/discovered_sources/gate_report/heartbeat/claim_report/reader_feedback 等；运行更新属预期 git 噪音）；`data/`（multi_source 下）是回归基线，online 抓取勿覆盖
 - `.trae/skills/chip-daily-report/` — 镜像，须与根目录逐字节一致（X1/X2，`check_rules_consistency.py` 的 R1 段监督；同步一律 Read+Write，Bash 写源码/配置会被钩子拦）
 - `.workbuddy/memory/MEMORY.md` — 项目长期约定与运行铁律的唯一权威（含用户画像、四条链路同步法）
 
