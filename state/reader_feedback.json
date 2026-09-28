@@ -9,12 +9,13 @@
   "records": [
     {
       "issue": "20260926",
-      "recorded_at": null,
+      "recorded_at": "2026-09-28T12:30:00+08:00",
       "read_minutes": null,
-      "takeaway_concept": null,
+      "takeaway_concept": "无——推演块看完不知道意味着什么（读者自述：还是之前那个问题）",
       "skipped_sections": [],
       "forecast_selfcheck": null,
-      "raw_quote": "（第 2 期冷读待填——读者环第一个数据点）"
+      "raw_quote": "我刚才看了一下你那个前瞻，怎么感觉一方面是有点少，二是这个传导链不太明确，我看了之后我都不知道它意味着什么，还是我之前和你说那个问题",
+      "capture_note": "读者环首个数据点（部分捕获：读者读了未来推演节并即时反馈，整体冷读未计时）。三条痛点：①数量少 ②传导链不明确 ③不知道意味着什么=v6.2『只说涨价没意思』未修到根。处置见台账读者环节。"
     }
   ]
 }
