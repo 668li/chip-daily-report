@@ -235,8 +235,9 @@ def test_fusion_output_unchanged():
     assert sum(1 for e in evs if e["verification"] == "verified") == 7
 
 
-def test_main_runs():
-    """main() 可运行并产出报告文件。"""
-    assert ld.main() == 0
-    assert (MS / "data" / "leak_report.json").exists()
-    assert (MS / "data" / "leak_report.md").exists()
+def test_main_runs(tmp_path):
+    """main() 可运行并产出报告文件——写入 tmp_path，不污染 data/ 回归基线
+    （v8 对齐轮修复：此前每次 pytest 都会把 data/leak_report.* 写脏）。"""
+    assert ld.main(out_dir=tmp_path) == 0
+    assert (tmp_path / "leak_report.json").exists()
+    assert (tmp_path / "leak_report.md").exists()

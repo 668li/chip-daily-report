@@ -390,13 +390,17 @@ def render_md(report: dict) -> str:
     return "\n".join(lines)
 
 
-def main():
+def main(out_dir: Path | None = None):
+    """out_dir：报告落盘目录，默认 DATA_DIR（CLI 历史行为）。测试传 tmp_path——
+    防 pytest 把 leak_report 写进 data/ 回归基线（v8 对齐轮：'跑完 git checkout --'
+    还原仪式的根因就在这里）。输入 cleaned/fused 仍固定读 DATA_DIR 基线。"""
+    out = Path(out_dir) if out_dir is not None else DATA_DIR
     cleaned = json.loads((DATA_DIR / "cleaned_events.json").read_text(encoding="utf-8"))
     fused = json.loads((DATA_DIR / "fused_events.json").read_text(encoding="utf-8"))
     report = detect(cleaned, fused)
-    (DATA_DIR / "leak_report.json").write_text(
+    (out / "leak_report.json").write_text(
         json.dumps(report, ensure_ascii=False, indent=2), encoding="utf-8")
-    (DATA_DIR / "leak_report.md").write_text(
+    (out / "leak_report.md").write_text(
         render_md(report), encoding="utf-8")
     st = report["stats"]
     print(f"[leak] 检查 {report['meta']['pairs_checked']} 对单源 → 候选 {st['total_candidates']} 个 "

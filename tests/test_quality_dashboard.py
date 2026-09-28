@@ -45,8 +45,8 @@ def test_20260727_core_metrics():
     # 数据完整性对账：计算 72.7% vs 自述 33.3% 偏差 ~0.394
     assert r["declared_a_ratio"] is not None
     assert abs(r["ratio_gap"] - 0.394) < 0.02
-    # X12：22 条 -> WARN（21-25 区间）
-    assert r["x12_grade"] == "WARN"
+    # X12：22 条 -> FAIL（>16，超路线 C 上限+缓冲；历史报告按现役口径回望）
+    assert r["x12_grade"] == "FAIL"
 
 
 def test_20260720_x11_and_count():
@@ -56,15 +56,15 @@ def test_20260720_x11_and_count():
     assert r["x11"] is True
     # 标题含日期 -> X16 通过
     assert r["x16_title"] is True
-    # 11 条 -> WARN（10-14）
-    assert r["x12_grade"] == "WARN"
+    # 11 条 -> PASS（8-13 路线 C 目标区间）
+    assert r["x12_grade"] == "PASS"
 
 
 def test_20260722_count_and_grade():
     r = report("芯片行业日报_20260722.md")
     assert r["computed_news"] == 9
-    # 9 条 -> FAIL（<10）
-    assert r["x12_grade"] == "FAIL"
+    # 9 条 -> PASS（8-13；旧口径 <10 FAIL 已随路线 C 废止）
+    assert r["x12_grade"] == "PASS"
     # 标题含日期
     assert r["x16_title"] is True
 

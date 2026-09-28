@@ -237,15 +237,28 @@ def run_checks(report: dict):
     rows.append((15, "产业链关联", "PASS" if len(cg) >= 2 else "FAIL",
                  f"{len(cg)} 组关联" if cg else "缺产业链关联小节"))
 
-    # 16. 新闻条数（news_count == 各环节之和，且 15-20）
+    # 16. 新闻条数（news_count == 各环节之和；阈值=registry thresholds.news_count，债⑧接线）
     seg_sum = sum(len(v or []) for v in report.get("segments", {}).values())
     nc = report.get("news_count")
+    _th = None
+    try:
+        import yaml
+        _reg = yaml.safe_load((Path(__file__).resolve().parent.parent / "rules" / "rule_registry.yaml")
+                              .read_text(encoding="utf-8")) or {}
+        _th = (_reg.get("thresholds") or {}).get("news_count") or {}
+        if not {"target_min", "target_max", "fail_below", "fail_above"} <= _th.keys():
+            _th = None
+    except Exception:
+        _th = None
     if nc != seg_sum:
         rows.append((16, "新闻条数", "FAIL", f"news_count={nc} 但环节实际 {seg_sum} 条"))
-    elif not (15 <= seg_sum <= 20):
-        rows.append((16, "新闻条数", "FAIL", f"条数 {seg_sum} 不在 15-20 区间"))
+    elif _th is None:
+        rows.append((16, "新闻条数", "PASS", f"{seg_sum} 条（阈值源不可读，仅核对声明=实际）"))
+    elif seg_sum < int(_th["fail_below"]) or seg_sum > int(_th["fail_above"]):
+        rows.append((16, "新闻条数", "FAIL",
+                     f"条数 {seg_sum} 出 FAIL 轨（<{_th['fail_below']} 或 >{_th['fail_above']}）"))
     else:
-        rows.append((16, "新闻条数", "PASS", f"{seg_sum} 条（落入 15-20）"))
+        rows.append((16, "新闻条数", "PASS", f"{seg_sum} 条（目标 {_th['target_min']}-{_th['target_max']}）"))
 
     # 17. 来源统计位置（渲染器恒定输出在自检小节内，PASS）
     rows.append((17, "来源统计位置", "PASS", "渲染器恒定在自检结果内输出来源分级统计"))

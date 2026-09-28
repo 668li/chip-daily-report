@@ -69,6 +69,20 @@ def load_registry():
     return a, b, c, segs
 
 
+def load_news_thresholds():
+    """X12 条数阈值唯一权威 = registry thresholds.news_count（运行时读取，无手工同步）。
+    读不到返回 None——调用方以 WARN 诚实降级，不用陈旧字面量顶包（债⑧接线，2026-09-28）。"""
+    try:
+        with open(REGISTRY, "r", encoding="utf-8") as f:
+            reg = yaml.safe_load(f) or {}
+        nc = (reg.get("thresholds") or {}).get("news_count") or {}
+        if {"target_min", "target_max", "fail_below", "fail_above"} <= nc.keys():
+            return nc
+    except Exception:
+        pass
+    return None
+
+
 def _match(domain, level_set):
     d = domain.lower().lstrip("www.")
     if d in level_set:
@@ -229,17 +243,18 @@ def parse_report(path, a_set, b_set, c_set):
     except StopIteration:
         pass
 
-    # --- X12 软指标（按计算新闻数） ---
+    # --- X12 软指标（按计算新闻数；阈值=registry thresholds.news_count 单源） ---
     def x12_grade(n):
         if n == 0:
             return "PASS"  # 节假日
-        if n < 10:
-            return "FAIL"
-        if n > 25:
-            return "FAIL"
-        if 15 <= n <= 20:
+        th = load_news_thresholds()
+        if th is None:
+            return "WARN"  # 阈值源不可读：诚实降级，不用陈旧字面量顶包
+        if int(th["target_min"]) <= n <= int(th["target_max"]):
             return "PASS"
-        return "WARN"  # 10-14 / 21-25
+        if n < int(th["fail_below"]) or n > int(th["fail_above"]):
+            return "FAIL"
+        return "WARN"
 
     x12 = x12_grade(news_count)
 

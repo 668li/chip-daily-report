@@ -210,13 +210,16 @@ def test_X11_stock_price_as_evidence_only():
 # =============================================================================
 
 def test_X12_news_count_soft_indicator():
+    """X12 阈值现读 rule_registry.yaml thresholds.news_count（路线 C 8-13，债⑧接线）。
+    带内 PASS / 14-20 缓冲 WARN / <8 或 >20 FAIL。"""
     v = load_validator()
-    assert v.check_news_count(0) == ("PASS", v.check_news_count(0)[1])  # 节假日0条自动PASS
-    assert v.check_news_count(17)[0] == "PASS"   # 落入 15-20
-    assert v.check_news_count(22)[0] == "WARN"   # 21-25 WARN
-    assert v.check_news_count(12)[0] == "WARN"   # 10-14 WARN
-    assert v.check_news_count(8)[0] == "FAIL"    # <10 FAIL
-    assert v.check_news_count(26)[0] == "FAIL"   # >25 FAIL
+    assert v.check_news_count(0)[0] == "PASS"    # 节假日0条自动PASS
+    assert v.check_news_count(8)[0] == "PASS"    # 组合下限（承重 3-5 + 背景 5-8）
+    assert v.check_news_count(13)[0] == "PASS"   # 目标区间上限
+    assert v.check_news_count(15)[0] == "WARN"   # 14-20 超上限缓冲带
+    assert v.check_news_count(18)[0] == "WARN"   # 过渡期报告实值（v8 换金 golden 0925）
+    assert v.check_news_count(7)[0] == "FAIL"    # <8 组合下限
+    assert v.check_news_count(22)[0] == "FAIL"   # >20
 
 
 # =============================================================================

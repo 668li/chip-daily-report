@@ -450,14 +450,16 @@ thresholds:
     warn_at: 6          # 6 句 WARN
     fail_at: 7          # ≥7 句 FAIL
     fail_below: 3       # ≤2 句 FAIL（与 pass_min 一致边界）
-  # X12：单期新闻条数（软指标；2026-09-28 路线 C 分层混合口径）
+  # X12：单期新闻条数（软指标；路线 C 分层混合口径。2026-09-28 对齐轮接线（债⑧闭账）：
+  # target 与 layered_note 的 8-13 对齐，validate_report/quality_dashboard 运行时读本字段，
+  # 脚本硬编码 15-20 的租界消灭——本块自此是条数口径唯一权威）
   news_count:
-    target_min: 10
-    target_max: 14
-    warn_min: 8         # 8–9 条 WARN
-    warn_max: 16        # 15–16 条 WARN
-    fail_below: 8       # <8 条 FAIL
-    fail_above: 16      # >16 条 FAIL
+    target_min: 8        # 目标下限 = 承重 3-5 + 背景 5-8 的组合下限
+    target_max: 13       # 目标上限
+    warn_min: 8          # 无下缓冲带：低于下限直接 FAIL（字段保留对称）
+    warn_max: 20         # 14–20 条 WARN（超上限缓冲带，承接 15-20 时代的过渡期报告）
+    fail_below: 8        # <8 条 FAIL
+    fail_above: 20       # >20 条 FAIL（判爆炸；历史 golden 18 条按现役口径回望为 WARN）
     layered_note: "路线 C（读者 2026-09-28 仲裁）：承重层 3-5 条（双源+先记住一句话）+ 背景层 5-8 条（单源+⚠行内标注）＝总 8-13 条；单极叙事断根（四维审查：台积电×48 次）"
     holiday_zero_pass: true   # 0 条（节假日）按既有兜底自动 PASS
 

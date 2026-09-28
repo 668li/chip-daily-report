@@ -643,19 +643,39 @@ def check_industry_chain(content):
 # v5.0 增强检查（X12 / X14 / X15 / X16 裁决固化，F3）
 # ============================================================
 
+def _news_count_thresholds():
+    """X12 阈值唯一权威 = rules/rule_registry.yaml thresholds.news_count（运行时读取，
+    消灭脚本硬编码租界——债⑧接线，2026-09-28 对齐轮）。读不到返回 None（诚实降级）。"""
+    try:
+        import yaml
+        reg_path = Path(__file__).resolve().parent.parent / "rules" / "rule_registry.yaml"
+        reg = yaml.safe_load(reg_path.read_text(encoding="utf-8")) or {}
+        nc = (reg.get("thresholds") or {}).get("news_count") or {}
+        if {"target_min", "target_max", "fail_below", "fail_above"} <= nc.keys():
+            return nc
+    except Exception:
+        pass
+    return None
+
+
 def check_news_count(actual_count):
-    """检查16（X12 软指标）：单期新闻条数 15-20 为目标区间，WARN 级。
-    落区间 PASS；10-14 或 21-25 WARN；<10 或 >25 FAIL；0 条（节假日）自动 PASS。
-    """
+    """检查16（X12 软指标）：单期新闻条数，阈值运行时读 rule_registry.yaml
+    thresholds.news_count（路线 C 分层混合口径：总 8-13 条为目标区间）。
+    落区间 PASS；14-20 WARN；<8 或 >20 FAIL；0 条（节假日）自动 PASS；
+    阈值源不可读时 WARN 降级（不用陈旧字面量顶包）。"""
     if actual_count == 0:
         return 'PASS', "0 条新闻（节假日），条数检查自动 PASS"
-    if actual_count < 10:
-        return 'FAIL', f"新闻条数 {actual_count} 条（<10，信息密度过低）"
-    if actual_count > 25:
-        return 'FAIL', f"新闻条数 {actual_count} 条（>25，疑似重复/冗余）"
-    if 10 <= actual_count < 15 or 21 <= actual_count <= 25:
-        return 'WARN', f"新闻条数 {actual_count} 条（偏离目标区间 15-20，建议调整）"
-    return 'PASS', f"新闻条数 {actual_count} 条（落入目标区间 15-20）"
+    th = _news_count_thresholds()
+    if th is None:
+        return 'WARN', "X12 阈值源 rules/rule_registry.yaml 不可读，条数未机检（人工核对）"
+    lo, hi = int(th["target_min"]), int(th["target_max"])
+    if actual_count < int(th["fail_below"]):
+        return 'FAIL', f"新闻条数 {actual_count} 条（<{th['fail_below']}，低于分层组合下限）"
+    if actual_count > int(th["fail_above"]):
+        return 'FAIL', f"新闻条数 {actual_count} 条（>{th['fail_above']}，疑似重复/冗余）"
+    if lo <= actual_count <= hi:
+        return 'PASS', f"新闻条数 {actual_count} 条（落入目标区间 {lo}-{hi}）"
+    return 'WARN', f"新闻条数 {actual_count} 条（偏离目标区间 {lo}-{hi}，建议调整）"
 
 
 def check_source_stats_location(content):
