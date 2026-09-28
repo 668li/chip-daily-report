@@ -1,0 +1,20 @@
+{
+  "schema": "reader-feedback v1（读者环 · 提取测试口径，2026-09-28 随读者环冲刺启动）",
+  "notes": [
+    "这是台账第 1 指标（读者价值）的唯一数据源——全部工程指标（门禁数/绿数/覆盖率）都排在它之后",
+    "四问是提取测试不是满意度调查：takeaway_concept 必须是勇谚自己的话，系统不得给选项、不得代填",
+    "采集纪律：每期日报只有一次自然采集窗口（交付后当场），没有反馈就不写记录、不追问第二次",
+    "recorded_at 为 ISO 时间戳；raw_quote 保留原话不加工"
+  ],
+  "records": [
+    {
+      "issue": "20260926",
+      "recorded_at": null,
+      "read_minutes": null,
+      "takeaway_concept": null,
+      "skipped_sections": [],
+      "forecast_selfcheck": null,
+      "raw_quote": "（第 2 期冷读待填——读者环第一个数据点）"
+    }
+  ]
+}
