@@ -200,3 +200,39 @@ def test_ithome_registered_and_parse():
     assert a.published == "2026-09-24"
     assert "涨价主要落在先进制程" in a.body  # HTML 剥离后正文保留
     assert collector._guess_segment(a.title) == "制造"
+
+
+# ---------------- v8 R5-C: TrendForce 直连源（对齐轮补测：审查发现无 feed 解析单测） ----------------
+
+TRENDFORCE_XML = """<?xml version="1.0" encoding="utf-8"?>
+<rss version="2.0"><channel><title>TrendForce News</title>
+<item><title>TSMC 3nm Capacity Fully Booked Through 2027</title>
+<link>https://www.trendforce.com/news/2026/09/28/tsmc-3nm-capacity-booked/</link>
+<pubDate>Mon, 28 Sep 2026 06:00:00 GMT</pubDate>
+<description>Foundry capacity update for advanced nodes.</description>
+</item>
+<item><title>DRAM Contract Prices Rise in October</title>
+<link>https://www.trendforce.com/news/2026/09/27/dram-prices-rise/</link>
+<pubDate>Sun, 27 Sep 2026 06:00:00 GMT</pubDate>
+<description>Memory pricing momentum continues.</description>
+</item>
+</channel></rss>"""
+
+
+def test_trendforce_registered_and_parse():
+    """TrendForce（v8 R5-C）：注册断言（防静默缺失，v7 per-source 教训）+ 离线解析出文章级直链。"""
+    assert collector.TrendForceCollector in collector.ONLINE_COLLECTORS
+    assert any(sid == "trendforce" for sid, _, _ in collector.PROBE_ENDPOINTS)
+    tf = collector.TrendForceCollector()
+    assert tf.source_id == "trendforce"
+    assert tf.tier == 1
+    assert tf.feed_url == "https://www.trendforce.com/news/feed_v2/"
+    items = tf._parse(TRENDFORCE_XML)
+    assert len(items) == 2
+    a = items[0]
+    assert a.source_id == "trendforce"
+    assert a.title == "TSMC 3nm Capacity Fully Booked Through 2027"
+    # 文章级直链（域名根/仅斜杠 = 伪追溯，采中准入会拒）
+    assert a.url.startswith("https://www.trendforce.com/news/")
+    assert a.url.count("/") >= 5
+    assert a.published == "2026-09-28"
