@@ -33,6 +33,7 @@
 | SEMI 大半导体产业网 | 权威源 | https://www.semi.org.cn | 材料/设备 | SEMI 中国官方 |
 | TechInsights | 权威源 | https://www.techinsights.com | 综合 | 拆解分析、技术情报 |
 | SemiAnalysis | 权威源 | https://www.semianalysis.com | 综合 | 深度行业分析 |
+| TrendForce 集邦咨询 | 权威源 | https://www.trendforce.com | 综合 | v8 R5-C 补录（2026-09-28）：行业研究机构，与 TechInsights/SemiAnalysis 同级；直连 RSS https://www.trendforce.com/news/feed_v2/ 实测 200（四维审查发现：日报引用其内容三期全走 gnews 跳转链，直连管道一直存在）；注意 feed pubDate 自报日期可能是列表缓存日（实测全部 2026-07-01 而内容滚动更新），引用时以文章页日期为准 |
 | EDN | 权威源 | https://www.edn.com | 设计/EDA | 电子设计技术媒体 |
 | Semiconductor Engineering | 权威源 | https://semiengineering.com | EDA/材料/设备 | 半导体工程媒体 |
 | EET-China | 权威源 | https://www.eet-china.com | 综合 | 电子工程专辑中文版 |
@@ -376,7 +377,7 @@ python scripts/multi_source/discover.py --mode status   # 只打印现有状态�
 
 | 源 | 死因 |
 |----|------|
-| TrendForce RSS | 404 |
+| TrendForce RSS（旧端点） | 404（feed_v2 新端点 2026-09-28 实测 200，见 A 级表 TrendForce 行——黑名单指旧路径，勿再探旧端点） |
 | The Elec | 403 / 502 |
 | AnandTech | 已关站；HTTP 200 + HTML 反爬壳陷阱（200 ≠ 活 feed 的教训，探测须验内容形态） |
 | 36kr `/feed` | 实测不可用（黑名单清单在列，未注明具体错误码） |

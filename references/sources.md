@@ -377,7 +377,7 @@ python scripts/multi_source/discover.py --mode status   # 只打印现有状态�
 
 | 源 | 死因 |
 |----|------|
-| TrendForce RSS | 404 |
+| TrendForce RSS（旧端点） | 404（feed_v2 新端点 2026-09-28 实测 200，见 A 级表 TrendForce 行——黑名单指旧路径，勿再探旧端点） |
 | The Elec | 403 / 502 |
 | AnandTech | 已关站；HTTP 200 + HTML 反爬壳陷阱（200 ≠ 活 feed 的教训，探测须验内容形态） |
 | 36kr `/feed` | 实测不可用（黑名单清单在列，未注明具体错误码） |
