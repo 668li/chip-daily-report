@@ -1,0 +1,225 @@
+{
+  "version": 1,
+  "runs": [
+    {
+      "date": "2026-09-29",
+      "ts": "2026-09-29T15:16:17",
+      "source_id": "sec_edgar",
+      "found": 10,
+      "kept": 10,
+      "first_import": true,
+      "dropped_old": 0,
+      "capped": false
+    },
+    {
+      "date": "2026-09-29",
+      "ts": "2026-09-29T15:16:17",
+      "source_id": "aihot",
+      "found": 25,
+      "kept": 25,
+      "first_import": true,
+      "dropped_old": 0,
+      "capped": false
+    },
+    {
+      "date": "2026-09-29",
+      "ts": "2026-09-29T15:16:17",
+      "source_id": "semiengineering",
+      "found": 10,
+      "kept": 10,
+      "first_import": true,
+      "dropped_old": 0,
+      "capped": false
+    },
+    {
+      "date": "2026-09-29",
+      "ts": "2026-09-29T15:16:17",
+      "source_id": "eetimes",
+      "found": 10,
+      "kept": 10,
+      "first_import": true,
+      "dropped_old": 0,
+      "capped": false
+    },
+    {
+      "date": "2026-09-29",
+      "ts": "2026-09-29T15:16:17",
+      "source_id": "cnbc",
+      "found": 30,
+      "kept": 11,
+      "first_import": true,
+      "dropped_old": 19,
+      "capped": false
+    },
+    {
+      "date": "2026-09-29",
+      "ts": "2026-09-29T15:16:17",
+      "source_id": "semianalysis",
+      "found": 10,
+      "kept": 0,
+      "first_import": true,
+      "dropped_old": 10,
+      "capped": false
+    },
+    {
+      "date": "2026-09-29",
+      "ts": "2026-09-29T15:16:17",
+      "source_id": "ieee_spectrum",
+      "found": 30,
+      "kept": 3,
+      "first_import": true,
+      "dropped_old": 27,
+      "capped": false
+    },
+    {
+      "date": "2026-09-29",
+      "ts": "2026-09-29T15:16:17",
+      "source_id": "tomshardware",
+      "found": 50,
+      "kept": 30,
+      "first_import": true,
+      "dropped_old": 0,
+      "capped": true
+    },
+    {
+      "date": "2026-09-29",
+      "ts": "2026-09-29T15:16:17",
+      "source_id": "nikkei_asia",
+      "found": 50,
+      "kept": 30,
+      "first_import": true,
+      "dropped_old": 0,
+      "capped": true
+    },
+    {
+      "date": "2026-09-29",
+      "ts": "2026-09-29T15:16:17",
+      "source_id": "ithome",
+      "found": 60,
+      "kept": 30,
+      "first_import": true,
+      "dropped_old": 0,
+      "capped": true
+    },
+    {
+      "date": "2026-09-29",
+      "ts": "2026-09-29T15:16:17",
+      "source_id": "trendforce",
+      "found": 20,
+      "kept": 0,
+      "first_import": true,
+      "dropped_old": 20,
+      "capped": false
+    },
+    {
+      "date": "2026-09-29",
+      "ts": "2026-09-29T15:16:17",
+      "source_id": "yahoo_nvda",
+      "found": 18,
+      "kept": 18,
+      "first_import": true,
+      "dropped_old": 0,
+      "capped": false
+    },
+    {
+      "date": "2026-09-29",
+      "ts": "2026-09-29T15:16:17",
+      "source_id": "yahoo_tsm",
+      "found": 20,
+      "kept": 20,
+      "first_import": true,
+      "dropped_old": 0,
+      "capped": false
+    },
+    {
+      "date": "2026-09-29",
+      "ts": "2026-09-29T15:16:17",
+      "source_id": "google_news",
+      "found": 200,
+      "kept": 30,
+      "first_import": true,
+      "dropped_old": 0,
+      "capped": true
+    },
+    {
+      "date": "2026-09-29",
+      "ts": "2026-09-29T15:16:17",
+      "source_id": "cninfo",
+      "found": 10,
+      "kept": 10,
+      "first_import": true,
+      "dropped_old": 0,
+      "capped": false
+    },
+    {
+      "date": "2026-09-29",
+      "ts": "2026-09-29T15:16:17",
+      "source_id": "dyn_wccftech.com",
+      "found": 20,
+      "kept": 20,
+      "first_import": true,
+      "dropped_old": 0,
+      "capped": false
+    },
+    {
+      "date": "2026-09-29",
+      "ts": "2026-09-29T15:16:17",
+      "source_id": "dyn_techpowerup.com",
+      "found": 121,
+      "kept": 30,
+      "first_import": true,
+      "dropped_old": 0,
+      "capped": true
+    },
+    {
+      "date": "2026-09-29",
+      "ts": "2026-09-29T15:16:17",
+      "source_id": "dyn_tspasemiconductor.substack.com",
+      "found": 20,
+      "kept": 20,
+      "first_import": true,
+      "dropped_old": 0,
+      "capped": false
+    },
+    {
+      "date": "2026-09-29",
+      "ts": "2026-09-29T15:16:17",
+      "source_id": "dyn_eenewseurope.com",
+      "found": 10,
+      "kept": 10,
+      "first_import": true,
+      "dropped_old": 0,
+      "capped": false
+    },
+    {
+      "date": "2026-09-29",
+      "ts": "2026-09-29T15:16:17",
+      "source_id": "dyn_electronicsweekly.com",
+      "found": 10,
+      "kept": 10,
+      "first_import": true,
+      "dropped_old": 0,
+      "capped": false
+    },
+    {
+      "date": "2026-09-29",
+      "ts": "2026-09-29T15:16:17",
+      "source_id": "dyn_electronicsforyou.biz",
+      "found": 10,
+      "kept": 10,
+      "first_import": true,
+      "dropped_old": 0,
+      "capped": false
+    },
+    {
+      "date": "2026-09-29",
+      "ts": "2026-09-29T15:16:17",
+      "source_id": "dyn_shattered.io",
+      "found": 10,
+      "kept": 10,
+      "first_import": true,
+      "dropped_old": 0,
+      "capped": false
+    }
+  ]
+}

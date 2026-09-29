@@ -18,7 +18,12 @@
 
 CLI：python scripts/multi_source/prepare_candidates.py
      [--conf-min 60] [--top-n 24] [--max-per-segment 6]
-     [--aihot-queries "半导体,芯片,存储,光刻"] [--aihot-limit 6]
+     [--aihot-queries "半导体,芯片,存储,光刻"] [--aihot-limit 6] [--no-ledger]
+
+v9 数据系统轮（2026-09-29）：采集账本接线——collect 产物按 source_id 套
+ledger.first_import_guard（首采限量+超龄丢弃，真差距①机制化）并逐源记账；
+ledger_path=None 时整体关闭（monkeypatch 存量测试零影响），生产 main()
+默认开（state/collector_ledger.json）。详见 multi_source/ledger.py。
 """
 from __future__ import annotations
 
@@ -37,6 +42,7 @@ import cleaner  # noqa: E402
 import fusion  # noqa: E402
 import gate as gate_mod  # noqa: E402
 import article_fetch  # noqa: E402
+import ledger  # noqa: E402
 
 ROOT = Path(__file__).resolve().parent.parent.parent
 STATE_DIR = ROOT / "state"
@@ -70,8 +76,10 @@ def enrich_top_candidates(report: dict, top_n: int = 8, timeout: int = 10,
 
 def run(conf_min: float = 60.0, top_n: int = 24, max_per_segment: int = 6,
         aihot_queries: str = "半导体,芯片,存储,光刻", aihot_limit: int = 6,
-        out_file: Path | None = None, enrich_top: int = 8) -> dict:
-    """执行完整候选池流水线，返回 gate 报告 dict（fail-soft）。"""
+        out_file: Path | None = None, enrich_top: int = 8,
+        ledger_path: Path | None = None) -> dict:
+    """执行完整候选池流水线，返回 gate 报告 dict（fail-soft）。
+    ledger_path 非 None 时开启采集账本（首采限量守卫+逐源记账）。"""
     result: dict = {"ok": False, "error": None, "gate": None}
     try:
         scope = {
@@ -80,6 +88,10 @@ def run(conf_min: float = 60.0, top_n: int = 24, max_per_segment: int = 6,
             "aihot_selected": True,  # v8 AIHOT 对标轮：精选池直采（无关键词交叉发现）
         }
         items = collector.collect(mode="online", scope=scope)
+        # v9 数据系统轮：首采限量+旧文归档（ledger_path=None 时整体关闭）
+        ledger_stats = None
+        if ledger_path is not None:
+            items, ledger_stats = ledger.collect_guard(items, ledger_path)
         cleaned = cleaner.normalize(items)
         # v8 P1-C 采中准入：无文章级 URL 不入池（G-1 前移，评审 P0-1 伪追溯断根）
         cleaned, admission_dropped = cleaner.admit_article_level(cleaned)
@@ -87,6 +99,8 @@ def run(conf_min: float = 60.0, top_n: int = 24, max_per_segment: int = 6,
         report = gate_mod.gate(events, conf_min=conf_min,
                                max_per_segment=max_per_segment, top_n=top_n)
         report["stats"]["admission_dropped"] = len(admission_dropped)
+        if ledger_stats is not None:
+            report["stats"]["ledger"] = ledger_stats
         if admission_dropped:
             report.setdefault("rejected_by_admission", []) .extend(
                 {"title": c.get("title", "")[:80], "url": c.get("url", ""),
@@ -125,12 +139,15 @@ def main() -> int:
     ap.add_argument("--aihot-limit", type=int, default=6)
     ap.add_argument("--enrich-top", type=int, default=8,
                     help="给前 N 条直链候选抓原文全文（0=关闭）")
+    ap.add_argument("--no-ledger", action="store_true",
+                    help="关闭采集账本（默认开：state/collector_ledger.json）")
     ap.add_argument("--out", default=str(DEFAULT_OUT))
     args = ap.parse_args()
 
     result = run(args.conf_min, args.top_n, args.max_per_segment,
                  args.aihot_queries, args.aihot_limit, Path(args.out),
-                 enrich_top=args.enrich_top)
+                 enrich_top=args.enrich_top,
+                 ledger_path=None if args.no_ledger else ledger.DEFAULT_LEDGER)
     gate = result["gate"]
 
     if not result["ok"]:
@@ -140,6 +157,11 @@ def main() -> int:
     s = gate["stats"]
     print(f"[prepare_candidates] online 采集 → 候选 {s['candidates']} 条 / 拒 {s['rejected']} 条"
           f"（raw {s['raw']}，准入拦首页级 {s.get('admission_dropped', 0)} 条）")
+    if s.get("ledger"):
+        ls = s["ledger"]
+        print(f"[prepare_candidates] 账本：{ls['sources']} 源记账，首采守卫"
+              f" {len(ls['first_import'])} 源 {ls['dropped_old']} 条超龄丢弃"
+              + (f"，封顶 {'、'.join(ls['capped'])}" if ls["capped"] else ""))
     if s["by_reason"]:
         print(f"[prepare_candidates] 拒绝原因: {s['by_reason']}")
     by_seg = Counter(c["segment"] for c in gate["candidates"])
