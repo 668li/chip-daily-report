@@ -1,26 +1,26 @@
 {
   "aggregate": {
-    "report_count": 14,
+    "report_count": 15,
     "date_range": [
       "20260720",
-      "20260926"
+      "20260929"
     ],
-    "avg_computed_a_ratio": 0.623,
+    "avg_computed_a_ratio": 0.615,
     "declared_a_ratio_count": 1,
     "avg_declared_a_ratio": 0.333,
     "avg_ratio_gap": 0.394,
     "max_ratio_gap": 0.394,
-    "avg_news_count": 15.3,
-    "news_min": 9,
+    "avg_news_count": 14.8,
+    "news_min": 8,
     "news_max": 22,
     "segment_coverage_matrix": {
-      "设计": 14,
-      "制造": 14,
-      "封测": 14,
-      "EDA": 14,
-      "材料设备": 14
+      "设计": 15,
+      "制造": 15,
+      "封测": 15,
+      "EDA": 15,
+      "材料设备": 15
     },
-    "segment_full_coverage_count": 14,
+    "segment_full_coverage_count": 15,
     "x_signals": {
       "X11_今日要点含股价": 2,
       "X14_独立来源统计小节": 1,
@@ -28,9 +28,9 @@
       "X16_标题缺日期": 1
     },
     "x12_distribution": {
-      "WARN": 3,
+      "PASS": 4,
       "FAIL": 1,
-      "PASS": 10
+      "WARN": 10
     },
     "avg_selfcheck_pass_rate": 1.0,
     "selfcheck_missing_count": 0
@@ -70,7 +70,7 @@
       "x15": false,
       "x16_title": true,
       "chain_present": false,
-      "x12_grade": "WARN"
+      "x12_grade": "PASS"
     },
     {
       "file": "芯片行业日报_20260722.md",
@@ -106,7 +106,7 @@
       "x15": false,
       "x16_title": true,
       "chain_present": false,
-      "x12_grade": "FAIL"
+      "x12_grade": "PASS"
     },
     {
       "file": "芯片行业日报_20260727.md",
@@ -142,7 +142,7 @@
       "x15": true,
       "x16_title": false,
       "chain_present": true,
-      "x12_grade": "WARN"
+      "x12_grade": "FAIL"
     },
     {
       "file": "芯片行业日报_20260808.md",
@@ -178,7 +178,7 @@
       "x15": false,
       "x16_title": true,
       "chain_present": true,
-      "x12_grade": "PASS"
+      "x12_grade": "WARN"
     },
     {
       "file": "芯片行业日报_20260809.md",
@@ -214,7 +214,7 @@
       "x15": false,
       "x16_title": true,
       "chain_present": true,
-      "x12_grade": "PASS"
+      "x12_grade": "WARN"
     },
     {
       "file": "芯片行业日报_20260814.md",
@@ -250,7 +250,7 @@
       "x15": false,
       "x16_title": true,
       "chain_present": true,
-      "x12_grade": "PASS"
+      "x12_grade": "WARN"
     },
     {
       "file": "芯片行业日报_20260817.md",
@@ -286,7 +286,7 @@
       "x15": false,
       "x16_title": true,
       "chain_present": true,
-      "x12_grade": "PASS"
+      "x12_grade": "WARN"
     },
     {
       "file": "芯片行业日报_20260828.md",
@@ -322,7 +322,7 @@
       "x15": false,
       "x16_title": true,
       "chain_present": true,
-      "x12_grade": "PASS"
+      "x12_grade": "WARN"
     },
     {
       "file": "芯片行业日报_20260831.md",
@@ -358,7 +358,7 @@
       "x15": false,
       "x16_title": true,
       "chain_present": true,
-      "x12_grade": "PASS"
+      "x12_grade": "WARN"
     },
     {
       "file": "芯片行业日报_20260903.md",
@@ -394,7 +394,7 @@
       "x15": false,
       "x16_title": true,
       "chain_present": true,
-      "x12_grade": "PASS"
+      "x12_grade": "WARN"
     },
     {
       "file": "芯片行业日报_20260909.md",
@@ -430,7 +430,7 @@
       "x15": false,
       "x16_title": true,
       "chain_present": true,
-      "x12_grade": "PASS"
+      "x12_grade": "WARN"
     },
     {
       "file": "芯片行业日报_20260910.md",
@@ -466,7 +466,7 @@
       "x15": false,
       "x16_title": true,
       "chain_present": true,
-      "x12_grade": "PASS"
+      "x12_grade": "WARN"
     },
     {
       "file": "芯片行业日报_20260925.md",
@@ -502,7 +502,7 @@
       "x15": false,
       "x16_title": true,
       "chain_present": true,
-      "x12_grade": "PASS"
+      "x12_grade": "WARN"
     },
     {
       "file": "芯片行业日报_20260926.md",
@@ -538,7 +538,43 @@
       "x15": false,
       "x16_title": true,
       "chain_present": true,
-      "x12_grade": "WARN"
+      "x12_grade": "PASS"
+    },
+    {
+      "file": "芯片行业日报_20260929.md",
+      "date": "20260929",
+      "title": "# 芯片行业日报 — 2026年9月29日",
+      "title_has_date": true,
+      "meta_blockquote": true,
+      "declared_news": 10,
+      "computed_news": 8,
+      "sources_total": 8,
+      "a_count": 4,
+      "b_count": 2,
+      "c_count": 0,
+      "u_count": 2,
+      "a_ratio": 0.5,
+      "segment_coverage": {
+        "设计": true,
+        "制造": true,
+        "封测": true,
+        "EDA": true,
+        "材料设备": true
+      },
+      "segment_coverage_count": 5,
+      "selfcheck_present": true,
+      "selfcheck_total": 26,
+      "selfcheck_pass": 26,
+      "selfcheck_fail": 0,
+      "selfcheck_warn": 0,
+      "declared_a_ratio": null,
+      "ratio_gap": null,
+      "x11": false,
+      "x14": false,
+      "x15": false,
+      "x16_title": true,
+      "chain_present": true,
+      "x12_grade": "PASS"
     }
   ]
 }

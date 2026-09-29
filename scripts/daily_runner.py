@@ -25,6 +25,8 @@ prepare → 按 SKILL.md 生成当期日报 → 再跑本脚本 verify → commi
 
 诚实性约定：prepare 失败时定时会话应如实响铃，但仍可按 SKILL.md fail-soft
 继续生成当期日报（交付韧性归 SKILL 流程管，问责归本脚本管）。
+告警格式（2026-09-29 AIHOT 对标吸收）：红灯/失败一律按四要素打印——
+读者看到什么 / 会不会自愈 / 现在要做什么 / 排查线索（写给读者影响，非技术原因）。
 """
 from __future__ import annotations
 
@@ -72,8 +74,18 @@ def _write_heartbeat(stage: str) -> None:
         print(f"[daily_runner] ⚠ heartbeat 写入失败（不阻塞）：{e}")
 
 
+def _alert(title: str, reader: str, self_heal: str, action: str, clue: str) -> None:
+    """告警四要素（2026-09-29 AIHOT 对标吸收）：写给「读者影响」而非技术原因——
+    读者看到什么 / 会不会自愈 / 现在要做什么 / 给排查者的线索。"""
+    print(f"[daily_runner] ⛔ {title}")
+    print(f"    读者看到什么：{reader}")
+    print(f"    会不会自愈：{self_heal}")
+    print(f"    现在要做什么：{action}")
+    print(f"    排查线索：{clue}")
+
+
 def check_heartbeat() -> None:
-    """启动时读死亡开关：>48h 无成功记录 → 静默红灯打印（不阻塞本次运行——
+    """启动时读死亡开关：>48h 无成功记录 → 四要素红灯（不阻塞本次运行——
     本次就是来救活它的）；文件不存在=从未成功过，同样红灯。
     消费者不止本脚本：任何会话（CLAUDE.md 约定）启动时都可读此文件亮红灯。"""
     import json
@@ -82,13 +94,21 @@ def check_heartbeat() -> None:
         age_h = (time.time() - float(rec["last_ok_ts"])) / 3600.0
         last = rec.get("last_ok_date", "?")
     except Exception:
-        print("[daily_runner] ⛔ 心跳红灯：state/heartbeat.json 不存在或不可读"
-              "——从未有过成功心跳记录（死亡开关，v8 R5-C）")
+        _alert("心跳红灯：state/heartbeat.json 不存在或不可读——从未有过成功心跳记录"
+               "（死亡开关，v8 R5-C）",
+               "定时链路从未成功跑通过，日报的『自动校验背书』处于未验证状态",
+               "不会——没有首次成功就没有后续心跳，红灯会一直亮着",
+               "人工跑一次 `python scripts/daily_runner.py --stage prepare` 验证链路，"
+               "再核查定时任务（automation-fe364622）与模型配额",
+               "heartbeat.json 由 runner 两阶段成功后自动写入；口径见 CLAUDE.md『心跳死亡开关』行")
         return
     if age_h > HEARTBEAT_STALE_HOURS:
-        print(f"[daily_runner] ⛔ 心跳红灯：上次成功心跳在 {last}"
-              f"（{age_h:.0f}h 前 > {HEARTBEAT_STALE_HOURS}h 阈值）"
-              "——心跳可能已静默死亡，请人工核查定时任务与配额")
+        _alert(f"心跳红灯：上次成功心跳在 {last}"
+               f"（{age_h:.0f}h 前 > {HEARTBEAT_STALE_HOURS}h 阈值）",
+               "心跳可能已静默死亡——若定时会话同样没跑，当期日报不会生成",
+               "不会——本次运行成功后心跳才会刷新（本次就是来救活它的）",
+               "核查定时任务连续未触发的原因（配额/网络/机器关机），手动补跑 prepare 验证链路",
+               "比对 heartbeat.json 的 last_ok_ts 与定时任务运行历史；连续两天未触发升级人工介入")
 
 
 def _run(step: str, stage: str, cmd: list[str], *, fatal: bool = True,
@@ -249,8 +269,12 @@ def main() -> int:
     if ok:
         print(f"[daily_runner] ✓ 全部 fatal 步通过（总 {total:.0f}s）")
         return 0
-    print(f"[daily_runner] ✗ 存在 fatal 失败步（总 {total:.0f}s）——定时会话请如实响铃，"
-          f"再按 SKILL.md fail-soft 决定是否降级交付")
+    _alert(f"存在 fatal 失败步（总 {total:.0f}s）——本次心跳失败",
+           "当期日报未生成（prepare 炸）或未经校验链背书（verify 炸），具体看上方心跳总结的 ✗ 步",
+           "不会——fatal 步不会自己变绿，下轮同一处炸会重复失败",
+           "定时会话请如实响铃；按 SKILL.md fail-soft 决定是否降级交付，修复炸点后重跑对应阶段",
+           "上方 ✗ 步打印的『该步输出末尾』即炸点日志；prepare 炸先看 discover/prepare_candidates，"
+           "verify 炸先看 26 项门禁/声明对账/HTML")
     return 1
 
 

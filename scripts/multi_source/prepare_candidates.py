@@ -77,6 +77,7 @@ def run(conf_min: float = 60.0, top_n: int = 24, max_per_segment: int = 6,
         scope = {
             "aihot_queries": [q.strip() for q in aihot_queries.split(",") if q.strip()],
             "aihot_limit": aihot_limit,
+            "aihot_selected": True,  # v8 AIHOT 对标轮：精选池直采（无关键词交叉发现）
         }
         items = collector.collect(mode="online", scope=scope)
         cleaned = cleaner.normalize(items)

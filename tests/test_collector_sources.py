@@ -91,6 +91,87 @@ def test_aihot_duplicate_dedup(monkeypatch):
     assert len(items) == 1
 
 
+# ---------------- B1+: AIHOT 精选池直采通道（v8 AIHOT 对标轮 2026-09-29） ----------------
+
+AIHOT_SELECTED_PAYLOAD = {
+    "schemaVersion": 1,
+    "items": [
+        {"id": "s1", "title": "AMD 收购 World Labs 强化空间智能芯片布局",
+         "summary": "AMD 宣布收购空间智能初创公司 World Labs。",
+         "links": {"original": "https://www.ithome.com/1/001/002.htm"},
+         "publishedAt": "2026-09-29T01:00:00.000Z"},
+        {"id": "s2", "title": "SK 海力士宣布向龙仁 Y2 投资 54 万亿韩元",
+         "summary": "与关键词通道同题的条目（跨通道去重用）",
+         "links": {}, "publishedAt": ""},
+    ],
+}
+
+
+def test_aihot_selected_pool_parse_and_dedup(monkeypatch):
+    """精选池通道：scope.aihot_selected 开启时无关键词拉 mode=selected，
+    links.original 追溯；与关键词通道同题自动去重（seen 账本跨通道共享）。"""
+    urls = []
+
+    def fake_urlopen(req, timeout=10):
+        urls.append(req.full_url)
+        body = (AIHOT_SELECTED_PAYLOAD if "mode=selected" in req.full_url
+                else AIHOT_PAYLOAD)
+        import json
+        class R:
+            def __enter__(self): return self
+            def __exit__(self, *a): return False
+            def read(self, n=-1): return json.dumps(body).encode("utf-8")
+        return R()
+
+    monkeypatch.setattr(collector.urllib.request, "urlopen", fake_urlopen)
+    items = collector.AIHOTCollector().collect(
+        {"aihot_queries": ["半导体"], "aihot_limit": 2, "aihot_selected": True})
+    assert any("mode=selected" in u for u in urls)          # 精选池确实被拉了
+    titles = [i.title for i in items]
+    assert any("World Labs" in t for t in titles)           # 精选池新条目进来
+    assert titles.count("SK 海力士宣布向龙仁 Y2 投资 54 万亿韩元") == 1  # 跨通道去重
+    assert all(i.source_id == "aihot" and i.tier == 4 for i in items)
+    cross = next(i for i in items if "World Labs" in i.title)
+    assert cross.url == "https://www.ithome.com/1/001/002.htm"  # links.original 追溯
+
+
+def test_aihot_selected_default_off(monkeypatch):
+    """默认关：scope 不带 aihot_selected 时不发精选池请求（既有调用方零回归）。"""
+    urls = []
+
+    def fake_urlopen(req, timeout=10):
+        urls.append(req.full_url)
+        import json
+        class R:
+            def __enter__(self): return self
+            def __exit__(self, *a): return False
+            def read(self, n=-1): return json.dumps(AIHOT_PAYLOAD).encode("utf-8")
+        return R()
+
+    monkeypatch.setattr(collector.urllib.request, "urlopen", fake_urlopen)
+    collector.AIHOTCollector().collect({"aihot_queries": ["半导体"], "aihot_limit": 1})
+    assert urls and all("mode=selected" not in u for u in urls)
+
+
+def test_aihot_selected_fail_soft(monkeypatch):
+    """精选池请求失败 → 跳过不抛异常，关键词通道照常返回（fail-soft）。"""
+
+    def fake_urlopen(req, timeout=10):
+        if "mode=selected" in req.full_url:
+            raise OSError("network unreachable")
+        import json
+        class R:
+            def __enter__(self): return self
+            def __exit__(self, *a): return False
+            def read(self, n=-1): return json.dumps(AIHOT_PAYLOAD).encode("utf-8")
+        return R()
+
+    monkeypatch.setattr(collector.urllib.request, "urlopen", fake_urlopen)
+    items = collector.AIHOTCollector().collect(
+        {"aihot_queries": ["半导体"], "aihot_limit": 1, "aihot_selected": True})
+    assert len(items) == 2
+
+
 # ---------------- B2: RSS 适配器 ----------------
 
 RSS_XML = """<?xml version="1.0" encoding="UTF-8"?>

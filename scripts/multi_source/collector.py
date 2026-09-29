@@ -248,9 +248,11 @@ class SECEdgarCollector(BaseCollector):
 # ============================================================
 # AIHOT 聚合 API 采集器（迭代2 正式源，Tier-4 线索，B 级，免 key）
 #   端点契约：GET /api/v1/items?mode=all&window=7d&q=<kw>&limit=N
-#   纪律（2026-08-09 实战验证）：
+#             GET /api/v1/items?mode=selected&window=24h&limit=N（v8 精选池直采）
+#   纪律（2026-08-09 实战验证 + 2026-09-29 AIHOT 对标轮增补）：
 #     * 中文关键词必须 URL 编码
-#     * 精选池（mode=top）空集时回退 mode=all
+#     * 精选池为无关键词直采通道（抓「没想到去搜」的交叉事件），
+#       scope.aihot_selected 开关，默认关；相关性过滤交给下游 gate
 #     * 命中后用 links.original 追溯第三方原文（日报引用不直接挂 aihot）
 # ============================================================
 class AIHOTCollector(BaseCollector):
@@ -267,6 +269,21 @@ class AIHOTCollector(BaseCollector):
             return []
         queries = [str(q).strip()[:40] for q in queries if str(q).strip()][:10]
         items, seen = [], set()
+        # v8 AIHOT 对标轮（2026-09-29）：精选池直采——不带关键词拉 mode=selected，
+        # 补关键词查询的盲区（对方编辑精选过的 AI×芯片交叉事件）；
+        # seen 账本跨通道共享，关键词通道命中同题自动去重。
+        if scope.get("aihot_selected"):
+            url = f"{self.BASE}?mode=selected&window=24h&limit={limit}"
+            try:
+                payload = json.loads(_safe_fetch(url).decode("utf-8", "ignore"))
+            except Exception as e:
+                print(f"[collector:{self.source_id}] 精选池请求失败（降级跳过）：{e}")
+            else:
+                rows = payload.get("items") or payload.get("data") or payload.get("results") or []
+                for row in rows:
+                    it = self._row_to_item(row, seen, url)
+                    if it:
+                        items.append(it)
         for q in queries:
             url = f"{self.BASE}?mode=all&window={window}&q={urllib.parse.quote(q)}&limit={limit}"
             try:
@@ -276,20 +293,27 @@ class AIHOTCollector(BaseCollector):
                 continue
             rows = payload.get("items") or payload.get("data") or payload.get("results") or []
             for row in rows:
-                title = (row.get("title") or "").strip()
-                if not title or title in seen:
-                    continue
-                seen.add(title)
-                links = row.get("links") or {}
-                orig = links.get("original") or row.get("url") or url
-                items.append(RawItem(
-                    source_id=self.source_id, source_name=self.source_name, tier=4,
-                    type="news", segment="综合",
-                    title=title, url=orig,
-                    published=row.get("publishedAt") or row.get("published") or row.get("date") or "",
-                    body=row.get("summary") or row.get("content") or "",
-                ))
+                it = self._row_to_item(row, seen, url)
+                if it:
+                    items.append(it)
         return items
+
+    def _row_to_item(self, row, seen: set, fallback_url: str) -> RawItem | None:
+        """单条 API 行 → RawItem（关键词通道与精选池通道共用同一解析路径）。
+        无标题或跨通道重复标题返回 None（seen 即跨通道去重账本）。"""
+        title = (row.get("title") or "").strip()
+        if not title or title in seen:
+            return None
+        seen.add(title)
+        links = row.get("links") or {}
+        orig = links.get("original") or row.get("url") or fallback_url
+        return RawItem(
+            source_id=self.source_id, source_name=self.source_name, tier=4,
+            type="news", segment="综合",
+            title=title, url=orig,
+            published=row.get("publishedAt") or row.get("published") or row.get("date") or "",
+            body=row.get("summary") or row.get("content") or "",
+        )
 
 
 # ============================================================
