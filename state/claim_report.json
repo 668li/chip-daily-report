@@ -1,269 +1,103 @@
 {
-  "report": "芯片行业日报_20260926.md",
-  "generated_at": "2026-09-28 18:15:59",
+  "report": "芯片行业日报_20260929.md",
+  "generated_at": "2026-09-29 08:16:43",
   "stats": {
-    "entries": 16,
-    "redirect_only": 3,
-    "no_claims": 9,
-    "partial": 2,
-    "ok": 2,
-    "verifiable_ratio": 0.25
+    "entries": 10,
+    "no_text": 1,
+    "no_claims": 4,
+    "partial": 1,
+    "ok": 4,
+    "verifiable_ratio": 0.5
   },
   "entries": [
     {
-      "title": "高通定案：已发布 2nm 旗舰芯片将由台积电代工，对三星仍留门",
+      "title": "◆ AMD 82 亿美元全股票收购李飞飞的 World Labs，「AI 教母」出任 AMD 首席科学家",
       "claims": [
-        "2nm",
-        "N2"
-      ],
-      "n_claims": 2,
-      "direct_urls": [],
-      "gnews_urls": [
-        "https://news.google.com/rss/articles/CBMiywFBVV95cUxPUEluc2FQLXhJVHFUbkhiaVZCamlVVFprdGhXRElmZzJqelYwOFBqRDlXbVdNVWlRaUZ3ai1FWFRoUFJMcFBWMU5rb3NlZG0yNWNmRDhndHBVR2U5bEVzRVQ5Znk5NnctYTR6OVR4N2ZSNmw5bEJValFpZE9hbzNiazhvTDFyZ1lTaEFad09FUFM4bVBkbmd0enhMSlV2LTlvUmF6Smx5dHFfWFdGZGluT2xfdWp0bVFIenhfZWdXYlpSRVZZNVBSSDFYYw?oc=5"
-      ],
-      "verdict": "redirect_only",
-      "coverage": null,
-      "missing": [],
-      "sources": []
-    },
-    {
-      "title": "英伟达申请专利：用自然语言聊天机器人帮开发者优化游戏 GPU 性能",
-      "claims": [],
-      "n_claims": 0,
-      "direct_urls": [
-        "https://www.tomshardware.com/video-games/pc-gaming/an-nvidia-chatbot-could-one-day-help-developers-better-optimize-their-games-patent-filing-show-requests-can-be-made-in-plain-english"
-      ],
-      "gnews_urls": [],
-      "verdict": "no_claims",
-      "coverage": null,
-      "missing": [],
-      "sources": []
-    },
-    {
-      "title": "多裸片系统需要\"跨芯片的道路网\"：Arteris 提出 NoC 直穿裸片边界",
-      "claims": [],
-      "n_claims": 0,
-      "direct_urls": [
-        "https://semiengineering.com/a-network-on-chip-noc-for-multi-die-devices/"
-      ],
-      "gnews_urls": [],
-      "verdict": "no_claims",
-      "coverage": null,
-      "missing": [],
-      "sources": []
-    },
-    {
-      "title": "[回顾] 台积电年度资本开支上修至约 640 亿美元，代工对手进一步落后",
-      "claims": [
-        "640 亿美元",
-        "2026",
-        "2027",
-        "2028"
-      ],
-      "n_claims": 4,
-      "direct_urls": [],
-      "gnews_urls": [
-        "https://news.google.com/rss/articles/CBMi3AFBVV95cUxQZHpXcjcyTXowRVZRUWlMN3oyb3BBM1Z0TC0wRmFSQnl6WklVSFJIclRxNnBrUl9YQi1hRHNQeFlWRmVwYjFlZ3ptU09tcWJXT1htenFlczE5dllQbFhRZmZsSVg1MGE2N2M0U0NmMlQxclJBYndPM29rQ2FSMTNqRXhNLWNXYk1kS2RUMGEtTXBsLUlEaFEyR1ptN2RSbjZxeUtqUlN5SEdBOHoyWXBuckEzRlBVWTZaYmJORjk3TGJDSDlFZ0p3MXJBN0RXYnNyQkVlWlF5OEtDa2c5?oc=5"
-      ],
-      "verdict": "redirect_only",
-      "coverage": null,
-      "missing": [],
-      "sources": []
-    },
-    {
-      "title": "英特尔放话：14A 性能与台积电 A14 差距 5% 以内，苹果/英伟达/亚马逊据报表现兴趣",
-      "claims": [
-        "5%",
-        "140%",
-        "200%",
-        "1.4nm",
-        "14A",
-        "A14",
-        "18A",
+        "82 亿美元",
         "2026"
       ],
-      "n_claims": 8,
+      "n_claims": 2,
       "direct_urls": [
-        "https://www.tomshardware.com/tech-industry/semiconductors/intel-expects-14a-to-be-within-5-percent-the-performance-of-tsmcs-a14-conservative-forecast-clashes-with-18as-frequency-lead-and-promised-20-percent-gains"
+        "https://www.reuters.com/technology/amd-acquire-fei-fei-lis-world-labs-82-billion-deal-2026-09-28",
+        "https://techcrunch.com/2026/09/28/amd-will-acquire-fei-fei-lis-world-labs-for-8-2-billion"
       ],
-      "gnews_urls": [
-        "https://news.google.com/rss/articles/CBMingFBVV95cUxOak1fSWhvOU1OUnRwSG5jNXlLa0tRc2Y1bjUxZ2stVHZWUE5tY3Z5aGZxVnNnbG9vMzRVY1FDY1dham5OY0R5NTRuTV9HYzBiSVNvbU5QTmFYUEV5bGE1YzFBRkJkUTh4eG94Tl8wQzZJZ0xaQTNRaTJSTkQ0X190U2w2UWluWkl5ZlVjcFRpcFBMbjg3SVkzN1ItRDJEQdIBmgFBVV95cUxPaDI2ejhoZnRPRWRLbmRQd3VjTHhLSXN2ODJCdDFnbG1Yc1VOZmpQSy1halVkOEUxRExDRHd0ZS1ZaWktRHBVaG9IVUt0ZFZsZ2dlZDVTdHlPcVZtZTAxYm4xTTFUdjlyTWdJQWNIWkhpOVp2aEFqenVrUjZOSnJIb3dFYV94SEVaRnNmdFVNTTBfdEJDbGcwUWRB?oc=5"
-      ],
-      "verdict": "partial",
-      "coverage": 0.75,
-      "missing": [
-        "140%",
-        "200%"
-      ],
+      "gnews_urls": [],
+      "verdict": "no_text",
+      "coverage": null,
+      "missing": [],
       "sources": [
         {
-          "url": "https://www.tomshardware.com/tech-industry/semiconductors/intel-expects-14a-to-be-within-5-percent-the-performance-of-tsmcs-a14-conservative-forecast-clashes-with-18as-frequency-lead-and-promised-20-percent-gains",
-          "status": "cached",
-          "text_len": 20554,
-          "error": null
+          "url": "https://www.reuters.com/technology/amd-acquire-fei-fei-lis-world-labs-82-billion-deal-2026-09-28",
+          "status": "error",
+          "text_len": 0,
+          "error": "proxy: HTTP Error 401: HTTP Forbidden; direct: <urlopen error timed out>"
+        },
+        {
+          "url": "https://techcrunch.com/2026/09/28/amd-will-acquire-fei-fei-lis-world-labs-for-8-2-billion",
+          "status": "error",
+          "text_len": 0,
+          "error": "proxy: _CitedRedirectHandler.redirect_request() takes 6 positional arguments but 7 were given; direct: _CitedRedirectHandler.redirect_request() takes 6 positional arguments but 7 were given"
         }
       ]
     },
     {
-      "title": "[上期已报·本期多源确认] 台积电 2027 年 1 月起晶圆代工涨价 3%-6%，主要落在先进制程",
-      "claims": [
-        "3%",
-        "6%",
-        "2027"
-      ],
-      "n_claims": 3,
+      "title": "◇ OpenAI 自研推理 ASIC「Jalapeño」曝光：AI 辅助设计、自用为主",
+      "claims": [],
+      "n_claims": 0,
       "direct_urls": [
-        "https://www.ithome.com/1/006/598.htm",
-        "https://finance.yahoo.com/markets/stocks/articles/why-taiwan-semiconductor-manufacturing-tsm-001759290.html"
+        "https://www.tomshardware.com/tech-industry/artificial-intelligence/openais-custom-jalapeno-ai-inference-asic-is-for-openais-internal-use-but-company-leaves-the-door-open-to-broader-rollout-firm-says-it-will-have-its-hands-full-with-jalapeno-for-a-good-long-time"
       ],
       "gnews_urls": [],
-      "verdict": "ok",
-      "coverage": 1.0,
+      "verdict": "no_claims",
+      "coverage": null,
       "missing": [],
+      "sources": []
+    },
+    {
+      "title": "◆ 台积电 2nm 月产能年底冲刺 12 万片，客户追加订单 10-20%",
+      "claims": [
+        "20%",
+        "12 万片",
+        "13 万片",
+        "2nm",
+        "2026"
+      ],
+      "n_claims": 5,
+      "direct_urls": [
+        "https://www.ithome.com/1/008/029.htm",
+        "https://www.bing.com/news/search?q=%E5%8F%B0%E7%A7%AF%E7%94%B5+2nm+%E6%9C%88%E4%BA%A7%E8%83%BD+12%E4%B8%87%E7%89%87&format=rss"
+      ],
+      "gnews_urls": [],
+      "verdict": "partial",
+      "coverage": 0.8,
+      "missing": [
+        "13 万片"
+      ],
       "sources": [
         {
-          "url": "https://www.ithome.com/1/006/598.htm",
+          "url": "https://www.ithome.com/1/008/029.htm",
           "status": "cached",
-          "text_len": 1231,
+          "text_len": 1125,
           "error": null
         },
         {
-          "url": "https://finance.yahoo.com/markets/stocks/articles/why-taiwan-semiconductor-manufacturing-tsm-001759290.html",
-          "status": "cached",
-          "text_len": 10701,
+          "url": "https://www.bing.com/news/search?q=%E5%8F%B0%E7%A7%AF%E7%94%B5+2nm+%E6%9C%88%E4%BA%A7%E8%83%BD+12%E4%B8%87%E7%89%87&format=rss",
+          "status": "ok",
+          "text_len": 7211,
           "error": null
         }
       ]
     },
     {
-      "title": "台积电高雄封装验证中心：把封测供应商\"拉到家门口\"认证",
-      "claims": [],
-      "n_claims": 0,
-      "direct_urls": [
-        "https://finance.yahoo.com/markets/stocks/articles/tsmc-stocks-rise-packaging-moves-155700706.html"
-      ],
-      "gnews_urls": [],
-      "verdict": "no_claims",
-      "coverage": null,
-      "missing": [],
-      "sources": []
-    },
-    {
-      "title": "日月光（ASE）：英伟达、AMD 芯片的\"封装后道\"担当",
-      "claims": [],
-      "n_claims": 0,
-      "direct_urls": [
-        "https://finance.yahoo.com/m/b8eae4aa-f7ed-33bb-9966-deffb558b2ed/nvidia%2C-amd-love-this.html"
-      ],
-      "gnews_urls": [],
-      "verdict": "no_claims",
-      "coverage": null,
-      "missing": [],
-      "sources": []
-    },
-    {
-      "title": "3D-IC 时代的设计管理题：Siemens EDA 强调多裸片 IP 的数据与版本控制",
-      "claims": [],
-      "n_claims": 0,
-      "direct_urls": [
-        "https://semiengineering.com/managing-3d-ic-design-and-ip/"
-      ],
-      "gnews_urls": [],
-      "verdict": "no_claims",
-      "coverage": null,
-      "missing": [],
-      "sources": []
-    },
-    {
-      "title": "以色列 Tower 半导体把日本打造成光芯片主枢纽",
-      "claims": [],
-      "n_claims": 0,
-      "direct_urls": [],
-      "gnews_urls": [
-        "https://news.google.com/rss/articles/CBMiyAFBVV95cUxOZHVIdDV5a0RZSTJzUlVUNkI0OVlhaXgtWnVwclVia05qRjJiZkNDWmpGWDJUZFdJNVpBdUtjSEMtb2oyRFU2bjU4cDY4UU5NSzhlS2JMY1dSMkZsNjhXUURDNzYwdjItVHJ0ZzFOZEJ2Q0NCOTdDcGJGSXZBekZwVGRxZmVoRFNKMXlrbzVXQWRaYUxKUFdyMkhKUW9OLWtzdWFMNV9JbUt2VVR4ckhvMlo0amRYSDhIUDNjaDRIUGtYeG40LU5KTg?oc=5"
-      ],
-      "verdict": "no_claims",
-      "coverage": null,
-      "missing": [],
-      "sources": []
-    },
-    {
-      "title": "当 AI 智能体跨过芯片设计孤岛：专业化与编排成新考题",
-      "claims": [],
-      "n_claims": 0,
-      "direct_urls": [
-        "https://semiengineering.com/when-ai-agents-cross-chip-design-silos/"
-      ],
-      "gnews_urls": [],
-      "verdict": "no_claims",
-      "coverage": null,
-      "missing": [],
-      "sources": []
-    },
-    {
-      "title": "下一代晶体管可靠性大考：A7 CFET 与 A10 NSFET 的寄生与老化评估",
+      "title": "◇ 长鑫科技拟投 241 亿元建技术研发项目、108 亿元建存储器晶圆后道测试基地二期",
       "claims": [
-        "A7",
-        "A10",
-        "2030"
+        "241 亿元",
+        "108 亿元",
+        "130 亿元"
       ],
       "n_claims": 3,
       "direct_urls": [
-        "https://semiengineering.com/comparing-a7-cfet-and-a10-nanosheet-fets-from-parasitics-to-chip-reliability-tum-unimore-applied-materials/"
-      ],
-      "gnews_urls": [],
-      "verdict": "partial",
-      "coverage": 0.6666666666666666,
-      "missing": [
-        "2030"
-      ],
-      "sources": [
-        {
-          "url": "https://semiengineering.com/comparing-a7-cfet-and-a10-nanosheet-fets-from-parasitics-to-chip-reliability-tum-unimore-applied-materials/",
-          "status": "cached",
-          "text_len": 14128,
-          "error": null
-        }
-      ]
-    },
-    {
-      "title": "台积电 Q2 晶圆代工份额约 72.5%：一超一强格局的\"数字注脚\"",
-      "claims": [
-        "72.5%",
-        "2nm",
-        "2026"
-      ],
-      "n_claims": 3,
-      "direct_urls": [],
-      "gnews_urls": [
-        "https://news.google.com/rss/articles/CBMiigFBVV95cUxPSl9HVjFMWjFoODhqQU5ZM3lyN3pMc01DeWtjQzlxOXY4dzN4NWQ4Z0RNRGdOaVJGUDlHS3MxcVVkNm0wNXE2NnMwZ3hTZlFnakpLOG54MmVBdUdzQ0tZdk1uQ3Q2M2VCSWtCQjRUdktpaExnMFJuR0NPUkthdmRWVkgzYndTcWdnUHc?oc=5"
-      ],
-      "verdict": "redirect_only",
-      "coverage": null,
-      "missing": [],
-      "sources": []
-    },
-    {
-      "title": "SemiEngineering 周报：中国加大 AI 算力与内存投入",
-      "claims": [],
-      "n_claims": 0,
-      "direct_urls": [
-        "https://semiengineering.com/chip-industry-week-in-review-157/"
-      ],
-      "gnews_urls": [],
-      "verdict": "no_claims",
-      "coverage": null,
-      "missing": [],
-      "sources": []
-    },
-    {
-      "title": "微软 Surface 悄然放弃 Copilot+ 品牌：AI PC 营销降温的信号",
-      "claims": [
-        "40 TOPS"
-      ],
-      "n_claims": 1,
-      "direct_urls": [
-        "https://www.tomshardware.com/tablets/microsoft-surface/microsoft-quietly-drops-copilot-branding-from-its-new-laptops-surface-cvp-confirms-new-devices-meet-hardware-requirements-but-lack-controversial-branding"
+        "https://www.ithome.com/1/008/037.htm"
       ],
       "gnews_urls": [],
       "verdict": "ok",
@@ -271,25 +105,134 @@
       "missing": [],
       "sources": [
         {
-          "url": "https://www.tomshardware.com/tablets/microsoft-surface/microsoft-quietly-drops-copilot-branding-from-its-new-laptops-surface-cvp-confirms-new-devices-meet-hardware-requirements-but-lack-controversial-branding",
-          "status": "cached",
-          "text_len": 20352,
+          "url": "https://www.ithome.com/1/008/037.htm",
+          "status": "ok",
+          "text_len": 1449,
           "error": null
         }
       ]
     },
     {
-      "title": "特朗普称台积电亚利桑那厂将扩大一倍规模，台官方\"交由公司回应\"",
+      "title": "◇ 铜晶粒结构决定 TSV 周边应力：普渡/UCLA 定量研究",
       "claims": [],
       "n_claims": 0,
-      "direct_urls": [],
-      "gnews_urls": [
-        "https://news.google.com/rss/articles/CBMiW0FVX3lxTE5mZkFUaE9LSmlMVzZjSkF1ODQ2c3BFNnYwU3M5cFJaMWxaSS10dU5FUk9mXy1yUTdsWmNyR1Z1Y3FFQkczYUhEWmZ1VnBuNmJZYkNRVmpGUnNmS0U?oc=5"
+      "direct_urls": [
+        "https://semiengineering.com/copper-grain-structure-influences-stress-around-scaled-tsvs-purdue-ucla/"
       ],
+      "gnews_urls": [],
       "verdict": "no_claims",
       "coverage": null,
       "missing": [],
       "sources": []
+    },
+    {
+      "title": "◆ Synopsys 发布 Autopilot 平台与七个 AgentEngineer 代理：芯片设计进入\"AI 代理跑",
+      "claims": [
+        "2026",
+        "2 倍"
+      ],
+      "n_claims": 2,
+      "direct_urls": [
+        "https://news.synopsys.com/2026-09-28-Synopsys-Powers-Autonomous-Engineering-with-a-Broad-Portfolio-of-Long-Horizon-Agents-and-Autopilot-Platform",
+        "https://www.tomshardware.com/tech-industry/semiconductors/synopsys-debuts-autopilot-platform-for-developing-chips-autonomously-using-ai-new-agentengineer-platform-is-poised-for-general-availability-by-the-end-of-2026"
+      ],
+      "gnews_urls": [],
+      "verdict": "ok",
+      "coverage": 1.0,
+      "missing": [],
+      "sources": [
+        {
+          "url": "https://news.synopsys.com/2026-09-28-Synopsys-Powers-Autonomous-Engineering-with-a-Broad-Portfolio-of-Long-Horizon-Agents-and-Autopilot-Platform",
+          "status": "ok",
+          "text_len": 14642,
+          "error": null
+        },
+        {
+          "url": "https://www.tomshardware.com/tech-industry/semiconductors/synopsys-debuts-autopilot-platform-for-developing-chips-autonomously-using-ai-new-agentengineer-platform-is-poised-for-general-availability-by-the-end-of-2026",
+          "status": "ok",
+          "text_len": 20096,
+          "error": null
+        }
+      ]
+    },
+    {
+      "title": "◇ 衬底不再一家独大：先进封装的材料多元化",
+      "claims": [],
+      "n_claims": 0,
+      "direct_urls": [
+        "https://semiengineering.com/one-substrate-no-longer-rules-them-all/"
+      ],
+      "gnews_urls": [],
+      "verdict": "no_claims",
+      "coverage": null,
+      "missing": [],
+      "sources": []
+    },
+    {
+      "title": "◇ 直觉与 AI：芯片设计方法学的下一个考题",
+      "claims": [],
+      "n_claims": 0,
+      "direct_urls": [
+        "https://semiengineering.com/intuition-and-ai/"
+      ],
+      "gnews_urls": [],
+      "verdict": "no_claims",
+      "coverage": null,
+      "missing": [],
+      "sources": []
+    },
+    {
+      "title": "◆ 英伟达董事会追加 1500 亿美元回购授权，2028 财年内计划完成 2350 亿美元",
+      "claims": [
+        "1500 亿美元",
+        "2350 亿美元",
+        "2028"
+      ],
+      "n_claims": 3,
+      "direct_urls": [
+        "https://www.ithome.com/1/008/022.htm",
+        "https://www.bing.com/news/search?q=%E8%8B%B1%E4%BC%9F%E8%BE%BE+1500%E4%BA%BF%E7%BE%8E%E5%85%83+%E5%9B%9E%E8%B4%AD&format=rss"
+      ],
+      "gnews_urls": [],
+      "verdict": "ok",
+      "coverage": 1.0,
+      "missing": [],
+      "sources": [
+        {
+          "url": "https://www.ithome.com/1/008/022.htm",
+          "status": "ok",
+          "text_len": 1138,
+          "error": null
+        },
+        {
+          "url": "https://www.bing.com/news/search?q=%E8%8B%B1%E4%BC%9F%E8%BE%BE+1500%E4%BA%BF%E7%BE%8E%E5%85%83+%E5%9B%9E%E8%B4%AD&format=rss",
+          "status": "ok",
+          "text_len": 809,
+          "error": null
+        }
+      ]
+    },
+    {
+      "title": "◇ 美国制裁外溢：荷兰自建 NixOS 软件生态替代微软方案",
+      "claims": [
+        "2027"
+      ],
+      "n_claims": 1,
+      "direct_urls": [
+        "https://www.tomshardware.com/software/the-netherlands-is-rolling-alternative-nixos-based-software-ecosystem-after-u-s-sanctions-on-icc-took-microsoft-off-the-table-trial-programs-running-now-first-release-expected-at-end-of-2027"
+      ],
+      "gnews_urls": [],
+      "verdict": "ok",
+      "coverage": 1.0,
+      "missing": [],
+      "sources": [
+        {
+          "url": "https://www.tomshardware.com/software/the-netherlands-is-rolling-alternative-nixos-based-software-ecosystem-after-u-s-sanctions-on-icc-took-microsoft-off-the-table-trial-programs-running-now-first-release-expected-at-end-of-2027",
+          "status": "ok",
+          "text_len": 17400,
+          "error": null
+        }
+      ]
     }
   ]
 }

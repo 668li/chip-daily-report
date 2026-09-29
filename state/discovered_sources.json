@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated": "2026-09-26T15:17:49Z",
+  "updated": "2026-09-29T00:05:31Z",
   "sources": [
     {
       "id": "wccftech.com",
@@ -735,11 +735,12 @@
       },
       "error_count": 1,
       "consecutive_ok": 0,
-      "last_checked": "2026-09-26T01:24:53Z",
-      "next_check_at": 1790389493.8938973,
+      "last_checked": "2026-09-29T00:05:31Z",
+      "next_check_at": 1790643931.401084,
       "last_entry_date": "",
       "evidence": {},
-      "last_error": "fetch_failed:HTTPError"
+      "last_error": "fetch_failed:HTTPError",
+      "transient_errors": 1
     },
     {
       "id": "cleanroomtechnology.com",
@@ -781,11 +782,12 @@
       },
       "error_count": 1,
       "consecutive_ok": 0,
-      "last_checked": "2026-09-26T01:24:53Z",
-      "next_check_at": 1790389493.8938973,
+      "last_checked": "2026-09-29T00:05:31Z",
+      "next_check_at": 1790643931.401084,
       "last_entry_date": "",
       "evidence": {},
-      "last_error": "fetch_failed:HTTPError"
+      "last_error": "fetch_failed:HTTPError",
+      "transient_errors": 1
     },
     {
       "id": "konsulteer.com",
@@ -800,11 +802,12 @@
       },
       "error_count": 1,
       "consecutive_ok": 0,
-      "last_checked": "2026-09-26T01:31:59Z",
-      "next_check_at": 1790389919.638434,
+      "last_checked": "2026-09-29T00:05:31Z",
+      "next_check_at": 1790643931.401084,
       "last_entry_date": "",
       "evidence": {},
-      "last_error": "fetch_failed:URLError"
+      "last_error": "fetch_failed:URLError",
+      "transient_errors": 1
     },
     {
       "id": "sohu.com",
@@ -819,11 +822,12 @@
       },
       "error_count": 1,
       "consecutive_ok": 0,
-      "last_checked": "2026-09-26T01:31:59Z",
-      "next_check_at": 1790389919.638434,
+      "last_checked": "2026-09-29T00:05:31Z",
+      "next_check_at": 1790643931.401084,
       "last_entry_date": "",
       "evidence": {},
-      "last_error": "fetch_failed:HTTPError"
+      "last_error": "fetch_failed:HTTPError",
+      "transient_errors": 1
     },
     {
       "id": "memeburn.com",
@@ -865,11 +869,12 @@
       },
       "error_count": 1,
       "consecutive_ok": 0,
-      "last_checked": "2026-09-26T01:31:59Z",
-      "next_check_at": 1790389919.638434,
+      "last_checked": "2026-09-29T00:05:31Z",
+      "next_check_at": 1790643931.401084,
       "last_entry_date": "",
       "evidence": {},
-      "last_error": "fetch_failed:HTTPError"
+      "last_error": "fetch_failed:HTTPError",
+      "transient_errors": 1
     },
     {
       "id": "businesskorea.co.kr",
@@ -911,11 +916,12 @@
       },
       "error_count": 1,
       "consecutive_ok": 0,
-      "last_checked": "2026-09-26T01:31:59Z",
-      "next_check_at": 1790389919.638434,
+      "last_checked": "2026-09-29T00:05:31Z",
+      "next_check_at": 1790643931.401084,
       "last_entry_date": "",
       "evidence": {},
-      "last_error": "fetch_failed:HTTPError"
+      "last_error": "fetch_failed:HTTPError",
+      "transient_errors": 1
     },
     {
       "id": "news.alphastreet.com",
@@ -928,10 +934,10 @@
         "kw_hits": 0,
         "entry_hits": 0
       },
-      "error_count": 1,
+      "error_count": 2,
       "consecutive_ok": 0,
-      "last_checked": "2026-09-26T01:31:59Z",
-      "next_check_at": 1790389919.638434,
+      "last_checked": "2026-09-29T00:05:31Z",
+      "next_check_at": 1790647531.401084,
       "last_entry_date": "",
       "evidence": {},
       "last_error": "low_relevance"
@@ -976,11 +982,12 @@
       },
       "error_count": 1,
       "consecutive_ok": 0,
-      "last_checked": "2026-09-26T01:31:59Z",
-      "next_check_at": 1790389919.638434,
+      "last_checked": "2026-09-29T00:05:31Z",
+      "next_check_at": 1790643931.401084,
       "last_entry_date": "",
       "evidence": {},
-      "last_error": "fetch_failed:HTTPError"
+      "last_error": "fetch_failed:HTTPError",
+      "transient_errors": 1
     },
     {
       "id": "cnnews.chosun.com",
@@ -1705,6 +1712,164 @@
       "consecutive_ok": 0,
       "last_checked": "2026-09-26T15:17:49Z",
       "next_check_at": 1790439469.872273,
+      "last_entry_date": "",
+      "evidence": {},
+      "last_error": "fetch_failed:HTTPError",
+      "transient_errors": 1
+    },
+    {
+      "id": "technode.global",
+      "domain": "technode.global",
+      "feed_url": "https://technode.global/feed/",
+      "homepage": "https://technode.global/",
+      "discovered_via": "gnews",
+      "state": "candidate",
+      "score": {
+        "kw_hits": 0,
+        "entry_hits": 0
+      },
+      "error_count": 1,
+      "consecutive_ok": 0,
+      "last_checked": "2026-09-29T00:05:31Z",
+      "next_check_at": 1790643931.401084,
+      "last_entry_date": "",
+      "evidence": {},
+      "last_error": "low_relevance"
+    },
+    {
+      "id": "stdaily.com",
+      "domain": "stdaily.com",
+      "feed_url": "",
+      "homepage": "https://stdaily.com/",
+      "discovered_via": "gnews",
+      "state": "candidate",
+      "score": {
+        "kw_hits": 0,
+        "entry_hits": 0
+      },
+      "error_count": 0,
+      "consecutive_ok": 0,
+      "last_checked": "2026-09-29T00:05:31Z",
+      "next_check_at": 1790643931.401084,
+      "last_entry_date": "",
+      "evidence": {},
+      "last_error": "fetch_failed:HTTPError",
+      "transient_errors": 1
+    },
+    {
+      "id": "tech-insider.org",
+      "domain": "tech-insider.org",
+      "feed_url": "https://tech-insider.org/feed/",
+      "homepage": "https://tech-insider.org/",
+      "discovered_via": "gnews",
+      "state": "candidate",
+      "score": {
+        "kw_hits": 0,
+        "entry_hits": 0
+      },
+      "error_count": 1,
+      "consecutive_ok": 0,
+      "last_checked": "2026-09-29T00:05:31Z",
+      "next_check_at": 1790643931.401084,
+      "last_entry_date": "",
+      "evidence": {},
+      "last_error": "low_relevance"
+    },
+    {
+      "id": "quiverquant.com",
+      "domain": "quiverquant.com",
+      "feed_url": "",
+      "homepage": "https://quiverquant.com/",
+      "discovered_via": "gnews",
+      "state": "candidate",
+      "score": {
+        "kw_hits": 0,
+        "entry_hits": 0
+      },
+      "error_count": 0,
+      "consecutive_ok": 0,
+      "last_checked": "2026-09-29T00:05:31Z",
+      "next_check_at": 1790643931.401084,
+      "last_entry_date": "",
+      "evidence": {},
+      "last_error": "fetch_failed:HTTPError",
+      "transient_errors": 1
+    },
+    {
+      "id": "focustaiwan.tw",
+      "domain": "focustaiwan.tw",
+      "feed_url": "",
+      "homepage": "https://focustaiwan.tw/",
+      "discovered_via": "gnews",
+      "state": "candidate",
+      "score": {
+        "kw_hits": 0,
+        "entry_hits": 0
+      },
+      "error_count": 0,
+      "consecutive_ok": 0,
+      "last_checked": "2026-09-29T00:05:31Z",
+      "next_check_at": 1790643931.401084,
+      "last_entry_date": "",
+      "evidence": {},
+      "last_error": "fetch_failed:HTTPError",
+      "transient_errors": 1
+    },
+    {
+      "id": "stock.stockstar.com",
+      "domain": "stock.stockstar.com",
+      "feed_url": "",
+      "homepage": "https://stock.stockstar.com/",
+      "discovered_via": "gnews",
+      "state": "candidate",
+      "score": {
+        "kw_hits": 0,
+        "entry_hits": 0
+      },
+      "error_count": 0,
+      "consecutive_ok": 0,
+      "last_checked": "2026-09-29T00:05:31Z",
+      "next_check_at": 1790643931.401084,
+      "last_entry_date": "",
+      "evidence": {},
+      "last_error": "fetch_failed:HTTPError",
+      "transient_errors": 1
+    },
+    {
+      "id": "gasworld.com",
+      "domain": "gasworld.com",
+      "feed_url": "",
+      "homepage": "https://gasworld.com/",
+      "discovered_via": "gnews",
+      "state": "candidate",
+      "score": {
+        "kw_hits": 0,
+        "entry_hits": 0
+      },
+      "error_count": 0,
+      "consecutive_ok": 0,
+      "last_checked": "2026-09-29T00:05:31Z",
+      "next_check_at": 1790643931.401084,
+      "last_entry_date": "",
+      "evidence": {},
+      "last_error": "fetch_failed:HTTPError",
+      "transient_errors": 1
+    },
+    {
+      "id": "gurufocus.com",
+      "domain": "gurufocus.com",
+      "feed_url": "",
+      "homepage": "https://gurufocus.com/",
+      "discovered_via": "gnews",
+      "state": "candidate",
+      "score": {
+        "kw_hits": 0,
+        "entry_hits": 0
+      },
+      "error_count": 0,
+      "consecutive_ok": 0,
+      "last_checked": "2026-09-29T00:05:31Z",
+      "next_check_at": 1790643931.401084,
       "last_entry_date": "",
       "evidence": {},
       "last_error": "fetch_failed:HTTPError",

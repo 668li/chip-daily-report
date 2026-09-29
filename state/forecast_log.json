@@ -412,6 +412,38 @@
       "verdict": null,
       "verified_note": null,
       "scenarios": null
+    },
+    {
+      "id": "20260929-agentengineer-customer",
+      "report_date": "2026-09-29",
+      "event_date": "2027-06-30",
+      "event": "AgentEngineer/Autopilot 在 2027-06-30 前获得 ≥1 家具名客户公开案例（客户官方渠道具名展示用其完成的设计项目）",
+      "segment": "EDA",
+      "importance": "高",
+      "certainty": "中确定性",
+      "source": "Synopsys 官方新闻稿 2026-09-28；判据源：客户官网/newsroom/财报电话会具名",
+      "when_judged": "剧本A具名背书：窗口内≥1家芯片公司官方渠道具名展示案例；剧本B演示期延续：仅自家演示与匿名口径；无中间态",
+      "verified": false,
+      "verified_date": null,
+      "verdict": null,
+      "verified_note": null,
+      "scenarios": null
+    },
+    {
+      "id": "20260929-nvda-buyback-exec",
+      "report_date": "2026-09-29",
+      "event_date": "2027-03-15",
+      "event": "英伟达 FY2027 年报披露的年度回购执行额 ≥400 亿美元",
+      "segment": "资本",
+      "importance": "高",
+      "certainty": "中确定性",
+      "source": "IT之家 2026-09-28（1500亿授权/2350亿计划）；判据源：NVDA 10-K 现金流量表 repurchase of common stock 行",
+      "when_judged": "剧本A加速执行：FY2027回购执行额≥400亿美元；剧本B平缓转向：<400亿（现金转向资本开支/并购/观望）；授权≠执行，以10-K实测为准",
+      "verified": false,
+      "verified_date": null,
+      "verdict": null,
+      "verified_note": null,
+      "scenarios": null
     }
   ]
 }
