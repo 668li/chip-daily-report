@@ -1,0 +1,154 @@
+{
+  "schema_version": 1,
+  "diagram_type": "architecture",
+  "meta": {
+    "title": "AIHOT 日报框架架构",
+    "locale": "zh-CN",
+    "quality_profile": "showcase",
+    "repository": {
+      "url": "https://github.com/KKKKhazix/AIHOT",
+      "revision": "c38705b84058c53bc75c91e6b0faa71c3079f588"
+    },
+    "viewBox": [1070, 524]
+  },
+  "components": [
+    {
+      "id": "sources",
+      "type": "external",
+      "label": "信源 ×6 类",
+      "sublabel": "RSS·JSON·X·公众号·推送",
+      "pos": [60, 132],
+      "size": [150, 64],
+      "sources": [{ "path": "packages/backend/src/sources/collect.ts", "line": 84, "label": "collectSource" }]
+    },
+    {
+      "id": "materials",
+      "type": "backend",
+      "label": "唯一入口 materials",
+      "sublabel": "身份判重·哈希修订",
+      "pos": [260, 132],
+      "size": [150, 64],
+      "sources": [{ "path": "packages/backend/src/content/materials.ts", "line": 114, "label": "identityKeyFor" }]
+    },
+    {
+      "id": "prefilter",
+      "type": "backend",
+      "label": "预筛 三态",
+      "sublabel": "temperature 0·三态",
+      "pos": [460, 132],
+      "size": [150, 64],
+      "sources": [{ "path": "industry/prompts/prefilter.md", "label": "预筛契约" }]
+    },
+    {
+      "id": "score",
+      "type": "backend",
+      "label": "双评分 ×2",
+      "sublabel": "temperature 1·双评分",
+      "pos": [660, 132],
+      "size": [150, 64],
+      "sources": [{ "path": "packages/backend/src/editorial/analyze.ts", "line": 214, "label": "runScores" }]
+    },
+    {
+      "id": "writing",
+      "type": "backend",
+      "label": "写作 + 身份守卫",
+      "sublabel": "四档降级·守卫即回退",
+      "pos": [860, 132],
+      "size": [150, 64],
+      "sources": [{ "path": "packages/backend/src/editorial/writing.ts", "line": 208, "label": "enforceIdentity" }]
+    },
+    {
+      "id": "analyses",
+      "type": "database",
+      "label": "analyses 账本",
+      "sublabel": "append-only·可追溯",
+      "pos": [860, 284],
+      "size": [150, 64],
+      "sources": [{ "path": "database/migrations/0001_core.sql", "line": 173 }]
+    },
+    {
+      "id": "group",
+      "type": "backend",
+      "label": "归组 group",
+      "sublabel": "串行队列·三方判定",
+      "pos": [660, 284],
+      "size": [150, 64],
+      "sources": [{ "path": "packages/backend/src/events/group.ts", "line": 605, "label": "decide" }]
+    },
+    {
+      "id": "stories",
+      "type": "database",
+      "label": "stories / facts",
+      "sublabel": "fact∈story·一手源",
+      "pos": [460, 284],
+      "size": [150, 64],
+      "sources": [{ "path": "database/migrations/0002_events_reports.sql", "line": 3 }]
+    },
+    {
+      "id": "hot",
+      "type": "backend",
+      "label": "热度 hot",
+      "sublabel": "48h窗·24h半衰·独立源",
+      "pos": [260, 284],
+      "size": [150, 64],
+      "sources": [{ "path": "packages/backend/src/events/hot.ts", "line": 7, "label": "heat-v1-48h" }]
+    },
+    {
+      "id": "report",
+      "type": "backend",
+      "label": "日报 08:00",
+      "sublabel": "每事件单代表",
+      "pos": [60, 284],
+      "size": [150, 64],
+      "sources": [{ "path": "packages/backend/src/reports/compose.ts", "line": 1, "label": "compose" }]
+    },
+    {
+      "id": "receipts",
+      "type": "database",
+      "label": "回执与预算",
+      "sublabel": "幂等·未知只放行一次",
+      "pos": [660, 24],
+      "size": [150, 64],
+      "sources": [{ "path": "packages/backend/src/providers/receipts.ts", "line": 71, "label": "logicalKeyFor" }]
+    },
+    {
+      "id": "alerts",
+      "type": "backend",
+      "label": "告警三档",
+      "sublabel": "now/today/digest 三档",
+      "pos": [60, 436],
+      "size": [150, 64],
+      "sources": [{ "path": "packages/backend/src/operations/alerts.ts", "line": 1 }]
+    }
+  ],
+  "connections": [
+    { "id": "c-src-mat", "from": "sources", "to": "materials", "label": "统一落库", "variant": "emphasis", "labelAt": [235, 222] },
+    { "id": "c-mat-pre", "from": "materials", "to": "prefilter", "label": "PASS/UNKNOWN", "labelAt": [435, 222] },
+    { "id": "c-pre-score", "from": "prefilter", "to": "score", "label": "进入评分", "labelAt": [635, 222] },
+    { "id": "c-score-write", "from": "score", "to": "writing", "label": "near 决定写法", "labelAt": [835, 222] },
+    { "id": "c-write-ana", "from": "writing", "to": "analyses", "label": "output jsonb 全量中间态", "labelAt": [935, 240] },
+    { "id": "c-ana-group", "from": "analyses", "to": "group", "label": "relevance=pass 入队", "labelAt": [835, 374] },
+    { "id": "c-group-stories", "from": "group", "to": "stories", "label": "同一发生归一", "labelAt": [635, 374] },
+    { "id": "c-stories-hot", "from": "stories", "to": "hot", "label": "独立来源计数", "labelAt": [435, 374] },
+    { "id": "c-hot-report", "from": "hot", "to": "report", "label": "热度排序", "labelAt": [235, 374] },
+    { "id": "c-score-receipt", "from": "score", "to": "receipts", "label": "付费调用先落回执", "variant": "dashed", "fromSide": "top", "toSide": "bottom", "labelAt": [735, 110] },
+    { "id": "c-report-alerts", "from": "report", "to": "alerts", "label": "未生成·停止收录", "fromSide": "bottom", "toSide": "top", "labelAt": [135, 392] }
+  ],
+  "cards": [
+    {
+      "dot": "cyan",
+      "title": "判断权与执行权分离",
+      "items": ["模型只负责措辞与理解：身份守卫、时间线、门槛全在模型外的代码里"]
+    },
+    {
+      "dot": "amber",
+      "title": "可靠性靠结构不靠组件",
+      "items": ["结果未知的付费请求不自动重发，30 分钟后只放行一次，之后等人"]
+    },
+    {
+      "dot": "emerald",
+      "title": "门槛只能整体移动",
+      "items": ["先改标准再动数字——门槛解决不了「哪一类判错了」"]
+    }
+  ]
+}
