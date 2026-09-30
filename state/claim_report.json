@@ -1,25 +1,36 @@
 {
-  "report": "芯片行业日报_20260929.md",
-  "generated_at": "2026-09-29 08:16:43",
+  "report": "芯片行业日报_20260930.md",
+  "generated_at": "2026-09-30 11:47:16",
   "stats": {
-    "entries": 10,
-    "no_text": 1,
+    "entries": 9,
     "no_claims": 4,
-    "partial": 1,
-    "ok": 4,
-    "verifiable_ratio": 0.5
+    "no_text": 1,
+    "partial": 2,
+    "ok": 2,
+    "verifiable_ratio": 0.444
   },
   "entries": [
     {
-      "title": "◆ AMD 82 亿美元全股票收购李飞飞的 World Labs，「AI 教母」出任 AMD 首席科学家",
-      "claims": [
-        "82 亿美元",
-        "2026"
-      ],
-      "n_claims": 2,
+      "title": "DeepSeek 开源昇腾平台全套基础设施组件，与英伟达平台一一对应",
+      "claims": [],
+      "n_claims": 0,
       "direct_urls": [
-        "https://www.reuters.com/technology/amd-acquire-fei-fei-lis-world-labs-82-billion-deal-2026-09-28",
-        "https://techcrunch.com/2026/09/28/amd-will-acquire-fei-fei-lis-world-labs-for-8-2-billion"
+        "https://www.ithome.com/1/008/604.htm"
+      ],
+      "gnews_urls": [],
+      "verdict": "no_claims",
+      "coverage": null,
+      "missing": [],
+      "sources": []
+    },
+    {
+      "title": "玩家 24 小时把英伟达 DLSS 5 神经渲染搬到 AMD 显卡，性能提升 74%",
+      "claims": [
+        "74%"
+      ],
+      "n_claims": 1,
+      "direct_urls": [
+        "https://www.tomshardware.com/pc-components/gpus/modders-bring-nvidias-dlss-5-neural-render"
       ],
       "gnews_urls": [],
       "verdict": "no_text",
@@ -27,97 +38,46 @@
       "missing": [],
       "sources": [
         {
-          "url": "https://www.reuters.com/technology/amd-acquire-fei-fei-lis-world-labs-82-billion-deal-2026-09-28",
+          "url": "https://www.tomshardware.com/pc-components/gpus/modders-bring-nvidias-dlss-5-neural-render",
           "status": "error",
           "text_len": 0,
-          "error": "proxy: HTTP Error 401: HTTP Forbidden; direct: <urlopen error timed out>"
-        },
-        {
-          "url": "https://techcrunch.com/2026/09/28/amd-will-acquire-fei-fei-lis-world-labs-for-8-2-billion",
-          "status": "error",
-          "text_len": 0,
-          "error": "proxy: _CitedRedirectHandler.redirect_request() takes 6 positional arguments but 7 were given; direct: _CitedRedirectHandler.redirect_request() takes 6 positional arguments but 7 were given"
+          "error": "proxy: HTTP Error 404: Not Found; direct: HTTP Error 404: Not Found"
         }
       ]
     },
     {
-      "title": "◇ OpenAI 自研推理 ASIC「Jalapeño」曝光：AI 辅助设计、自用为主",
-      "claims": [],
-      "n_claims": 0,
-      "direct_urls": [
-        "https://www.tomshardware.com/tech-industry/artificial-intelligence/openais-custom-jalapeno-ai-inference-asic-is-for-openais-internal-use-but-company-leaves-the-door-open-to-broader-rollout-firm-says-it-will-have-its-hands-full-with-jalapeno-for-a-good-long-time"
-      ],
-      "gnews_urls": [],
-      "verdict": "no_claims",
-      "coverage": null,
-      "missing": [],
-      "sources": []
-    },
-    {
-      "title": "◆ 台积电 2nm 月产能年底冲刺 12 万片，客户追加订单 10-20%",
+      "title": "美光今晚发布 2026 财年第四季度财报，指引营收 500±10 亿美元",
       "claims": [
-        "20%",
-        "12 万片",
-        "13 万片",
-        "2nm",
-        "2026"
+        "10 亿美元",
+        "500 亿美元",
+        "2026",
+        "31.5 美元"
       ],
-      "n_claims": 5,
+      "n_claims": 4,
       "direct_urls": [
-        "https://www.ithome.com/1/008/029.htm",
-        "https://www.bing.com/news/search?q=%E5%8F%B0%E7%A7%AF%E7%94%B5+2nm+%E6%9C%88%E4%BA%A7%E8%83%BD+12%E4%B8%87%E7%89%87&format=rss"
+        "https://financefeeds.com/micron-earnings-date-september-30-extra-week-50bn-guide/"
       ],
       "gnews_urls": [],
       "verdict": "partial",
-      "coverage": 0.8,
+      "coverage": 0.75,
       "missing": [
-        "13 万片"
+        "31.5 美元"
       ],
       "sources": [
         {
-          "url": "https://www.ithome.com/1/008/029.htm",
-          "status": "cached",
-          "text_len": 1125,
-          "error": null
-        },
-        {
-          "url": "https://www.bing.com/news/search?q=%E5%8F%B0%E7%A7%AF%E7%94%B5+2nm+%E6%9C%88%E4%BA%A7%E8%83%BD+12%E4%B8%87%E7%89%87&format=rss",
+          "url": "https://financefeeds.com/micron-earnings-date-september-30-extra-week-50bn-guide/",
           "status": "ok",
-          "text_len": 7211,
+          "text_len": 26565,
           "error": null
         }
       ]
     },
     {
-      "title": "◇ 长鑫科技拟投 241 亿元建技术研发项目、108 亿元建存储器晶圆后道测试基地二期",
-      "claims": [
-        "241 亿元",
-        "108 亿元",
-        "130 亿元"
-      ],
-      "n_claims": 3,
-      "direct_urls": [
-        "https://www.ithome.com/1/008/037.htm"
-      ],
-      "gnews_urls": [],
-      "verdict": "ok",
-      "coverage": 1.0,
-      "missing": [],
-      "sources": [
-        {
-          "url": "https://www.ithome.com/1/008/037.htm",
-          "status": "ok",
-          "text_len": 1449,
-          "error": null
-        }
-      ]
-    },
-    {
-      "title": "◇ 铜晶粒结构决定 TSV 周边应力：普渡/UCLA 定量研究",
+      "title": "韩媒：英伟达黄仁勋 28 日纽约会见三星李在镕、SK 崔泰源，下一代 HBM 供应是焦点",
       "claims": [],
       "n_claims": 0,
       "direct_urls": [
-        "https://semiengineering.com/copper-grain-structure-influences-stress-around-scaled-tsvs-purdue-ucla/"
+        "https://www.ithome.com/1/007/849.htm"
       ],
       "gnews_urls": [],
       "verdict": "no_claims",
@@ -126,100 +86,48 @@
       "sources": []
     },
     {
-      "title": "◆ Synopsys 发布 Autopilot 平台与七个 AgentEngineer 代理：芯片设计进入\"AI 代理跑",
+      "title": "半导体工程网：台积电 OIP 论坛口径，行业年底规模约 1.7 万亿美元、AI 相关超 1 万亿",
       "claims": [
+        "39.3%",
+        "1.7 万亿美元",
+        "1 万亿",
+        "1.6 万亿",
+        "7000 亿",
+        "1.7 万",
+        "1 万",
+        "1.6 万",
         "2026",
-        "2 倍"
+        "2030"
       ],
-      "n_claims": 2,
+      "n_claims": 10,
       "direct_urls": [
-        "https://news.synopsys.com/2026-09-28-Synopsys-Powers-Autonomous-Engineering-with-a-Broad-Portfolio-of-Long-Horizon-Agents-and-Autopilot-Platform",
-        "https://www.tomshardware.com/tech-industry/semiconductors/synopsys-debuts-autopilot-platform-for-developing-chips-autonomously-using-ai-new-agentengineer-platform-is-poised-for-general-availability-by-the-end-of-2026"
+        "https://semiengineering.com/tsmc-oip-chip-industry-growth-blows-past-forecast/"
       ],
       "gnews_urls": [],
-      "verdict": "ok",
-      "coverage": 1.0,
-      "missing": [],
+      "verdict": "partial",
+      "coverage": 0.7,
+      "missing": [
+        "1.7 万",
+        "1 万",
+        "1.6 万"
+      ],
       "sources": [
         {
-          "url": "https://news.synopsys.com/2026-09-28-Synopsys-Powers-Autonomous-Engineering-with-a-Broad-Portfolio-of-Long-Horizon-Agents-and-Autopilot-Platform",
-          "status": "ok",
-          "text_len": 14642,
-          "error": null
-        },
-        {
-          "url": "https://www.tomshardware.com/tech-industry/semiconductors/synopsys-debuts-autopilot-platform-for-developing-chips-autonomously-using-ai-new-agentengineer-platform-is-poised-for-general-availability-by-the-end-of-2026",
-          "status": "ok",
-          "text_len": 20096,
+          "url": "https://semiengineering.com/tsmc-oip-chip-industry-growth-blows-past-forecast/",
+          "status": "cached",
+          "text_len": 17776,
           "error": null
         }
       ]
     },
     {
-      "title": "◇ 衬底不再一家独大：先进封装的材料多元化",
-      "claims": [],
-      "n_claims": 0,
-      "direct_urls": [
-        "https://semiengineering.com/one-substrate-no-longer-rules-them-all/"
-      ],
-      "gnews_urls": [],
-      "verdict": "no_claims",
-      "coverage": null,
-      "missing": [],
-      "sources": []
-    },
-    {
-      "title": "◇ 直觉与 AI：芯片设计方法学的下一个考题",
-      "claims": [],
-      "n_claims": 0,
-      "direct_urls": [
-        "https://semiengineering.com/intuition-and-ai/"
-      ],
-      "gnews_urls": [],
-      "verdict": "no_claims",
-      "coverage": null,
-      "missing": [],
-      "sources": []
-    },
-    {
-      "title": "◆ 英伟达董事会追加 1500 亿美元回购授权，2028 财年内计划完成 2350 亿美元",
+      "title": "SK海力士将向合作伙伴预付最高 50% 研发费用",
       "claims": [
-        "1500 亿美元",
-        "2350 亿美元",
-        "2028"
-      ],
-      "n_claims": 3,
-      "direct_urls": [
-        "https://www.ithome.com/1/008/022.htm",
-        "https://www.bing.com/news/search?q=%E8%8B%B1%E4%BC%9F%E8%BE%BE+1500%E4%BA%BF%E7%BE%8E%E5%85%83+%E5%9B%9E%E8%B4%AD&format=rss"
-      ],
-      "gnews_urls": [],
-      "verdict": "ok",
-      "coverage": 1.0,
-      "missing": [],
-      "sources": [
-        {
-          "url": "https://www.ithome.com/1/008/022.htm",
-          "status": "ok",
-          "text_len": 1138,
-          "error": null
-        },
-        {
-          "url": "https://www.bing.com/news/search?q=%E8%8B%B1%E4%BC%9F%E8%BE%BE+1500%E4%BA%BF%E7%BE%8E%E5%85%83+%E5%9B%9E%E8%B4%AD&format=rss",
-          "status": "ok",
-          "text_len": 809,
-          "error": null
-        }
-      ]
-    },
-    {
-      "title": "◇ 美国制裁外溢：荷兰自建 NixOS 软件生态替代微软方案",
-      "claims": [
-        "2027"
+        "50%"
       ],
       "n_claims": 1,
       "direct_urls": [
-        "https://www.tomshardware.com/software/the-netherlands-is-rolling-alternative-nixos-based-software-ecosystem-after-u-s-sanctions-on-icc-took-microsoft-off-the-table-trial-programs-running-now-first-release-expected-at-end-of-2027"
+        "https://en.yna.co.kr/view/AEN20260929006600320"
       ],
       "gnews_urls": [],
       "verdict": "ok",
@@ -227,9 +135,57 @@
       "missing": [],
       "sources": [
         {
-          "url": "https://www.tomshardware.com/software/the-netherlands-is-rolling-alternative-nixos-based-software-ecosystem-after-u-s-sanctions-on-icc-took-microsoft-off-the-table-trial-programs-running-now-first-release-expected-at-end-of-2027",
+          "url": "https://en.yna.co.kr/view/AEN20260929006600320",
           "status": "ok",
-          "text_len": 17400,
+          "text_len": 6250,
+          "error": null
+        }
+      ]
+    },
+    {
+      "title": "半导体工程网：TSV 铜微结构对残余应力的影响（普渡/UCLA 团队研究正式刊出）",
+      "claims": [],
+      "n_claims": 0,
+      "direct_urls": [
+        "https://semiengineering.com/impact-of-cu-microstructure-on-the-tsv-induced-residual-stress-within-3d-stacked-integrated-circuits/"
+      ],
+      "gnews_urls": [],
+      "verdict": "no_claims",
+      "coverage": null,
+      "missing": [],
+      "sources": []
+    },
+    {
+      "title": "半导体工程网：用智能体 AI 贯穿芯片设计流程",
+      "claims": [],
+      "n_claims": 0,
+      "direct_urls": [
+        "https://semiengineering.com/moores-lab-ai-applying-agentic-ai-across-chip-design/"
+      ],
+      "gnews_urls": [],
+      "verdict": "no_claims",
+      "coverage": null,
+      "missing": [],
+      "sources": []
+    },
+    {
+      "title": "富国银行：台积电 2nm 扩产将带来设备采购激增",
+      "claims": [
+        "2nm"
+      ],
+      "n_claims": 1,
+      "direct_urls": [
+        "https://finance.yahoo.com/technology/articles/wells-fargo-spots-unexpected-winner-191101346.html"
+      ],
+      "gnews_urls": [],
+      "verdict": "ok",
+      "coverage": 1.0,
+      "missing": [],
+      "sources": [
+        {
+          "url": "https://finance.yahoo.com/technology/articles/wells-fargo-spots-unexpected-winner-191101346.html",
+          "status": "ok",
+          "text_len": 10251,
           "error": null
         }
       ]

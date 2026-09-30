@@ -1,26 +1,26 @@
 {
   "aggregate": {
-    "report_count": 15,
+    "report_count": 16,
     "date_range": [
       "20260720",
-      "20260929"
+      "20260930"
     ],
-    "avg_computed_a_ratio": 0.615,
+    "avg_computed_a_ratio": 0.598,
     "declared_a_ratio_count": 1,
     "avg_declared_a_ratio": 0.333,
     "avg_ratio_gap": 0.394,
     "max_ratio_gap": 0.394,
-    "avg_news_count": 14.8,
+    "avg_news_count": 14.4,
     "news_min": 8,
     "news_max": 22,
     "segment_coverage_matrix": {
-      "设计": 15,
-      "制造": 15,
-      "封测": 15,
-      "EDA": 15,
-      "材料设备": 15
+      "设计": 16,
+      "制造": 16,
+      "封测": 16,
+      "EDA": 16,
+      "材料设备": 16
     },
-    "segment_full_coverage_count": 15,
+    "segment_full_coverage_count": 16,
     "x_signals": {
       "X11_今日要点含股价": 2,
       "X14_独立来源统计小节": 1,
@@ -28,7 +28,7 @@
       "X16_标题缺日期": 1
     },
     "x12_distribution": {
-      "PASS": 4,
+      "PASS": 5,
       "FAIL": 1,
       "WARN": 10
     },
@@ -565,6 +565,42 @@
       "selfcheck_present": true,
       "selfcheck_total": 26,
       "selfcheck_pass": 26,
+      "selfcheck_fail": 0,
+      "selfcheck_warn": 0,
+      "declared_a_ratio": null,
+      "ratio_gap": null,
+      "x11": false,
+      "x14": false,
+      "x15": false,
+      "x16_title": true,
+      "chain_present": true,
+      "x12_grade": "PASS"
+    },
+    {
+      "file": "芯片行业日报_20260930.md",
+      "date": "20260930",
+      "title": "# 芯片行业日报 — 2026-09-30",
+      "title_has_date": true,
+      "meta_blockquote": true,
+      "declared_news": 9,
+      "computed_news": 9,
+      "sources_total": 9,
+      "a_count": 3,
+      "b_count": 2,
+      "c_count": 0,
+      "u_count": 4,
+      "a_ratio": 0.333,
+      "segment_coverage": {
+        "设计": true,
+        "制造": true,
+        "封测": true,
+        "EDA": true,
+        "材料设备": true
+      },
+      "segment_coverage_count": 5,
+      "selfcheck_present": true,
+      "selfcheck_total": 15,
+      "selfcheck_pass": 15,
       "selfcheck_fail": 0,
       "selfcheck_warn": 0,
       "declared_a_ratio": null,

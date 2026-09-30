@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated": "2026-09-29T00:05:31Z",
+  "updated": "2026-09-30T03:12:52Z",
   "sources": [
     {
       "id": "wccftech.com",
@@ -1000,10 +1000,10 @@
         "kw_hits": 0,
         "entry_hits": 0
       },
-      "error_count": 1,
+      "error_count": 2,
       "consecutive_ok": 0,
-      "last_checked": "2026-09-26T01:31:59Z",
-      "next_check_at": 1790389919.638434,
+      "last_checked": "2026-09-30T03:12:52Z",
+      "next_check_at": 1790745172.422302,
       "last_entry_date": "",
       "evidence": {},
       "last_error": "html_shell"
@@ -1021,11 +1021,12 @@
       },
       "error_count": 1,
       "consecutive_ok": 0,
-      "last_checked": "2026-09-26T01:31:59Z",
-      "next_check_at": 1790389919.638434,
+      "last_checked": "2026-09-30T03:12:52Z",
+      "next_check_at": 1790741572.422302,
       "last_entry_date": "",
       "evidence": {},
-      "last_error": "fetch_failed:HTTPError"
+      "last_error": "fetch_failed:HTTPError",
+      "transient_errors": 1
     },
     {
       "id": "mbiz.heraldcorp.com",
@@ -1038,10 +1039,10 @@
         "kw_hits": 0,
         "entry_hits": 0
       },
-      "error_count": 1,
+      "error_count": 2,
       "consecutive_ok": 0,
-      "last_checked": "2026-09-26T01:31:59Z",
-      "next_check_at": 1790389919.638434,
+      "last_checked": "2026-09-30T03:12:52Z",
+      "next_check_at": 1790745172.422302,
       "last_entry_date": "",
       "evidence": {},
       "last_error": "low_relevance"
@@ -1059,11 +1060,12 @@
       },
       "error_count": 1,
       "consecutive_ok": 0,
-      "last_checked": "2026-09-26T01:31:59Z",
-      "next_check_at": 1790389919.638434,
+      "last_checked": "2026-09-30T03:12:52Z",
+      "next_check_at": 1790741572.422302,
       "last_entry_date": "",
       "evidence": {},
-      "last_error": "fetch_failed:HTTPError"
+      "last_error": "fetch_failed:HTTPError",
+      "transient_errors": 1
     },
     {
       "id": "fr.tradingview.com",
@@ -1076,10 +1078,10 @@
         "kw_hits": 0,
         "entry_hits": 0
       },
-      "error_count": 1,
+      "error_count": 2,
       "consecutive_ok": 0,
-      "last_checked": "2026-09-26T01:31:59Z",
-      "next_check_at": 1790389919.638434,
+      "last_checked": "2026-09-30T03:12:52Z",
+      "next_check_at": 1790745172.422302,
       "last_entry_date": "",
       "evidence": {},
       "last_error": "low_relevance"
@@ -1097,11 +1099,12 @@
       },
       "error_count": 1,
       "consecutive_ok": 0,
-      "last_checked": "2026-09-26T01:31:59Z",
-      "next_check_at": 1790389919.638434,
+      "last_checked": "2026-09-30T03:12:52Z",
+      "next_check_at": 1790741572.422302,
       "last_entry_date": "",
       "evidence": {},
-      "last_error": "fetch_failed:HTTPError"
+      "last_error": "fetch_failed:TimeoutError",
+      "transient_errors": 1
     },
     {
       "id": "qz.com",
@@ -1114,10 +1117,10 @@
         "kw_hits": 0,
         "entry_hits": 0
       },
-      "error_count": 1,
+      "error_count": 2,
       "consecutive_ok": 0,
-      "last_checked": "2026-09-26T01:31:59Z",
-      "next_check_at": 1790389919.638434,
+      "last_checked": "2026-09-30T03:12:52Z",
+      "next_check_at": 1790745172.422302,
       "last_entry_date": "",
       "evidence": {},
       "last_error": "low_relevance"
@@ -1135,11 +1138,12 @@
       },
       "error_count": 1,
       "consecutive_ok": 0,
-      "last_checked": "2026-09-26T01:31:59Z",
-      "next_check_at": 1790389919.638434,
+      "last_checked": "2026-09-30T03:12:52Z",
+      "next_check_at": 1790741572.422302,
       "last_entry_date": "",
       "evidence": {},
-      "last_error": "fetch_failed:HTTPError"
+      "last_error": "fetch_failed:HTTPError",
+      "transient_errors": 1
     },
     {
       "id": "ifeng.com",
@@ -1873,6 +1877,167 @@
       "last_entry_date": "",
       "evidence": {},
       "last_error": "fetch_failed:HTTPError",
+      "transient_errors": 1
+    },
+    {
+      "id": "eurekalert.org",
+      "domain": "eurekalert.org",
+      "feed_url": "",
+      "homepage": "https://eurekalert.org/",
+      "discovered_via": "gnews",
+      "state": "candidate",
+      "score": {
+        "kw_hits": 0,
+        "entry_hits": 0
+      },
+      "error_count": 1,
+      "consecutive_ok": 0,
+      "last_checked": "2026-09-30T03:12:52Z",
+      "next_check_at": 1790741572.422302,
+      "last_entry_date": "",
+      "evidence": {},
+      "last_error": "not_a_feed"
+    },
+    {
+      "id": "es.tradingview.com",
+      "domain": "es.tradingview.com",
+      "feed_url": "https://es.tradingview.com/feed/",
+      "homepage": "https://es.tradingview.com/",
+      "discovered_via": "gnews",
+      "state": "candidate",
+      "score": {
+        "kw_hits": 0,
+        "entry_hits": 0
+      },
+      "error_count": 1,
+      "consecutive_ok": 0,
+      "last_checked": "2026-09-30T03:12:52Z",
+      "next_check_at": 1790741572.422302,
+      "last_entry_date": "",
+      "evidence": {},
+      "last_error": "low_relevance"
+    },
+    {
+      "id": "techrepublic.com",
+      "domain": "techrepublic.com",
+      "feed_url": "https://www.techrepublic.com/feed/",
+      "homepage": "https://techrepublic.com/",
+      "discovered_via": "gnews",
+      "state": "candidate",
+      "score": {
+        "kw_hits": 0,
+        "entry_hits": 0
+      },
+      "error_count": 1,
+      "consecutive_ok": 0,
+      "last_checked": "2026-09-30T03:12:52Z",
+      "next_check_at": 1790741572.422302,
+      "last_entry_date": "",
+      "evidence": {},
+      "last_error": "low_relevance"
+    },
+    {
+      "id": "edb.gov.sg",
+      "domain": "edb.gov.sg",
+      "feed_url": "",
+      "homepage": "https://edb.gov.sg/",
+      "discovered_via": "gnews",
+      "state": "candidate",
+      "score": {
+        "kw_hits": 0,
+        "entry_hits": 0
+      },
+      "error_count": 1,
+      "consecutive_ok": 0,
+      "last_checked": "2026-09-30T03:12:52Z",
+      "next_check_at": 1790741572.422302,
+      "last_entry_date": "",
+      "evidence": {},
+      "last_error": "not_a_feed"
+    },
+    {
+      "id": "chosun.com",
+      "domain": "chosun.com",
+      "feed_url": "",
+      "homepage": "https://chosun.com/",
+      "discovered_via": "gnews",
+      "state": "candidate",
+      "score": {
+        "kw_hits": 0,
+        "entry_hits": 0
+      },
+      "error_count": 0,
+      "consecutive_ok": 0,
+      "last_checked": "2026-09-30T03:12:52Z",
+      "next_check_at": 1790741572.422302,
+      "last_entry_date": "",
+      "evidence": {},
+      "last_error": "fetch_failed:HTTPError",
+      "transient_errors": 1
+    },
+    {
+      "id": "rfi.fr",
+      "domain": "rfi.fr",
+      "feed_url": "https://www.rfi.fr/fr/rss",
+      "homepage": "https://rfi.fr/",
+      "discovered_via": "gnews",
+      "state": "candidate",
+      "score": {
+        "kw_hits": 0,
+        "entry_hits": 0
+      },
+      "error_count": 1,
+      "consecutive_ok": 0,
+      "last_checked": "2026-09-30T03:12:52Z",
+      "next_check_at": 1790741572.422302,
+      "last_entry_date": "",
+      "evidence": {},
+      "last_error": "low_relevance"
+    },
+    {
+      "id": "verdict.co.uk",
+      "domain": "verdict.co.uk",
+      "feed_url": "https://www.verdict.co.uk/feed/",
+      "homepage": "https://verdict.co.uk/",
+      "discovered_via": "gnews",
+      "state": "trial",
+      "score": {
+        "kw_hits": 6,
+        "entry_hits": 4
+      },
+      "error_count": 0,
+      "consecutive_ok": 1,
+      "last_checked": "2026-09-30T03:12:52Z",
+      "next_check_at": 1790781172.422302,
+      "last_entry_date": "2026-09-29",
+      "evidence": {
+        "http_ok": true,
+        "entry_count": 10,
+        "sample_titles": [
+          "AI startup Instinct raises $1bn in Series C at $10bn valuation",
+          "AMD to acquire AI research lab World Labs for $8.2bn",
+          "Anthropic cites ‘existential risks’ from AI in IPO prospectus"
+        ]
+      }
+    },
+    {
+      "id": "kyoto-u.ac.jp",
+      "domain": "kyoto-u.ac.jp",
+      "feed_url": "",
+      "homepage": "https://kyoto-u.ac.jp/",
+      "discovered_via": "gnews",
+      "state": "candidate",
+      "score": {
+        "kw_hits": 0,
+        "entry_hits": 0
+      },
+      "error_count": 0,
+      "consecutive_ok": 0,
+      "last_checked": "2026-09-30T03:12:52Z",
+      "next_check_at": 1790741572.422302,
+      "last_entry_date": "",
+      "evidence": {},
+      "last_error": "fetch_failed:URLError",
       "transient_errors": 1
     }
   ]

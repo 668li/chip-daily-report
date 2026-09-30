@@ -1,26 +1,26 @@
 # chip-daily-report 跨日记忆状态文件（B · v5.3）
 # 规则：由生成流程 Step 6 更新；缺失或损坏时 Step 1 跳过持续追踪，不 FAIL。
 schema_version: 1
-last_report_date: '2026-09-29'
-coverage: 2026-09-27 ~ 2026-09-29
+last_report_date: '2026-09-30'
+coverage: 2026-09-28 ~ 2026-09-30
 tracked_topics:
 - topic: HBM 价格与供需
   direction: tight
-  streak: 7
-  delta: 本期无新数据点；明天（9-30）美光 FQ4 财报已官宣，是 HBM 需求官方口径的下一个验证窗口
+  streak: 8
+  delta: 美光 FQ4 验证窗口开启（指引 500±10 亿，实数下期对账）；黄仁勋 28 日纽约面见三星李在镕/SK 崔泰源，下一代 HBM 供应是议题焦点
   signal: 高/利好/正面
 - topic: 先进封装产能紧缺
   direction: tight
-  streak: 13
-  delta: TSV 铜微结构应力研究（普渡/UCLA）从学术侧印证三维堆叠可靠性门槛在抬高；衬底多元化是产能紧缺的间接旁证
-  signal: 高/利好/正面
+  streak: 14
+  delta: TSV 铜微结构应力研究在 SemiEngineering 正式刊出（上期学术条→本期正式版，跨期多源确认）——竞争焦点从产能数量侧移到可靠性门槛
+  signal: 中/中性/中性
 - topic: 国产设备替代
   direction: up
-  streak: 9
-  delta: 长鑫科技拟投 108 亿元建存储器晶圆后道测试基地二期+241 亿元技术研发项目——国产测试设备需求直接受益
-  signal: 中/利好/正面
+  streak: 10
+  delta: DeepSeek 开源昇腾平台全套组件（TileLang/计算库/分布式通信库，与英伟达版一一对应）——软件生态侧补强，设备侧本期无新进展
+  signal: 高/利好/正面
 - topic: 出口管制收紧
   direction: tight
-  streak: 13
-  delta: 荷兰因美制裁自建 NixOS 软件生态（涉 ICC 条款微软受限）——管制外溢首次波及盟友软件栈；BIS GAAFET EDA 管制 10-14 生效倒计时 15 天
+  streak: 14
+  delta: 本期无新进展；BIS GAAFET EDA 管制 10-14 生效倒计时 14 天
   signal: 高/利空/负面

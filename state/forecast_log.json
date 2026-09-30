@@ -444,6 +444,38 @@
       "verdict": null,
       "verified_note": null,
       "scenarios": null
+    },
+    {
+      "id": "20260930-mu-fq4",
+      "report_date": "2026-09-30",
+      "event_date": "2026-10-03",
+      "event": "美光FQ4实际营收落点与下季指引方向（500±10亿指引）",
+      "segment": "制造",
+      "importance": "高",
+      "certainty": "中确定性",
+      "source": "https://financefeeds.com/micron-earnings-date-september-30-extra-week-50bn-guide/",
+      "when_judged": "false",
+      "verified": false,
+      "verified_date": null,
+      "verdict": null,
+      "verified_note": null,
+      "scenarios": null
+    },
+    {
+      "id": "20260930-tilelang-ascend",
+      "report_date": "2026-09-30",
+      "event_date": "2026-12-31",
+      "event": "TileLang昇腾开源后6个月内第二家头部厂公开部署昇腾",
+      "segment": "设计",
+      "importance": "高",
+      "certainty": "中确定性",
+      "source": "https://www.ithome.com/1/008/604.htm",
+      "when_judged": "false",
+      "verified": false,
+      "verified_date": null,
+      "verdict": null,
+      "verified_note": null,
+      "scenarios": null
     }
   ]
 }
