@@ -32,3 +32,5 @@ nul
 
 # v8 R2 文章正文缓存（可再生临时产物，不入库）
 state/article_cache/
+state/金标样本.md
+state/金标样本_key.json
