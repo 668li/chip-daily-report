@@ -112,6 +112,39 @@ header.top h1{margin:0 0 6px;font-size:23px;letter-spacing:.5px}
 .tk-dir{font-size:11.5px;font-weight:700;color:#0f766e;background:#ccfbf1;border-radius:999px;padding:1px 8px;white-space:nowrap}
 .tk-topic{font-weight:700;font-size:14px;color:#134e4a}
 .tk-detail{margin:0;font-size:13px;color:#475569;line-height:1.5}
+/* v8.1 持续追踪表格化：变化（Δ）独立成列 */
+.tk-table{width:100%;border-collapse:collapse;font-size:13px}
+.tk-table th{background:#f0fdfa;color:#0f766e;font-size:12.5px;text-align:left;padding:7px 9px;border-bottom:2px solid #99f6e4;white-space:nowrap}
+.tk-table td{padding:8px 9px;border-bottom:1px solid var(--line);vertical-align:top;line-height:1.5}
+.tk-t-topic{font-weight:700;color:#134e4a;white-space:nowrap}
+.tk-streak{white-space:nowrap;color:var(--muted);font-variant-numeric:tabular-nums}
+.tk-progress{color:#475569}
+.tk-delta-up{font-weight:700;color:#b91c1c;white-space:nowrap}
+.tk-delta-down{font-weight:700;color:#15803d;white-space:nowrap}
+.tk-delta-turn{font-weight:700;color:#b45309;white-space:nowrap}
+.tk-delta-flat{color:var(--muted);white-space:nowrap}
+/* v8.1 四态计分板：让欠账自己站起来 */
+.sb-table{width:100%;border-collapse:collapse;margin-top:12px;font-size:13px}
+.sb-table th{background:#f8fafc;color:var(--muted);font-size:12.5px;text-align:left;padding:7px 9px;border-bottom:2px solid var(--line);white-space:nowrap}
+.sb-table td{padding:8px 9px;border-bottom:1px solid var(--line);vertical-align:top;line-height:1.5}
+.sb-state{font-weight:700;white-space:nowrap}
+.sb-count{font-size:16px;font-weight:800;text-align:center;font-variant-numeric:tabular-nums}
+.sb-next{color:#475569}
+.sb-hit .sb-state,.sb-hit .sb-count{color:#15803d}
+.sb-partial .sb-state,.sb-partial .sb-count{color:#b45309}
+.sb-miss .sb-state,.sb-miss .sb-count{color:#64748b}
+.sb-over .sb-state,.sb-over .sb-count{color:#b91c1c}
+.sb-zero{background:#fef2f2}
+.sb-zero .sb-count{color:#b91c1c}
+/* v8.1 读者回声：读者原话逐字进正文 */
+.rv-block{margin-top:18px;background:#fff;border:1px solid #c7d2fe;border-radius:12px;padding:14px 16px}
+.rv-title{font-size:16.5px;margin:0 0 10px;color:#4338ca}
+.rv-intro{margin:0 0 10px;font-size:12.5px;color:var(--muted);line-height:1.6}
+.rv-quote{margin:0 0 10px;padding:10px 14px;background:#eef2ff;border-left:3px solid #6366f1;border-radius:0 10px 10px 0;font-size:14px;color:#312e81;line-height:1.7}
+.rv-meta{margin-top:6px;font-size:12px;color:#6366f1}
+.rv-none{padding:10px 14px;background:#f8fafc;border:1px dashed var(--line);border-radius:10px;font-size:13px;color:var(--muted)}
+.rv-ledger{margin:0;padding-left:20px;font-size:13px;color:#475569;line-height:1.7}
+.rv-ledger b{color:#4338ca}
 /* 前瞻催化剂（C v5.3）→ v6.1 未来推演 */
 .catalyst-block{margin-top:18px;background:#fff;border:1px solid var(--line);border-radius:12px;padding:14px 16px}
 .ct-title{font-size:16.5px;margin:0 0 10px;color:#1d4ed8}

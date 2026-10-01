@@ -236,9 +236,39 @@ def _selfcheck_block(rows: list) -> str:
 
 
 def _tracking_block(items: list) -> str:
-    """持续追踪（B·v5.3）：主题卡片列表。"""
+    """持续追踪（B·v5.3）。
+
+    v8.1 起表格化：方向 / 变化（Δ）/ 连续 / 当日进展四要素分列。变化独立成列是这次
+    做厚的核心——此前方向、变化、期数挤在一行散文里，跨日记忆实际退化成日志，
+    读者扫不出「哪条在加速、哪条在熄火」。v6.0 及更早的项目符号形态继续兼容。
+    """
     if not items:
         return ""
+    if any(it.get("delta") or it.get("direction") for it in items):
+        trs = []
+        for it in items:
+            d = it.get("delta") or "—"
+            cls = (
+                "tk-delta-up" if "↑" in d or "加速" in d
+                else "tk-delta-down" if "↓" in d or "缓和" in d
+                else "tk-delta-turn" if "⚡" in d
+                else "tk-delta-flat"
+            )
+            trs.append(
+                f'<tr><td class="tk-t-topic">{_esc(it.get("topic", ""))}</td>'
+                f'<td>{_esc(it.get("direction", "—"))}</td>'
+                f'<td class="{cls}">{_esc(d)}</td>'
+                f'<td class="tk-streak">{_esc(it.get("streak", "—"))}</td>'
+                f'<td class="tk-progress">{_esc(it.get("progress", "—"))}</td></tr>'
+            )
+        return f"""
+    <section class="tracking-block">
+      <h2 class="tk-title">📈 持续追踪 <span class="tk-sub">跨日记忆 · 变化列</span></h2>
+      <table class="tk-table">
+        <thead><tr><th>主题</th><th>方向</th><th>变化（Δ）</th><th>连续</th><th>当日进展</th></tr></thead>
+        <tbody>{"".join(trs)}</tbody>
+      </table>
+    </section>"""
     cards = []
     dir_label = {"up": "↑ 上行", "down": "↓ 下行", "flat": "→ 平稳",
                  "tight": "↗ 趋紧", "loose": "↘ 趋松"}
@@ -442,8 +472,77 @@ def _future_lessons_block(items: list) -> str:
     </section>"""
 
 
+def _scoreboard(rows: list) -> str:
+    """四态计分板（v8.1）：命中/偏差/打脸/逾期四行独立成表，让欠账自己站起来。
+
+    纪律：不显示命中率（该指标已废弃，虚高正是审计抓出的造假信号）；
+    打脸 0 这一格必须显眼地是 0——它比任何命中数字都重要。
+    """
+    if not rows:
+        return ""
+    trs = []
+    for r in rows:
+        state = r.get("state", "")
+        tone = (
+            "sb-hit" if "命中" in state and "偏差" not in state
+            else "sb-partial" if "偏差" in state
+            else "sb-miss" if "打脸" in state
+            else "sb-over"
+        )
+        # 打脸为零时整行点红：零打脸是红旗，不是"暂时没有"
+        zero_flag = (
+            " sb-zero"
+            if tone == "sb-miss" and r.get("count", "").strip() in ("0", "0 条", "—")
+            else ""
+        )
+        trs.append(
+            f'<tr class="{tone}{zero_flag}"><td class="sb-state">{_esc(state)}</td>'
+            f'<td class="sb-count">{_esc(r.get("count", "—"))}</td>'
+            f'<td>{_esc(r.get("latest", "—"))}</td>'
+            f'<td class="sb-next">{_esc(r.get("next", "—"))}</td></tr>'
+        )
+    return f"""
+      <table class="sb-table">
+        <thead><tr><th>状态</th><th>累计条数</th><th>最近一次</th><th>下一步</th></tr></thead>
+        <tbody>{"".join(trs)}</tbody>
+      </table>"""
+
+
+def _reader_voice_block(rv: dict | None) -> str:
+    """读者回声（v8.1 固定节）：读者原话逐字引用 + 本期已改/未改台账。
+
+    这是读者环的正文出口——反馈只躺在 state 文件里等于闭环没合上。
+    原话逐字呈现，不加工不美化；本期无反馈也照写「无新反馈」，整节不省略。
+    """
+    if not rv:
+        return ""
+    intro = f'<div class="rv-intro">{_esc(rv.get("intro", ""))}</div>' if rv.get("intro") else ""
+    quotes = ""
+    if rv.get("quotes"):
+        qs = []
+        for q in rv["quotes"]:
+            meta = f'<div class="rv-meta">{_esc(q["meta"])}</div>' if q.get("meta") else ""
+            qs.append(
+                f'<blockquote class="rv-quote">{_esc(q["text"])}{meta}</blockquote>'
+            )
+        quotes = "".join(qs)
+    else:
+        quotes = '<div class="rv-none">本期无新反馈，最近一次记录见下。</div>'
+    li = "".join(
+        f'<li><b>{_esc(x["issue"])}</b>：{_esc(x["text"])}</li>' for x in rv.get("ledger", [])
+    )
+    ledger = f'<ul class="rv-ledger">{li}</ul>' if li else ""
+    return f"""
+    <section class="rv-block">
+      <h2 class="rv-title">🗣 读者回声 <span class="tk-sub">你的原话进了正文</span></h2>
+      {intro}
+      {quotes}
+      {ledger}
+    </section>"""
+
+
 def _forward_review_block(fr: dict | None) -> str:
-    """前瞻兑现回顾（v5.10，v6.0 起在日报视图渲染，对齐 md 曲线）：回看卡 + 预判成绩单。"""
+    """前瞻兑现回顾（v5.10，v6.0 起在日报视图渲染，对齐 md 曲线）：回看卡 + 四态计分板 + 预判成绩单。"""
     if not fr:
         return ""
     cards = []
@@ -455,18 +554,20 @@ def _forward_review_block(fr: dict | None) -> str:
         cards.append(
             f'<div class="fr-card"><div class="fr-title">{_esc(it.get("title", ""))}</div>{parts}</div>'
         )
-    if not cards and not fr.get("summary"):
+    if not cards and not fr.get("summary") and not fr.get("scoreboard"):
         return ""
     intro = f'<div class="fr-intro">{_esc(fr.get("intro", ""))}</div>' if fr.get("intro") else ""
     summary = ""
     if fr.get("summary"):
         label = fr.get("summary_label") or "闭环小结"
         summary = f'<div class="fr-summary">{_esc(label)}：{_esc(fr["summary"])}</div>'
+    board = _scoreboard(fr.get("scoreboard", []))
     return f"""
     <section class="fr-block">
       <h2 class="fr-title">✅ 兑现回顾 <span class="tk-sub">预告 → 验证闭环 · 允许打脸</span></h2>
       {intro}
       <div class="fr-grid">{"".join(cards)}</div>
+      {board}
       {summary}
     </section>"""
 
@@ -499,6 +600,7 @@ def render(report: dict) -> str:
     forward_review = _forward_review_block(report.get("forward_review"))
     deep_dive = _deep_dive_block(report.get("deep_dive", []))
     future_lessons = _future_lessons_block(report.get("future_lessons", []))
+    reader_voice = _reader_voice_block(report.get("reader_voice"))
     selfcheck = _selfcheck_block(report.get("selfcheck", []))
 
     return f"""
@@ -513,5 +615,6 @@ def render(report: dict) -> str:
       {forward_review}
       {deep_dive}
       {future_lessons}
+      {reader_voice}
       {selfcheck}
     </div>"""

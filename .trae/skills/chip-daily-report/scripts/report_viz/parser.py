@@ -47,7 +47,7 @@ DIM_ORDER = ["市场与需求", "政策与监管", "资本与投融资"]
 # v5.3 附加小节：持续追踪（B）/ 前瞻兑现回顾（v5.10 方向1）/ 前瞻催化剂（C）；
 # v6.1 未来推演（推演型前瞻，取代前两者的新版承载节）；v5.4 费曼解释（F1.3）；
 # v5.6 深度解读/未来借鉴；v5.8 今日导师课
-EXTRA_ORDER = ["持续追踪", "前瞻兑现回顾", "前瞻催化剂", "未来推演", "费曼解释", "深度解读", "未来借鉴", "今日导师课"]
+EXTRA_ORDER = ["持续追踪", "前瞻兑现回顾", "前瞻催化剂", "未来推演", "费曼解释", "深度解读", "未来借鉴", "今日导师课", "读者回声"]
 
 
 def _seg_of(heading: str):
@@ -250,9 +250,65 @@ def _parse_dim_section(buf):
     return {"intro": intro, "subs": out_subs}
 
 
+def _split_md_row(line):
+    """把一行 markdown 表格行切成单元格列表（去掉首尾竖线与空白）。"""
+    s = line.strip()
+    if not s.startswith("|"):
+        return []
+    cells = [c.strip() for c in s.strip("|").split("|")]
+    return cells
+
+
+def _is_sep_row(cells):
+    """判断是否为表格分隔行 |---|---|。"""
+    return bool(cells) and all(re.fullmatch(r":?-{2,}:?", c or "") for c in cells)
+
+
 def _parse_tracking(buf):
-    """解析 '## 持续追踪' 小节（B·v5.3）：提取 '**主题**：方向（连续N期）Δ 变比 — 进展' 列表。"""
+    """解析 '## 持续追踪' 小节。
+
+    v8.1 表格化：`| 主题 | 方向 | 变化（Δ） | 连续 | 当日进展 |`，变化列独立成列
+    （此前变化被压在单行散文里，读者扫不出"哪条在加速/哪条在熄火"）。
+    v6.0 及更早的 `- **主题**：方向（连续N期）Δ 变比 — …` 项目符号形态继续兼容。
+    """
     items = []
+    header = None
+    for ln in buf:
+        cells = _split_md_row(ln)
+        if not cells:
+            header = None
+            continue
+        if _is_sep_row(cells):
+            continue
+        if header is None:
+            # 第一行非分隔的表格行=表头；若不是表头就退回项目符号形态
+            if any("主题" in c for c in cells):
+                header = cells
+            continue
+        if len(cells) < len(header):
+            continue
+
+        def cell(key, default=""):
+            for i, h in enumerate(header):
+                if key in h and i < len(cells):
+                    return cells[i]
+            return default
+
+        items.append(
+            {
+                "topic": cell("主题"),
+                "direction": cell("方向"),
+                "delta": cell("变化"),
+                "streak": cell("连续"),
+                "progress": cell("进展"),
+                "detail": " ｜ ".join(
+                    x for x in (cell("方向"), cell("变化"), cell("连续"), cell("进展")) if x
+                ),
+            }
+        )
+    if items:
+        return items
+
     for ln in buf:
         m = re.match(r"^-\s+\*\*(.+?)\*\*\s*[:：]\s*(.+)$", ln.strip())
         if m:
@@ -378,6 +434,35 @@ def _parse_catalyst(buf):
     return rows
 
 
+def _parse_reader_voice(buf):
+    """解析 '## 读者回声' 小节（v8.1 固定节：读者环的正文出口）。
+
+    结构：首行 blockquote=收集口径说明；'「…」' 行=读者原话（逐字引用不加工）；
+    '—— 记录于 …' 行=该条原话的期号/时间；'- **[期号]**：…' 行=本期回声台账
+    （已改/未改）。无原话时 quotes 为空、台账仍写"本期无新反馈"——整节不省略。
+    """
+    intro = ""
+    quotes = []
+    ledger = []
+    for ln in buf:
+        s = ln.strip()
+        if s.startswith(">"):
+            body = s.lstrip("> ").strip()
+            if not body:
+                continue
+            if body.startswith("「") or body.startswith("」"):
+                quotes.append({"text": body.strip("「」").strip(), "meta": ""})
+            elif body.startswith("——") and quotes:
+                quotes[-1]["meta"] = body.strip("—— ").strip()
+            elif not intro:
+                intro = body
+            continue
+        m = re.match(r"^-\s*\*\*(.+?)\*\*\s*[：:]\s*(.+)$", s)
+        if m:
+            ledger.append({"issue": m.group(1).strip(), "text": m.group(2).strip()})
+    return {"intro": intro, "quotes": quotes, "ledger": ledger}
+
+
 def _parse_catalyst_notes(buf):
     """解析 '## 前瞻催化剂'（v5.11）/'## 未来推演'（v6.1）下的 '### 前瞻/推演 N：标题' 解读块。
 
@@ -461,12 +546,36 @@ def _parse_forward_review(buf):
     summary = ""
     summary_label = ""  # v6.0：闭环小结人话版改名「预判成绩单」，标签原文随写回保留
     extra = []  # v6.0：未识别的非空行原样保留（如「预判成绩单」块/表格/结论行），往返零丢失
+    scoreboard = []  # v8.1：四态计分板 [{state,count,latest,next}]，把欠账从散文里提出来独立成表
+    sb_header = None
     cur = None
     for ln in buf:
         s = ln.strip()
         if s.startswith(">"):
             intro_lines.append(s.lstrip("> ").strip())
             continue
+        cells = _split_md_row(ln)
+        if cells:
+            if _is_sep_row(cells):
+                continue
+            if sb_header is None:
+                # 表头含「状态」+「累计」→ 四态计分板；其余表格照旧进 extra
+                if any("状态" in c for c in cells) and any("累计" in c for c in cells):
+                    sb_header = cells
+                    continue
+                extra.append(s)
+                continue
+            if len(cells) >= len(sb_header):
+                scoreboard.append(
+                    {
+                        "state": cells[0],
+                        "count": cells[1] if len(cells) > 1 else "",
+                        "latest": cells[2] if len(cells) > 2 else "",
+                        "next": cells[3] if len(cells) > 3 else "",
+                    }
+                )
+            continue
+        sb_header = None
         hm = re.match(r"^###\s+回看\s*\d*\s*[：:.]?\s*(.*)$", ln.strip())
         if hm:
             if cur is not None:
@@ -488,6 +597,7 @@ def _parse_forward_review(buf):
     return {
         "intro": "\n".join(intro_lines).strip(),
         "items": items,
+        "scoreboard": scoreboard,
         "summary_label": summary_label or "闭环小结",
         "summary": summary,
         "extra": extra,
@@ -534,6 +644,7 @@ def parse_report(path) -> dict:
         "forward_review": None,  # v5.10 方向1：预告→验证闭环
         "catalyst_notes": [],  # v5.11：高/中重要度催化剂前瞻解读块
         "future_intro": "",  # v6.1：未来推演小节引言
+        "reader_voice": None,  # v8.1：读者回声（读者环的正文出口）
         "source_stats": {"A": 0, "B": 0, "C": 0},
     }
 
@@ -587,6 +698,8 @@ def parse_report(path) -> dict:
             report["future_lessons"].extend(_parse_future_lessons(buf))
         elif cur == "今日导师课":
             report["tutor"].extend(_parse_tutor(buf))
+        elif cur == "读者回声":
+            report["reader_voice"] = _parse_reader_voice(buf)
         elif in_selfcheck:
             report["selfcheck"].extend(_parse_selfcheck(buf))
         buf = []

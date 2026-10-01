@@ -1,6 +1,6 @@
 {
   "report": "芯片行业日报_20261001.md",
-  "generated_at": "2026-10-01 08:15:15",
+  "generated_at": "2026-10-01 18:51:59",
   "stats": {
     "entries": 10,
     "no_claims": 7,
@@ -67,7 +67,7 @@
       "sources": [
         {
           "url": "https://www.cnbc.com/2026/09/30/micron-mu-q4-earnings-report-2026.html",
-          "status": "ok",
+          "status": "cached",
           "text_len": 6300,
           "error": null
         },
@@ -102,13 +102,13 @@
       "sources": [
         {
           "url": "https://www.ithome.com/1/008/934.htm",
-          "status": "ok",
+          "status": "cached",
           "text_len": 1476,
           "error": null
         },
         {
           "url": "https://news.qq.com/rain/a/20260930A0BBFX00",
-          "status": "ok",
+          "status": "cached",
           "text_len": 587,
           "error": null
         }
@@ -157,13 +157,13 @@
       "sources": [
         {
           "url": "https://www.ithome.com/1/008/917.htm",
-          "status": "ok",
+          "status": "cached",
           "text_len": 1198,
           "error": null
         },
         {
           "url": "https://finance.yahoo.com/technology/ai/articles/synopsys-signs-1-billion-plus-170828121.html",
-          "status": "ok",
+          "status": "cached",
           "text_len": 9857,
           "error": null
         }
