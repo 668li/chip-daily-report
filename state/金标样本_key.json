@@ -1,0 +1,18 @@
+{
+  "schema": "gold-sample-key v1（金标台账的机器真相键，2026-09-29 随金标通道开通建立）",
+  "notes": [
+    "与 state/金标样本.md 按 issue+row 逐行对账；盲标完整性依赖两文件分离——台账侧永远不得出现 pool/confidence/reason",
+    "pool: passed=gate 通过 / rejected=被拒；reason 取 gate() 拒因枚举（low_confidence/off_topic/irrelevant/duplicate_topic/segment_quota/top_n_cap），通过行为 null",
+    "建议标注者当期标完再读本文件（防锚定）；对账只发生在 10-12 SelectBench 式 eval 时点"
+  ],
+  "keys": [
+    { "issue": "20260929", "row": 1, "event_id": "EV06", "pool": "passed", "confidence": 76.0, "reason": null, "segment": "制造", "title": "三星高管预计明年 HBM 占 DRAM 行业总产能近 30%，高于目前的 20%" },
+    { "issue": "20260929", "row": 2, "event_id": "EV11", "pool": "passed", "confidence": 76.0, "reason": null, "segment": "制造", "title": "SK 海力士以 CoWoS 平台 HBM5 内存验证蝉联台积电年度合作伙伴奖" },
+    { "issue": "20260929", "row": 3, "event_id": "EV222", "pool": "passed", "confidence": 76.0, "reason": null, "segment": "设计", "title": "Modders bring Nvidia's DLSS 5 Neural Rendering to AMD Radeon GPUs" },
+    { "issue": "20260929", "row": 4, "event_id": "EV12", "pool": "rejected", "confidence": 57.5, "reason": "low_confidence", "segment": "未知", "title": "全球精度最高时钟诞生！不确定度达 1 × 10⁻¹⁹" },
+    { "issue": "20260929", "row": 5, "event_id": "EV13", "pool": "rejected", "confidence": 57.5, "reason": "low_confidence", "segment": "未知", "title": "IDC：今年上半年全球人形机器人出货近 2.5 万台同比增长 432.1%，中国独占 1.9 万台" },
+    { "issue": "20260929", "row": 6, "event_id": "EV14", "pool": "rejected", "confidence": 57.5, "reason": "low_confidence", "segment": "未知", "title": "暴雪《风暴英雄》游戏时隔 6 年迎第 91 位英雄萨拉塔斯，暗示第 92 位已在路上" },
+    { "issue": "20260929", "row": 7, "event_id": "EV543", "pool": "rejected", "confidence": 44.0, "reason": "low_confidence", "segment": "未知", "title": "IBM study finds AI workforce skills gap" },
+    { "issue": "20260929", "row": 8, "event_id": "EV563", "pool": "rejected", "confidence": 44.0, "reason": "low_confidence", "segment": "设计", "title": "Taped Out Xbox Helix Chip Reportedly Reaches 56 TFLOPS, Surp" }
+  ]
+}

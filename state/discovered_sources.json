@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated": "2026-09-30T03:12:52Z",
+  "updated": "2026-10-01T00:08:30Z",
   "sources": [
     {
       "id": "wccftech.com",
@@ -42,12 +42,12 @@
       },
       "error_count": 1,
       "consecutive_ok": 0,
-      "last_checked": "2026-09-26T02:50:15Z",
-      "next_check_at": 1790394615.9685128,
+      "last_checked": "2026-10-01T00:08:30Z",
+      "next_check_at": 1790820510.3304882,
       "last_entry_date": "",
       "evidence": {},
       "last_error": "fetch_failed:HTTPError",
-      "transient_errors": 1
+      "transient_errors": 2
     },
     {
       "id": "finance.sina.cn",
@@ -399,10 +399,10 @@
         "kw_hits": 4,
         "entry_hits": 4
       },
-      "error_count": 0,
+      "error_count": 1,
       "consecutive_ok": 0,
-      "last_checked": "2026-09-26T02:38:56Z",
-      "next_check_at": 1790392285.473518,
+      "last_checked": "2026-10-01T00:08:30Z",
+      "next_check_at": 1790816910.3304882,
       "last_entry_date": "2026-09-26",
       "evidence": {
         "http_ok": true,
@@ -413,7 +413,8 @@
           "High-end NVIDIA RTX 5080 gaming PC with AMD Ryzen 7 9800X3D gets huge $500 disco"
         ],
         "rescore": "2026-09-26T02:41:25Z demoted:low_relevance"
-      }
+      },
+      "last_error": "low_relevance"
     },
     {
       "id": "k.sina.com.cn",
@@ -753,10 +754,10 @@
         "kw_hits": 4,
         "entry_hits": 2
       },
-      "error_count": 0,
+      "error_count": 1,
       "consecutive_ok": 0,
-      "last_checked": "2026-09-26T02:38:56Z",
-      "next_check_at": 1790392285.473518,
+      "last_checked": "2026-10-01T00:08:30Z",
+      "next_check_at": 1790816910.3304882,
       "last_entry_date": "2026-09-25",
       "evidence": {
         "http_ok": true,
@@ -767,7 +768,8 @@
           "How is cleanroom qualification  changing in a digital world?"
         ],
         "rescore": "2026-09-26T02:41:25Z demoted:low_relevance"
-      }
+      },
+      "last_error": "low_relevance"
     },
     {
       "id": "wallstreetcn.com",
@@ -840,10 +842,10 @@
         "kw_hits": 3,
         "entry_hits": 4
       },
-      "error_count": 0,
+      "error_count": 1,
       "consecutive_ok": 0,
-      "last_checked": "2026-09-26T01:31:59Z",
-      "next_check_at": 1790392136.7251232,
+      "last_checked": "2026-10-01T00:08:30Z",
+      "next_check_at": 1790816910.3304882,
       "last_entry_date": "2026-09-26",
       "evidence": {
         "http_ok": true,
@@ -854,7 +856,8 @@
           "Best Free Cloud Storage 2026: Where the Free Gigabytes Still Are"
         ],
         "rescore": "2026-09-26T02:38:56Z demoted:low_relevance"
-      }
+      },
+      "last_error": "low_relevance"
     },
     {
       "id": "investing.com",
@@ -887,10 +890,10 @@
         "kw_hits": 8,
         "entry_hits": 7
       },
-      "error_count": 0,
+      "error_count": 1,
       "consecutive_ok": 0,
-      "last_checked": "2026-09-26T02:41:25Z",
-      "next_check_at": 1790392402.092151,
+      "last_checked": "2026-10-01T00:08:30Z",
+      "next_check_at": 1790816910.3304882,
       "last_entry_date": "2026-09-25",
       "evidence": {
         "http_ok": true,
@@ -901,7 +904,8 @@
           "대전 현대직업전문학교, ‘전기내선공사 관리자 양성과정’ 10월 개강"
         ],
         "rescore": "2026-09-26T02:43:22Z demoted:low_relevance"
-      }
+      },
+      "last_error": "low_relevance"
     },
     {
       "id": "finance.sina.com.cn",
@@ -953,10 +957,10 @@
         "kw_hits": 3,
         "entry_hits": 3
       },
-      "error_count": 0,
+      "error_count": 1,
       "consecutive_ok": 0,
-      "last_checked": "2026-09-26T02:38:56Z",
-      "next_check_at": 1790392285.473518,
+      "last_checked": "2026-10-01T00:08:30Z",
+      "next_check_at": 1790816910.3304882,
       "last_entry_date": "2026-09-25",
       "evidence": {
         "http_ok": true,
@@ -967,7 +971,8 @@
           "Завод на 50 000 грузовиков: Tesla начала поставки серийных Semi"
         ],
         "rescore": "2026-09-26T02:41:25Z demoted:low_relevance"
-      }
+      },
+      "last_error": "low_relevance"
     },
     {
       "id": "au.investing.com",
@@ -1158,11 +1163,12 @@
       },
       "error_count": 1,
       "consecutive_ok": 0,
-      "last_checked": "2026-09-26T01:31:59Z",
-      "next_check_at": 1790389919.638434,
+      "last_checked": "2026-10-01T00:08:30Z",
+      "next_check_at": 1790816910.3304882,
       "last_entry_date": "",
       "evidence": {},
-      "last_error": "fetch_failed:HTTPError"
+      "last_error": "fetch_failed:HTTPError",
+      "transient_errors": 1
     },
     {
       "id": "theglobeandmail.com",
@@ -2005,10 +2011,10 @@
         "kw_hits": 6,
         "entry_hits": 4
       },
-      "error_count": 0,
-      "consecutive_ok": 1,
-      "last_checked": "2026-09-30T03:12:52Z",
-      "next_check_at": 1790781172.422302,
+      "error_count": 1,
+      "consecutive_ok": 0,
+      "last_checked": "2026-10-01T00:08:30Z",
+      "next_check_at": 1790816910.3304882,
       "last_entry_date": "2026-09-29",
       "evidence": {
         "http_ok": true,
@@ -2018,7 +2024,8 @@
           "AMD to acquire AI research lab World Labs for $8.2bn",
           "Anthropic cites ‘existential risks’ from AI in IPO prospectus"
         ]
-      }
+      },
+      "last_error": "low_relevance"
     },
     {
       "id": "kyoto-u.ac.jp",
@@ -2039,6 +2046,163 @@
       "evidence": {},
       "last_error": "fetch_failed:URLError",
       "transient_errors": 1
+    },
+    {
+      "id": "electronics.economictimes.indiatimes.com",
+      "domain": "electronics.economictimes.indiatimes.com",
+      "feed_url": "",
+      "homepage": "https://electronics.economictimes.indiatimes.com/",
+      "discovered_via": "gnews",
+      "state": "candidate",
+      "score": {
+        "kw_hits": 0,
+        "entry_hits": 0
+      },
+      "error_count": 0,
+      "consecutive_ok": 0,
+      "last_checked": "2026-10-01T00:08:30Z",
+      "next_check_at": 1790816910.3304882,
+      "last_entry_date": "",
+      "evidence": {},
+      "last_error": "fetch_failed:HTTPError",
+      "transient_errors": 1
+    },
+    {
+      "id": "stock.eastmoney.com",
+      "domain": "stock.eastmoney.com",
+      "feed_url": "",
+      "homepage": "https://stock.eastmoney.com/",
+      "discovered_via": "gnews",
+      "state": "candidate",
+      "score": {
+        "kw_hits": 0,
+        "entry_hits": 0
+      },
+      "error_count": 0,
+      "consecutive_ok": 0,
+      "last_checked": "2026-10-01T00:08:30Z",
+      "next_check_at": 1790816910.3304882,
+      "last_entry_date": "",
+      "evidence": {},
+      "last_error": "fetch_failed:HTTPError",
+      "transient_errors": 1
+    },
+    {
+      "id": "einnews.com",
+      "domain": "einnews.com",
+      "feed_url": "",
+      "homepage": "https://einnews.com/",
+      "discovered_via": "gnews",
+      "state": "candidate",
+      "score": {
+        "kw_hits": 0,
+        "entry_hits": 0
+      },
+      "error_count": 0,
+      "consecutive_ok": 0,
+      "last_checked": "2026-10-01T00:08:30Z",
+      "next_check_at": 1790816910.3304882,
+      "last_entry_date": "",
+      "evidence": {},
+      "last_error": "fetch_failed:URLError",
+      "transient_errors": 1
+    },
+    {
+      "id": "sammyguru.com",
+      "domain": "sammyguru.com",
+      "feed_url": "https://sammyguru.com/feed/",
+      "homepage": "https://sammyguru.com/",
+      "discovered_via": "gnews",
+      "state": "candidate",
+      "score": {
+        "kw_hits": 0,
+        "entry_hits": 0
+      },
+      "error_count": 1,
+      "consecutive_ok": 0,
+      "last_checked": "2026-10-01T00:08:30Z",
+      "next_check_at": 1790816910.3304882,
+      "last_entry_date": "",
+      "evidence": {},
+      "last_error": "low_relevance"
+    },
+    {
+      "id": "english.cw.com.tw",
+      "domain": "english.cw.com.tw",
+      "feed_url": "",
+      "homepage": "https://english.cw.com.tw/",
+      "discovered_via": "gnews",
+      "state": "candidate",
+      "score": {
+        "kw_hits": 0,
+        "entry_hits": 0
+      },
+      "error_count": 0,
+      "consecutive_ok": 0,
+      "last_checked": "2026-10-01T00:08:30Z",
+      "next_check_at": 1790816910.3304882,
+      "last_entry_date": "",
+      "evidence": {},
+      "last_error": "fetch_failed:URLError",
+      "transient_errors": 1
+    },
+    {
+      "id": "news.sina.com.cn",
+      "domain": "news.sina.com.cn",
+      "feed_url": "https://rss.sina.com.cn/news/marquee/ddt.xml",
+      "homepage": "https://news.sina.com.cn/",
+      "discovered_via": "gnews",
+      "state": "candidate",
+      "score": {
+        "kw_hits": 0,
+        "entry_hits": 0
+      },
+      "error_count": 1,
+      "consecutive_ok": 0,
+      "last_checked": "2026-10-01T00:08:30Z",
+      "next_check_at": 1790816910.3304882,
+      "last_entry_date": "",
+      "evidence": {},
+      "last_error": "low_relevance"
+    },
+    {
+      "id": "tokenpost.com",
+      "domain": "tokenpost.com",
+      "feed_url": "",
+      "homepage": "https://tokenpost.com/",
+      "discovered_via": "gnews",
+      "state": "candidate",
+      "score": {
+        "kw_hits": 0,
+        "entry_hits": 0
+      },
+      "error_count": 0,
+      "consecutive_ok": 0,
+      "last_checked": "2026-10-01T00:08:30Z",
+      "next_check_at": 1790816910.3304882,
+      "last_entry_date": "",
+      "evidence": {},
+      "last_error": "fetch_failed:HTTPError",
+      "transient_errors": 1
+    },
+    {
+      "id": "bits-chips.com",
+      "domain": "bits-chips.com",
+      "feed_url": "https://bits-chips.com/feed/",
+      "homepage": "https://bits-chips.com/",
+      "discovered_via": "gnews",
+      "state": "candidate",
+      "score": {
+        "kw_hits": 0,
+        "entry_hits": 0
+      },
+      "error_count": 1,
+      "consecutive_ok": 0,
+      "last_checked": "2026-10-01T00:08:30Z",
+      "next_check_at": 1790816910.3304882,
+      "last_entry_date": "",
+      "evidence": {},
+      "last_error": "low_relevance"
     }
   ]
 }

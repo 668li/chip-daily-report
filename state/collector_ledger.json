@@ -460,6 +460,246 @@
       "first_import": true,
       "dropped_old": 0,
       "capped": false
+    },
+    {
+      "date": "2026-10-01",
+      "ts": "2026-10-01T08:09:15",
+      "source_id": "sec_edgar",
+      "found": 10,
+      "kept": 10,
+      "first_import": false,
+      "dropped_old": 0,
+      "capped": false
+    },
+    {
+      "date": "2026-10-01",
+      "ts": "2026-10-01T08:09:15",
+      "source_id": "aihot",
+      "found": 23,
+      "kept": 23,
+      "first_import": false,
+      "dropped_old": 0,
+      "capped": false
+    },
+    {
+      "date": "2026-10-01",
+      "ts": "2026-10-01T08:09:15",
+      "source_id": "semiengineering",
+      "found": 10,
+      "kept": 10,
+      "first_import": false,
+      "dropped_old": 0,
+      "capped": false
+    },
+    {
+      "date": "2026-10-01",
+      "ts": "2026-10-01T08:09:15",
+      "source_id": "eetimes",
+      "found": 10,
+      "kept": 10,
+      "first_import": false,
+      "dropped_old": 0,
+      "capped": false
+    },
+    {
+      "date": "2026-10-01",
+      "ts": "2026-10-01T08:09:15",
+      "source_id": "cnbc",
+      "found": 30,
+      "kept": 30,
+      "first_import": false,
+      "dropped_old": 0,
+      "capped": false
+    },
+    {
+      "date": "2026-10-01",
+      "ts": "2026-10-01T08:09:15",
+      "source_id": "semianalysis",
+      "found": 10,
+      "kept": 10,
+      "first_import": false,
+      "dropped_old": 0,
+      "capped": false
+    },
+    {
+      "date": "2026-10-01",
+      "ts": "2026-10-01T08:09:15",
+      "source_id": "ieee_spectrum",
+      "found": 30,
+      "kept": 30,
+      "first_import": false,
+      "dropped_old": 0,
+      "capped": false
+    },
+    {
+      "date": "2026-10-01",
+      "ts": "2026-10-01T08:09:15",
+      "source_id": "tomshardware",
+      "found": 50,
+      "kept": 50,
+      "first_import": false,
+      "dropped_old": 0,
+      "capped": false
+    },
+    {
+      "date": "2026-10-01",
+      "ts": "2026-10-01T08:09:15",
+      "source_id": "nikkei_asia",
+      "found": 50,
+      "kept": 50,
+      "first_import": false,
+      "dropped_old": 0,
+      "capped": false
+    },
+    {
+      "date": "2026-10-01",
+      "ts": "2026-10-01T08:09:15",
+      "source_id": "yonhap_en",
+      "found": 100,
+      "kept": 100,
+      "first_import": false,
+      "dropped_old": 0,
+      "capped": false
+    },
+    {
+      "date": "2026-10-01",
+      "ts": "2026-10-01T08:09:15",
+      "source_id": "ithome",
+      "found": 60,
+      "kept": 60,
+      "first_import": false,
+      "dropped_old": 0,
+      "capped": false
+    },
+    {
+      "date": "2026-10-01",
+      "ts": "2026-10-01T08:09:15",
+      "source_id": "trendforce",
+      "found": 20,
+      "kept": 20,
+      "first_import": false,
+      "dropped_old": 0,
+      "capped": false
+    },
+    {
+      "date": "2026-10-01",
+      "ts": "2026-10-01T08:09:15",
+      "source_id": "yahoo_nvda",
+      "found": 18,
+      "kept": 18,
+      "first_import": false,
+      "dropped_old": 0,
+      "capped": false
+    },
+    {
+      "date": "2026-10-01",
+      "ts": "2026-10-01T08:09:15",
+      "source_id": "yahoo_tsm",
+      "found": 19,
+      "kept": 19,
+      "first_import": false,
+      "dropped_old": 0,
+      "capped": false
+    },
+    {
+      "date": "2026-10-01",
+      "ts": "2026-10-01T08:09:15",
+      "source_id": "google_news",
+      "found": 200,
+      "kept": 200,
+      "first_import": false,
+      "dropped_old": 0,
+      "capped": false
+    },
+    {
+      "date": "2026-10-01",
+      "ts": "2026-10-01T08:09:15",
+      "source_id": "cninfo",
+      "found": 10,
+      "kept": 10,
+      "first_import": false,
+      "dropped_old": 0,
+      "capped": false
+    },
+    {
+      "date": "2026-10-01",
+      "ts": "2026-10-01T08:09:15",
+      "source_id": "dyn_wccftech.com",
+      "found": 20,
+      "kept": 20,
+      "first_import": false,
+      "dropped_old": 0,
+      "capped": false
+    },
+    {
+      "date": "2026-10-01",
+      "ts": "2026-10-01T08:09:15",
+      "source_id": "dyn_techpowerup.com",
+      "found": 133,
+      "kept": 133,
+      "first_import": false,
+      "dropped_old": 0,
+      "capped": false
+    },
+    {
+      "date": "2026-10-01",
+      "ts": "2026-10-01T08:09:15",
+      "source_id": "dyn_tspasemiconductor.substack.com",
+      "found": 20,
+      "kept": 20,
+      "first_import": false,
+      "dropped_old": 0,
+      "capped": false
+    },
+    {
+      "date": "2026-10-01",
+      "ts": "2026-10-01T08:09:15",
+      "source_id": "dyn_eenewseurope.com",
+      "found": 10,
+      "kept": 10,
+      "first_import": false,
+      "dropped_old": 0,
+      "capped": false
+    },
+    {
+      "date": "2026-10-01",
+      "ts": "2026-10-01T08:09:15",
+      "source_id": "dyn_electronicsweekly.com",
+      "found": 10,
+      "kept": 10,
+      "first_import": false,
+      "dropped_old": 0,
+      "capped": false
+    },
+    {
+      "date": "2026-10-01",
+      "ts": "2026-10-01T08:09:15",
+      "source_id": "dyn_electronicsforyou.biz",
+      "found": 10,
+      "kept": 10,
+      "first_import": false,
+      "dropped_old": 0,
+      "capped": false
+    },
+    {
+      "date": "2026-10-01",
+      "ts": "2026-10-01T08:09:15",
+      "source_id": "dyn_shattered.io",
+      "found": 10,
+      "kept": 10,
+      "first_import": false,
+      "dropped_old": 0,
+      "capped": false
+    },
+    {
+      "date": "2026-10-01",
+      "ts": "2026-10-01T08:09:15",
+      "source_id": "dyn_verdict.co.uk",
+      "found": 10,
+      "kept": 10,
+      "first_import": false,
+      "dropped_old": 0,
+      "capped": false
     }
   ]
 }

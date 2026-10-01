@@ -1,21 +1,21 @@
 {
-  "report": "芯片行业日报_20260930.md",
-  "generated_at": "2026-09-30 11:47:16",
+  "report": "芯片行业日报_20261001.md",
+  "generated_at": "2026-10-01 08:15:15",
   "stats": {
-    "entries": 9,
-    "no_claims": 4,
-    "no_text": 1,
+    "entries": 10,
+    "no_claims": 7,
     "partial": 2,
-    "ok": 2,
-    "verifiable_ratio": 0.444
+    "ok": 1,
+    "verifiable_ratio": 0.3
   },
   "entries": [
     {
-      "title": "DeepSeek 开源昇腾平台全套基础设施组件，与英伟达平台一一对应",
+      "title": "◇ OpenAI 自研芯片体系再进一步：Dot 虚拟机跑在 AMD 霄龙 9V74 上",
       "claims": [],
       "n_claims": 0,
       "direct_urls": [
-        "https://www.ithome.com/1/008/604.htm"
+        "https://www.tomshardware.com/tech-industry/artificial-intelligence/geekbench-7-results-suggest-openais-dots-run-on-nine-core-amd-epyc-vms",
+        "https://www.ithome.com/1/008/936.htm"
       ],
       "gnews_urls": [],
       "verdict": "no_claims",
@@ -24,60 +24,102 @@
       "sources": []
     },
     {
-      "title": "玩家 24 小时把英伟达 DLSS 5 神经渲染搬到 AMD 显卡，性能提升 74%",
-      "claims": [
-        "74%"
-      ],
-      "n_claims": 1,
+      "title": "◇ 设计\"物理 AI\"系统要过现实约束关",
+      "claims": [],
+      "n_claims": 0,
       "direct_urls": [
-        "https://www.tomshardware.com/pc-components/gpus/modders-bring-nvidias-dlss-5-neural-render"
+        "https://semiengineering.com/designing-physical-ai-systems-under-real-world-constraints/"
       ],
       "gnews_urls": [],
-      "verdict": "no_text",
+      "verdict": "no_claims",
       "coverage": null,
       "missing": [],
+      "sources": []
+    },
+    {
+      "title": "◆ 美光 FQ4 全面碾压预期：营收 542.3 亿美元、数据中心营收暴涨 11 倍，CEO 宣布与英伟达合作开发行业首",
+      "claims": [
+        "343%",
+        "73%",
+        "895%",
+        "1.2 万亿美元",
+        "542.3 亿美元",
+        "510.7 亿",
+        "113.2 亿",
+        "377 亿美元",
+        "615 亿美元",
+        "398 亿美元",
+        "2500 亿美元",
+        "849.69 亿美元"
+      ],
+      "n_claims": 12,
+      "direct_urls": [
+        "https://www.cnbc.com/2026/09/30/micron-mu-q4-earnings-report-2026.html",
+        "https://www.ithome.com/1/008/952.htm"
+      ],
+      "gnews_urls": [],
+      "verdict": "partial",
+      "coverage": 0.8333333333333334,
+      "missing": [
+        "895%",
+        "849.69 亿美元"
+      ],
       "sources": [
         {
-          "url": "https://www.tomshardware.com/pc-components/gpus/modders-bring-nvidias-dlss-5-neural-render",
-          "status": "error",
-          "text_len": 0,
-          "error": "proxy: HTTP Error 404: Not Found; direct: HTTP Error 404: Not Found"
+          "url": "https://www.cnbc.com/2026/09/30/micron-mu-q4-earnings-report-2026.html",
+          "status": "ok",
+          "text_len": 6300,
+          "error": null
+        },
+        {
+          "url": "https://www.ithome.com/1/008/952.htm",
+          "status": "cached",
+          "text_len": 2646,
+          "error": null
         }
       ]
     },
     {
-      "title": "美光今晚发布 2026 财年第四季度财报，指引营收 500±10 亿美元",
+      "title": "◆ TrendForce 预测 Q4 DRAM/NAND 合约价再涨 15-20%",
       "claims": [
-        "10 亿美元",
-        "500 亿美元",
+        "20%",
+        "343%",
         "2026",
-        "31.5 美元"
+        "11 倍"
       ],
       "n_claims": 4,
       "direct_urls": [
-        "https://financefeeds.com/micron-earnings-date-september-30-extra-week-50bn-guide/"
+        "https://www.ithome.com/1/008/934.htm",
+        "https://news.qq.com/rain/a/20260930A0BBFX00"
       ],
       "gnews_urls": [],
       "verdict": "partial",
-      "coverage": 0.75,
+      "coverage": 0.5,
       "missing": [
-        "31.5 美元"
+        "343%",
+        "11 倍"
       ],
       "sources": [
         {
-          "url": "https://financefeeds.com/micron-earnings-date-september-30-extra-week-50bn-guide/",
+          "url": "https://www.ithome.com/1/008/934.htm",
           "status": "ok",
-          "text_len": 26565,
+          "text_len": 1476,
+          "error": null
+        },
+        {
+          "url": "https://news.qq.com/rain/a/20260930A0BBFX00",
+          "status": "ok",
+          "text_len": 587,
           "error": null
         }
       ]
     },
     {
-      "title": "韩媒：英伟达黄仁勋 28 日纽约会见三星李在镕、SK 崔泰源，下一代 HBM 供应是焦点",
+      "title": "◇ 黄仁勋与李在镕同框：英伟达承诺延续与三星 33 年合作",
       "claims": [],
       "n_claims": 0,
       "direct_urls": [
-        "https://www.ithome.com/1/007/849.htm"
+        "https://www.ithome.com/1/008/904.htm"
       ],
       "gnews_urls": [],
       "verdict": "no_claims",
@@ -86,48 +128,27 @@
       "sources": []
     },
     {
-      "title": "半导体工程网：台积电 OIP 论坛口径，行业年底规模约 1.7 万亿美元、AI 相关超 1 万亿",
-      "claims": [
-        "39.3%",
-        "1.7 万亿美元",
-        "1 万亿",
-        "1.6 万亿",
-        "7000 亿",
-        "1.7 万",
-        "1 万",
-        "1.6 万",
-        "2026",
-        "2030"
-      ],
-      "n_claims": 10,
+      "title": "◇ PCIe 8.0 借道 UCIe 3.0 进入 chiplet 时代",
+      "claims": [],
+      "n_claims": 0,
       "direct_urls": [
-        "https://semiengineering.com/tsmc-oip-chip-industry-growth-blows-past-forecast/"
+        "https://semiengineering.com/pcie-8-0-over-ucie-3-0-bringing-a-proven-protocol-into-the-chiplet-era/"
       ],
       "gnews_urls": [],
-      "verdict": "partial",
-      "coverage": 0.7,
-      "missing": [
-        "1.7 万",
-        "1 万",
-        "1.6 万"
-      ],
-      "sources": [
-        {
-          "url": "https://semiengineering.com/tsmc-oip-chip-industry-growth-blows-past-forecast/",
-          "status": "cached",
-          "text_len": 17776,
-          "error": null
-        }
-      ]
+      "verdict": "no_claims",
+      "coverage": null,
+      "missing": [],
+      "sources": []
     },
     {
-      "title": "SK海力士将向合作伙伴预付最高 50% 研发费用",
+      "title": "◆ Synopsys 与亚马逊签多年期超 10 亿美元硅 IP 协议：云巨头的定制芯片向 EDA 下单",
       "claims": [
-        "50%"
+        "10 亿美元"
       ],
       "n_claims": 1,
       "direct_urls": [
-        "https://en.yna.co.kr/view/AEN20260929006600320"
+        "https://www.ithome.com/1/008/917.htm",
+        "https://finance.yahoo.com/technology/ai/articles/synopsys-signs-1-billion-plus-170828121.html"
       ],
       "gnews_urls": [],
       "verdict": "ok",
@@ -135,60 +156,57 @@
       "missing": [],
       "sources": [
         {
-          "url": "https://en.yna.co.kr/view/AEN20260929006600320",
+          "url": "https://www.ithome.com/1/008/917.htm",
           "status": "ok",
-          "text_len": 6250,
+          "text_len": 1198,
           "error": null
-        }
-      ]
-    },
-    {
-      "title": "半导体工程网：TSV 铜微结构对残余应力的影响（普渡/UCLA 团队研究正式刊出）",
-      "claims": [],
-      "n_claims": 0,
-      "direct_urls": [
-        "https://semiengineering.com/impact-of-cu-microstructure-on-the-tsv-induced-residual-stress-within-3d-stacked-integrated-circuits/"
-      ],
-      "gnews_urls": [],
-      "verdict": "no_claims",
-      "coverage": null,
-      "missing": [],
-      "sources": []
-    },
-    {
-      "title": "半导体工程网：用智能体 AI 贯穿芯片设计流程",
-      "claims": [],
-      "n_claims": 0,
-      "direct_urls": [
-        "https://semiengineering.com/moores-lab-ai-applying-agentic-ai-across-chip-design/"
-      ],
-      "gnews_urls": [],
-      "verdict": "no_claims",
-      "coverage": null,
-      "missing": [],
-      "sources": []
-    },
-    {
-      "title": "富国银行：台积电 2nm 扩产将带来设备采购激增",
-      "claims": [
-        "2nm"
-      ],
-      "n_claims": 1,
-      "direct_urls": [
-        "https://finance.yahoo.com/technology/articles/wells-fargo-spots-unexpected-winner-191101346.html"
-      ],
-      "gnews_urls": [],
-      "verdict": "ok",
-      "coverage": 1.0,
-      "missing": [],
-      "sources": [
+        },
         {
-          "url": "https://finance.yahoo.com/technology/articles/wells-fargo-spots-unexpected-winner-191101346.html",
+          "url": "https://finance.yahoo.com/technology/ai/articles/synopsys-signs-1-billion-plus-170828121.html",
           "status": "ok",
-          "text_len": 10251,
+          "text_len": 9857,
           "error": null
         }
       ]
+    },
+    {
+      "title": "◇ AI 验证需要被重新思考",
+      "claims": [],
+      "n_claims": 0,
+      "direct_urls": [
+        "https://semiengineering.com/rethinking-ai-validation/"
+      ],
+      "gnews_urls": [],
+      "verdict": "no_claims",
+      "coverage": null,
+      "missing": [],
+      "sources": []
+    },
+    {
+      "title": "◇ 数据中心能耗趋势迫使芯片供电方式重构",
+      "claims": [],
+      "n_claims": 0,
+      "direct_urls": [
+        "https://semiengineering.com/data-center-energy-trends-force-a-rethink-of-chip-power-delivery/"
+      ],
+      "gnews_urls": [],
+      "verdict": "no_claims",
+      "coverage": null,
+      "missing": [],
+      "sources": []
+    },
+    {
+      "title": "◇ AI 巨头承诺\"自我监管\"开发",
+      "claims": [],
+      "n_claims": 0,
+      "direct_urls": [
+        "https://www.tomshardware.com/tech-industry/policy/top-ai-tech-executives-promise-to-self-police-ai-development"
+      ],
+      "gnews_urls": [],
+      "verdict": "no_claims",
+      "coverage": null,
+      "missing": [],
+      "sources": []
     }
   ]
 }
