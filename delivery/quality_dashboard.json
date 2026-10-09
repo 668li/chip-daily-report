@@ -1,26 +1,26 @@
 {
   "aggregate": {
-    "report_count": 17,
+    "report_count": 18,
     "date_range": [
       "20260720",
-      "20261001"
+      "20261009"
     ],
-    "avg_computed_a_ratio": 0.596,
+    "avg_computed_a_ratio": 0.577,
     "declared_a_ratio_count": 1,
     "avg_declared_a_ratio": 0.333,
     "avg_ratio_gap": 0.394,
     "max_ratio_gap": 0.394,
-    "avg_news_count": 14.0,
+    "avg_news_count": 13.7,
     "news_min": 7,
     "news_max": 22,
     "segment_coverage_matrix": {
-      "设计": 17,
-      "制造": 17,
-      "封测": 17,
-      "EDA": 17,
-      "材料设备": 17
+      "设计": 18,
+      "制造": 18,
+      "封测": 18,
+      "EDA": 18,
+      "材料设备": 18
     },
-    "segment_full_coverage_count": 17,
+    "segment_full_coverage_count": 18,
     "x_signals": {
       "X11_今日要点含股价": 2,
       "X14_独立来源统计小节": 1,
@@ -28,7 +28,7 @@
       "X16_标题缺日期": 1
     },
     "x12_distribution": {
-      "PASS": 5,
+      "PASS": 6,
       "FAIL": 2,
       "WARN": 10
     },
@@ -647,6 +647,42 @@
       "x16_title": true,
       "chain_present": true,
       "x12_grade": "FAIL"
+    },
+    {
+      "file": "芯片行业日报_20261009.md",
+      "date": "20261009",
+      "title": "# 芯片行业日报 — 2026-10-09",
+      "title_has_date": true,
+      "meta_blockquote": true,
+      "declared_news": 8,
+      "computed_news": 8,
+      "sources_total": 8,
+      "a_count": 2,
+      "b_count": 1,
+      "c_count": 0,
+      "u_count": 5,
+      "a_ratio": 0.25,
+      "segment_coverage": {
+        "设计": true,
+        "制造": true,
+        "封测": true,
+        "EDA": true,
+        "材料设备": true
+      },
+      "segment_coverage_count": 5,
+      "selfcheck_present": true,
+      "selfcheck_total": 15,
+      "selfcheck_pass": 15,
+      "selfcheck_fail": 0,
+      "selfcheck_warn": 0,
+      "declared_a_ratio": null,
+      "ratio_gap": null,
+      "x11": false,
+      "x14": false,
+      "x15": false,
+      "x16_title": true,
+      "chain_present": true,
+      "x12_grade": "PASS"
     }
   ]
 }

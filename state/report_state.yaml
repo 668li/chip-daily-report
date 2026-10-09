@@ -1,27 +1,26 @@
 # chip-daily-report 跨日记忆状态文件（B · v5.3）
 # 规则：由生成流程 Step 6 更新；缺失或损坏时 Step 1 跳过持续追踪，不 FAIL。
 schema_version: 1
-last_report_date: '2026-10-01'
-coverage: 2026-09-29 ~ 2026-10-01
+last_report_date: '2026-10-09'
+coverage: 2026-10-02 ~ 2026-10-09
 tracked_topics:
 - topic: HBM 价格与供需
   direction: tight
-  streak: 8
-  delta: 美光 FQ4 碾压（数据中心营收 11 倍、FQ1 指引 615 亿超预期）+TrendForce Q4 合约价再涨 15-20% 双兑现；JPMorgan 口径 HBM 短缺或持续至
-    2028
+  streak: 9
+  delta: 三星 Q3 营业利润指引近 9 倍（107.4 万亿韩元，史上首家单季破 800 亿美元）+美光 CEO 称 2027 年 75% 产能已售+TrendForce 上调 2027 HBM 价格预期——利润/订单/价格三线同修
   signal: 高/利好/正面
 - topic: 先进封装产能紧缺
   direction: tight
-  streak: 14
-  delta: PCIe 8.0 over UCIe 3.0 打通芯粒互连协议层——chiplet 生态成熟使先进封装需求进一步上量；美光 2500 亿美元两座 HBM 园区开建
+  streak: 15
+  delta: 台积电请 GlobalFoundries 美国产能代产 CoWoS 硅中介层（五年 20 亿美元）——紧缺外溢到借竞争对手产能，扩供给与地缘分散并行
   signal: 高/利好/正面
 - topic: 国产设备替代
   direction: up
-  streak: 10
-  delta: 国庆假期国内公告流减少，本期无直接进展；长鑫 349 亿投资的中期逻辑不变
-  signal: 中/利好/正面
+  streak: 11
+  delta: 长鑫上半年收入 1503.1 亿元（+873.6%）登顶国产半导体收入第一、净利 776 亿元——扩产资金实力实证；本期无新签设备订单具体数字
+  signal: 高/利好/正面
 - topic: 出口管制收紧
   direction: tight
-  streak: 14
-  delta: AI 巨头 self-police 自律承诺与荷兰 NixOS 自建生态并行——管制影响从芯片向软件栈/治理层扩散；BIS GAAFET EDA 管制 10-14 生效倒计时 13 天
+  streak: 15
+  delta: H200「批准+25% 收入分成」模式落地出货（5 月批文 10 月实际恢复出货，下一代仍禁）——工具箱从纯禁运转向受控放行，净方向未松；BIS GAAFET EDA 管制 10-14 生效倒计时 5 天
   signal: 高/利空/负面

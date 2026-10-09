@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated": "2026-10-01T00:08:30Z",
+  "updated": "2026-10-09T09:48:27Z",
   "sources": [
     {
       "id": "wccftech.com",
@@ -62,12 +62,12 @@
       },
       "error_count": 1,
       "consecutive_ok": 0,
-      "last_checked": "2026-09-26T02:50:15Z",
-      "next_check_at": 1790394615.9685128,
+      "last_checked": "2026-10-09T09:48:27Z",
+      "next_check_at": 1791546507.2251318,
       "last_entry_date": "",
       "evidence": {},
       "last_error": "fetch_failed:HTTPError",
-      "transient_errors": 1
+      "transient_errors": 2
     },
     {
       "id": "seekingalpha.com",
@@ -101,12 +101,12 @@
       },
       "error_count": 1,
       "consecutive_ok": 0,
-      "last_checked": "2026-09-26T02:50:15Z",
-      "next_check_at": 1790394615.9685128,
+      "last_checked": "2026-10-09T09:48:27Z",
+      "next_check_at": 1791546507.2251318,
       "last_entry_date": "",
       "evidence": {},
       "last_error": "fetch_failed:HTTPError",
-      "transient_errors": 1
+      "transient_errors": 2
     },
     {
       "id": "marketscreener.com",
@@ -121,12 +121,12 @@
       },
       "error_count": 1,
       "consecutive_ok": 0,
-      "last_checked": "2026-09-26T02:50:15Z",
-      "next_check_at": 1790394615.9685128,
+      "last_checked": "2026-10-09T09:48:27Z",
+      "next_check_at": 1791546507.2251318,
       "last_entry_date": "",
       "evidence": {},
       "last_error": "fetch_failed:HTTPError",
-      "transient_errors": 1
+      "transient_errors": 2
     },
     {
       "id": "tradingview.com",
@@ -206,12 +206,12 @@
       },
       "error_count": 1,
       "consecutive_ok": 0,
-      "last_checked": "2026-09-26T02:50:15Z",
-      "next_check_at": 1790394615.9685128,
+      "last_checked": "2026-10-09T09:48:27Z",
+      "next_check_at": 1791546507.2251318,
       "last_entry_date": "",
       "evidence": {},
       "last_error": "fetch_failed:HTTPError",
-      "transient_errors": 1
+      "transient_errors": 2
     },
     {
       "id": "laoyaoba.com",
@@ -245,12 +245,12 @@
       },
       "error_count": 1,
       "consecutive_ok": 0,
-      "last_checked": "2026-09-26T02:50:15Z",
-      "next_check_at": 1790394615.9685128,
+      "last_checked": "2026-10-09T09:48:27Z",
+      "next_check_at": 1791546507.2251318,
       "last_entry_date": "",
       "evidence": {},
       "last_error": "fetch_failed:HTTPError",
-      "transient_errors": 1
+      "transient_errors": 2
     },
     {
       "id": "benzinga.com",
@@ -1183,12 +1183,12 @@
       },
       "error_count": 0,
       "consecutive_ok": 0,
-      "last_checked": "2026-09-26T02:50:15Z",
-      "next_check_at": 1790394615.9685128,
+      "last_checked": "2026-10-09T09:48:27Z",
+      "next_check_at": 1791546507.2251318,
       "last_entry_date": "",
       "evidence": {},
-      "last_error": "fetch_failed:HTTPError",
-      "transient_errors": 1
+      "last_error": "fetch_failed:URLError",
+      "transient_errors": 2
     },
     {
       "id": "huxiu.com",
@@ -1201,10 +1201,10 @@
         "kw_hits": 0,
         "entry_hits": 0
       },
-      "error_count": 1,
+      "error_count": 2,
       "consecutive_ok": 0,
-      "last_checked": "2026-09-26T02:50:15Z",
-      "next_check_at": 1790394615.9685128,
+      "last_checked": "2026-10-09T09:48:27Z",
+      "next_check_at": 1791546507.2251318,
       "last_entry_date": "",
       "evidence": {},
       "last_error": "not_a_feed"
@@ -2013,8 +2013,8 @@
       },
       "error_count": 1,
       "consecutive_ok": 0,
-      "last_checked": "2026-10-01T00:08:30Z",
-      "next_check_at": 1790816910.3304882,
+      "last_checked": "2026-10-09T09:48:27Z",
+      "next_check_at": 1791542907.2251318,
       "last_entry_date": "2026-09-29",
       "evidence": {
         "http_ok": true,
@@ -2025,7 +2025,8 @@
           "Anthropic cites ‘existential risks’ from AI in IPO prospectus"
         ]
       },
-      "last_error": "low_relevance"
+      "last_error": "fetch_failed:URLError",
+      "transient_errors": 1
     },
     {
       "id": "kyoto-u.ac.jp",

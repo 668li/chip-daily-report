@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>芯片行业周度复盘 · 10-05 ~ 10-09</title>
+<style>
+:root{
+  --bg:#f1f5f9; --card:#ffffff; --ink:#1e293b; --muted:#64748b;
+  --line:#e2e8f0; --accent:#0f172a;
+  --seg-design:#2563eb; --seg-make:#7c3aed; --seg-pack:#0891b2;
+  --seg-eda:#db2777; --seg-mat:#16a34a;
+}
+*{box-sizing:border-box}
+body{margin:0;font-family:-apple-system,"Segoe UI",Roboto,"PingFang SC","Microsoft YaHei",sans-serif;
+  background:var(--bg);color:var(--ink);line-height:1.6}
+.wrap{max-width:1080px;margin:0 auto;padding:24px 18px 56px}
+header.top{background:linear-gradient(120deg,#0f172a,#1e3a8a);color:#fff;border-radius:16px;
+  padding:22px 26px;box-shadow:0 8px 24px rgba(15,23,42,.18)}
+header.top h1{margin:0 0 6px;font-size:23px;letter-spacing:.5px}
+.meta-row{display:flex;flex-wrap:wrap;gap:10px 22px;font-size:13px;opacity:.92}
+.meta-row b{font-weight:600;opacity:.8;margin-right:4px}
+.tabs{display:flex;gap:8px;margin:20px 0 14px;flex-wrap:wrap}
+.tab{border:1px solid var(--line);background:#fff;color:var(--muted);padding:9px 18px;
+  border-radius:999px;cursor:pointer;font-size:14px;font-weight:600;transition:.15s}
+.tab:hover{border-color:#94a3b8}
+.tab.active{background:var(--accent);color:#fff;border-color:var(--accent)}
+.panel{display:none;animation:fade .25s ease}
+.panel.active{display:block}
+@keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+
+/* 今日要点 */
+.highlights{background:#fff;border:1px solid var(--line);border-radius:14px;padding:16px 20px;margin-bottom:18px}
+.hl-title{margin:0 0 10px;font-size:16px;color:var(--accent)}
+.hl-list{margin:0;padding-left:0;list-style:none;display:grid;gap:8px}
+.hl-item{position:relative;padding:10px 14px 10px 38px;background:#f8fafc;border-radius:10px;font-size:14px}
+.hl-item::before{content:"★";position:absolute;left:14px;top:10px;color:#f59e0b}
+
+/* 环节分区 */
+.seg{margin-bottom:22px}
+.seg-title{display:flex;align-items:center;gap:10px;font-size:18px;margin:0 0 12px;
+  padding-bottom:8px;border-bottom:2px solid var(--seg)}
+.seg-title .dot{width:12px;height:12px;border-radius:50%}
+.seg-count{font-size:13px;color:var(--muted);font-weight:500}
+.seg-stat{margin-left:auto;font-size:12px;color:var(--muted);font-weight:500}
+.news-list{display:grid;gap:12px}
+.news{background:#fff;border:1px solid var(--line);border-left:4px solid var(--seg);
+  border-radius:12px;padding:14px 16px}
+.news-head{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:6px}
+.news-title{margin:0;font-size:15.5px;line-height:1.4}
+.news-summary{margin:6px 0 10px;font-size:14px;color:#334155}
+.annot{background:#f8fafc;border:1px dashed #cbd5e1;border-radius:10px;padding:8px 12px;
+  font-size:13px;color:#475569;display:flex;gap:6px;align-items:baseline}
+.annot-ico{font-size:14px}
+.annot-label{font-weight:700;color:#0f766e;white-space:nowrap}
+.annot-body{flex:1}
+.news-meta{display:flex;align-items:center;gap:10px;flex-wrap:wrap;font-size:12.5px;color:var(--muted)}
+.srcs{display:flex;gap:6px;flex-wrap:wrap}
+.src-link{color:#1d4ed8;text-decoration:none;font-weight:600}
+.src-link:hover{text-decoration:underline}
+.badge{font-size:11.5px;font-weight:700;padding:2px 9px;border-radius:999px;white-space:nowrap}
+.badge-review{background:#fef3c7;color:#b45309}
+.sig-group{display:inline-flex;gap:5px;flex-wrap:wrap}
+.sig-badge{font-size:11px;font-weight:700;padding:1px 8px;border-radius:999px;white-space:nowrap}
+.tag-origin{background:#eef2ff;color:#4338ca;padding:2px 9px;border-radius:999px;font-size:11.5px}
+.ts{white-space:nowrap}
+
+/* 自检 */
+.selfcheck{background:#fff;border:1px solid var(--line);border-radius:12px;padding:6px 14px;margin-top:6px}
+.selfcheck summary{cursor:pointer;font-weight:600;padding:8px 0;color:var(--accent)}
+.sc-table{width:100%;border-collapse:collapse;font-size:13px;margin:6px 0 12px}
+.sc-table th,.sc-table td{border-bottom:1px solid var(--line);padding:7px 8px;text-align:left}.sc-table th{color:var(--muted);font-weight:600}
+.sc-pill{font-weight:700;padding:1px 9px;border-radius:999px;font-size:12px}
+.sc-pass{background:#dcfce7;color:#15803d}
+.sc-warn{background:#fef3c7;color:#b45309}
+.sc-fail{background:#fee2e2;color:#b91c1c}
+/* 持续追踪（B v5.3） */
+.tracking-block{margin-top:18px;background:#fff;border:1px solid var(--line);border-radius:12px;padding:14px 16px}
+.tk-title{font-size:16.5px;margin:0 0 10px;color:#0f766e}
+.tk-sub{font-size:12.5px;color:var(--muted);font-weight:500;margin-left:8px}
+.tk-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:10px}
+.tk-card{background:#f0fdfa;border:1px solid #99f6e4;border-radius:10px;padding:10px 12px}
+.tk-head{display:flex;align-items:center;gap:8px;margin-bottom:4px}
+.tk-dir{font-size:11.5px;font-weight:700;color:#0f766e;background:#ccfbf1;border-radius:999px;padding:1px 8px;white-space:nowrap}
+.tk-topic{font-weight:700;font-size:14px;color:#134e4a}
+.tk-detail{margin:0;font-size:13px;color:#475569;line-height:1.5}
+/* v8.1 持续追踪表格化：变化（Δ）独立成列 */
+.tk-table{width:100%;border-collapse:collapse;font-size:13px}
+.tk-table th{background:#f0fdfa;color:#0f766e;font-size:12.5px;text-align:left;padding:7px 9px;border-bottom:2px solid #99f6e4;white-space:nowrap}
+.tk-table td{padding:8px 9px;border-bottom:1px solid var(--line);vertical-align:top;line-height:1.5}
+.tk-t-topic{font-weight:700;color:#134e4a;white-space:nowrap}
+.tk-streak{white-space:nowrap;color:var(--muted);font-variant-numeric:tabular-nums}
+.tk-progress{color:#475569}
+.tk-delta-up{font-weight:700;color:#b91c1c;white-space:nowrap}
+.tk-delta-down{font-weight:700;color:#15803d;white-space:nowrap}
+.tk-delta-turn{font-weight:700;color:#b45309;white-space:nowrap}
+.tk-delta-flat{color:var(--muted);white-space:nowrap}
+/* v8.1 四态计分板：让欠账自己站起来 */
+.sb-table{width:100%;border-collapse:collapse;margin-top:12px;font-size:13px}
+.sb-table th{background:#f8fafc;color:var(--muted);font-size:12.5px;text-align:left;padding:7px 9px;border-bottom:2px solid var(--line);white-space:nowrap}
+.sb-table td{padding:8px 9px;border-bottom:1px solid var(--line);vertical-align:top;line-height:1.5}
+.sb-state{font-weight:700;white-space:nowrap}
+.sb-count{font-size:16px;font-weight:800;text-align:center;font-variant-numeric:tabular-nums}
+.sb-next{color:#475569}
+.sb-hit .sb-state,.sb-hit .sb-count{color:#15803d}
+.sb-partial .sb-state,.sb-partial .sb-count{color:#b45309}
+.sb-miss .sb-state,.sb-miss .sb-count{color:#64748b}
+.sb-over .sb-state,.sb-over .sb-count{color:#b91c1c}
+.sb-zero{background:#fef2f2}
+.sb-zero .sb-count{color:#b91c1c}
+/* v8.1 读者回声：读者原话逐字进正文 */
+.rv-block{margin-top:18px;background:#fff;border:1px solid #c7d2fe;border-radius:12px;padding:14px 16px}
+.rv-title{font-size:16.5px;margin:0 0 10px;color:#4338ca}
+.rv-intro{margin:0 0 10px;font-size:12.5px;color:var(--muted);line-height:1.6}
+.rv-quote{margin:0 0 10px;padding:10px 14px;background:#eef2ff;border-left:3px solid #6366f1;border-radius:0 10px 10px 0;font-size:14px;color:#312e81;line-height:1.7}
+.rv-meta{margin-top:6px;font-size:12px;color:#6366f1}
+.rv-none{padding:10px 14px;background:#f8fafc;border:1px dashed var(--line);border-radius:10px;font-size:13px;color:var(--muted)}
+.rv-ledger{margin:0;padding-left:20px;font-size:13px;color:#475569;line-height:1.7}
+.rv-ledger b{color:#4338ca}
+/* 前瞻催化剂（C v5.3）→ v6.1 未来推演 */
+.catalyst-block{margin-top:18px;background:#fff;border:1px solid var(--line);border-radius:12px;padding:14px 16px}
+.ct-title{font-size:16.5px;margin:0 0 10px;color:#1d4ed8}
+.ct-sub{font-size:12.5px;color:var(--muted);font-weight:500;margin-left:8px}
+.fx-intro{margin:0 0 10px;font-size:13px;color:#475569;line-height:1.6}
+.fx-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:10px;margin:0 0 12px}
+.fx-card{border:1px solid var(--line);border-radius:10px;padding:10px 12px;background:#f8fafc}
+.fx-title{font-weight:700;font-size:13.5px;color:#1e293b;margin:0 0 8px}
+.fx-part{margin:0 0 6px;font-size:12.5px;line-height:1.55}
+.fx-key{display:inline-block;font-weight:700;color:#1d4ed8;margin-right:6px}
+.fx-val{color:#334155}
+.ct-table{width:100%;border-collapse:collapse;font-size:13.5px}
+.ct-table th,.ct-table td{border-bottom:1px solid var(--line);padding:8px 9px;text-align:left}
+.ct-table th{color:var(--muted);font-weight:600}
+.ct-date{font-weight:700;color:#1e293b;white-space:nowrap}
+.ct-imp{font-weight:700;border:1.5px solid;border-radius:999px;padding:0 9px;font-size:12px;white-space:nowrap}
+.sc-fail{background:#fee2e2;color:#b91c1c}
+
+/* 费曼解释（F1.3 v5.4） */
+.feynman-block{margin-top:18px;background:#fff;border:1px solid var(--line);border-radius:12px;padding:14px 16px}
+.fk-title{font-size:16.5px;margin:0 0 10px;color:#6d28d9}
+.fk-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:10px}
+.fk-card{background:#f5f3ff;border:1px solid #ddd6fe;border-radius:10px;padding:10px 12px}
+.fk-term{font-weight:700;font-size:14px;color:#5b21b6;margin-bottom:4px}
+.fk-text{margin:0;font-size:13px;color:#475569;line-height:1.55}
+
+/* 深度解读（v5.6） */
+.deep-block{margin-top:18px;background:#fff;border:1px solid var(--line);border-radius:12px;padding:14px 16px}
+.dd-title{font-size:16.5px;margin:0 0 10px;color:#b91c1c}
+.dd-list{display:grid;gap:12px}
+.dd-card{background:#fff7f7;border:1px solid #fecaca;border-radius:10px;padding:12px 14px}
+.dd-head{display:flex;align-items:center;gap:8px;margin-bottom:8px}
+.dd-num{width:22px;height:22px;border-radius:50%;background:#b91c1c;color:#fff;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.dd-title{font-size:15px;font-weight:700;color:#7f1d1d}
+.dd-part{margin-bottom:8px}
+.dd-part:last-child{margin-bottom:0}
+.dd-part-title{font-size:13px;font-weight:700;color:#b91c1c;margin-bottom:2px}
+.dd-part-text{font-size:13.5px;color:#334155;line-height:1.7;text-align:justify}
+
+/* 未来借鉴（v5.6） */
+.future-block{margin-top:18px;background:#fff;border:1px solid var(--line);border-radius:12px;padding:14px 16px}
+.fu-title{font-size:16.5px;margin:0 0 10px;color:#0f766e}
+.fu-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:10px}
+.fu-card{background:#f8fafc;border:1px solid var(--line);border-top:3px solid var(--line);border-radius:10px;padding:10px 12px}
+.fu-head{display:flex;align-items:center;gap:6px;margin-bottom:4px}
+.fu-ico{font-size:14px}
+.fu-cat{font-weight:700;font-size:14px}
+.fu-text{margin:0;font-size:13px;color:#475569;line-height:1.6}
+/* 未来借鉴 v5.8 增强：强度徽章 + 格局时间轴 */
+.fu-strength{display:inline-block;font-size:11px;font-weight:700;padding:0 8px;border-radius:999px;margin:0 3px;white-space:nowrap;vertical-align:1px}
+.tl-track{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:0;margin-top:2px}
+.tl-stage{position:relative;padding:8px 10px 8px 16px;border-left:3px solid #0f766e;margin-right:8px}
+.tl-stage:last-child{margin-right:0}
+.tl-dot{font-size:11px;font-weight:700;color:#fff;background:#0f766e;border-radius:999px;padding:0 8px;display:inline-block;margin-bottom:3px}
+.tl-period{font-size:13.5px;font-weight:800;color:#134e4a;margin-bottom:3px}
+.tl-desc{margin:0;font-size:12.5px;color:#475569;line-height:1.55;text-align:justify}
+
+/* 前瞻时间轴（v5.11 方向3） */
+.tl-block{background:#fff;border:1px solid var(--line);border-radius:14px;padding:16px 18px;margin-bottom:18px}
+.tl-title{font-size:16.5px;margin:0 0 12px;color:#1d4ed8}
+.tl-sub{font-size:12.5px;color:var(--muted);font-weight:500;margin-left:8px}
+.tl-summary{display:flex;flex-wrap:wrap;gap:12px;margin-bottom:16px}
+.tl-stat{background:#f8fafc;border:1px solid var(--line);border-radius:10px;padding:8px 16px;text-align:center;min-width:120px}
+.tl-stat-num{font-size:22px;font-weight:800;color:#1d4ed8}
+.tl-stat-lab{font-size:12px;color:var(--muted);margin-top:2px}
+.tl-axis{position:relative;margin-left:8px;padding-left:28px;border-left:3px solid #cbd5e1}
+.tl-node{position:relative;margin-bottom:14px;padding:2px 0}
+.tl-node::before{content:"";position:absolute;left:-37px;top:8px;width:13px;height:13px;border-radius:50%;background:#fff;border:3px solid #94a3b8}
+.tl-node.near::before{border-color:#1d4ed8;background:#1d4ed8}
+.tl-node.near{background:#eff6ff;border-radius:10px;border:1px solid #bfdbfe;padding:10px 12px;margin-left:-12px;padding-left:12px}
+.tl-date{font-weight:700;color:#1e293b;font-size:14.5px}
+.tl-window{font-size:11px;font-weight:700;color:#1d4ed8;background:#dbeafe;border-radius:999px;padding:0 9px;margin-left:8px;white-space:nowrap}
+.tl-event{font-size:14px;color:#334155;margin:5px 0}
+.tl-meta{display:flex;flex-wrap:wrap;gap:6px;align-items:center;font-size:12px;margin-top:4px}
+.tl-seg{font-weight:700;padding:1px 9px;border-radius:999px;font-size:11.5px;white-space:nowrap}
+.tl-imp{font-weight:700;border:1.5px solid;border-radius:999px;padding:0 9px;font-size:11px;white-space:nowrap}
+.tl-cert{font-size:11.5px;padding:1px 8px;border-radius:999px;font-weight:600;white-space:nowrap}
+.tl-src{color:#1d4ed8;text-decoration:none;font-weight:600}
+.tl-src:hover{text-decoration:underline}
+.tl-empty{padding:20px;text-align:center;color:var(--muted);background:#fff;border:1px solid var(--line);border-radius:12px}
+/* 导师课堂（v5.8） */
+.tu-intro{background:#fff;border:1px solid var(--line);border-radius:12px;padding:12px 16px;font-size:13.5px;color:#475569;line-height:1.7}
+.tu-intro b{color:#7c3aed}
+.tu-block{background:#fff;border:1px solid var(--line);border-radius:14px;padding:16px 18px}
+.tu-title{font-size:16.5px;margin:0 0 12px;color:#7c3aed}
+.tu-sub{font-size:12.5px;color:var(--muted);font-weight:500;margin-left:8px}
+.tu-board{background:linear-gradient(135deg,#312e81,#1e1b4b);color:#e0e7ff;border-radius:12px;padding:16px 18px}
+.tu-board p{margin:0 0 10px;font-size:14.5px;line-height:1.85}
+.tu-board p:last-child{margin-bottom:0}
+.tu-board b{color:#fde68a}
+.tu-board ul,.tu-board ol{margin:6px 0;padding-left:22px}
+.tu-board li{margin-bottom:5px;font-size:13.5px;line-height:1.7}
+.tu-lesson-card{background:#faf5ff;border:1px solid #e9d5ff;border-radius:12px;padding:14px 16px}
+.tu-lead{font-size:14.5px;font-weight:700;color:#6b21a8;background:#f3e8ff;border-radius:8px;padding:8px 12px;margin-bottom:10px;line-height:1.7}
+.tu-lesson-card ul,.tu-lesson-card ol{margin:4px 0 8px;padding-left:22px}
+.tu-lesson-card li{margin-bottom:6px;font-size:13.5px;color:#334155;line-height:1.7}
+.tu-lesson-card li b{color:#6b21a8}
+.tu-concept-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:10px}
+.tu-concept{background:#f0fdf4;border:1px solid #bbf7d0;border-radius:10px;padding:10px 12px}
+.tu-concept-term{font-weight:800;font-size:13.5px;color:#166534;margin-bottom:3px}
+.tu-concept-text{font-size:13px;color:#475569;line-height:1.6}
+.tu-concept-text b{color:#166534}
+.tu-q-list{display:grid;gap:10px}
+.tu-q{display:flex;gap:10px;align-items:flex-start;background:#fffbeb;border:1px solid #fde68a;border-radius:10px;padding:11px 13px}
+.tu-q-num{width:24px;height:24px;border-radius:50%;background:#b45309;color:#fff;font-size:13px;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.tu-q-text{font-size:13.5px;color:#334155;line-height:1.7}
+.tu-q-text b{color:#92400e}
+.tu-empty{padding:20px;text-align:center;color:var(--muted);background:#fff;border:1px solid var(--line);border-radius:12px}
+
+/* 产业链全貌 */
+.chain-intro{background:#fff;border:1px solid var(--line);border-radius:12px;padding:12px 16px;
+  font-size:14px;color:#334155;margin-bottom:14px;line-height:1.7}
+.chain-intro b{color:var(--accent)}
+.seg-strip{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-bottom:16px}
+.ss-cell{border:1px solid var(--line);border-top:3px solid;border-radius:12px;background:#fff;
+  padding:12px 8px;text-align:center}
+.ss-name{font-size:13px;font-weight:700}
+.ss-num{font-size:20px;font-weight:800;margin:4px 0 2px}
+.ss-ab{font-size:11.5px;color:var(--muted)}
+.chain-svg-wrap{background:linear-gradient(180deg,#fbfdff,#eef2f7);border:1px solid var(--line);
+  border-radius:14px;padding:14px 10px;margin-bottom:18px}
+.chain-svg{display:block;margin:0 auto}
+.stage{cursor:pointer;transition:transform .15s}
+.stage:hover{transform:translateY(-3px)}
+.chain-detail-title{font-size:16px;margin:4px 0 12px;color:var(--accent)}
+.chain-ribbons{display:grid;gap:12px;margin-left:2px}
+.chain-ribbon{border:1px solid var(--line);border-radius:12px;background:#fff;padding:12px 16px;
+  border-left-width:4px}
+.cr-head{display:flex;align-items:center;gap:10px;margin-bottom:8px}
+.cr-num{width:24px;height:24px;border-radius:50%;color:#fff;font-weight:700;font-size:13px;
+  display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.cr-title{font-weight:700;font-size:14.5px;color:#1e293b}
+.cr-flow{display:flex;align-items:center;flex-wrap:wrap;gap:6px;margin-bottom:6px}
+.cr-step{border:1.5px solid;border-radius:999px;padding:3px 13px;font-size:13px;font-weight:600;
+  background:#f8fafc;transition:.15s}
+.cr-step.hl{background:#e0e7ff}
+.cr-arrow{color:#94a3b8;font-weight:700;font-size:15px}
+.cr-body{margin:0;font-size:13.5px;color:#475569;line-height:1.55}
+.flow{stroke-dasharray:7 5;animation:dash 1.1s linear infinite}
+@keyframes dash{to{stroke-dashoffset:-24}}
+
+/* 横向维度视图（多维透视） */
+.dim-block{background:#fff;border:1px solid var(--line);border-radius:14px;padding:16px 18px;margin-bottom:18px}
+.dim-head{display:flex;align-items:center;gap:12px;padding-bottom:12px;margin-bottom:12px;
+  border-bottom:2px solid var(--line)}
+.dim-ico{width:38px;height:38px;border-radius:10px;display:flex;align-items:center;justify-content:center;
+  font-size:19px;color:#fff;flex-shrink:0}
+.dim-name{font-size:17px;font-weight:800;color:var(--ink)}
+.dim-desc{font-size:12.5px;color:var(--muted);margin-top:2px}
+.dim-intro{background:#f8fafc;border-left:3px solid var(--line);border-radius:8px;padding:8px 12px;
+  font-size:13px;color:#475569;margin-bottom:12px;line-height:1.6}
+.dim-sub{padding:12px 0;border-top:1px solid var(--line)}
+.dim-sub:first-of-type{border-top:none;padding-top:0}
+.ds-title{font-size:15px;font-weight:700;color:#1e293b;margin-bottom:6px}
+.ds-body{font-size:13.8px;color:#334155;line-height:1.75}
+.ds-srcs{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
+.badge-a{background:#dcfce7;color:#15803d}
+.badge-b{background:#fef3c7;color:#b45309}
+.dim-empty{padding:20px;text-align:center;color:var(--muted);background:#fff;border:1px solid var(--line);border-radius:12px}
+
+/* v5.5 趋势图 + 周报对比 */
+.tr-block{background:#fff;border:1px solid var(--line);border-radius:14px;padding:16px 18px;margin-bottom:18px}
+.tr-title{font-size:16.5px;margin:0 0 12px;color:var(--accent)}
+.tr-sub{font-size:12.5px;color:var(--muted);font-weight:500;margin-left:8px}
+.chart-card{background:#fbfdff;border:1px solid var(--line);border-radius:12px;padding:12px 14px;overflow-x:auto}
+.viz-svg{display:block;width:100%;height:auto;min-width:560px}
+.chart-legend{display:flex;gap:16px;margin-top:8px;font-size:12.5px;color:var(--muted);flex-wrap:wrap}
+.lg-chip{display:inline-flex;align-items:center;gap:6px}
+.lg-chip i{width:12px;height:12px;border-radius:3px;display:inline-block}
+.tr-note{font-size:12px;color:var(--muted);margin:8px 0 0}
+.tr-dir{font-size:11.5px;font-weight:700;border:1.5px solid;border-radius:999px;padding:1px 9px;white-space:nowrap}
+.tk-delta{font-size:12px;font-weight:600;color:#0f766e;margin:2px 0 4px}
+.wk-cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin-bottom:6px}
+.wk-card{background:#f8fafc;border:1px solid var(--line);border-radius:12px;padding:12px;text-align:center}
+.wk-num{font-size:22px;font-weight:800;color:var(--accent)}
+.wk-label{font-size:12px;color:var(--muted);margin-top:2px}
+.x12-card{margin-top:12px}
+.x12-title{font-size:13px;font-weight:700;color:#475569;margin-bottom:8px}
+.x12-row{display:flex;align-items:center;gap:10px;margin-bottom:6px;font-size:12.5px}
+.x12-lab{width:46px;font-weight:700}
+.x12-track{flex:1;background:#f1f5f9;border-radius:999px;height:12px;overflow:hidden}
+.x12-fill{height:100%;border-radius:999px}
+.x12-num{width:22px;text-align:right;color:var(--muted)}
+.wk-table{width:100%;border-collapse:collapse;font-size:13px}
+.wk-table th,.wk-table td{border-bottom:1px solid var(--line);padding:8px 9px;text-align:left;vertical-align:middle}
+.wk-table th{color:var(--muted);font-weight:600;white-space:nowrap}
+.mini-bar{display:inline-block;width:74px;height:9px;background:#f1f5f9;border-radius:999px;overflow:hidden;vertical-align:middle;margin-right:6px}
+.mini-fill{height:100%;background:#16a34a;border-radius:999px}
+.mini-val{font-weight:700;color:#1e293b}
+.cov-dot{display:inline-block;width:11px;height:11px;border-radius:50%;margin-right:3px;vertical-align:middle}
+.wk-topic{font-weight:700;color:#1e293b}
+.wk-detail{font-size:12.5px;color:#64748b;max-width:380px}
+
+footer.foot{margin-top:30px;text-align:center;font-size:12px;color:var(--muted)}
+
+/* 理解优先（v6.0）：读前须知图例条 / 今日一课摘要卡 / 新闻 teach 三层子行 / 前瞻兑现回顾 */
+.read-first{background:#f3e8ff;border:1px solid #e9d5ff;border-left:4px solid #7c3aed;border-radius:10px;padding:12px 14px;font-size:13px;line-height:1.7;color:#4c1d95;margin-bottom:14px}
+.read-first br{line-height:2}
+.lesson-card{background:#faf5ff;border:1px solid #e9d5ff;border-radius:12px;padding:14px 16px;margin-bottom:18px}
+.lesson-tag{display:inline-block;background:#7c3aed;color:#fff;font-size:12px;font-weight:700;border-radius:999px;padding:2px 10px;margin-bottom:8px}
+.lesson-title{font-size:15.5px;font-weight:700;color:#6b21a8;margin-bottom:6px}
+.lesson-hook{font-size:13.5px;color:#475569;line-height:1.65;margin-bottom:6px}
+.lesson-more{font-size:12px;color:#a78bfa}
+.news .teach{margin:10px 0 2px;border-top:1px dashed #e9d5ff;padding-top:8px}
+.teach-line{font-size:12.5px;line-height:1.65;color:#57534e;padding:3px 0 3px 2px}
+.fr-block{margin-top:18px}
+.fr-title{font-size:16.5px;margin:0 0 10px;color:#0f766e}
+.fr-intro{font-size:12.5px;color:var(--muted);margin-bottom:10px}
+.fr-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:10px}
+.fr-card{background:#f0fdfa;border:1px solid #ccfbf1;border-radius:10px;padding:10px 12px}
+.fr-title .tk-sub{font-size:12px;color:var(--muted);font-weight:400}
+.fr-card .fr-title{font-size:13.5px;margin:0}
+.fr-card{margin-bottom:0}
+.fr-part{font-size:12.5px;color:#475569;line-height:1.6;margin-top:6px}
+.fr-part b{color:#0f766e}
+.fr-summary{margin-top:12px;background:#ecfdf5;border:1px solid #bbf7d0;border-radius:10px;padding:10px 12px;font-size:13px;color:#065f46}
+
+@media(max-width:720px){
+  .seg-strip{grid-template-columns:repeat(2,1fr)}
+  .wrap{padding:16px 12px 40px}
+}
+
+.rv-head{background:linear-gradient(120deg,#0f172a,#4c1d95);color:#fff;border-radius:16px;
+  padding:20px 24px;box-shadow:0 8px 24px rgba(15,23,42,.18)}
+.rv-head h1{margin:0 0 6px;font-size:22px}
+.rv-meta{font-size:13px;opacity:.9;display:flex;flex-wrap:wrap;gap:8px 20px}
+.rv-block{background:#fff;border:1px solid var(--line,#e2e8f0);border-radius:14px;
+  padding:16px 18px;margin-bottom:18px}
+.rv-title{font-size:16.5px;margin:0 0 12px;color:var(--accent,#0f172a)}
+.rv-sub{font-size:12.5px;color:var(--muted,#64748b);font-weight:500;margin-left:8px}
+.rv-note{font-size:12px;color:#64748b;margin:8px 0 0;line-height:1.6}
+.rv-hl{background:#f8fafc;border-left:3px solid #f59e0b;border-radius:8px;padding:8px 12px;
+  font-size:13.5px;color:#334155;margin-bottom:8px;line-height:1.6}
+.rv-hl b{color:#b45309}
+.rv-cog{background:#f8fafc;border-radius:8px;padding:10px 14px;margin-bottom:10px;font-size:13px;line-height:1.7}
+.rv-cog b{color:#1e293b}
+.rv-cog li{margin-bottom:4px}
+.rv-risk{background:#fff7f7;border:1px solid #fecaca;border-radius:8px;padding:8px 12px;
+  font-size:13px;color:#7f1d1d;margin-bottom:6px}
+.rv-cat{font-size:13px;color:#334155;margin-bottom:4px}
+.rv-insight{border:1.5px dashed #a78bfa;background:#faf5ff;border-radius:10px;
+  padding:10px 14px;font-size:13px;color:#5b21b6;line-height:1.7}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="rv-head">
+    <h1>🧭 芯片行业周度复盘 <span style="font-size:15px;opacity:.85">（10-05 ~ 10-09）</span></h1>
+    <div class="rv-meta">
+      <span>生成时间：2026-10-09 18:10</span>
+      <span>期数：1</span>
+      <span>累计新闻：8 条</span>
+    </div>
+  </header>
+
+  <section class="rv-block">
+<h2 class="rv-title">📋 本周概览 <span class="rv-sub">10-05 ~ 10-09 · 1 期</span></h2>
+<div class="wk-cards"><div class="wk-card"><div class="wk-num">1</div><div class="wk-label">报告期数</div></div><div class="wk-card"><div class="wk-num">8</div><div class="wk-label">累计新闻</div></div><div class="wk-card"><div class="wk-num">8.0</div><div class="wk-label">平均条数</div></div><div class="wk-card"><div class="wk-num">38%</div><div class="wk-label">平均 A 级占比</div></div><div class="wk-card"><div class="wk-num">0/1</div><div class="wk-label">全环节覆盖</div></div><div class="wk-card"><div class="wk-num">100%</div><div class="wk-label">自检通过率</div></div></div>
+<p class="rv-note">数据来自本周全部日报（根目录 芯片行业日报_*.md）与 quality_dashboard 口径。</p>
+</section>
+
+  <section class="rv-block">
+    <h2 class="rv-title">🧭 本周主线叙事 <span class="rv-sub">AI 洞察 + 各期今日要点素材</span></h2>
+    <div style="margin-bottom:10px"><div class="rv-hl"><b>🧭 主线</b> 假期后首周仅第 6 期（10-09）一期成稿；10-02~10-08 心跳因宿主未运行静默错过。本周主线：AI 基础设施的稀缺被创纪录利润确认——三星单季营业利润指引近 9 倍（史上首家破 800 亿美元）、台积电 Q3 营收 1.49 万亿新台币创纪录、长鑫上半年收入 +873.6% 登顶国产半导体收入第一。</div></div>
+    <div class="rv-hl"><b>10-09</b> 三星三季度营业利润指引近 9 倍、史上首家单季破 800 亿美元——存储稀缺定价直接兑现为利润（详见制造第 1 条）</div><div class="rv-hl"><b>10-09</b> 台积电三季度营收创纪录 1.49 万亿新台币，9 月同比 +54.6%（详见制造第 2 条）</div><div class="rv-hl"><b>10-09</b> 台积电与竞争对手 GlobalFoundries 签 20 亿美元协议，把先进封装的关键部件&quot;硅中介层&quot;搬到美国造（详见封测第 1 条）</div>
+    <div class="rv-insight" style="margin-top:10px">💡 <b>洞察区说明</b>：Step 7（AI）应结合「认知素材库」与信号演进提炼 3-5 条本周主线，
+    用 `--insights 文件` 注入（每行一条）即可同步更新 md 与 html。</div>
+  </section>
+
+  <section class="rv-block">
+<h2 class="rv-title">📈 信号强度曲线 <span class="rv-sub">固定量纲 -2..2 · ⚠ = 方向反转</span></h2>
+<div class="chart-card"><svg viewBox="0 0 940 260" class="viz-svg" role="img" aria-label="信号强度曲线（固定量纲 -2..2）"><line x1="14" y1="122.0" x2="924" y2="122.0" stroke="#cbd5e1" stroke-width="1.6"/><line x1="14" y1="167.5" x2="924" y2="167.5" stroke="#eef2f7" stroke-width="1" stroke-dasharray="4 4"/><line x1="14" y1="76.5" x2="924" y2="76.5" stroke="#eef2f7" stroke-width="1" stroke-dasharray="4 4"/><text x="8" y="216.9" text-anchor="end" font-size="10" fill="#94a3b8">-2</text><text x="8" y="171.5" text-anchor="end" font-size="10" fill="#94a3b8">-1</text><text x="8" y="126.0" text-anchor="end" font-size="10" fill="#94a3b8">0</text><text x="8" y="80.5" text-anchor="end" font-size="10" fill="#94a3b8">1</text><text x="8" y="35.1" text-anchor="end" font-size="10" fill="#94a3b8">2</text><text x="14.0" y="246" text-anchor="middle" font-size="11.5" fill="#64748b">08-08</text><text x="89.8" y="246" text-anchor="middle" font-size="11.5" fill="#64748b">08-09</text><text x="165.7" y="246" text-anchor="middle" font-size="11.5" fill="#64748b">08-14</text><text x="241.5" y="246" text-anchor="middle" font-size="11.5" fill="#64748b">08-17</text><text x="317.3" y="246" text-anchor="middle" font-size="11.5" fill="#64748b">08-31</text><text x="393.2" y="246" text-anchor="middle" font-size="11.5" fill="#64748b">09-03</text><text x="469.0" y="246" text-anchor="middle" font-size="11.5" fill="#64748b">09-10</text><text x="544.8" y="246" text-anchor="middle" font-size="11.5" fill="#64748b">09-25</text><text x="620.7" y="246" text-anchor="middle" font-size="11.5" fill="#64748b">09-26</text><text x="696.5" y="246" text-anchor="middle" font-size="11.5" fill="#64748b">09-29</text><text x="772.3" y="246" text-anchor="middle" font-size="11.5" fill="#64748b">09-30</text><text x="848.2" y="246" text-anchor="middle" font-size="11.5" fill="#64748b">10-01</text><text x="924.0" y="246" text-anchor="middle" font-size="11.5" fill="#64748b">10-09</text><polyline points="14.0,31.1 89.8,212.9 165.7,212.9 241.5,212.9 317.3,76.5 393.2,76.5 469.0,76.5 544.8,76.5 620.7,76.5 696.5,76.5 772.3,76.5 848.2,76.5 924.0,76.5" fill="none" stroke="#2563eb" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/><g><circle cx="14.0" cy="31.1" r="4" fill="#fff" stroke="#2563eb" stroke-width="2.2"><title>08-08 · HBM 价格与供需：上行</title></circle><text x="14.0" y="22.1" text-anchor="middle" font-size="10.5" font-weight="700" fill="#2563eb">上行</text></g><g><circle cx="89.8" cy="212.9" r="4" fill="#fff" stroke="#2563eb" stroke-width="2.2"><title>08-09 · HBM 价格与供需：下行</title></circle><text x="89.8" y="203.9" text-anchor="middle" font-size="10.5" font-weight="700" fill="#2563eb">下行</text></g><g><circle cx="165.7" cy="212.9" r="4" fill="#fff" stroke="#2563eb" stroke-width="2.2"><title>08-14 · HBM 价格与供需：下行</title></circle><text x="165.7" y="203.9" text-anchor="middle" font-size="10.5" font-weight="700" fill="#2563eb">下行</text></g><g><circle cx="241.5" cy="212.9" r="4" fill="#fff" stroke="#2563eb" stroke-width="2.2"><title>08-17 · HBM 价格与供需：下行</title></circle><text x="241.5" y="203.9" text-anchor="middle" font-size="10.5" font-weight="700" fill="#2563eb">下行</text></g><g><circle cx="317.3" cy="76.5" r="4" fill="#fff" stroke="#2563eb" stroke-width="2.2"><title>08-31 · HBM 价格与供需：趋紧</title></circle><text x="317.3" y="67.5" text-anchor="middle" font-size="10.5" font-weight="700" fill="#2563eb">趋紧</text></g><g><circle cx="393.2" cy="76.5" r="4" fill="#fff" stroke="#2563eb" stroke-width="2.2"><title>09-03 · HBM 价格与供需：趋紧</title></circle><text x="393.2" y="67.5" text-anchor="middle" font-size="10.5" font-weight="700" fill="#2563eb">趋紧</text></g><g><circle cx="469.0" cy="76.5" r="4" fill="#fff" stroke="#2563eb" stroke-width="2.2"><title>09-10 · HBM 价格与供需：趋紧</title></circle><text x="469.0" y="67.5" text-anchor="middle" font-size="10.5" font-weight="700" fill="#2563eb">趋紧</text></g><g><circle cx="544.8" cy="76.5" r="4" fill="#fff" stroke="#2563eb" stroke-width="2.2"><title>09-25 · HBM 价格与供需：趋紧</title></circle><text x="544.8" y="67.5" text-anchor="middle" font-size="10.5" font-weight="700" fill="#2563eb">趋紧</text></g><g><circle cx="620.7" cy="76.5" r="4" fill="#fff" stroke="#2563eb" stroke-width="2.2"><title>09-26 · HBM 价格与供需：趋紧</title></circle><text x="620.7" y="67.5" text-anchor="middle" font-size="10.5" font-weight="700" fill="#2563eb">趋紧</text></g><g><circle cx="696.5" cy="76.5" r="4" fill="#fff" stroke="#2563eb" stroke-width="2.2"><title>09-29 · HBM 价格与供需：趋紧</title></circle><text x="696.5" y="67.5" text-anchor="middle" font-size="10.5" font-weight="700" fill="#2563eb">趋紧</text></g><g><circle cx="772.3" cy="76.5" r="4" fill="#fff" stroke="#2563eb" stroke-width="2.2"><title>09-30 · HBM 价格与供需：趋紧</title></circle><text x="772.3" y="67.5" text-anchor="middle" font-size="10.5" font-weight="700" fill="#2563eb">趋紧</text></g><g><circle cx="848.2" cy="76.5" r="4" fill="#fff" stroke="#2563eb" stroke-width="2.2"><title>10-01 · HBM 价格与供需：趋紧</title></circle><text x="848.2" y="67.5" text-anchor="middle" font-size="10.5" font-weight="700" fill="#2563eb">趋紧</text></g><g><circle cx="924.0" cy="76.5" r="4" fill="#fff" stroke="#2563eb" stroke-width="2.2"><title>10-09 · HBM 价格与供需：趋紧</title></circle><text x="924.0" y="67.5" text-anchor="middle" font-size="10.5" font-weight="700" fill="#2563eb">趋紧</text></g><text x="96.8" y="200.9" font-size="13" fill="#dc2626" font-weight="800">⚠</text><text x="324.3" y="64.5" font-size="13" fill="#dc2626" font-weight="800">⚠</text><polyline points="14.0,76.5 89.8,76.5 165.7,76.5 241.5,76.5 317.3,76.5 393.2,76.5 469.0,76.5 544.8,76.5 620.7,76.5 696.5,76.5 772.3,76.5 848.2,76.5 924.0,76.5" fill="none" stroke="#7c3aed" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/><g><circle cx="14.0" cy="76.5" r="4" fill="#fff" stroke="#7c3aed" stroke-width="2.2"><title>08-08 · 先进封装产能紧缺：趋紧</title></circle><text x="14.0" y="67.5" text-anchor="middle" font-size="10.5" font-weight="700" fill="#7c3aed">趋紧</text></g><g><circle cx="89.8" cy="76.5" r="4" fill="#fff" stroke="#7c3aed" stroke-width="2.2"><title>08-09 · 先进封装产能紧缺：趋紧</title></circle><text x="89.8" y="67.5" text-anchor="middle" font-size="10.5" font-weight="700" fill="#7c3aed">趋紧</text></g><g><circle cx="165.7" cy="76.5" r="4" fill="#fff" stroke="#7c3aed" stroke-width="2.2"><title>08-14 · 先进封装产能紧缺：趋紧</title></circle><text x="165.7" y="67.5" text-anchor="middle" font-size="10.5" font-weight="700" fill="#7c3aed">趋紧</text></g><g><circle cx="241.5" cy="76.5" r="4" fill="#fff" stroke="#7c3aed" stroke-width="2.2"><title>08-17 · 先进封装产能紧缺：趋紧</title></circle><text x="241.5" y="67.5" text-anchor="middle" font-size="10.5" font-weight="700" fill="#7c3aed">趋紧</text></g><g><circle cx="317.3" cy="76.5" r="4" fill="#fff" stroke="#7c3aed" stroke-width="2.2"><title>08-31 · 先进封装产能紧缺：趋紧</title></circle><text x="317.3" y="67.5" text-anchor="middle" font-size="10.5" font-weight="700" fill="#7c3aed">趋紧</text></g><g><circle cx="393.2" cy="76.5" r="4" fill="#fff" stroke="#7c3aed" stroke-width="2.2"><title>09-03 · 先进封装产能紧缺：趋紧</title></circle><text x="393.2" y="67.5" text-anchor="middle" font-size="10.5" font-weight="700" fill="#7c3aed">趋紧</text></g><g><circle cx="469.0" cy="76.5" r="4" fill="#fff" stroke="#7c3aed" stroke-width="2.2"><title>09-10 · 先进封装产能紧缺：趋紧</title></circle><text x="469.0" y="67.5" text-anchor="middle" font-size="10.5" font-weight="700" fill="#7c3aed">趋紧</text></g><g><circle cx="544.8" cy="76.5" r="4" fill="#fff" stroke="#7c3aed" stroke-width="2.2"><title>09-25 · 先进封装产能紧缺：趋紧</title></circle><text x="544.8" y="67.5" text-anchor="middle" font-size="10.5" font-weight="700" fill="#7c3aed">趋紧</text></g><g><circle cx="620.7" cy="76.5" r="4" fill="#fff" stroke="#7c3aed" stroke-width="2.2"><title>09-26 · 先进封装产能紧缺：趋紧</title></circle><text x="620.7" y="67.5" text-anchor="middle" font-size="10.5" font-weight="700" fill="#7c3aed">趋紧</text></g><g><circle cx="696.5" cy="76.5" r="4" fill="#fff" stroke="#7c3aed" stroke-width="2.2"><title>09-29 · 先进封装产能紧缺：趋紧</title></circle><text x="696.5" y="67.5" text-anchor="middle" font-size="10.5" font-weight="700" fill="#7c3aed">趋紧</text></g><g><circle cx="772.3" cy="76.5" r="4" fill="#fff" stroke="#7c3aed" stroke-width="2.2"><title>09-30 · 先进封装产能紧缺：趋紧</title></circle><text x="772.3" y="67.5" text-anchor="middle" font-size="10.5" font-weight="700" fill="#7c3aed">趋紧</text></g><g><circle cx="848.2" cy="76.5" r="4" fill="#fff" stroke="#7c3aed" stroke-width="2.2"><title>10-01 · 先进封装产能紧缺：趋紧</title></circle><text x="848.2" y="67.5" text-anchor="middle" font-size="10.5" font-weight="700" fill="#7c3aed">趋紧</text></g><g><circle cx="924.0" cy="76.5" r="4" fill="#fff" stroke="#7c3aed" stroke-width="2.2"><title>10-09 · 先进封装产能紧缺：趋紧</title></circle><text x="924.0" y="67.5" text-anchor="middle" font-size="10.5" font-weight="700" fill="#7c3aed">趋紧</text></g><polyline points="14.0,31.1 89.8,31.1" fill="none" stroke="#0891b2" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/><g><circle cx="14.0" cy="31.1" r="4" fill="#fff" stroke="#0891b2" stroke-width="2.2"><title>08-08 · 国产 EDA 并购整合：上行</title></circle><text x="14.0" y="22.1" text-anchor="middle" font-size="10.5" font-weight="700" fill="#0891b2">上行</text></g><g><circle cx="89.8" cy="31.1" r="4" fill="#fff" stroke="#0891b2" stroke-width="2.2"><title>08-09 · 国产 EDA 并购整合：上行</title></circle><text x="89.8" y="22.1" text-anchor="middle" font-size="10.5" font-weight="700" fill="#0891b2">上行</text></g><polyline points="14.0,76.5 89.8,76.5 165.7,76.5 241.5,76.5 317.3,76.5 393.2,76.5 469.0,76.5 544.8,76.5 620.7,76.5 696.5,76.5 772.3,76.5 848.2,76.5 924.0,76.5" fill="none" stroke="#db2777" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/><g><circle cx="14.0" cy="76.5" r="4" fill="#fff" stroke="#db2777" stroke-width="2.2"><title>08-08 · 出口管制收紧：趋紧</title></circle><text x="14.0" y="67.5" text-anchor="middle" font-size="10.5" font-weight="700" fill="#db2777">趋紧</text></g><g><circle cx="89.8" cy="76.5" r="4" fill="#fff" stroke="#db2777" stroke-width="2.2"><title>08-09 · 出口管制收紧：趋紧</title></circle><text x="89.8" y="67.5" text-anchor="middle" font-size="10.5" font-weight="700" fill="#db2777">趋紧</text></g><g><circle cx="165.7" cy="76.5" r="4" fill="#fff" stroke="#db2777" stroke-width="2.2"><title>08-14 · 出口管制收紧：趋紧</title></circle><text x="165.7" y="67.5" text-anchor="middle" font-size="10.5" font-weight="700" fill="#db2777">趋紧</text></g><g><circle cx="241.5" cy="76.5" r="4" fill="#fff" stroke="#db2777" stroke-width="2.2"><title>08-17 · 出口管制收紧：趋紧</title></circle><text x="241.5" y="67.5" text-anchor="middle" font-size="10.5" font-weight="700" fill="#db2777">趋紧</text></g><g><circle cx="317.3" cy="76.5" r="4" fill="#fff" stroke="#db2777" stroke-width="2.2"><title>08-31 · 出口管制收紧：趋紧</title></circle><text x="317.3" y="67.5" text-anchor="middle" font-size="10.5" font-weight="700" fill="#db2777">趋紧</text></g><g><circle cx="393.2" cy="76.5" r="4" fill="#fff" stroke="#db2777" stroke-width="2.2"><title>09-03 · 出口管制收紧：趋紧</title></circle><text x="393.2" y="67.5" text-anchor="middle" font-size="10.5" font-weight="700" fill="#db2777">趋紧</text></g><g><circle cx="469.0" cy="76.5" r="4" fill="#fff" stroke="#db2777" stroke-width="2.2"><title>09-10 · 出口管制收紧：趋紧</title></circle><text x="469.0" y="67.5" text-anchor="middle" font-size="10.5" font-weight="700" fill="#db2777">趋紧</text></g><g><circle cx="544.8" cy="76.5" r="4" fill="#fff" stroke="#db2777" stroke-width="2.2"><title>09-25 · 出口管制收紧：趋紧</title></circle><text x="544.8" y="67.5" text-anchor="middle" font-size="10.5" font-weight="700" fill="#db2777">趋紧</text></g><g><circle cx="620.7" cy="76.5" r="4" fill="#fff" stroke="#db2777" stroke-width="2.2"><title>09-26 · 出口管制收紧：趋紧</title></circle><text x="620.7" y="67.5" text-anchor="middle" font-size="10.5" font-weight="700" fill="#db2777">趋紧</text></g><g><circle cx="696.5" cy="76.5" r="4" fill="#fff" stroke="#db2777" stroke-width="2.2"><title>09-29 · 出口管制收紧：趋紧</title></circle><text x="696.5" y="67.5" text-anchor="middle" font-size="10.5" font-weight="700" fill="#db2777">趋紧</text></g><g><circle cx="772.3" cy="76.5" r="4" fill="#fff" stroke="#db2777" stroke-width="2.2"><title>09-30 · 出口管制收紧：趋紧</title></circle><text x="772.3" y="67.5" text-anchor="middle" font-size="10.5" font-weight="700" fill="#db2777">趋紧</text></g><g><circle cx="848.2" cy="76.5" r="4" fill="#fff" stroke="#db2777" stroke-width="2.2"><title>10-01 · 出口管制收紧：趋紧</title></circle><text x="848.2" y="67.5" text-anchor="middle" font-size="10.5" font-weight="700" fill="#db2777">趋紧</text></g><g><circle cx="924.0" cy="76.5" r="4" fill="#fff" stroke="#db2777" stroke-width="2.2"><title>10-09 · 出口管制收紧：趋紧</title></circle><text x="924.0" y="67.5" text-anchor="middle" font-size="10.5" font-weight="700" fill="#db2777">趋紧</text></g><polyline points="165.7,31.1 241.5,31.1 317.3,31.1 393.2,31.1 469.0,31.1 544.8,31.1 620.7,31.1 696.5,31.1 772.3,31.1 848.2,31.1 924.0,31.1" fill="none" stroke="#16a34a" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/><g><circle cx="165.7" cy="31.1" r="4" fill="#fff" stroke="#16a34a" stroke-width="2.2"><title>08-14 · 国产设备替代：上行</title></circle><text x="165.7" y="22.1" text-anchor="middle" font-size="10.5" font-weight="700" fill="#16a34a">上行</text></g><g><circle cx="241.5" cy="31.1" r="4" fill="#fff" stroke="#16a34a" stroke-width="2.2"><title>08-17 · 国产设备替代：上行</title></circle><text x="241.5" y="22.1" text-anchor="middle" font-size="10.5" font-weight="700" fill="#16a34a">上行</text></g><g><circle cx="317.3" cy="31.1" r="4" fill="#fff" stroke="#16a34a" stroke-width="2.2"><title>08-31 · 国产设备替代：上行</title></circle><text x="317.3" y="22.1" text-anchor="middle" font-size="10.5" font-weight="700" fill="#16a34a">上行</text></g><g><circle cx="393.2" cy="31.1" r="4" fill="#fff" stroke="#16a34a" stroke-width="2.2"><title>09-03 · 国产设备替代：上行</title></circle><text x="393.2" y="22.1" text-anchor="middle" font-size="10.5" font-weight="700" fill="#16a34a">上行</text></g><g><circle cx="469.0" cy="31.1" r="4" fill="#fff" stroke="#16a34a" stroke-width="2.2"><title>09-10 · 国产设备替代：上行</title></circle><text x="469.0" y="22.1" text-anchor="middle" font-size="10.5" font-weight="700" fill="#16a34a">上行</text></g><g><circle cx="544.8" cy="31.1" r="4" fill="#fff" stroke="#16a34a" stroke-width="2.2"><title>09-25 · 国产设备替代：上行</title></circle><text x="544.8" y="22.1" text-anchor="middle" font-size="10.5" font-weight="700" fill="#16a34a">上行</text></g><g><circle cx="620.7" cy="31.1" r="4" fill="#fff" stroke="#16a34a" stroke-width="2.2"><title>09-26 · 国产设备替代：上行</title></circle><text x="620.7" y="22.1" text-anchor="middle" font-size="10.5" font-weight="700" fill="#16a34a">上行</text></g><g><circle cx="696.5" cy="31.1" r="4" fill="#fff" stroke="#16a34a" stroke-width="2.2"><title>09-29 · 国产设备替代：上行</title></circle><text x="696.5" y="22.1" text-anchor="middle" font-size="10.5" font-weight="700" fill="#16a34a">上行</text></g><g><circle cx="772.3" cy="31.1" r="4" fill="#fff" stroke="#16a34a" stroke-width="2.2"><title>09-30 · 国产设备替代：上行</title></circle><text x="772.3" y="22.1" text-anchor="middle" font-size="10.5" font-weight="700" fill="#16a34a">上行</text></g><g><circle cx="848.2" cy="31.1" r="4" fill="#fff" stroke="#16a34a" stroke-width="2.2"><title>10-01 · 国产设备替代：上行</title></circle><text x="848.2" y="22.1" text-anchor="middle" font-size="10.5" font-weight="700" fill="#16a34a">上行</text></g><g><circle cx="924.0" cy="31.1" r="4" fill="#fff" stroke="#16a34a" stroke-width="2.2"><title>10-09 · 国产设备替代：上行</title></circle><text x="924.0" y="22.1" text-anchor="middle" font-size="10.5" font-weight="700" fill="#16a34a">上行</text></g></svg><div class="chart-legend"><span class="lg-chip"><i style="background:#2563eb"></i>HBM 价格与供需</span><span class="lg-chip"><i style="background:#7c3aed"></i>先进封装产能紧缺</span><span class="lg-chip"><i style="background:#0891b2"></i>国产 EDA 并购整合</span><span class="lg-chip"><i style="background:#db2777"></i>出口管制收紧</span><span class="lg-chip"><i style="background:#16a34a"></i>国产设备替代</span></div></div>
+<p class="rv-note">Y 轴固定量纲：down=-2 / loose=-1 / flat=0 / tight=1 / up=2，不归一化；
+同一坐标下可直观看到主题从 up 断崖到 down（如 HBM 高位反转）。</p>
+<div class="chart-card" style="margin-top:12px;overflow-x:auto">
+<table class="wk-table"><thead><tr><th>主题</th>
+<th>08-08</th><th>08-09</th><th>08-14</th><th>08-17</th><th>08-31</th><th>09-03</th><th>09-10</th><th>09-25</th><th>09-26</th><th>09-29</th><th>09-30</th><th>10-01</th><th>10-09</th><th>本周变化</th></tr></thead>
+<tbody><tr><td class="wk-topic">HBM 价格与供需</td><td><span class="tr-dir" style="color:#dc2626;border-color:#dc2626">up（连续 3 期）</span></td><td><span class="tr-dir" style="color:#16a34a;border-color:#16a34a">down（连续 1 期）</span></td><td><span class="tr-dir" style="color:#16a34a;border-color:#16a34a">down（连续 2 期）</span></td><td><span class="tr-dir" style="color:#16a34a;border-color:#16a34a">down（连续 3 期）</span></td><td><span class="tr-dir" style="color:#b45309;border-color:#b45309">tight（连续 2 期）</span></td><td><span class="tr-dir" style="color:#b45309;border-color:#b45309">tight（连续 3 期）</span></td><td><span class="tr-dir" style="color:#b45309;border-color:#b45309">tight（连续 4 期）</span></td><td><span class="tr-dir" style="color:#b45309;border-color:#b45309">tight（连续 4 期）</span></td><td><span class="tr-dir" style="color:#b45309;border-color:#b45309">tight（连续 6 期）</span></td><td><span class="tr-dir" style="color:#b45309;border-color:#b45309">tight（连续 7 期）</span></td><td><span class="tr-dir" style="color:#b45309;border-color:#b45309">tight（连续 7 期）</span></td><td><span class="tr-dir" style="color:#b45309;border-color:#b45309">tight（连续 8 期）</span></td><td><span class="tr-dir" style="color:#b45309;border-color:#b45309">tight（连续 9 期）</span></td><td class="wk-detail">⚠ 方向反转：up → tight（08-08~10-09）</td></tr><tr><td class="wk-topic">先进封装产能紧缺</td><td><span class="tr-dir" style="color:#b45309;border-color:#b45309">tight（连续 2 期）</span></td><td><span class="tr-dir" style="color:#b45309;border-color:#b45309">tight（连续 4 期）</span></td><td><span class="tr-dir" style="color:#b45309;border-color:#b45309">tight（连续 5 期）</span></td><td><span class="tr-dir" style="color:#b45309;border-color:#b45309">tight（连续 6 期）</span></td><td><span class="tr-dir" style="color:#b45309;border-color:#b45309">tight（连续 8 期）</span></td><td><span class="tr-dir" style="color:#b45309;border-color:#b45309">tight（连续 9 期）</span></td><td><span class="tr-dir" style="color:#b45309;border-color:#b45309">tight（连续 10 期）</span></td><td><span class="tr-dir" style="color:#b45309;border-color:#b45309">tight（连续 10 期）</span></td><td><span class="tr-dir" style="color:#b45309;border-color:#b45309">tight（连续 12 期）</span></td><td><span class="tr-dir" style="color:#b45309;border-color:#b45309">tight（连续 13 期）</span></td><td><span class="tr-dir" style="color:#b45309;border-color:#b45309">tight（连续 13 期）</span></td><td><span class="tr-dir" style="color:#b45309;border-color:#b45309">tight（连续 14 期）</span></td><td><span class="tr-dir" style="color:#b45309;border-color:#b45309">tight（连续 15 期）</span></td><td class="wk-detail">延续 tight，streak 2→15</td></tr><tr><td class="wk-topic">国产 EDA 并购整合</td><td><span class="tr-dir" style="color:#dc2626;border-color:#dc2626">up（连续 2 期）</span></td><td><span class="tr-dir" style="color:#dc2626;border-color:#dc2626">up（连续 4 期）</span></td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td class="wk-detail">延续 up，streak 2→4</td></tr><tr><td class="wk-topic">出口管制收紧</td><td><span class="tr-dir" style="color:#b45309;border-color:#b45309">tight（连续 2 期）</span></td><td><span class="tr-dir" style="color:#b45309;border-color:#b45309">tight（连续 4 期）</span></td><td><span class="tr-dir" style="color:#b45309;border-color:#b45309">tight（连续 5 期）</span></td><td><span class="tr-dir" style="color:#b45309;border-color:#b45309">tight（连续 6 期）</span></td><td><span class="tr-dir" style="color:#b45309;border-color:#b45309">tight（连续 8 期）</span></td><td><span class="tr-dir" style="color:#b45309;border-color:#b45309">tight（连续 9 期）</span></td><td><span class="tr-dir" style="color:#b45309;border-color:#b45309">tight（连续 10 期）</span></td><td><span class="tr-dir" style="color:#b45309;border-color:#b45309">tight（连续 10 期）</span></td><td><span class="tr-dir" style="color:#b45309;border-color:#b45309">tight（连续 12 期）</span></td><td><span class="tr-dir" style="color:#b45309;border-color:#b45309">tight（连续 13 期）</span></td><td><span class="tr-dir" style="color:#b45309;border-color:#b45309">tight（连续 13 期）</span></td><td><span class="tr-dir" style="color:#b45309;border-color:#b45309">tight（连续 14 期）</span></td><td><span class="tr-dir" style="color:#b45309;border-color:#b45309">tight（连续 15 期）</span></td><td class="wk-detail">延续 tight，streak 2→15</td></tr><tr><td class="wk-topic">国产设备替代</td><td>—</td><td>—</td><td><span class="tr-dir" style="color:#dc2626;border-color:#dc2626">up（连续 1 期）</span></td><td><span class="tr-dir" style="color:#dc2626;border-color:#dc2626">up（连续 2 期）</span></td><td><span class="tr-dir" style="color:#dc2626;border-color:#dc2626">up（连续 4 期）</span></td><td><span class="tr-dir" style="color:#dc2626;border-color:#dc2626">up（连续 5 期）</span></td><td><span class="tr-dir" style="color:#dc2626;border-color:#dc2626">up（连续 6 期）</span></td><td><span class="tr-dir" style="color:#dc2626;border-color:#dc2626">up（连续 6 期）</span></td><td><span class="tr-dir" style="color:#dc2626;border-color:#dc2626">up（连续 8 期）</span></td><td><span class="tr-dir" style="color:#dc2626;border-color:#dc2626">up（连续 9 期）</span></td><td><span class="tr-dir" style="color:#dc2626;border-color:#dc2626">up（连续 9 期）</span></td><td><span class="tr-dir" style="color:#dc2626;border-color:#dc2626">up（连续 10 期）</span></td><td><span class="tr-dir" style="color:#dc2626;border-color:#dc2626">up（连续 11 期）</span></td><td class="wk-detail">延续 up，streak 1→11</td></tr></tbody></table>
+</div>
+</section>
+
+  <section class="rv-block">
+    <h2 class="rv-title">🧠 认知素材库 <span class="rv-sub">各期深度解读 + 未来借鉴（跨期去重留档）</span></h2>
+    <div class="rv-hl"><b>10-09 · 解读</b> 三星单季利润近 9 倍——存储周期的&quot;顶部信号&quot;还是&quot;中段确认&quot;？</div><div class="rv-hl"><b>10-09 · 解读</b> 台积电请 GlobalFoundries 代产中介层——先进封装的&quot;地缘化+开放化&quot;双重信号</div><div class="rv-cog"><b>[趋势信号]</b> 1. 存储超周期延展至 2028-29 年（美光 CEO 口径 2027 年 75% 已售）——紧缺终点被一再推后（强度：↑强） 2. 先进封装从配角变主战场：中介层、键合、测试全面紧缺并开始资本化（GF 协议就是定价）（强度：↑强） 3. 键合工艺路线分歧公开化——存储双雄在 16 层堆叠上首次出现路线分歧（强度：→中）</div><div class="rv-cog"><b>[格局预判]</b> 1. 存储格局从&quot;三强&quot;走向&quot;三强+长鑫&quot;四极（长鑫 EBIT 利润率已登顶行业，可观察指标：全球 DRAM 份额与 G5 平台量产进度） 2. 中介层/先进封装供应多元化（可观察指标：GF 爬坡进度、台积电是否引入更多中介层供应商）</div><div class="rv-cog"><b>[格局时间轴]</b> 1. **1 年内**：HBM4E 竞标季（键合路线见分晓）、三星/海力士财报连续超预期、存储涨价传导到 PC/手机零售价 2. **1-3 年**：新产能集中释放（2027-2028），周期见顶回落风险累积；GF 中介层满产，先进封装多元供给成型 3. **3-5 年**：混合键合在 HBM5 代际成为主流；存储四极格局固化，中国份额向两成靠拢 - **可借鉴行动**（学生版）：1. 课程选择：先进封装/互连方向（UCIe、键合、中介层）与你的模电寄生参数知识直接衔接，值得作为实验室候选方向 2. 技能栈：把「混合键合 hybrid bonding」与「昇腾 CANN 工具链」加进跟踪清单（对应推演 1/2 的成长含义） 3. 信息源：10-14（BIS 管制生效+ASML 财报）与 10 月中旬台积电法说会是未来一周两个必看时点，自己先记下预测再对答案 4. 观察作业：今天记下 DDR5 内存条价格，12 月复测一次（详见课后思考）</div><div class="rv-cog"><b>[风险提示]</b> 1. 利润极值是周期顶部最强信号——800 亿美元单季利润的另一面是&quot;未来利润弹性向上空间有限&quot;，2027-2028 产能释放后价格回落风险真实存在 2. 政策拉锯未完：H200 模式（批准+分成）随时可能因政治事件反转，阉割版 Blackwell 也可能不被批准 3. 需求破坏：涨价向终端传导后，PC/手机换机需求可能被压制，反过来削弱涨价逻辑——这是周期自我修正的经典路径</div>
+  </section>
+
+  <section class="rv-block">
+    <h2 class="rv-title">⚠️ 风险与机会再评估 <span class="rv-sub">各期「风险提示」汇总</span></h2>
+    <div class="rv-risk">⚠ <b>10-09</b> 1. 利润极值是周期顶部最强信号——800 亿美元单季利润的另一面是&quot;未来利润弹性向上空间有限&quot;，2027-2028 产能释放后价格回落风险真实存在 2. 政策拉锯未完：H200 模式（批准+分成）随时可能因政治事件反转，阉割版 Blackwell 也可能不被批准 3. 需求破坏：涨价向终端传导后，PC/手机换机需求可能被压制，反过来削弱涨价逻辑——这是周期自我修正的经典路径</div>
+  </section>
+
+  <section class="rv-block">
+    <h2 class="rv-title">📅 下周前瞻催化剂 <span class="rv-sub">已公告确定时点（C·v5.3）</span></h2>
+    <div class="chart-card"><table class="wk-table">
+<thead><tr><th>日期</th><th>事件</th><th>环节</th><th>重要度</th><th>来源</th></tr></thead>
+<tbody><tr><td class="ct-date">2026-10 中旬</td><td class="wk-topic">台积电三季度法说会（惯例 10 月中旬，官网日历可查）</td><td>制造</td><td>高</td><td class="wk-detail">—</td></tr><tr><td class="ct-date">2026-10-14</td><td class="wk-topic">BIS GAAFET EDA 管制 60 天缓冲期届满生效</td><td>政策</td><td>高</td><td class="wk-detail">—</td></tr><tr><td class="ct-date">2026-10-14</td><td class="wk-topic">ASML 三季度财报</td><td>材料/设备</td><td>高</td><td class="wk-detail">—</td></tr><tr><td class="ct-date">2026-10-27</td><td class="wk-topic">SK 海力士三季度财报</td><td>制造</td><td>中</td><td class="wk-detail">—</td></tr><tr><td class="ct-date">2026-10-29</td><td class="wk-topic">三星电子三季度完整财报</td><td>制造</td><td>中</td><td class="wk-detail">—</td></tr></tbody></table></div>
+  </section>
+
+  <section class="rv-block">
+    <h2 class="rv-title">🎭 前瞻剧本复盘 <span class="rv-sub">多剧本并行打分（L4 情景推演 · M3→M5）</span></h2>
+    <div class="chart-card"><table class="wk-table">
+<thead><tr><th>事件</th><th>立场</th><th>剧本陈述</th><th>验证</th></tr></thead>
+<tbody><tr><td class="wk-topic">中芯国际 Q2 业绩说明会</td><td>真趋势</td><td class="wk-detail">成熟制程稼动率延续高位、Q3 指引稳健（实体清单外的基本盘稳）</td><td>一致</td></tr><tr><td class="wk-topic">中芯国际 Q2 业绩说明会</td><td>炒作</td><td class="wk-detail">AI 叙事把 SMIC 估值推到远超其先进产能兑现节奏</td><td>有偏差</td></tr><tr><td class="wk-topic">中芯国际 Q2 业绩说明会</td><td>被绕开</td><td class="wk-detail">国产替代在 10nm 以下绕开实体清单限制</td><td>有偏差</td></tr><tr><td class="wk-topic">BIS 出口管制正式生效（氧化镓/金刚石/PGC/车规SiC-GaN 当日；EDA 60天后约10-14生效）</td><td>—</td><td class="wk-detail">（单一预判，未挂互斥剧本）</td><td>一致（且加码）</td></tr><tr><td class="wk-topic">中美经贸会谈（西班牙）</td><td>—</td><td class="wk-detail">（单一预判，未挂互斥剧本）</td><td>有偏差（方向正确但信号偏弱）</td></tr><tr><td class="wk-topic">台积电 7 月营收公告（月度销售，AI 供应链近端验证）</td><td>—</td><td class="wk-detail">（单一预判，未挂互斥剧本）</td><td>有偏差</td></tr><tr><td class="wk-topic">英伟达 FY2027 Q2 财报（AI 资本开支风向标）</td><td>—</td><td class="wk-detail">（单一预判，未挂互斥剧本）</td><td>一致</td></tr><tr><td class="wk-topic">台积电 8 月营收公告（月度惯例每月 10 日前后，AI 供给瓶颈的月度级实证）</td><td>—</td><td class="wk-detail">（单一预判，未挂互斥剧本）</td><td>✅ 命中（真趋势剧本）</td></tr><tr><td class="wk-topic">苹果秋季发布会（iPhone 18/折叠屏：新 SoC 制程与存储基础容量公开）</td><td>—</td><td class="wk-detail">（单一预判，未挂互斥剧本）</td><td>一致</td></tr><tr><td class="wk-topic">卓胜微全系射频产品新价生效（国内设计端首次大规模顺价落地）</td><td>—</td><td class="wk-detail">（单一预判，未挂互斥剧本）</td><td>一致（设计端顺价确认）</td></tr><tr><td class="wk-topic">SEMICON Taiwan 2026 半导体展（8/31 论坛启动、9/2-9/4 展览，年度产业风向标）</td><td>—</td><td class="wk-detail">（单一预判，未挂互斥剧本）</td><td>一致</td></tr><tr><td class="wk-topic">AI Infra Summit 2026（9/15 开幕，AI 基础设施供给与互连路线图风向标）</td><td>—</td><td class="wk-detail">（单一预判，未挂互斥剧本）</td><td>信息不可得（连续两期无公开素材，按第5期计分板预告纪律结案）</td></tr><tr><td class="wk-topic">美国新一轮广泛半导体关税考量（减免与&#x27;在美制造&#x27;承诺挂钩）</td><td>—</td><td class="wk-detail">（单一预判，未挂互斥剧本）</td><td>信息不可得（连续两期无公开素材，按第5期计分板预告纪律结案）</td></tr><tr><td class="wk-topic">美光FQ4实际营收落点与下季指引方向（500±10亿指引）</td><td>—</td><td class="wk-detail">（单一预判，未挂互斥剧本）</td><td>✅ 命中（超上沿+指引向上）</td></tr></tbody></table></div>
+<div class="chart-card" style="margin-top:12px;overflow-x:auto"><table class="wk-table">
+<thead><tr><th>立场</th><th>剧本数</th><th>印证</th><th>被打脸</th><th>命中率</th></tr></thead>
+<tbody><tr><td class="wk-topic">真趋势</td><td>1</td><td>1</td><td>0</td><td>100%</td></tr><tr><td class="wk-topic">炒作</td><td>1</td><td>0</td><td>1</td><td>100%</td></tr><tr><td class="wk-topic">被绕开</td><td>1</td><td>0</td><td>1</td><td>0%</td></tr></tbody></table></div><p class="rv-note"><b>升级信号</b>：`真趋势` 命中率最高（100%），下期优先采信；<b>淘汰信号</b>：`被绕开` 命中率最低（0%），需收紧触发标准。</p>
+  </section>
+
+  <footer class="foot">由 chip-daily-report · weekly_review.py 生成 · 认知资产（迭代5）</footer>
+</div>
+</body>
+</html>

@@ -1,154 +1,152 @@
 {
-  "report": "芯片行业日报_20261001.md",
-  "generated_at": "2026-10-01 18:51:59",
+  "report": "芯片行业日报_20261009.md",
+  "generated_at": "2026-10-09 18:09:25",
   "stats": {
-    "entries": 10,
-    "no_claims": 7,
-    "partial": 2,
+    "entries": 8,
+    "no_text": 4,
+    "no_claims": 3,
     "ok": 1,
-    "verifiable_ratio": 0.3
+    "verifiable_ratio": 0.125
   },
   "entries": [
     {
-      "title": "◇ OpenAI 自研芯片体系再进一步：Dot 虚拟机跑在 AMD 霄龙 9V74 上",
-      "claims": [],
-      "n_claims": 0,
-      "direct_urls": [
-        "https://www.tomshardware.com/tech-industry/artificial-intelligence/geekbench-7-results-suggest-openais-dots-run-on-nine-core-amd-epyc-vms",
-        "https://www.ithome.com/1/008/936.htm"
-      ],
-      "gnews_urls": [],
-      "verdict": "no_claims",
-      "coverage": null,
-      "missing": [],
-      "sources": []
-    },
-    {
-      "title": "◇ 设计\"物理 AI\"系统要过现实约束关",
-      "claims": [],
-      "n_claims": 0,
-      "direct_urls": [
-        "https://semiengineering.com/designing-physical-ai-systems-under-real-world-constraints/"
-      ],
-      "gnews_urls": [],
-      "verdict": "no_claims",
-      "coverage": null,
-      "missing": [],
-      "sources": []
-    },
-    {
-      "title": "◆ 美光 FQ4 全面碾压预期：营收 542.3 亿美元、数据中心营收暴涨 11 倍，CEO 宣布与英伟达合作开发行业首",
+      "title": "◆ [回顾] 英伟达 H200 获批近 5 个月后实际恢复对华出货，下一代\"阉割版\"芯片已在路上",
       "claims": [
-        "343%",
-        "73%",
-        "895%",
-        "1.2 万亿美元",
-        "542.3 亿美元",
-        "510.7 亿",
-        "113.2 亿",
-        "377 亿美元",
-        "615 亿美元",
-        "398 亿美元",
-        "2500 亿美元",
-        "849.69 亿美元"
+        "25%",
+        "2026"
       ],
-      "n_claims": 12,
+      "n_claims": 2,
       "direct_urls": [
-        "https://www.cnbc.com/2026/09/30/micron-mu-q4-earnings-report-2026.html",
-        "https://www.ithome.com/1/008/952.htm"
+        "https://www.reuters.com/business/retail-consumer/us-clears-h200-chip-sales-10-china-firms-nvidia-ceo-looks-breakthrough-2026-05-14",
+        "https://table.media/index.php/en/china/feature/h200-chips-more-popular-than-authorities-would-like"
       ],
       "gnews_urls": [],
-      "verdict": "partial",
-      "coverage": 0.8333333333333334,
-      "missing": [
-        "895%",
-        "849.69 亿美元"
-      ],
+      "verdict": "no_text",
+      "coverage": null,
+      "missing": [],
       "sources": [
         {
-          "url": "https://www.cnbc.com/2026/09/30/micron-mu-q4-earnings-report-2026.html",
-          "status": "cached",
-          "text_len": 6300,
-          "error": null
+          "url": "https://www.reuters.com/business/retail-consumer/us-clears-h200-chip-sales-10-china-firms-nvidia-ceo-looks-breakthrough-2026-05-14",
+          "status": "error",
+          "text_len": 0,
+          "error": "proxy: <urlopen error timed out>; direct: <urlopen error timed out>"
         },
         {
-          "url": "https://www.ithome.com/1/008/952.htm",
-          "status": "cached",
-          "text_len": 2646,
-          "error": null
+          "url": "https://table.media/index.php/en/china/feature/h200-chips-more-popular-than-authorities-would-like",
+          "status": "error",
+          "text_len": 0,
+          "error": "proxy: <urlopen error timed out>; direct: <urlopen error timed out>"
         }
       ]
     },
     {
-      "title": "◆ TrendForce 预测 Q4 DRAM/NAND 合约价再涨 15-20%",
-      "claims": [
-        "20%",
-        "343%",
-        "2026",
-        "11 倍"
-      ],
-      "n_claims": 4,
+      "title": "◇ 英伟达为中国设计\"阉割版 Blackwell\"，新一轮合规芯片竞赛开启",
+      "claims": [],
+      "n_claims": 0,
       "direct_urls": [
-        "https://www.ithome.com/1/008/934.htm",
-        "https://news.qq.com/rain/a/20260930A0BBFX00"
+        "https://www.tomshardware.com/tech-industry/artificial-intelligence/nvidia-is-reportedly-designing-a-new-blackwell-ai-chip-for-china-amid-export-controls"
       ],
       "gnews_urls": [],
-      "verdict": "partial",
-      "coverage": 0.5,
-      "missing": [
-        "343%",
-        "11 倍"
+      "verdict": "no_claims",
+      "coverage": null,
+      "missing": [],
+      "sources": []
+    },
+    {
+      "title": "◇ AMD 寻求与三星\"更广合作\"锁定内存供应，三星想把它变成逻辑代工订单",
+      "claims": [],
+      "n_claims": 0,
+      "direct_urls": [
+        "https://www.tomshardware.com/tech-industry/semiconductors/amd-seeks-broader-partnership-with-samsung-as-it-looks-to-secure-memory-supply-samsung-reportedly-hopes-to-turn-its-memory-supply-relationship-with-amd-into-foundry"
       ],
+      "gnews_urls": [],
+      "verdict": "no_claims",
+      "coverage": null,
+      "missing": [],
+      "sources": []
+    },
+    {
+      "title": "◆ 三星三季度营业利润指引近 9 倍，史上首家单季破 800 亿美元",
+      "claims": [
+        "782%",
+        "107.4 万亿",
+        "800 亿美元",
+        "107.4 万",
+        "9 倍"
+      ],
+      "n_claims": 5,
+      "direct_urls": [
+        "https://news.samsung.com/global/samsung-electronics-announces-earnings-guidance-for-third-quarter-2026",
+        "https://finance.yahoo.com/markets/stocks/articles/samsung-profit-just-rose-nearly-115500791.html"
+      ],
+      "gnews_urls": [],
+      "verdict": "no_text",
+      "coverage": null,
+      "missing": [],
       "sources": [
         {
-          "url": "https://www.ithome.com/1/008/934.htm",
-          "status": "cached",
-          "text_len": 1476,
-          "error": null
+          "url": "https://news.samsung.com/global/samsung-electronics-announces-earnings-guidance-for-third-quarter-2026",
+          "status": "error",
+          "text_len": 0,
+          "error": "proxy: The read operation timed out; direct: <urlopen error timed out>"
         },
         {
-          "url": "https://news.qq.com/rain/a/20260930A0BBFX00",
-          "status": "cached",
-          "text_len": 587,
-          "error": null
+          "url": "https://finance.yahoo.com/markets/stocks/articles/samsung-profit-just-rose-nearly-115500791.html",
+          "status": "error",
+          "text_len": 0,
+          "error": "proxy: HTTP Error 403: Forbidden; direct: HTTP Error 403: Forbidden"
         }
       ]
     },
     {
-      "title": "◇ 黄仁勋与李在镕同框：英伟达承诺延续与三星 33 年合作",
-      "claims": [],
-      "n_claims": 0,
-      "direct_urls": [
-        "https://www.ithome.com/1/008/904.htm"
-      ],
-      "gnews_urls": [],
-      "verdict": "no_claims",
-      "coverage": null,
-      "missing": [],
-      "sources": []
-    },
-    {
-      "title": "◇ PCIe 8.0 借道 UCIe 3.0 进入 chiplet 时代",
-      "claims": [],
-      "n_claims": 0,
-      "direct_urls": [
-        "https://semiengineering.com/pcie-8-0-over-ucie-3-0-bringing-a-proven-protocol-into-the-chiplet-era/"
-      ],
-      "gnews_urls": [],
-      "verdict": "no_claims",
-      "coverage": null,
-      "missing": [],
-      "sources": []
-    },
-    {
-      "title": "◆ Synopsys 与亚马逊签多年期超 10 亿美元硅 IP 协议：云巨头的定制芯片向 EDA 下单",
+      "title": "◆ 台积电三季度营收创纪录：9 月 5118.6 亿新台币同比 +54.6%，全年美元口径指引增长超 30%",
       "claims": [
-        "10 亿美元"
+        "54.6%",
+        "30%",
+        "0.6%",
+        "1.49 万亿",
+        "5118.6 亿",
+        "160 亿美元",
+        "467 亿美元",
+        "1.49 万"
       ],
-      "n_claims": 1,
+      "n_claims": 8,
       "direct_urls": [
-        "https://www.ithome.com/1/008/917.htm",
-        "https://finance.yahoo.com/technology/ai/articles/synopsys-signs-1-billion-plus-170828121.html"
+        "https://focustaiwan.tw/business/202610080012",
+        "https://www.thestreet.com/investing/tsmc-q3-earnings-ai-tsm-stock-outlook"
+      ],
+      "gnews_urls": [],
+      "verdict": "no_text",
+      "coverage": null,
+      "missing": [],
+      "sources": [
+        {
+          "url": "https://focustaiwan.tw/business/202610080012",
+          "status": "error",
+          "text_len": 0,
+          "error": "proxy: <urlopen error timed out>; direct: <urlopen error timed out>"
+        },
+        {
+          "url": "https://www.thestreet.com/investing/tsmc-q3-earnings-ai-tsm-stock-outlook",
+          "status": "error",
+          "text_len": 0,
+          "error": "proxy: <urlopen error timed out>; direct: <urlopen error timed out>"
+        }
+      ]
+    },
+    {
+      "title": "◆ [回顾] 长鑫科技上半年收入 1503.1 亿元同比 +873.6%，登顶国产半导体收入第一",
+      "claims": [
+        "873.6%",
+        "84.84%",
+        "90%",
+        "1503.1 亿元",
+        "787.93 亿元"
+      ],
+      "n_claims": 5,
+      "direct_urls": [
+        "https://finance.sina.com.cn/tech/discovery/2026-10-06/doc-iniuhitk7063253.shtml",
+        "https://www.reuters.com/world/asia-pacific/chinas-cxmt-posts-first-half-profit-after-revenue-surge-2026-08-28"
       ],
       "gnews_urls": [],
       "verdict": "ok",
@@ -156,25 +154,25 @@
       "missing": [],
       "sources": [
         {
-          "url": "https://www.ithome.com/1/008/917.htm",
+          "url": "https://finance.sina.com.cn/tech/discovery/2026-10-06/doc-iniuhitk7063253.shtml",
           "status": "cached",
-          "text_len": 1198,
+          "text_len": 2213,
           "error": null
         },
         {
-          "url": "https://finance.yahoo.com/technology/ai/articles/synopsys-signs-1-billion-plus-170828121.html",
-          "status": "cached",
-          "text_len": 9857,
-          "error": null
+          "url": "https://www.reuters.com/world/asia-pacific/chinas-cxmt-posts-first-half-profit-after-revenue-surge-2026-08-28",
+          "status": "error",
+          "text_len": 0,
+          "error": "proxy: <urlopen error timed out>; direct: <urlopen error timed out>"
         }
       ]
     },
     {
-      "title": "◇ AI 验证需要被重新思考",
+      "title": "◇ SK 海力士混合键合研发遇阻、押注 Advanced MR-MUF 撑到 HBM4E，十六层堆叠竞赛升温",
       "claims": [],
       "n_claims": 0,
       "direct_urls": [
-        "https://semiengineering.com/rethinking-ai-validation/"
+        "https://www.techpowerup.com/353458/sk-hynix-reportedly-faces-difficulties-in-hbm-hybrid-bonding-trailing-samsung"
       ],
       "gnews_urls": [],
       "verdict": "no_claims",
@@ -183,30 +181,34 @@
       "sources": []
     },
     {
-      "title": "◇ 数据中心能耗趋势迫使芯片供电方式重构",
-      "claims": [],
-      "n_claims": 0,
+      "title": "◆ 台积电请竞争对手 GlobalFoundries 在美国代产硅中介层：五年 20 亿美元协议",
+      "claims": [
+        "7%",
+        "20 亿美元"
+      ],
+      "n_claims": 2,
       "direct_urls": [
-        "https://semiengineering.com/data-center-energy-trends-force-a-rethink-of-chip-power-delivery/"
+        "https://gf.com/news-and-events/news/globalfoundries-reaches-agreement-to-establish-us-based-supply-of-silicon-interposers-for-advanced-ai-packaging",
+        "https://www.theregister.com/systems/2026/10/08/tsmc-taps-globalfoundries-to-bolster-us-silicon-interposer-production-in-2b-deal/"
       ],
       "gnews_urls": [],
-      "verdict": "no_claims",
+      "verdict": "no_text",
       "coverage": null,
       "missing": [],
-      "sources": []
-    },
-    {
-      "title": "◇ AI 巨头承诺\"自我监管\"开发",
-      "claims": [],
-      "n_claims": 0,
-      "direct_urls": [
-        "https://www.tomshardware.com/tech-industry/policy/top-ai-tech-executives-promise-to-self-police-ai-development"
-      ],
-      "gnews_urls": [],
-      "verdict": "no_claims",
-      "coverage": null,
-      "missing": [],
-      "sources": []
+      "sources": [
+        {
+          "url": "https://gf.com/news-and-events/news/globalfoundries-reaches-agreement-to-establish-us-based-supply-of-silicon-interposers-for-advanced-ai-packaging",
+          "status": "error",
+          "text_len": 0,
+          "error": "proxy: _CitedRedirectHandler.redirect_request() takes 6 positional arguments but 7 were given; direct: _CitedRedirectHandler.redirect_request() takes 6 positional arguments but 7 were given"
+        },
+        {
+          "url": "https://www.theregister.com/systems/2026/10/08/tsmc-taps-globalfoundries-to-bolster-us-silicon-interposer-production-in-2b-deal/",
+          "status": "too_short",
+          "text_len": 13,
+          "error": "疑似反爬/付费墙"
+        }
+      ]
     }
   ]
 }

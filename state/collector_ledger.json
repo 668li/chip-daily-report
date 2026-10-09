@@ -700,6 +700,186 @@
       "first_import": false,
       "dropped_old": 0,
       "capped": false
+    },
+    {
+      "date": "2026-10-09",
+      "ts": "2026-10-09T17:49:52",
+      "source_id": "sec_edgar",
+      "found": 10,
+      "kept": 10,
+      "first_import": false,
+      "dropped_old": 0,
+      "capped": false
+    },
+    {
+      "date": "2026-10-09",
+      "ts": "2026-10-09T17:49:52",
+      "source_id": "aihot",
+      "found": 24,
+      "kept": 24,
+      "first_import": false,
+      "dropped_old": 0,
+      "capped": false
+    },
+    {
+      "date": "2026-10-09",
+      "ts": "2026-10-09T17:49:52",
+      "source_id": "semiengineering",
+      "found": 10,
+      "kept": 10,
+      "first_import": false,
+      "dropped_old": 0,
+      "capped": false
+    },
+    {
+      "date": "2026-10-09",
+      "ts": "2026-10-09T17:49:52",
+      "source_id": "eetimes",
+      "found": 10,
+      "kept": 10,
+      "first_import": false,
+      "dropped_old": 0,
+      "capped": false
+    },
+    {
+      "date": "2026-10-09",
+      "ts": "2026-10-09T17:49:52",
+      "source_id": "cnbc",
+      "found": 30,
+      "kept": 30,
+      "first_import": false,
+      "dropped_old": 0,
+      "capped": false
+    },
+    {
+      "date": "2026-10-09",
+      "ts": "2026-10-09T17:49:52",
+      "source_id": "semianalysis",
+      "found": 10,
+      "kept": 10,
+      "first_import": false,
+      "dropped_old": 0,
+      "capped": false
+    },
+    {
+      "date": "2026-10-09",
+      "ts": "2026-10-09T17:49:52",
+      "source_id": "ieee_spectrum",
+      "found": 30,
+      "kept": 30,
+      "first_import": false,
+      "dropped_old": 0,
+      "capped": false
+    },
+    {
+      "date": "2026-10-09",
+      "ts": "2026-10-09T17:49:52",
+      "source_id": "tomshardware",
+      "found": 50,
+      "kept": 50,
+      "first_import": false,
+      "dropped_old": 0,
+      "capped": false
+    },
+    {
+      "date": "2026-10-09",
+      "ts": "2026-10-09T17:49:52",
+      "source_id": "yonhap_en",
+      "found": 99,
+      "kept": 99,
+      "first_import": false,
+      "dropped_old": 0,
+      "capped": false
+    },
+    {
+      "date": "2026-10-09",
+      "ts": "2026-10-09T17:49:52",
+      "source_id": "ithome",
+      "found": 60,
+      "kept": 60,
+      "first_import": false,
+      "dropped_old": 0,
+      "capped": false
+    },
+    {
+      "date": "2026-10-09",
+      "ts": "2026-10-09T17:49:52",
+      "source_id": "trendforce",
+      "found": 20,
+      "kept": 20,
+      "first_import": false,
+      "dropped_old": 0,
+      "capped": false
+    },
+    {
+      "date": "2026-10-09",
+      "ts": "2026-10-09T17:49:52",
+      "source_id": "yahoo_nvda",
+      "found": 15,
+      "kept": 15,
+      "first_import": false,
+      "dropped_old": 0,
+      "capped": false
+    },
+    {
+      "date": "2026-10-09",
+      "ts": "2026-10-09T17:49:52",
+      "source_id": "yahoo_tsm",
+      "found": 13,
+      "kept": 13,
+      "first_import": false,
+      "dropped_old": 0,
+      "capped": false
+    },
+    {
+      "date": "2026-10-09",
+      "ts": "2026-10-09T17:49:52",
+      "source_id": "cninfo",
+      "found": 10,
+      "kept": 10,
+      "first_import": false,
+      "dropped_old": 0,
+      "capped": false
+    },
+    {
+      "date": "2026-10-09",
+      "ts": "2026-10-09T17:49:52",
+      "source_id": "dyn_techpowerup.com",
+      "found": 114,
+      "kept": 114,
+      "first_import": false,
+      "dropped_old": 0,
+      "capped": false
+    },
+    {
+      "date": "2026-10-09",
+      "ts": "2026-10-09T17:49:52",
+      "source_id": "dyn_eenewseurope.com",
+      "found": 10,
+      "kept": 10,
+      "first_import": false,
+      "dropped_old": 0,
+      "capped": false
+    },
+    {
+      "date": "2026-10-09",
+      "ts": "2026-10-09T17:49:52",
+      "source_id": "dyn_electronicsforyou.biz",
+      "found": 10,
+      "kept": 10,
+      "first_import": false,
+      "dropped_old": 0,
+      "capped": false
+    },
+    {
+      "date": "2026-10-09",
+      "ts": "2026-10-09T17:49:52",
+      "source_id": "dyn_shattered.io",
+      "found": 10,
+      "kept": 10,
+      "first_import": false,
+      "dropped_old": 0,
+      "capped": false
     }
   ]
 }

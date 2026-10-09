@@ -78,5 +78,15 @@
     "divergences": 1,
     "events": 10,
     "score": 45.0
+  },
+  {
+    "date": "20261009",
+    "a_ratio": 0.5,
+    "exclusive_leads": 0,
+    "cross_cov": 0.6,
+    "continuity": 1.0,
+    "divergences": 1,
+    "events": 10,
+    "score": 45.0
   }
 ]

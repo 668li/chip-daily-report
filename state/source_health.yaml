@@ -1,19 +1,16 @@
 schema_version: 1
-generated: '2026-09-30T11:47:58+08:00'
+generated: '2026-10-09T18:10:25+08:00'
 sources:
 - source_id: sec_edgar
   source_name: SEC EDGAR
-  status: ok
-  last_attempt: '2026-09-30T11:47:58+08:00'
+  status: degraded
+  last_attempt: '2026-10-09T18:10:25+08:00'
   last_success: '2026-09-30T11:47:58+08:00'
-  consecutive_failures: 0
+  consecutive_failures: 1
   availability_7d: 0.43
-  avg_latency_ms: 3479
-  last_error: null
+  avg_latency_ms: 4252
+  last_error: <urlopen error timed out>
   history:
-  - date: '2026-08-09'
-    ok: false
-    latency_ms: 0
   - date: '2026-08-15'
     ok: false
     latency_ms: 0
@@ -32,19 +29,19 @@ sources:
   - date: '2026-09-30'
     ok: true
     latency_ms: 621
+  - date: '2026-10-09'
+    ok: false
+    latency_ms: 8115
 - source_id: aihot
   source_name: AIHOT 聚合 API
   status: ok
-  last_attempt: '2026-09-30T11:47:58+08:00'
-  last_success: '2026-09-30T11:47:58+08:00'
+  last_attempt: '2026-10-09T18:10:25+08:00'
+  last_success: '2026-10-09T18:10:25+08:00'
   consecutive_failures: 0
-  availability_7d: 0.71
-  avg_latency_ms: 1884
+  availability_7d: 0.86
+  avg_latency_ms: 1632
   last_error: null
   history:
-  - date: '2026-08-09'
-    ok: false
-    latency_ms: 0
   - date: '2026-08-15'
     ok: false
     latency_ms: 0
@@ -63,14 +60,17 @@ sources:
   - date: '2026-09-30'
     ok: true
     latency_ms: 267
+  - date: '2026-10-09'
+    ok: true
+    latency_ms: 371
 - source_id: semiengineering
   source_name: Semiconductor Engineering
   status: ok
-  last_attempt: '2026-09-30T11:47:58+08:00'
-  last_success: '2026-09-30T11:47:58+08:00'
+  last_attempt: '2026-10-09T18:10:25+08:00'
+  last_success: '2026-10-09T18:10:25+08:00'
   consecutive_failures: 0
   availability_7d: 1.0
-  avg_latency_ms: 1845
+  avg_latency_ms: 1866
   last_error: null
   history:
   - date: '2026-08-17'
@@ -88,14 +88,17 @@ sources:
   - date: '2026-09-30'
     ok: true
     latency_ms: 1870
+  - date: '2026-10-09'
+    ok: true
+    latency_ms: 1974
 - source_id: eetimes
   source_name: EE Times
   status: ok
-  last_attempt: '2026-09-30T11:47:58+08:00'
-  last_success: '2026-09-30T11:47:58+08:00'
+  last_attempt: '2026-10-09T18:10:25+08:00'
+  last_success: '2026-10-09T18:10:25+08:00'
   consecutive_failures: 0
   availability_7d: 1.0
-  avg_latency_ms: 768
+  avg_latency_ms: 788
   last_error: null
   history:
   - date: '2026-08-17'
@@ -113,14 +116,17 @@ sources:
   - date: '2026-09-30'
     ok: true
     latency_ms: 1037
+  - date: '2026-10-09'
+    ok: true
+    latency_ms: 889
 - source_id: cnbc
   source_name: CNBC Tech
   status: ok
-  last_attempt: '2026-09-30T11:47:58+08:00'
-  last_success: '2026-09-30T11:47:58+08:00'
+  last_attempt: '2026-10-09T18:10:25+08:00'
+  last_success: '2026-10-09T18:10:25+08:00'
   consecutive_failures: 0
   availability_7d: 1.0
-  avg_latency_ms: 785
+  avg_latency_ms: 786
   last_error: null
   history:
   - date: '2026-08-17'
@@ -138,14 +144,17 @@ sources:
   - date: '2026-09-30'
     ok: true
     latency_ms: 1132
+  - date: '2026-10-09'
+    ok: true
+    latency_ms: 790
 - source_id: semianalysis
   source_name: SemiAnalysis
   status: ok
-  last_attempt: '2026-09-30T11:47:58+08:00'
-  last_success: '2026-09-30T11:47:58+08:00'
+  last_attempt: '2026-10-09T18:10:25+08:00'
+  last_success: '2026-10-09T18:10:25+08:00'
   consecutive_failures: 0
   availability_7d: 1.0
-  avg_latency_ms: 576
+  avg_latency_ms: 566
   last_error: null
   history:
   - date: '2026-08-17'
@@ -163,162 +172,201 @@ sources:
   - date: '2026-09-30'
     ok: true
     latency_ms: 736
+  - date: '2026-10-09'
+    ok: true
+    latency_ms: 517
 - source_id: ieee_spectrum
   source_name: IEEE Spectrum
   status: ok
-  last_attempt: '2026-09-30T11:47:58+08:00'
-  last_success: '2026-09-30T11:47:58+08:00'
+  last_attempt: '2026-10-09T18:10:25+08:00'
+  last_success: '2026-10-09T18:10:25+08:00'
   consecutive_failures: 0
   availability_7d: 1.0
-  avg_latency_ms: 632
+  avg_latency_ms: 737
   last_error: null
   history:
   - date: '2026-09-30'
     ok: true
     latency_ms: 632
+  - date: '2026-10-09'
+    ok: true
+    latency_ms: 842
 - source_id: tomshardware
   source_name: Tom's Hardware
   status: degraded
-  last_attempt: '2026-09-30T11:47:58+08:00'
+  last_attempt: '2026-10-09T18:10:25+08:00'
   last_success: null
-  consecutive_failures: 1
+  consecutive_failures: 2
   availability_7d: 0.0
-  avg_latency_ms: 534
+  avg_latency_ms: 731
   last_error: 仅允许 https 抓取：http://www.tomshardware.com/feeds.xml
   history:
   - date: '2026-09-30'
     ok: false
     latency_ms: 534
+  - date: '2026-10-09'
+    ok: false
+    latency_ms: 928
 - source_id: nikkei_asia
   source_name: Nikkei Asia
-  status: ok
-  last_attempt: '2026-09-30T11:47:58+08:00'
+  status: degraded
+  last_attempt: '2026-10-09T18:10:25+08:00'
   last_success: '2026-09-30T11:47:58+08:00'
-  consecutive_failures: 0
-  availability_7d: 1.0
-  avg_latency_ms: 754
-  last_error: null
+  consecutive_failures: 1
+  availability_7d: 0.5
+  avg_latency_ms: 4389
+  last_error: <urlopen error timed out>
   history:
   - date: '2026-09-30'
     ok: true
     latency_ms: 754
+  - date: '2026-10-09'
+    ok: false
+    latency_ms: 8025
 - source_id: korea_herald
   source_name: Korea Herald
   status: ok
-  last_attempt: '2026-09-30T11:47:58+08:00'
-  last_success: '2026-09-30T11:47:58+08:00'
+  last_attempt: '2026-10-09T18:10:25+08:00'
+  last_success: '2026-10-09T18:10:25+08:00'
   consecutive_failures: 0
   availability_7d: 1.0
-  avg_latency_ms: 1680
+  avg_latency_ms: 1052
   last_error: null
   history:
   - date: '2026-09-30'
     ok: true
     latency_ms: 1680
+  - date: '2026-10-09'
+    ok: true
+    latency_ms: 424
 - source_id: yonhap_en
   source_name: Yonhap EN
   status: ok
-  last_attempt: '2026-09-30T11:47:58+08:00'
-  last_success: '2026-09-30T11:47:58+08:00'
+  last_attempt: '2026-10-09T18:10:25+08:00'
+  last_success: '2026-10-09T18:10:25+08:00'
   consecutive_failures: 0
   availability_7d: 1.0
-  avg_latency_ms: 1382
+  avg_latency_ms: 1059
   last_error: null
   history:
   - date: '2026-09-30'
     ok: true
     latency_ms: 1382
+  - date: '2026-10-09'
+    ok: true
+    latency_ms: 737
 - source_id: ithome
   source_name: IT之家
   status: ok
-  last_attempt: '2026-09-30T11:47:58+08:00'
-  last_success: '2026-09-30T11:47:58+08:00'
+  last_attempt: '2026-10-09T18:10:25+08:00'
+  last_success: '2026-10-09T18:10:25+08:00'
   consecutive_failures: 0
   availability_7d: 1.0
-  avg_latency_ms: 87
+  avg_latency_ms: 179
   last_error: null
   history:
   - date: '2026-09-30'
     ok: true
     latency_ms: 87
+  - date: '2026-10-09'
+    ok: true
+    latency_ms: 271
 - source_id: trendforce
   source_name: TrendForce
   status: ok
-  last_attempt: '2026-09-30T11:47:58+08:00'
-  last_success: '2026-09-30T11:47:58+08:00'
+  last_attempt: '2026-10-09T18:10:25+08:00'
+  last_success: '2026-10-09T18:10:25+08:00'
   consecutive_failures: 0
   availability_7d: 1.0
-  avg_latency_ms: 1047
+  avg_latency_ms: 763
   last_error: null
   history:
   - date: '2026-09-30'
     ok: true
     latency_ms: 1047
+  - date: '2026-10-09'
+    ok: true
+    latency_ms: 479
 - source_id: yahoo_nvda
   source_name: Yahoo Finance (NVDA)
   status: ok
-  last_attempt: '2026-09-30T11:47:58+08:00'
-  last_success: '2026-09-30T11:47:58+08:00'
+  last_attempt: '2026-10-09T18:10:25+08:00'
+  last_success: '2026-10-09T18:10:25+08:00'
   consecutive_failures: 0
   availability_7d: 1.0
-  avg_latency_ms: 665
+  avg_latency_ms: 917
   last_error: null
   history:
   - date: '2026-09-30'
     ok: true
     latency_ms: 665
+  - date: '2026-10-09'
+    ok: true
+    latency_ms: 1169
 - source_id: yahoo_tsm
   source_name: Yahoo Finance (TSM)
   status: ok
-  last_attempt: '2026-09-30T11:47:58+08:00'
-  last_success: '2026-09-30T11:47:58+08:00'
+  last_attempt: '2026-10-09T18:10:25+08:00'
+  last_success: '2026-10-09T18:10:25+08:00'
   consecutive_failures: 0
   availability_7d: 1.0
-  avg_latency_ms: 658
+  avg_latency_ms: 1335
   last_error: null
   history:
   - date: '2026-09-30'
     ok: true
     latency_ms: 658
+  - date: '2026-10-09'
+    ok: true
+    latency_ms: 2012
 - source_id: google_news
   source_name: Google News
-  status: ok
-  last_attempt: '2026-09-30T11:47:58+08:00'
+  status: degraded
+  last_attempt: '2026-10-09T18:10:25+08:00'
   last_success: '2026-09-30T11:47:58+08:00'
-  consecutive_failures: 0
-  availability_7d: 1.0
-  avg_latency_ms: 941
-  last_error: null
+  consecutive_failures: 1
+  availability_7d: 0.5
+  avg_latency_ms: 4494
+  last_error: <urlopen error timed out>
   history:
   - date: '2026-09-30'
     ok: true
     latency_ms: 941
+  - date: '2026-10-09'
+    ok: false
+    latency_ms: 8048
 - source_id: cninfo
   source_name: 巨潮资讯公告
   status: ok
-  last_attempt: '2026-09-30T11:47:58+08:00'
-  last_success: '2026-09-30T11:47:58+08:00'
+  last_attempt: '2026-10-09T18:10:25+08:00'
+  last_success: '2026-10-09T18:10:25+08:00'
   consecutive_failures: 0
   availability_7d: 1.0
-  avg_latency_ms: 419
+  avg_latency_ms: 372
   last_error: null
   history:
   - date: '2026-09-30'
     ok: true
     latency_ms: 419
+  - date: '2026-10-09'
+    ok: true
+    latency_ms: 326
 - source_id: newsnow
   source_name: Newsnow 热榜
   status: degraded
-  last_attempt: '2026-09-30T11:47:58+08:00'
+  last_attempt: '2026-10-09T18:10:25+08:00'
   last_success: null
-  consecutive_failures: 1
+  consecutive_failures: 2
   availability_7d: 0.0
-  avg_latency_ms: 665
+  avg_latency_ms: 663
   last_error: 'HTTP Error 403: Forbidden'
   history:
   - date: '2026-09-30'
     ok: false
     latency_ms: 665
+  - date: '2026-10-09'
+    ok: false
+    latency_ms: 662
 global:
   raw_count: 19
   cleaned_count: 19
