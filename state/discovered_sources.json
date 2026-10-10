@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated": "2026-10-09T09:48:27Z",
+  "updated": "2026-10-10T04:50:31Z",
   "sources": [
     {
       "id": "wccftech.com",
@@ -1222,12 +1222,12 @@
       },
       "error_count": 0,
       "consecutive_ok": 0,
-      "last_checked": "2026-09-26T02:50:15Z",
-      "next_check_at": 1790394615.9685128,
+      "last_checked": "2026-10-10T04:50:31Z",
+      "next_check_at": 1791615031.9657996,
       "last_entry_date": "",
       "evidence": {},
       "last_error": "fetch_failed:HTTPError",
-      "transient_errors": 1
+      "transient_errors": 2
     },
     {
       "id": "engineering.com",
@@ -1242,11 +1242,12 @@
       },
       "error_count": 1,
       "consecutive_ok": 0,
-      "last_checked": "2026-09-26T02:50:15Z",
-      "next_check_at": 1790394615.9685128,
+      "last_checked": "2026-10-10T04:50:31Z",
+      "next_check_at": 1791611431.9657996,
       "last_entry_date": "",
       "evidence": {},
-      "last_error": "low_relevance"
+      "last_error": "fetch_failed:HTTPError",
+      "transient_errors": 1
     },
     {
       "id": "shattered.io",
@@ -1287,12 +1288,12 @@
       },
       "error_count": 0,
       "consecutive_ok": 0,
-      "last_checked": "2026-09-26T02:50:15Z",
-      "next_check_at": 1790394615.9685128,
+      "last_checked": "2026-10-10T04:50:31Z",
+      "next_check_at": 1791615031.9657996,
       "last_entry_date": "",
       "evidence": {},
       "last_error": "fetch_failed:HTTPError",
-      "transient_errors": 1
+      "transient_errors": 2
     },
     {
       "id": "datacenterdynamics.com",
@@ -1307,11 +1308,12 @@
       },
       "error_count": 1,
       "consecutive_ok": 0,
-      "last_checked": "2026-09-26T02:50:15Z",
-      "next_check_at": 1790394615.9685128,
+      "last_checked": "2026-10-10T04:50:31Z",
+      "next_check_at": 1791611431.9657996,
       "last_entry_date": "",
       "evidence": {},
-      "last_error": "low_relevance"
+      "last_error": "fetch_failed:HTTPError",
+      "transient_errors": 1
     },
     {
       "id": "basenor.com",
@@ -1326,30 +1328,38 @@
       },
       "error_count": 0,
       "consecutive_ok": 0,
-      "last_checked": "2026-09-26T02:50:15Z",
-      "next_check_at": 1790394615.9685128,
+      "last_checked": "2026-10-10T04:50:31Z",
+      "next_check_at": 1791615031.9657996,
       "last_entry_date": "",
       "evidence": {},
       "last_error": "fetch_failed:HTTPError",
-      "transient_errors": 1
+      "transient_errors": 2
     },
     {
       "id": "sammobile.com",
       "domain": "sammobile.com",
-      "feed_url": "https://sammobile.com/feed/",
+      "feed_url": "https://sammobile.com/rss",
       "homepage": "https://sammobile.com/",
       "discovered_via": "gnews",
-      "state": "candidate",
+      "state": "trial",
       "score": {
-        "kw_hits": 0,
-        "entry_hits": 0
+        "kw_hits": 5,
+        "entry_hits": 10
       },
-      "error_count": 1,
-      "consecutive_ok": 0,
-      "last_checked": "2026-09-26T02:50:15Z",
-      "next_check_at": 1790394615.9685128,
-      "last_entry_date": "",
-      "evidence": {},
+      "error_count": 0,
+      "consecutive_ok": 1,
+      "last_checked": "2026-10-10T04:50:31Z",
+      "next_check_at": 1791651031.9657996,
+      "last_entry_date": "2026-10-09",
+      "evidence": {
+        "http_ok": true,
+        "entry_count": 10,
+        "sample_titles": [
+          "What are the smallest Samsung Galaxy phones you can buy in 2026?",
+          "Samsung takes another step forward in Galaxy A58 development",
+          "Samsung ends software support for Galaxy A04s"
+        ]
+      },
       "last_error": "low_relevance"
     },
     {
@@ -1365,12 +1375,12 @@
       },
       "error_count": 0,
       "consecutive_ok": 0,
-      "last_checked": "2026-09-26T02:50:15Z",
-      "next_check_at": 1790394615.9685128,
+      "last_checked": "2026-10-10T04:50:31Z",
+      "next_check_at": 1791615031.9657996,
       "last_entry_date": "",
       "evidence": {},
       "last_error": "fetch_failed:HTTPError",
-      "transient_errors": 1
+      "transient_errors": 2
     },
     {
       "id": "globalsources.com",
@@ -2013,8 +2023,8 @@
       },
       "error_count": 1,
       "consecutive_ok": 0,
-      "last_checked": "2026-10-09T09:48:27Z",
-      "next_check_at": 1791542907.2251318,
+      "last_checked": "2026-10-10T04:50:31Z",
+      "next_check_at": 1791615031.9657996,
       "last_entry_date": "2026-09-29",
       "evidence": {
         "http_ok": true,
@@ -2026,7 +2036,7 @@
         ]
       },
       "last_error": "fetch_failed:URLError",
-      "transient_errors": 1
+      "transient_errors": 2
     },
     {
       "id": "kyoto-u.ac.jp",

@@ -1,152 +1,22 @@
 {
-  "report": "芯片行业日报_20261009.md",
-  "generated_at": "2026-10-09 18:09:25",
+  "report": "芯片行业日报_20261010.md",
+  "generated_at": "2026-10-10 12:53:46",
   "stats": {
     "entries": 8,
-    "no_text": 4,
-    "no_claims": 3,
-    "ok": 1,
-    "verifiable_ratio": 0.125
+    "ok": 4,
+    "no_claims": 4,
+    "verifiable_ratio": 0.5
   },
   "entries": [
     {
-      "title": "◆ [回顾] 英伟达 H200 获批近 5 个月后实际恢复对华出货，下一代\"阉割版\"芯片已在路上",
+      "title": "◆ 三星拿 HBM4 供应当筹码，要 AMD 用代工订单来换——苏姿丰本周亲赴首尔约三小时会谈",
       "claims": [
-        "25%",
         "2026"
       ],
-      "n_claims": 2,
+      "n_claims": 1,
       "direct_urls": [
-        "https://www.reuters.com/business/retail-consumer/us-clears-h200-chip-sales-10-china-firms-nvidia-ceo-looks-breakthrough-2026-05-14",
-        "https://table.media/index.php/en/china/feature/h200-chips-more-popular-than-authorities-would-like"
-      ],
-      "gnews_urls": [],
-      "verdict": "no_text",
-      "coverage": null,
-      "missing": [],
-      "sources": [
-        {
-          "url": "https://www.reuters.com/business/retail-consumer/us-clears-h200-chip-sales-10-china-firms-nvidia-ceo-looks-breakthrough-2026-05-14",
-          "status": "error",
-          "text_len": 0,
-          "error": "proxy: <urlopen error timed out>; direct: <urlopen error timed out>"
-        },
-        {
-          "url": "https://table.media/index.php/en/china/feature/h200-chips-more-popular-than-authorities-would-like",
-          "status": "error",
-          "text_len": 0,
-          "error": "proxy: <urlopen error timed out>; direct: <urlopen error timed out>"
-        }
-      ]
-    },
-    {
-      "title": "◇ 英伟达为中国设计\"阉割版 Blackwell\"，新一轮合规芯片竞赛开启",
-      "claims": [],
-      "n_claims": 0,
-      "direct_urls": [
-        "https://www.tomshardware.com/tech-industry/artificial-intelligence/nvidia-is-reportedly-designing-a-new-blackwell-ai-chip-for-china-amid-export-controls"
-      ],
-      "gnews_urls": [],
-      "verdict": "no_claims",
-      "coverage": null,
-      "missing": [],
-      "sources": []
-    },
-    {
-      "title": "◇ AMD 寻求与三星\"更广合作\"锁定内存供应，三星想把它变成逻辑代工订单",
-      "claims": [],
-      "n_claims": 0,
-      "direct_urls": [
-        "https://www.tomshardware.com/tech-industry/semiconductors/amd-seeks-broader-partnership-with-samsung-as-it-looks-to-secure-memory-supply-samsung-reportedly-hopes-to-turn-its-memory-supply-relationship-with-amd-into-foundry"
-      ],
-      "gnews_urls": [],
-      "verdict": "no_claims",
-      "coverage": null,
-      "missing": [],
-      "sources": []
-    },
-    {
-      "title": "◆ 三星三季度营业利润指引近 9 倍，史上首家单季破 800 亿美元",
-      "claims": [
-        "782%",
-        "107.4 万亿",
-        "800 亿美元",
-        "107.4 万",
-        "9 倍"
-      ],
-      "n_claims": 5,
-      "direct_urls": [
-        "https://news.samsung.com/global/samsung-electronics-announces-earnings-guidance-for-third-quarter-2026",
-        "https://finance.yahoo.com/markets/stocks/articles/samsung-profit-just-rose-nearly-115500791.html"
-      ],
-      "gnews_urls": [],
-      "verdict": "no_text",
-      "coverage": null,
-      "missing": [],
-      "sources": [
-        {
-          "url": "https://news.samsung.com/global/samsung-electronics-announces-earnings-guidance-for-third-quarter-2026",
-          "status": "error",
-          "text_len": 0,
-          "error": "proxy: The read operation timed out; direct: <urlopen error timed out>"
-        },
-        {
-          "url": "https://finance.yahoo.com/markets/stocks/articles/samsung-profit-just-rose-nearly-115500791.html",
-          "status": "error",
-          "text_len": 0,
-          "error": "proxy: HTTP Error 403: Forbidden; direct: HTTP Error 403: Forbidden"
-        }
-      ]
-    },
-    {
-      "title": "◆ 台积电三季度营收创纪录：9 月 5118.6 亿新台币同比 +54.6%，全年美元口径指引增长超 30%",
-      "claims": [
-        "54.6%",
-        "30%",
-        "0.6%",
-        "1.49 万亿",
-        "5118.6 亿",
-        "160 亿美元",
-        "467 亿美元",
-        "1.49 万"
-      ],
-      "n_claims": 8,
-      "direct_urls": [
-        "https://focustaiwan.tw/business/202610080012",
-        "https://www.thestreet.com/investing/tsmc-q3-earnings-ai-tsm-stock-outlook"
-      ],
-      "gnews_urls": [],
-      "verdict": "no_text",
-      "coverage": null,
-      "missing": [],
-      "sources": [
-        {
-          "url": "https://focustaiwan.tw/business/202610080012",
-          "status": "error",
-          "text_len": 0,
-          "error": "proxy: <urlopen error timed out>; direct: <urlopen error timed out>"
-        },
-        {
-          "url": "https://www.thestreet.com/investing/tsmc-q3-earnings-ai-tsm-stock-outlook",
-          "status": "error",
-          "text_len": 0,
-          "error": "proxy: <urlopen error timed out>; direct: <urlopen error timed out>"
-        }
-      ]
-    },
-    {
-      "title": "◆ [回顾] 长鑫科技上半年收入 1503.1 亿元同比 +873.6%，登顶国产半导体收入第一",
-      "claims": [
-        "873.6%",
-        "84.84%",
-        "90%",
-        "1503.1 亿元",
-        "787.93 亿元"
-      ],
-      "n_claims": 5,
-      "direct_urls": [
-        "https://finance.sina.com.cn/tech/discovery/2026-10-06/doc-iniuhitk7063253.shtml",
-        "https://www.reuters.com/world/asia-pacific/chinas-cxmt-posts-first-half-profit-after-revenue-surge-2026-08-28"
+        "https://www.tomshardware.com/tech-industry/semiconductors/amd-seeks-broader-partnership-with-samsung-as-it-looks-to-secure-memory-supply-samsung-reportedly-hopes-to-turn-its-memory-supply-relationship-with-amd-into-foundry",
+        "https://hwbusters.com/news/amd-asks-samsung-for-more-hbm4-and-samsung-wants-foundry-orders-in-return/"
       ],
       "gnews_urls": [],
       "verdict": "ok",
@@ -154,24 +24,25 @@
       "missing": [],
       "sources": [
         {
-          "url": "https://finance.sina.com.cn/tech/discovery/2026-10-06/doc-iniuhitk7063253.shtml",
-          "status": "cached",
-          "text_len": 2213,
-          "error": null
-        },
-        {
-          "url": "https://www.reuters.com/world/asia-pacific/chinas-cxmt-posts-first-half-profit-after-revenue-surge-2026-08-28",
+          "url": "https://www.tomshardware.com/tech-industry/semiconductors/amd-seeks-broader-partnership-with-samsung-as-it-looks-to-secure-memory-supply-samsung-reportedly-hopes-to-turn-its-memory-supply-relationship-with-amd-into-foundry",
           "status": "error",
           "text_len": 0,
-          "error": "proxy: <urlopen error timed out>; direct: <urlopen error timed out>"
+          "error": "proxy: HTTP Error 404: Not Found; direct: HTTP Error 404: Not Found"
+        },
+        {
+          "url": "https://hwbusters.com/news/amd-asks-samsung-for-more-hbm4-and-samsung-wants-foundry-orders-in-return/",
+          "status": "cached",
+          "text_len": 6005,
+          "error": null
         }
       ]
     },
     {
-      "title": "◇ SK 海力士混合键合研发遇阻、押注 Advanced MR-MUF 撑到 HBM4E，十六层堆叠竞赛升温",
+      "title": "◆ 存储双雄竞逐 16 层 HBM4，英伟达下一代 Rubin 平台却仍以 12 层为主",
       "claims": [],
       "n_claims": 0,
       "direct_urls": [
+        "https://www.koreaherald.com/article/10897751",
         "https://www.techpowerup.com/353458/sk-hynix-reportedly-faces-difficulties-in-hbm-hybrid-bonding-trailing-samsung"
       ],
       "gnews_urls": [],
@@ -181,32 +52,107 @@
       "sources": []
     },
     {
-      "title": "◆ 台积电请竞争对手 GlobalFoundries 在美国代产硅中介层：五年 20 亿美元协议",
-      "claims": [
-        "7%",
-        "20 亿美元"
-      ],
-      "n_claims": 2,
+      "title": "◇ 英伟达 NVHBM 重塑 base die 分工：美光官宣外采，三星/美光把台积电拉进存储地基阵营",
+      "claims": [],
+      "n_claims": 0,
       "direct_urls": [
-        "https://gf.com/news-and-events/news/globalfoundries-reaches-agreement-to-establish-us-based-supply-of-silicon-interposers-for-advanced-ai-packaging",
-        "https://www.theregister.com/systems/2026/10/08/tsmc-taps-globalfoundries-to-bolster-us-silicon-interposer-production-in-2b-deal/"
+        "https://www.trendforce.com/news/2026/10/09/news-nvidias-nvhbm-reshapes-memory-makers-base-die-strategies-as-micron-samsung-turn-to-external-foundries/"
       ],
       "gnews_urls": [],
-      "verdict": "no_text",
+      "verdict": "no_claims",
       "coverage": null,
+      "missing": [],
+      "sources": []
+    },
+    {
+      "title": "◇ 美光台湾桃园厂工会拿下罢工权（88.3% 支持），台中厂 10-22 调解在即",
+      "claims": [
+        "88.3%"
+      ],
+      "n_claims": 1,
+      "direct_urls": [
+        "https://www.trendforce.com/news/2026/10/08/news-micron-taiwans-taoyuan-union-secures-right-to-strike-with-88-3-support-taichung-mediation-set-for-oct-22/"
+      ],
+      "gnews_urls": [],
+      "verdict": "ok",
+      "coverage": 1.0,
       "missing": [],
       "sources": [
         {
-          "url": "https://gf.com/news-and-events/news/globalfoundries-reaches-agreement-to-establish-us-based-supply-of-silicon-interposers-for-advanced-ai-packaging",
-          "status": "error",
-          "text_len": 0,
-          "error": "proxy: _CitedRedirectHandler.redirect_request() takes 6 positional arguments but 7 were given; direct: _CitedRedirectHandler.redirect_request() takes 6 positional arguments but 7 were given"
-        },
+          "url": "https://www.trendforce.com/news/2026/10/08/news-micron-taiwans-taoyuan-union-secures-right-to-strike-with-88-3-support-taichung-mediation-set-for-oct-22/",
+          "status": "cached",
+          "text_len": 6877,
+          "error": null
+        }
+      ]
+    },
+    {
+      "title": "◇ 矽品测试产能吃紧宣布涨价：客户抢签一年以上长约，存储客户溢价锁产能",
+      "claims": [
+        "20 亿"
+      ],
+      "n_claims": 1,
+      "direct_urls": [
+        "https://www.trendforce.com/news/2026/10/08/news-taiwan-osat-sigurd-says-customers-lock-in-1-year-plus-deals-as-ai-chip-testing-capacity-tightens/"
+      ],
+      "gnews_urls": [],
+      "verdict": "ok",
+      "coverage": 1.0,
+      "missing": [],
+      "sources": [
         {
-          "url": "https://www.theregister.com/systems/2026/10/08/tsmc-taps-globalfoundries-to-bolster-us-silicon-interposer-production-in-2b-deal/",
-          "status": "too_short",
-          "text_len": 13,
-          "error": "疑似反爬/付费墙"
+          "url": "https://www.trendforce.com/news/2026/10/08/news-taiwan-osat-sigurd-says-customers-lock-in-1-year-plus-deals-as-ai-chip-testing-capacity-tightens/",
+          "status": "cached",
+          "text_len": 6315,
+          "error": null
+        }
+      ]
+    },
+    {
+      "title": "◇ [回顾] DRAM 现货价横盘：假期与月末效应下散客市场降温",
+      "claims": [],
+      "n_claims": 0,
+      "direct_urls": [
+        "https://www.trendforce.com/news/2026/10/07/insights-memory-spot-price-update-dram-spot-largely-sideways-as-holidays-month-end-effects-weigh/"
+      ],
+      "gnews_urls": [],
+      "verdict": "no_claims",
+      "coverage": null,
+      "missing": [],
+      "sources": []
+    },
+    {
+      "title": "◇ [回顾] 美参院两党提出 S.5548 法案：把联邦采购对华限制从半导体扩展到光模块",
+      "claims": [],
+      "n_claims": 0,
+      "direct_urls": [
+        "https://www.govinfo.gov/xhtml/BILLS-119s5548is"
+      ],
+      "gnews_urls": [],
+      "verdict": "no_claims",
+      "coverage": null,
+      "missing": [],
+      "sources": []
+    },
+    {
+      "title": "◇ [回顾] 英特尔 CEO 表态留驻马斯克 Terafab 项目，TSMC 参与传闻升温",
+      "claims": [
+        "14A"
+      ],
+      "n_claims": 1,
+      "direct_urls": [
+        "https://www.trendforce.com/news/2026/10/07/news-intel-ceo-lip-bu-tan-says-it-remains-in-musks-terafab-as-tsmc-speculation-grows/"
+      ],
+      "gnews_urls": [],
+      "verdict": "ok",
+      "coverage": 1.0,
+      "missing": [],
+      "sources": [
+        {
+          "url": "https://www.trendforce.com/news/2026/10/07/news-intel-ceo-lip-bu-tan-says-it-remains-in-musks-terafab-as-tsmc-speculation-grows/",
+          "status": "cached",
+          "text_len": 5194,
+          "error": null
         }
       ]
     }

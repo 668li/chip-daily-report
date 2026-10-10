@@ -375,5 +375,34 @@
         "signal": "高/利空/负面"
       }
     ]
+  },
+  {
+    "date": "20261010",
+    "topics": [
+      {
+        "topic": "HBM 价格与供需",
+        "direction": "tight",
+        "streak": 10,
+        "signal": "高/中性/正面"
+      },
+      {
+        "topic": "先进封装产能紧缺",
+        "direction": "tight",
+        "streak": 16,
+        "signal": "高/利好/正面"
+      },
+      {
+        "topic": "国产设备替代",
+        "direction": "up",
+        "streak": 12,
+        "signal": "中/中性/中性"
+      },
+      {
+        "topic": "出口管制收紧",
+        "direction": "tight",
+        "streak": 16,
+        "signal": "高/利空/负面"
+      }
+    ]
   }
 ]
